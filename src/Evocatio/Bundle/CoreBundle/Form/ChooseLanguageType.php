@@ -3,8 +3,9 @@
 namespace Evocatio\Bundle\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Evocatio\Bundle\CoreBundle\Lib\Locale;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ChooseLanguageType extends AbstractType {
 
@@ -16,19 +17,19 @@ class ChooseLanguageType extends AbstractType {
                     , 'multiple' => true
 //                    , 'property' => 'symbol'
                     , 'expanded' => true
-                    ))
+                ))
         ;
+    }
+
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+        $resolver->setDefaults(array(
+            'data_class' => 'Evocatio\Bundle\CoreBundle\Entity\Language',
+        ));
     }
 
     public function getName() {
         return 'evocatio_bundle_corebundle_chooselanguagetype';
     }
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        return array(
-            'data_class' => 'Evocatio\Bundle\CoreBundle\Entity\Language',
-        );
-    }
-
+    
 }
