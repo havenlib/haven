@@ -3,7 +3,7 @@
 namespace Evocatio\Bundle\SecurityBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class LoginType extends AbstractType
 {
