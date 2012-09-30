@@ -20,6 +20,13 @@ class DefaultController extends Controller {
      * @Template()
      */
     public function setupAction() {
+        
+        $coll = new \Collator('fr_CA');
+        $al   = $coll->getLocale(Locale::ACTUAL_LOCALE);
+        echo "Actual locale: $al\n";
+//        die();
+        
+        
         $em = $this->getDoctrine()->getEntityManager();
         $languages = $this->getDoctrine()->getRepository("EvocatioCoreBundle:Language")->findAll();
 
@@ -138,7 +145,7 @@ class DefaultController extends Controller {
     public function changeLanguageAction() {
         // if language exists and is status, set current language to it
         if ($this->getDoctrine()->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(array('status' => 1, 'symbol' => $this->getRequest()->get("lang")))) {
-            $this->getRequest()->getSession()->setLocale($this->getRequest()->get("lang"));
+            $this->getRequest()->getSession()->set('_locale',$this->getRequest()->get("lang"));
         }
 
         return $this->redirect($this->getRequest()->server->get('HTTP_REFERER'));
@@ -150,9 +157,9 @@ class DefaultController extends Controller {
     private function checkDefaultLanguage() {
         if (!$this->getDoctrine()->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(array('status' => 1, 'symbol' => Locale::getDefault()))) {
             if ($default = $this->getDoctrine()->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findOneBy(array('status' => true)))
-                $this->getRequest()->getSession()->setLocale($default->getSymbol());
+                $this->getRequest()->getSession()->set('_locale',$default->getSymbol());
             else
-                $this->getRequest()->getSession()->setLocale("fr");
+                $this->getRequest()->getSession()->set('_locale',"fr");
         }
     }
 
