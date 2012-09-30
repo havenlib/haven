@@ -20,12 +20,20 @@ class Locale extends \Symfony\Component\Locale\Locale {
 
     static public function getAvailableDisplaySystemLocales($locale){
         $available = self::getSystemLocales();
-        return array_intersect_key(\Symfony\Component\Locale\Locale::getDisplayLanguages($locale),array_flip($available));
+        echo "<pre>";
+//        print_r($available);
+        foreach($available as $one){
+            echo self::getDisplayLanguage($one, "fr_CA")." ";
+            echo self::getDisplayName($one, "fr_CA")." ";
+        }
+        echo "</pre>";
+//        die();
+        return $available;
     }
 
     static public function getAvailableSystemLocales(){
         $available = self::getSystemLocales();
-        return array_intersect_key(\Symfony\Component\Locale\Locale::getLocales(),array_flip($available));
+        return array_intersect_key(self::getLocales(),array_flip($available));
     }
 
 }

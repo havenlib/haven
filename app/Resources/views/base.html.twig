@@ -3,11 +3,49 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% block stylesheets %}<link rel="stylesheet" type="text/css" href="/css/base.css">{% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
-</html>
+        {% if app.session.flash("notice") %}
+            <div class="notice">
+            {{ app.session.flash("notice") }}
+                </div>
+        {% endif %}
+        {% if app.session.flash("error") %}
+                <div class="error">
+            {{ app.session.flash("error") }}
+                    </div>
+        {% endif %}
+        {% if app.session.flash("success") %}
+                    <div class="success">
+            {{ app.session.flash("success") }}
+                        </div>
+        {% endif %}
+        {% if app.session.flash("info") %}
+                        <div class="info">
+            {{ app.session.flash("info") }}
+                            </div>
+        {% endif %}
+        {#{ app.session["_locale"] }#}
+        {% block body %}
+                            <header>
+            {% block header %}
+            {% endblock header %}
+                                </header>
+                                <div class="left">
+                {% block aside %}
+                {% endblock aside %}
+                                    </div>
+                                    <div class="right">
+                {% block theatre %}
+                {% endblock theatre %}
+                                        </div>
+                                        <footer>
+            {% block footer %}
+            {% endblock footer %}
+                                            </footer>
+        {% endblock body %}
+        {% block javascripts %}{% endblock javascripts %}
+                                        </body>
+                                    </html>

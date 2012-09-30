@@ -3,7 +3,7 @@
 namespace Evocatio\Bundle\PersonaBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class WebType extends AbstractType
 {
