@@ -1,0 +1,27 @@
+{%  extends "::base.html.twig" %}
+{% block left %}
+<ul>
+    {% for post in posts %}
+        <li>
+        {{ post.status }} --- <strong>{{ post.title }}</strong>
+                <a href="{{ path('EvocatioPostBundle_edit', { 'id': post.id }) }}">edit</a>
+                <a href="{{ path('EvocatioPostBundle_show', { 'id': post.id }) }}">show</a>
+            {{ post.excerpt }}
+            </li>
+    {% else %}
+            &nbsp;
+    {% endfor %}
+        </ul>
+        <ul>
+            <li>
+                <a href="{{ path('EvocatioPostBundle_new') }}">
+                    Create a new entry
+                </a>
+            </li>
+        </ul>
+{% endblock left %}
+{% block right %}
+{% render "EvocatioCoreBundle:Default:i18nSwitcher" %}
+{% endblock right %}
+
+

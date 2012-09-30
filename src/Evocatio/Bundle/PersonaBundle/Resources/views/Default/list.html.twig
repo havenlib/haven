@@ -1,0 +1,14 @@
+{# empty Twig template #}
+{% for unit in entities %}
+<p>
+{% if unit.web is defined %}
+{{ unit.web }}
+{% elseif unit.address is defined %}
+{{ unit.address }}
+
+{% endif %}
+</p>
+<p>
+{{ unit.getPlane }}
+</p>
+{% endfor %}

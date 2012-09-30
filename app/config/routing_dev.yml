@@ -1,3 +1,28 @@
+#EvocatioPosBundle:
+#    resource: "@EvocatioPosBundle/Controller/"
+#    type:     annotation
+#    prefix:   /product
+
+EvocatioSecurityBundle:
+    resource: "@EvocatioSecurityBundle/Controller/"
+    type:     annotation
+    prefix: auth
+
+EvocatioPersonaBundle:
+    resource: "@EvocatioPersonaBundle/Controller/"
+    type:     annotation
+    prefix: contact
+
+EvocatioFaqBundle:
+    resource: "@EvocatioFaqBundle/Controller/DefaultController.php"
+    type:     annotation
+    prefix: faq
+
+EvocatioFaqBundle:
+    resource: "@EvocatioCoreBundle/Controller/DefaultController.php"
+    type:     annotation
+    prefix: core
+
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
     prefix:   /_wdt
