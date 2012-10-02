@@ -13,7 +13,7 @@ class ChooseLanguageType extends AbstractType {
         $builder
                 ->add('symbol', "choice", array(
 //                    "class" => "EvocatioCoreBundle:Language"
-                    "choices" => Locale::getAvailableDisplaySystemLocales(Locale::getDefault())
+                    "choices" => Locale::getAvailableDisplayLanguage(Locale::getDefault())
                     , 'multiple' => true
 //                    , 'property' => 'symbol'
                     , 'expanded' => true
@@ -24,7 +24,7 @@ class ChooseLanguageType extends AbstractType {
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\CoreBundle\Entity\Language',
+//            'data_class' => 'Evocatio\Bundle\CoreBundle\Entity\Language',
         ));
     }
 
