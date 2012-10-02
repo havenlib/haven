@@ -17,6 +17,8 @@ EvocatioFaqBundle:
     resource: "@EvocatioFaqBundle/Controller/DefaultController.php"
     type:     annotation
     prefix: /{_locale}/faq
+    requirements: 
+      _locale: fr|en
 
 EvocatioCoreBundle:
     resource: "@EvocatioCoreBundle/Controller/DefaultController.php"

@@ -17,11 +17,23 @@ use Evocatio\Bundle\CoreBundle\Entity\Language;
 class DefaultController extends Controller {
 
     /**
+     *  @Route("test")
+     *  
+     */
+    public function testAction() {
+        echo "<p>-->".  \Evocatio\Bundle\CoreBundle\Lib\Locale::getDefault()."</p>";
+        echo "<p>session local-->".  $this->container->get("session")->get("_locale")."</p>";
+        echo "<p>request local-->".  $this->container->get("request")->get("_locale")."</p>";
+        die();
+    }
+    
+    /**
      * @Route("/setup", name="setup_core")
      * @Template()
      */
     public function setupAction() {
-
+        echo "<p>-->".  Locale::getDefault()."</p>";
+        echo "<p>session local-->".  $this->container->get("session")->get("_locale")."</p>";
         $em = $this->getDoctrine()->getEntityManager();
         $languages = $this->getDoctrine()->getRepository("EvocatioCoreBundle:Language")->findAll();
 
@@ -213,18 +225,25 @@ class DefaultController extends Controller {
      * @Route("/changeLanguage", name="change_language")
      */
     public function changeLanguageAction() {
+        $router = $this->container->get("router");
+
         // if language exists and is status, set current language to it
-//        $context = new \Symfony\Component\Routing\RequestContext($_SERVER['REQUEST_URI']);
-
-//        $matcher = new \Symfony\Component\Routing\Tests\Matcher\UrlMatcherTest($routes, $context);
-
         if ($this->getDoctrine()->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(array('status' => 1, 'symbol' => $this->getRequest()->get("lang")))) {
             $this->getRequest()->getSession()->set('_locale', $this->getRequest()->get("lang"));
         }
-        $urlBaseReferer=$this->container->get('router')->getContext()->getScheme()."://".$this->container->get('router')->getContext()->getHost().$this->container->get('router')->getContext()->getBaseUrl();
+//        get the base URL to remove form http_referer to get URI
+        $urlBaseReferer=$router->getContext()->getScheme()."://".$router->getContext()->getHost().$router->getContext()->getBaseUrl();
+//        figuring out the referers route information 
+        $uri = str_replace($urlBaseReferer, "", $this->getRequest()->server->get('HTTP_REFERER'));
+        $routeArray = $router->match($uri);
+//        changing the locale to the current one while probably have to manage sluggable around here
+        $routeArray["_locale"]=$this->getRequest()->get("lang");
+
+        $route = $routeArray["_route"];
+        unset($routeArray["_route"]);
+//        $this->container->get("session")->setFlash("error", "lang is : " . print_r($router->generate($route["_route"], $route),true) );  //   $router->match($this->getRequest()->server->get('HTTP_REFERER')));
         
-        $this->container->get("session")->setFlash("error", "lang is : " . $urlBaseReferer);  //   $this->container->get("router")->match($this->getRequest()->server->get('HTTP_REFERER')));
-        return $this->redirect($this->getRequest()->server->get('HTTP_REFERER'));
+        return $this->redirect($router->generate($route, $routeArray));
     }
 
     /**
