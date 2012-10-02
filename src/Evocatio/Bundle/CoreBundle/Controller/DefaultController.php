@@ -3,6 +3,7 @@
 namespace Evocatio\Bundle\CoreBundle\Controller;
 
 #Symfony includes
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 #Sensio includes
@@ -20,7 +21,7 @@ class DefaultController extends Controller {
      * @Template()
      */
     public function setupAction() {
-        
+
         $em = $this->getDoctrine()->getEntityManager();
         $languages = $this->getDoctrine()->getRepository("EvocatioCoreBundle:Language")->findAll();
 
@@ -39,10 +40,36 @@ class DefaultController extends Controller {
         $existingLanguages->setSymbol($languagesArray);
 //        creer le form, et met l'info dedans
         $form = $this->createForm(new ChooseLanguageType());
-        $form->setData($existingLanguages);
+//        $form->setData($existingLanguages);
 //        assure que la language courante existe
         $this->checkDefaultLanguage();
         return array('form' => $form->createView(), 'languages' => $languages);
+    }
+
+    /**
+     * @Route("/setup/culture", name="setup_culture_core")
+     * @Template()
+     */
+    public function setupCultureAction() {
+        $request = $this->getRequest();
+
+        $form = $this->createForm(new ChooseLanguageType());
+        $form->bindRequest($request);
+
+        $languages = $this->getDoctrine()->getRepository("EvocatioCoreBundle:Language")->findAll();
+        $locales = Locale::getSystemLocales();
+        if ($form->isValid()) {
+            $cultures = array();
+            foreach ($form->get("symbol")->getData() as $symbol) {
+                foreach ($locales as $locale) {
+                    if ($symbol === Locale::getPrimaryLanguage($locale)) {
+                        $cultures[$symbol][$locale] = Locale::getDisplayName($locale);
+                    }
+                }
+            }
+
+            return array('form' => null, 'cultures' => $cultures);
+        }
     }
 
     private function getFileForLocale() {
@@ -78,59 +105,108 @@ class DefaultController extends Controller {
      * @Route("/save", name="save_core")
      */
     public function saveSelectedLanguages() {
-        $em = $this->getDoctrine()->getEntityManager();
-//        assure que la language courante existe
-        $this->checkDefaultLanguage();
-        $post = $this->getRequest()->get("evocatio_bundle_corebundle_chooselanguagetype") ? $this->getRequest()->get("evocatio_bundle_corebundle_chooselanguagetype") : array('symbol' => array());
-        $languages = $this->getDoctrine()->getRepository("EvocatioCoreBundle:Language")->findAll();
-        if ($this->getRequest()->getMethod() == "POST" && !empty($post["symbol"])) {
-//        create or update those that we want
-            foreach ($post["symbol"] as $symbol) {
-                if (!$current = current(array_filter($languages, function($language) use ($symbol) {
+        $request = $this->getRequest();
+
+        $form = $this->createForm(new ChooseLanguageType());
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $languages = $this->getDoctrine()->getRepository("EvocatioCoreBundle:Language")->findAll();
+            $symboles = $form->get("symbol")->getData();
+
+            /**
+             * Get all languages for translation from form and enties.
+             */
+            foreach ($symboles as $key => $symbol) {
+                $language = current(array_filter($languages, function($language) use ($symbol) {
                                     return $language->getSymbol() == $symbol;
-                                })
-                ))
-                    $current = new Language();
-                $current->setSymbol($symbol);
-                $current->setStatus(true);
-
-                $em->persist($current);
-            }
-//        remove those we don't wanna keep
-            $toDelete = array_filter($languages, function($language) use ($post) {
-                        return (!in_array($language->getSymbol(), $post["symbol"]));
-                    })
-
-            ;
-            foreach ($toDelete as $efface) {
-                $em->remove($efface);
-            }
-//        now commit
-            $em->flush();
-        } else {
-            if ($this->getRequest()->getMethod() == "POST")
-                $this->get('session')->setFlash('notice', 'minimum.1.language');
-        }
-//         va chercher les languages existantes dans la db
-        $languages = $this->getDoctrine()->getRepository("EvocatioCoreBundle:Language")->findAll();
-//        et pour chacune, met à jour les traductions
-        foreach ($languages as $language) {
-//            ajoute toutes les traductions
-            $language->addTranslations($languages);
-//            Pour chaques langues
-            foreach ($languages as $translation) {
-//                Trouve tout les noms
-                $names = Locale::getAvailableDisplaySystemLocales($translation->getSymbol());
-//                les assignent aux langues;
-                foreach ($language->getTranslations() as $languageTranslation) {
-                    if ($languageTranslation->getTransLang() == $translation)
-                        $languageTranslation->setName($names[$language->getSymbol()]);
+                                }));
+                if (!$language) {
+                    $language = new Language();
+                    $language->setSymbol($symbol);
+                    $language->setStatus(true);
+                    $languages[] = $language;
                 }
             }
-            $em->persist($language);
+
+            foreach ($languages as $language) {
+                $em->persist($language);
+
+                foreach ($languages as $translation_language) {
+                    Locale::setDefault($translation_language->getSymbol());
+                    $translation = $language->getTranslations()->filter(function ($translation) use ($language) {
+                                        return $translation->getName() == Locale::getDisplayLanguage($language->getSymbol());
+                                    })->current();
+
+                    $translation = ($translation) ? $translation : new \Evocatio\Bundle\CoreBundle\Entity\LanguageTranslation();
+                    $translation->setName(Locale::getDisplayLanguage($language->getSymbol()));
+                    $translation->setParent($language);
+                    $translation->setTransLang($translation_language);
+
+                    $em->persist($translation);
+                }
+            }
         }
+
         $em->flush();
         return $this->redirect($this->generateUrl("setup_core"));
+        
+
+//        $em = $this->getDoctrine()->getEntityManager();
+////        assure que la language courante existe
+//        $this->checkDefaultLanguage();
+//        $post = $this->getRequest()->get("evocatio_bundle_corebundle_chooselanguagetype") ? $this->getRequest()->get("evocatio_bundle_corebundle_chooselanguagetype") : array('symbol' => array());
+//        $languages = $this->getDoctrine()->getRepository("EvocatioCoreBundle:Language")->findAll();
+//        if ($this->getRequest()->getMethod() == "POST" && !empty($post["symbol"])) {
+////        create or update those that we want
+//            foreach ($post["symbol"] as $symbol) {
+//                if (!$current = current(array_filter($languages, function($language) use ($symbol) {
+//                                    return $language->getSymbol() == $symbol;
+//                                })
+//                ))
+//                    $current = new Language();
+//                $current->setSymbol($symbol);
+//                $current->setStatus(true);
+//
+//                $em->persist($current);
+//            }
+////        remove those we don't wanna keep
+//            $toDelete = array_filter($languages, function($language) use ($post) {
+//                        return (!in_array($language->getSymbol(), $post["symbol"]));
+//                    })
+//
+//            ;
+//            foreach ($toDelete as $efface) {
+//                $em->remove($efface);
+//            }
+////        now commit
+//            $em->flush();
+//        } else {
+//            if ($this->getRequest()->getMethod() == "POST")
+//                $this->get('session')->setFlash('notice', 'minimum.1.language');
+//        }
+////         va chercher les languages existantes dans la db
+//        $languages = $this->getDoctrine()->getRepository("EvocatioCoreBundle:Language")->findAll();
+////        et pour chacune, met à jour les traductions
+//        foreach ($languages as $language) {
+////            ajoute toutes les traductions
+//            $language->addTranslations($languages);
+////            Pour chaques langues
+//            foreach ($languages as $translation) {
+////                Trouve tout les noms
+//                $names = Locale::getAvailableDisplaySystemLocales($translation->getSymbol());
+////                les assignent aux langues;
+//                foreach ($language->getTranslations() as $languageTranslation) {
+//                    if ($languageTranslation->getTransLang() == $translation)
+//                        $languageTranslation->setName($names[$language->getSymbol()]);
+//                }
+//            }
+//            $em->persist($language);
+//        }
+//        $em->flush();
+//        return $this->redirect($this->generateUrl("setup_core"));
     }
 
     /**
@@ -139,7 +215,7 @@ class DefaultController extends Controller {
     public function changeLanguageAction() {
         // if language exists and is status, set current language to it
         if ($this->getDoctrine()->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(array('status' => 1, 'symbol' => $this->getRequest()->get("lang")))) {
-            $this->getRequest()->getSession()->set('_locale',$this->getRequest()->get("lang"));
+            $this->getRequest()->getSession()->set('_locale', $this->getRequest()->get("lang"));
         }
 
         return $this->redirect($this->getRequest()->server->get('HTTP_REFERER'));
@@ -151,9 +227,9 @@ class DefaultController extends Controller {
     private function checkDefaultLanguage() {
         if (!$this->getDoctrine()->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(array('status' => 1, 'symbol' => Locale::getDefault()))) {
             if ($default = $this->getDoctrine()->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findOneBy(array('status' => true)))
-                $this->getRequest()->getSession()->set('_locale',$default->getSymbol());
+                $this->getRequest()->getSession()->set('_locale', $default->getSymbol());
             else
-                $this->getRequest()->getSession()->set('_locale',"fr");
+                $this->getRequest()->getSession()->set('_locale', "fr");
         }
     }
 
