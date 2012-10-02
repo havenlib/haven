@@ -152,7 +152,7 @@ class DefaultController extends Controller {
 
         $em->flush();
         return $this->redirect($this->generateUrl("setup_core"));
-        
+
 
 //        $em = $this->getDoctrine()->getEntityManager();
 ////        assure que la language courante existe
