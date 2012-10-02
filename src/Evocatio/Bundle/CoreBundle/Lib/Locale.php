@@ -30,6 +30,22 @@ class Locale extends \Symfony\Component\Locale\Locale {
 //        die();
         return $available;
     }
+    
+    /**
+     * Return the list of languages from system locales. Regardless of culture.
+     * 
+     * @return type array("en" => "English", ...)
+     */
+    static public function getAvailableDisplayLanguage(){
+        $locales = self::getAvailableDisplaySystemLocales(Locale::getDefault());
+
+        $langues = array();
+        foreach ($locales as $locale){
+            $langues[Locale::getPrimaryLanguage($locale)] = Locale::getDisplayLanguage($locale);
+        }
+        
+        return array_unique($langues);
+    }
 
     static public function getAvailableSystemLocales(){
         $available = self::getSystemLocales();
