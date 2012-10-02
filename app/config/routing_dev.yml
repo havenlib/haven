@@ -16,9 +16,9 @@ EvocatioPersonaBundle:
 EvocatioFaqBundle:
     resource: "@EvocatioFaqBundle/Controller/DefaultController.php"
     type:     annotation
-    prefix: faq
+    prefix: /{_locale}/faq
 
-EvocatioFaqBundle:
+EvocatioCoreBundle:
     resource: "@EvocatioCoreBundle/Controller/DefaultController.php"
     type:     annotation
     prefix: core
