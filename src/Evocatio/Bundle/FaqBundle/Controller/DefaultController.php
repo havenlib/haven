@@ -18,7 +18,7 @@ class DefaultController extends ContainerAware {
 
     /**
      * @Route("/", name="EvocatioFaqBundle_index")
-     * @Method("get")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction() {
@@ -36,13 +36,13 @@ class DefaultController extends ContainerAware {
      */
     public function listAction() {
         $faqs = $this->container->get("Doctrine")->getRepository("EvocatioFaqBundle:Faq")->findAll();
-
+        echo \Evocatio\Bundle\CoreBundle\Lib\Locale::getDefault();
         return array("entities" => $faqs);
     }
 
     /**
      * @Route("/new", name="EvocatioFaqBundle_new")
-     * @Method("get")
+     * @Method("GET")
      * @Template
      */
     public function newAction() {
@@ -55,7 +55,7 @@ class DefaultController extends ContainerAware {
      * Creates a new faq entity.
      *
      * @Route("/new", name="EvocatioFaqBundle_create")
-     * @Method("post")
+     * @Method("POST")
      * @Template("EvocatioFaqBundle:Faq:new.html.twig")
      */
     public function createAction() {

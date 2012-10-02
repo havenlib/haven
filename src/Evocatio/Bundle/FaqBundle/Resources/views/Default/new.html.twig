@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% block left %}
+{% block aside %}
 <h1>Ajouter/Modifier une faq</h1>
 <div class="tabs">
             {% for key, translation in edit_form.translations %}
@@ -59,7 +59,7 @@
     {% block delete %}
     {% endblock delete %}
                               </ul>
-{% endblock left %}
-{% block right %}
+{% endblock aside %}
+{% block theatre %}
 {% render "EvocatioCoreBundle:Default:i18nSwitcher" %}
-{% endblock right %}
+{% endblock theatre %}
