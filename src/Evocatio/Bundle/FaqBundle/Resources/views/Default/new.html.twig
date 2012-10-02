@@ -1,7 +1,7 @@
 {%  extends "::base.html.twig" %}
 {% block aside %}
 <h1>Ajouter/Modifier une faq</h1>
-<div class="tabs">
+    <div class="tabs">
             {% for key, translation in edit_form.translations %}
         <li id="tab{{ translation.vars.value.getTransLang.id }}" class="tab active" onclick="showFormElement(this)"><a href="#" onclick="return false" data-toggle="tab">{{ translation.vars.value.getTransLang.name }}</a></li>
             {% endfor %}
@@ -52,7 +52,7 @@
                               </form>
                               <ul>
                                   <li>
-                                      <a href="{{ path('EvocatioFaqBundle_index') }}">
+                                      <a href="{{ path('EvocatioFaqBundle_list') }}">
                                           Back to the list
                                       </a>
                                   </li>
@@ -61,5 +61,6 @@
                               </ul>
 {% endblock aside %}
 {% block theatre %}
-{% render "EvocatioCoreBundle:Default:i18nSwitcher" %}
+--{{ app.getRequest().get("_locale") }} -
+    {% render "EvocatioCoreBundle:Default:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %}
 {% endblock theatre %}

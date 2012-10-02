@@ -36,7 +36,7 @@ class DefaultController extends ContainerAware {
      */
     public function listAction() {
         $faqs = $this->container->get("Doctrine")->getRepository("EvocatioFaqBundle:Faq")->findAll();
-        echo \Evocatio\Bundle\CoreBundle\Lib\Locale::getDefault();
+        echo "default : " .\Evocatio\Bundle\CoreBundle\Lib\Locale::getDefault();
         return array("entities" => $faqs);
     }
 
@@ -87,7 +87,6 @@ class DefaultController extends ContainerAware {
         if (!$faq) {
             throw new NotFoundHttpException('entity.not.found');
         }
-
         $edit_form = $this->createEditForm($faq);
         $delete_form = $this->createDeleteForm($id);
 

@@ -7,6 +7,12 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        <p>request:
+        {{ app.getRequest().get("_locale") }}
+        </p>
+        <p>session:
+        {{ app.getSession().get("_locale") }}
+        </p>
         {% if app.session.hasFlash("notice")%}
             <div class="notice">
             {{ app.session.flash("notice") }}
