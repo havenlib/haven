@@ -7,7 +7,7 @@
 {{ app.session.flash('notice')|trans }}
 <ul>
 {% for language in languages %}
-<li><a href="{{ path('change_language') }}?lang={{ language.symbol }}" >{{ language.name }} </a></li>
+<li><a href="{{ path('change_language') }}?lang={{ language.symbol }}" >{{ language.name }}</a></li>
 {% endfor %}
 </ul>
 &nbsp;
@@ -15,7 +15,7 @@
 
 {% block aside %}
 
-<form action="{{ path('save_core') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('setup_culture_core') }}" method="post" {{ form_enctype(form) }}>
 {{ form_widget(form) }}
 <input type="submit" value="go" />
 </form>

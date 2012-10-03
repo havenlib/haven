@@ -11,8 +11,10 @@ class FaqType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('status')
-            ->add('rank')
+                ->add('status', 'choice', array(
+                    'choices' => array(0 => "Inactive", 1 => "Publish")
+                ))
+                ->add('translations', 'collection', array('type'=> new FaqTranslationType()))
         ;
     }
 
