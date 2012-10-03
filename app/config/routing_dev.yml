@@ -23,7 +23,7 @@ EvocatioFaqBundle:
 EvocatioCoreBundle:
     resource: "@EvocatioCoreBundle/Controller/DefaultController.php"
     type:     annotation
-    prefix: core
+    prefix: /{_locale}/core
 
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
