@@ -243,9 +243,8 @@ class DefaultController extends Controller {
             $em = $this->getDoctrine()->getEntityManager();
             $languages = $this->getDoctrine()->getRepository("EvocatioCoreBundle:Language")->findAll();
 
-            /**
-             * Get all languages for translation from form and enties.
-             */
+            
+            // Get all languages for translation from form and entyties. 
             foreach ($edit_form->get("symbol")->getData() as $key => $symbol) {
                 $language = current(array_filter($languages, function($language) use ($symbol) {
                                     return $language->getSymbol() == $symbol;
@@ -256,17 +255,19 @@ class DefaultController extends Controller {
                     $language->setStatus(true);
                     $languages[] = $language;
                 }
-                
-                foreach ($languages as $language) {
-                    $language->addTranslations($languages);
-                    foreach ($language->getTranslations() as $translation) {
-                        Locale::setDefault($translation->getTransLang()->getSymbol());
-                        $translation->setName(Locale::getDisplayLanguage($language->getSymbol()));
-                    }
-                }
+
                 $em->persist($language);
             }
             
+            //Translate current language to other languages
+            foreach ($languages as $language) {
+                $language->addTranslations($languages);
+                foreach ($language->getTranslations() as $translation) {
+                    Locale::setDefault($translation->getTransLang()->getSymbol());
+                    $translation->setName(Locale::getDisplayLanguage($language->getSymbol()));
+                }
+            }
+
             $em->flush();
             return true;
         }
