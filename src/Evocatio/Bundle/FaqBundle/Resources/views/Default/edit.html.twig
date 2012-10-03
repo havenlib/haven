@@ -1,15 +1,13 @@
 {%  extends "EvocatioFaqBundle:Default:new.html.twig" %}
 {% block formhead %}
-{{ path("EvocatioFaqBundle_update", { "id": edit_form.vars.value.id }) }}
+{{ path("EvocatioFaqBundle_update", { "id": entity.id }) }}
 {% endblock formhead %}
 {% block delete %}
 <li>
-    <form action="{{ path('EvocatioFaqBundle_delete', { 'id': faq.id }) }}" method="post">
+    <form action="{{ path('EvocatioFaqBundle_delete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
         <button type="submit">Delete</button>
     </form>
 </li>
 {% endblock delete %}
-{% block right %}
-{% render "EvocatioCoreBundle:Default:i18nSwitcher" %}
-{% endblock right %}
+
