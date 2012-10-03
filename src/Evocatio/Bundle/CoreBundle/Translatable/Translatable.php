@@ -1,4 +1,5 @@
 <?php
+
 namespace Evocatio\Bundle\CoreBundle\Translatable;
 
 use Evocatio\Bundle\CoreBundle\Entity\Language;
@@ -10,6 +11,7 @@ use Evocatio\Bundle\CoreBundle\Lib\Locale;
  * @author Stéphan Champagne <sc@evocatio.com>
  */
 abstract class Translatable {
+
     private $transArray = array();
 
     /**
@@ -18,23 +20,22 @@ abstract class Translatable {
      * @return <type>
      */
     public function getTranslationByLang($language) {
-        if($language instanceof Language) {
+        if ($language instanceof Language) {
             $index = $language->getSymbol();
-        }else{
+        } else {
             $index = $language;
         }
-        if(empty($this->transArray[$index])) {
-            $this->transArray[$index] =  $this->getTranslations()->filter(function ($trans) use ($language) {
-                        if($language instanceof Language) {
-                            return $trans->getTransLang() == $language;
-                        }
-                        else {
-                            return $trans->getTransLang()->getSymbol() == $language;
-                        }
-                    })
+        if (empty($this->transArray[$index])) {
+            $this->transArray[$index] = $this->getTranslations()->filter(function ($trans) use ($language) {
+                                if ($language instanceof Language) {
+                                    return $trans->getTransLang() == $language;
+                                } else {
+                                    return $trans->getTransLang()->getSymbol() == $language;
+                                }
+                            })
                     ->first();
         }
-        
+
         return $this->transArray[$index];
     }
 
@@ -55,7 +56,7 @@ abstract class Translatable {
      */
     protected function addTranslationForLanguage($language) {
 
-        if(!$trans = $this->getTranslationByLang($language)) {
+        if (!$trans = $this->getTranslationByLang($language)) {
             $tc = $this->getTranslationClass();
             $trans = new $tc();
             $trans->setTransLang($language);
@@ -71,14 +72,14 @@ abstract class Translatable {
      * @return String
      */
     protected function getTranslated($attribut, $language = null) {
-        $language = $language?$language:Locale::getPrimaryLanguage(Locale::getDefault());
-        echo Locale::getDefault()." ";
-        return $this->getTranslationByLang($language)?$this->getTranslationByLang($language)->{"get".$attribut}():false;
+        $language = $language ? $language : Locale::getPrimaryLanguage(Locale::getDefault());
+        return $this->getTranslationByLang($language) ? $this->getTranslationByLang($language)->{"get" . $attribut}() : false;
     }
 
-    protected function getTranslationClass(){
-        throw new \Exception("Vous devez définir la fonction getTranslationClass dans ".get_called_class());
+    protected function getTranslationClass() {
+        throw new \Exception("Vous devez définir la fonction getTranslationClass dans " . get_called_class());
     }
 
 }
+
 ?>

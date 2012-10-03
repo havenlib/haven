@@ -53,6 +53,14 @@ class DefaultController extends ContainerAware {
         return $response;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * @Route("/register", name="EvocatioSecurityBundle_register")
      */
