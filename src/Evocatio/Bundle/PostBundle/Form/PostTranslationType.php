@@ -4,6 +4,7 @@ namespace Evocatio\Bundle\PostBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PostTranslationType extends AbstractType
 {
@@ -18,6 +19,13 @@ class PostTranslationType extends AbstractType
             ->add('file', "file", array('required' => false))
 //            ->add('slug', "textarea", array('required' => false))
         ;
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'Evocatio\Bundle\PostBundle\Entity\PostTranslation'
+        ));
     }
 
     public function getName()

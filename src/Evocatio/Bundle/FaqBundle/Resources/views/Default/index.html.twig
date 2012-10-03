@@ -2,22 +2,17 @@
 {% block theatre %}
     <dl>
         {% for faq in entities %}
-            <dt><div>{{ faq.status?'status':'instatus' }}</div> <strong>{{ faq.question }}</strong> <a href="{{ path('EvocatioFaqBundle_edit', { 'id': faq.id }) }}">edit</a> <a href="{#{ path('EvocatioFaqBundle_show', { 'id': faq.id }) }#}">show</a> </dt>
+            <dt><div>{{ faq.status?'status':'instatus' }}</div> <strong>{{ faq.question }}</strong></dt>
             <dd>{{ faq.reponse }}</dd>
         {% else %}
             &nbsp;
         {% endfor %}
     </dl>
 <ul>
-    <li>
-        <a href="{{ path('EvocatioFaqBundle_new') }}">
-            Create a new entry
-        </a>
-    </li>
 </ul>
 {% endblock theatre %}
-{% block right %}
-    {% render "EvocatioCoreBundle:Default:i18nSwitcher" %}
-{% endblock right %}
+{% block aside %}
+    {% render "EvocatioCoreBundle:Default:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %}
+{% endblock aside %}
 
 
