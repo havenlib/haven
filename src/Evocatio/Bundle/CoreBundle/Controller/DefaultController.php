@@ -17,11 +17,23 @@ use Evocatio\Bundle\CoreBundle\Entity\Language;
 class DefaultController extends Controller {
 
     /**
+     *  @Route("test")
+     *  
+     */
+    public function testAction() {
+        echo "<p>-->" . \Evocatio\Bundle\CoreBundle\Lib\Locale::getDefault() . "</p>";
+        echo "<p>session local-->" . $this->container->get("session")->get("_locale") . "</p>";
+        echo "<p>request local-->" . $this->container->get("request")->get("_locale") . "</p>";
+        die();
+    }
+
+    /**
      * @Route("/setup", name="setup_core")
      * @Template()
      */
     public function setupAction() {
-
+        echo "<p>-->" . Locale::getDefault() . "</p>";
+        echo "<p>session local-->" . $this->container->get("session")->get("_locale") . "</p>";
         $em = $this->getDoctrine()->getEntityManager();
         $languages = $this->getDoctrine()->getRepository("EvocatioCoreBundle:Language")->findAll();
 
@@ -177,12 +189,25 @@ class DefaultController extends Controller {
      * @Route("/changeLanguage", name="change_language")
      */
     public function changeLanguageAction() {
+        $router = $this->container->get("router");
+
         // if language exists and is status, set current language to it
         if ($this->getDoctrine()->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(array('status' => 1, 'symbol' => $this->getRequest()->get("lang")))) {
             $this->getRequest()->getSession()->set('_locale', $this->getRequest()->get("lang"));
         }
+//        get the base URL to remove form http_referer to get URI
+        $urlBaseReferer = $router->getContext()->getScheme() . "://" . $router->getContext()->getHost() . $router->getContext()->getBaseUrl();
+//        figuring out the referers route information 
+        $uri = str_replace($urlBaseReferer, "", $this->getRequest()->server->get('HTTP_REFERER'));
+        $routeArray = $router->match($uri);
+//        changing the locale to the current one while probably have to manage sluggable around here
+        $routeArray["_locale"] = $this->getRequest()->get("lang");
 
-        return $this->redirect($this->getRequest()->server->get('HTTP_REFERER'));
+        $route = $routeArray["_route"];
+        unset($routeArray["_route"]);
+//        $this->container->get("session")->setFlash("error", "lang is : " . print_r($router->generate($route["_route"], $route),true) );  //   $router->match($this->getRequest()->server->get('HTTP_REFERER')));
+
+        return $this->redirect($router->generate($route, $routeArray));
     }
 
     /**
@@ -236,19 +261,11 @@ class DefaultController extends Controller {
 
             foreach ($languages as $language) {
                 $em->persist($language);
+                $language->addTranslations($languages);
 
-                foreach ($languages as $translation_language) {
-                    Locale::setDefault($translation_language->getSymbol());
-                    $translation = $language->getTranslations()->filter(function ($translation) use ($language) {
-                                        return $translation->getName() == Locale::getDisplayLanguage($language->getSymbol());
-                                    })->current();
-
-                    $translation = ($translation) ? $translation : new \Evocatio\Bundle\CoreBundle\Entity\LanguageTranslation();
+                foreach ($language->getTranslations() as $translation) {
+                    Locale::setDefault($translation->getTransLang()->getSymbol());
                     $translation->setName(Locale::getDisplayLanguage($language->getSymbol()));
-                    $translation->setParent($language);
-                    $translation->setTransLang($translation_language);
-
-                    $em->persist($translation);
                 }
             }
 
