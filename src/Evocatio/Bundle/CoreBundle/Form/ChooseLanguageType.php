@@ -24,7 +24,7 @@ class ChooseLanguageType extends AbstractType {
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-//            'data_class' => 'Evocatio\Bundle\CoreBundle\Entity\Language',
+            'data_class' => 'Evocatio\Bundle\CoreBundle\Entity\Language',
         ));
     }
 
