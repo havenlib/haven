@@ -169,21 +169,21 @@ class DefaultController extends Controller {
 
         // if language exists and is status, set current language to it
         if ($this->getDoctrine()->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(array('status' => 1, 'symbol' => $this->getRequest()->get("lang")))) {
-            $this->getRequest()->getSession()->set('_locale', $this->getRequest()->get("lang"));
-        }
 //        get the base URL to remove form http_referer to get URI
-        $urlBaseReferer = $router->getContext()->getScheme() . "://" . $router->getContext()->getHost() . $router->getContext()->getBaseUrl();
+            $urlBaseReferer = $router->getContext()->getScheme() . "://" . $router->getContext()->getHost() . $router->getContext()->getBaseUrl();
 //        figuring out the referers route information 
-        $uri = str_replace($urlBaseReferer, "", $this->getRequest()->server->get('HTTP_REFERER'));
-        $routeArray = $router->match($uri);
+            $uri = str_replace($urlBaseReferer, "", $this->getRequest()->server->get('HTTP_REFERER'));
+            $routeArray = $router->match($uri);
 //        changing the locale to the current one while probably have to manage sluggable around here
-        $routeArray["_locale"] = $this->getRequest()->get("lang");
+            $routeArray["_locale"] = $this->getRequest()->get("lang");
 
-        $route = $routeArray["_route"];
-        unset($routeArray["_route"]);
-//        $this->container->get("session")->setFlash("error", "lang is : " . print_r($router->generate($route["_route"], $route),true) );  //   $router->match($this->getRequest()->server->get('HTTP_REFERER')));
+            $route = $routeArray["_route"];
+            unset($routeArray["_route"]);
+//        $this->container->get("session")->setFlash("error", "lang is : " . print_r($routeArray,true) );  //   $router->match($this->getRequest()->server->get('HTTP_REFERER')));
 
-        return $this->redirect($router->generate($route, $routeArray));
+            return $this->redirect($router->generate($route, $routeArray));
+        }
+        return $this->redirect($this->getRequest()->server->get('HTTP_REFERER'));
     }
 
     /**

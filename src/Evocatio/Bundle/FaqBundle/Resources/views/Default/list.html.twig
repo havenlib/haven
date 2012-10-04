@@ -1,11 +1,11 @@
 {%  extends "::base.html.twig" %}
-{% block theatre %}--
+{% block theatre %}
     <dl>
-        {% for faq in entities %}
-            <dt><div>{{ faq.status?'status':'instatus' }}</div> <strong>{{ faq.question }}</strong> <a href="{{ path('EvocatioFaqBundle_edit', { 'id': faq.id }) }}">edit</a> <a href="{#{ path('EvocatioFaqBundle_show', { 'id': faq.id }) }#}">show</a> </dt>
-            <dd>{{ faq.reponse }}</dd>
+        {% for entity in entities %}
+            <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.question }}</strong> <a href="{{ path('EvocatioFaqBundle_edit', { 'id': entity.id }) }}">edit</a> <a href="{{ path('EvocatioFaqBundle_show', { 'id': entity.id }) }}">show</a> </dt>
+            <dd>{{ entity.reponse }}</dd>
         {% else %}
-            &nbsp;
+            aucun
         {% endfor %}
     </dl>
 <ul>
@@ -17,7 +17,6 @@
 </ul>
 {% endblock theatre %}
 {% block aside %}
---{{ app.getRequest().get("_locale") }} -
     {% render "EvocatioCoreBundle:Default:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %}
 {% endblock aside %}
 

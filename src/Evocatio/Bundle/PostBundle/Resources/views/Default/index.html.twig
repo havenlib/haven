@@ -1,27 +1,18 @@
 {%  extends "::base.html.twig" %}
-{% block left %}
+{% block theatre %}
 <ul>
-    {% for post in posts %}
+    {% for entity in entities %}
         <li>
-        {{ post.status }} --- <strong>{{ post.title }}</strong>
-                <a href="{{ path('EvocatioPostBundle_edit', { 'id': post.id }) }}">edit</a>
-                <a href="{{ path('EvocatioPostBundle_show', { 'id': post.id }) }}">show</a>
-            {{ post.excerpt }}
-            </li>
+        {{ entity.status }} - <strong>{{ entity.title }}</strong>
+                <span>
+   {{ entity.excerpt }}
+                    </span> 
+        <a href="{{ path('EvocatioPostBundle_show_slug', { 'slug': entity.slug }) }}">show</a>
+                </li>
     {% else %}
-            &nbsp;
+                Pas d'entité
     {% endfor %}
-        </ul>
-        <ul>
-            <li>
-                <a href="{{ path('EvocatioPostBundle_new') }}">
-                    Create a new entry
-                </a>
-            </li>
-        </ul>
-{% endblock left %}
-{% block right %}
-{% render "EvocatioCoreBundle:Default:i18nSwitcher" %}
-{% endblock right %}
+
+{% endblock theatre %}
 
 
