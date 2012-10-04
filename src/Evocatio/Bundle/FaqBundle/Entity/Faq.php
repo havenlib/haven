@@ -4,13 +4,13 @@ namespace Evocatio\Bundle\FaqBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Evocatio\Bundle\CoreBundle\Translatable\Translatable;
+use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 
 /**
  * Evocatio\Bundle\FaqBundle\Entity\Faq
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Translatable\TranslatableRepository")
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
  */
 class Faq extends Translatable {
     /**
@@ -121,5 +121,28 @@ class Faq extends Translatable {
     public function getRank()
     {
         return $this->rank;
+    }
+
+    /**
+     * Add translations
+     *
+     * @param Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations
+     * @return Faq
+     */
+    public function addTranslation(\Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations)
+    {
+        $this->translations[] = $translations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove translations
+     *
+     * @param Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations
+     */
+    public function removeTranslation(\Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations)
+    {
+        $this->translations->removeElement($translations);
     }
 }

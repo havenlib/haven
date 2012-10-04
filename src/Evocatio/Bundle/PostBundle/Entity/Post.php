@@ -3,13 +3,13 @@
 namespace Evocatio\Bundle\PostBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Evocatio\Bundle\CoreBundle\Translatable\Translatable;
+use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 
 /**
  * Evocatio\Bundle\PostBundle\Entity\Post
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Translatable\TranslatableRepository")
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
  */
 class Post extends Translatable {
 
@@ -227,5 +227,28 @@ class Post extends Translatable {
     private function getFormated($date, $format)
     {
         return $date?strftime($format, $date->getTimestamp()):"";
+    }
+
+    /**
+     * Add translations
+     *
+     * @param Evocatio\Bundle\PostBundle\Entity\PostTranslation $translations
+     * @return Post
+     */
+    public function addTranslation(\Evocatio\Bundle\PostBundle\Entity\PostTranslation $translations)
+    {
+        $this->translations[] = $translations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove translations
+     *
+     * @param Evocatio\Bundle\PostBundle\Entity\PostTranslation $translations
+     */
+    public function removeTranslation(\Evocatio\Bundle\PostBundle\Entity\PostTranslation $translations)
+    {
+        $this->translations->removeElement($translations);
     }
 }

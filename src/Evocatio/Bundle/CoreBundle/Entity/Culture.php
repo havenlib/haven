@@ -4,7 +4,7 @@ namespace Evocatio\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Evocatio\Bundle\CoreBundle\Lib\Locale;
-use Evocatio\Bundle\CoreBundle\Translatable\Translatable;
+use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 
 /**
  * Evocatio\Bundle\CoreBundle\Entity\Culture
@@ -151,5 +151,28 @@ class Culture extends Translatable {
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * Add translations
+     *
+     * @param Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations
+     * @return Culture
+     */
+    public function addTranslation(\Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations)
+    {
+        $this->translations[] = $translations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove translations
+     *
+     * @param Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations
+     */
+    public function removeTranslation(\Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations)
+    {
+        $this->translations->removeElement($translations);
     }
 }
