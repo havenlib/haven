@@ -11,7 +11,7 @@
 
 {% block aside %}
 <h1>Choisir la culture pour "{{ language.symbol }}"</h1>
-<form action="{{ path('save_culture_core', {'display_language': language.symbol }) }}" method="post" {{ form_enctype(edit_form) }}>
+<form action="{{ path('EvocatioFaqBundle_create_cultures', {'display_language': language.symbol }) }}" method="post" {{ form_enctype(edit_form) }}>
 {{ form_widget(edit_form) }}
 
 <input type="submit" value="go" />
