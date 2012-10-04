@@ -12,10 +12,8 @@ class ChooseLanguageType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('symboles', "choice", array(
-//                    "class" => "EvocatioCoreBundle:Language"
                     "choices" => Locale::getAvailableDisplayLanguage(Locale::getDefault())
                     , 'multiple' => true
-//                    , 'property' => 'symbol'
                     , 'expanded' => true
                 ))
         ;

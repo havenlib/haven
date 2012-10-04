@@ -83,17 +83,11 @@ class CultureController extends ContainerAware {
                     $culture->setLanguage($language);
                     $cultures[] = $culture;
                 }
-
-                $em->persist($culture);
             }
 
-            //Translate current language to other languages
             foreach ($cultures as $culture) {
-                $culture->addTranslations($languages);
-                foreach ($culture->getTranslations() as $translation) {
-                    Locale::setDefault($translation->getTransLang()->getSymbol());
-                    $translation->setName(Locale::getDisplayRegion($culture->getSymbol()));
-                }
+                $culture->refreshTranslations($languages);
+                $em->persist($culture);
             }
 
             $em->flush();
@@ -101,6 +95,10 @@ class CultureController extends ContainerAware {
         }
 
         return $edit_form;
+    }
+
+    public static function persistCultures($languages, $cultures, $em) {
+        //Translate current language to other languages
     }
 
     /**
@@ -112,7 +110,6 @@ class CultureController extends ContainerAware {
         $edit_form = $this->container->get('form.factory')->create(new ChooseCultureType(), array('symboles' => $existing_culture), array('display_language' => $current_language->getSymbol()));
         return $edit_form;
     }
-    
 
 }
 

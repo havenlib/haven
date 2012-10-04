@@ -13,7 +13,6 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
  * @ORM\Entity()
  */
 class Language extends Translatable {
-
     const STATUS_INACTIVE = 0;
     const STATUS_PUBLISH = 1;
     const STATUS_DRAFT = 2;
@@ -46,7 +45,6 @@ class Language extends Translatable {
      */
     protected $translations;
 
-
     /**
      * @ORM\OneToMany(targetEntity="Culture", mappedBy="language", cascade={"persist"})
      */
@@ -55,6 +53,7 @@ class Language extends Translatable {
     public function __construct() {
         $this->status = false;
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->cultures = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -131,14 +130,12 @@ class Language extends Translatable {
         return "Evocatio\Bundle\CoreBundle\Entity\LanguageTranslation";
     }
 
-
     /**
      * Add cultures
      *
      * @param Evocatio\Bundle\CoreBundle\Entity\Culture $cultures
      */
-    public function addCulture(\Evocatio\Bundle\CoreBundle\Entity\Culture $cultures)
-    {
+    public function addCulture(\Evocatio\Bundle\CoreBundle\Entity\Culture $cultures) {
         $this->cultures[] = $cultures;
     }
 
@@ -147,8 +144,7 @@ class Language extends Translatable {
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getCultures()
-    {
+    public function getCultures() {
         return $this->cultures;
     }
 
@@ -158,10 +154,9 @@ class Language extends Translatable {
      * @param Evocatio\Bundle\CoreBundle\Entity\LanguageTranslation $translations
      * @return Language
      */
-    public function addTranslation(\Evocatio\Bundle\CoreBundle\Entity\LanguageTranslation $translations)
-    {
+    public function addTranslation(\Evocatio\Bundle\CoreBundle\Entity\LanguageTranslation $translations) {
         $this->translations[] = $translations;
-    
+
         return $this;
     }
 
@@ -170,8 +165,7 @@ class Language extends Translatable {
      *
      * @param Evocatio\Bundle\CoreBundle\Entity\LanguageTranslation $translations
      */
-    public function removeTranslation(\Evocatio\Bundle\CoreBundle\Entity\LanguageTranslation $translations)
-    {
+    public function removeTranslation(\Evocatio\Bundle\CoreBundle\Entity\LanguageTranslation $translations) {
         $this->translations->removeElement($translations);
     }
 
@@ -180,8 +174,16 @@ class Language extends Translatable {
      *
      * @param Evocatio\Bundle\CoreBundle\Entity\Culture $cultures
      */
-    public function removeCulture(\Evocatio\Bundle\CoreBundle\Entity\Culture $cultures)
-    {
+    public function removeCulture(\Evocatio\Bundle\CoreBundle\Entity\Culture $cultures) {
         $this->cultures->removeElement($cultures);
     }
+
+    public function refreshTranslations($languages) {
+        $this->addTranslations($languages);
+        foreach ($this->getTranslations() as $translation) {
+            Locale::setDefault($translation->getTransLang()->getSymbol());
+            $translation->setName(Locale::getDisplayLanguage($this->getSymbol()));
+        }
+    }
+
 }

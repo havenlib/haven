@@ -117,16 +117,16 @@ class LanguageController extends ContainerAware {
                     $language->setStatus(true);
                     $languages[] = $language;
                 }
-
-                $em->persist($language);
             }
 
             //Translate current language to other languages
             foreach ($languages as $language) {
-                $language->addTranslations($languages);
-                foreach ($language->getTranslations() as $translation) {
-                    Locale::setDefault($translation->getTransLang()->getSymbol());
-                    $translation->setName(Locale::getDisplayLanguage($language->getSymbol()));
+                $language->refreshTranslations($languages);
+                $em->persist($language);
+
+                foreach ($language->getCultures() as $culture) {
+                    $culture->refreshTranslations($languages);
+                    $em->persist($culture);
                 }
             }
 
