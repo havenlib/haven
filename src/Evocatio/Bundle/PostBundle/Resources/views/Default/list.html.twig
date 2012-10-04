@@ -2,8 +2,8 @@
 {% block theatre %}
     <dl>
         {% for entity in entities %}
-            <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.question }}</strong> <a href="{{ path('EvocatioPostBundle_edit', { 'id': entity.id }) }}">edit</a> <a href="{{ path('EvocatioPostBundle_show', { 'id': entity.id }) }}">show</a> </dt>
-            <dd>{{ entity.reponse }}</dd>
+            <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.title }}</strong> <a href="{{ path('EvocatioPostBundle_edit', { 'id': entity.id }) }}">edit</a> <a href="{{ path('EvocatioPostBundle_show', { 'id': entity.id }) }}">show</a> </dt>
+            <dd>{{ entity.excerpt }}</dd>
         {{ entity.name }}
         {% else %}
             aucune entré
