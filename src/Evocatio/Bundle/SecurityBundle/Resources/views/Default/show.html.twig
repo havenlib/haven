@@ -1,6 +1,6 @@
 {%  extends "::base.html.twig" %}
 {% block theatre %}
-<h1>Post</h1>
+<h1>Security</h1>
 
 <table class="record_properties">
     <tbody>
@@ -13,33 +13,33 @@
             <td>{{ entity.getStatus() }}</td>
         </tr>
         <tr>
-            <th>title</th>
-            <td>{{ entity.getTitle() }}</td>
+            <th>Username</th>
+            <td>{{ entity.getUsername() }}</td>
         </tr>
         <tr>
-            <th>excerpt</th>
-            <td>{{ entity.getExcerpt() }}</td>
+            <th>Email</th>
+            <td>{{ entity.getEmail() }}</td>
         </tr>
         <tr>
-            <th>image</th>
-            <td>{{ entity.getPath() }}</td>
+            <th>Locked</th>
+            <td>{{ entity.getLocked()?"Locked":"Unlocked" }}</td>
         </tr>
     </tbody>
 </table>
 
 <ul>
     <li>
-        <a href="{{ path('EvocatioPostBundle_index') }}">
+        <a href="{{ path('EvocatioSecurityBundle_index') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('EvocatioPostBundle_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('EvocatioSecurityBundle_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>
     <li>
-        <form action="{{ path('EvocatioPostBundle_delete', { 'id': entity.id }) }}" method="post">
+        <form action="{{ path('EvocatioSecurityBundle_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>

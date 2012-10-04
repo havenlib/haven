@@ -3,13 +3,13 @@
 namespace Evocatio\Bundle\PostBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Evocatio\Bundle\CoreBundle\Translatable\Translatable;
+use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 
 /**
  * Evocatio\Bundle\PostBundle\Entity\Post
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Translatable\TranslatableRepository")
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
  */
 class Post extends Translatable {
 

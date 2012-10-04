@@ -1,6 +1,6 @@
 <?php
 
-namespace Evocatio\Bundle\CoreBundle\Translatable;
+namespace Evocatio\Bundle\CoreBundle\Generic;
 
 use Evocatio\Bundle\CoreBundle\Entity\Language;
 use Evocatio\Bundle\CoreBundle\Lib\Locale;
