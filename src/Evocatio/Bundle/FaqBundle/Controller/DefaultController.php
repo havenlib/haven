@@ -78,7 +78,7 @@ class DefaultController extends ContainerAware {
      *
      * @Route("/new", name="EvocatioFaqBundle_create")
      * @Method("POST")
-     * @Template("EvocatioFaqBundle:Faq:new.html.twig")
+     * @Template("EvocatioFaqBundle:Default:new.html.twig")
      */
     public function createAction() {
         $edit_form = $this->createEditForm(new Entity());

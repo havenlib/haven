@@ -4,6 +4,7 @@ namespace Evocatio\Bundle\SecurityBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UserType extends AbstractType {
 
@@ -25,10 +26,10 @@ class UserType extends AbstractType {
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-        return array(
-            'data_class' => 'Evocatio\Bundle\SecurityBundle\Entity\User',
-        );
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+        $resolver->setDefaults(array(
+            'data_class' => 'Evocatio\Bundle\SecurityBundle\Entity\User'
+        ));
     }
 
     public function getName() {
