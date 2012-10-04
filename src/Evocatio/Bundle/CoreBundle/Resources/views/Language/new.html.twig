@@ -10,7 +10,7 @@
 <li>
     <a href="{{ path('change_language') }}?lang={{ language.symbol }}" >{{ language.name }} </a>
     ->
-    <a href="{{ path('choose_culture', {'display_language': language.symbol }) }}"> choir la culture</a>
+    <a href="{{ path('EvocatioCoreBundle_new_cultures', {'display_language': language.symbol }) }}"> choir la culture</a>
 </li>
 {% endfor %}
 </ul>
@@ -19,7 +19,7 @@
 
 {% block aside %}
 
-<form action="{{ path('save_core') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('EvocatioCoreBundle_create_languages') }}" method="post" {{ form_enctype(form) }}>
 {{ form_widget(form) }}
 
 <input type="submit" value="go" />

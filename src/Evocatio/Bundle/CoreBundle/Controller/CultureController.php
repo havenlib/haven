@@ -18,39 +18,41 @@ use \Evocatio\Bundle\CoreBundle\Form\ChooseCultureType;
 class CultureController extends ContainerAware {
 
     /**
-     * @Route("/new/cultures/{display_language}", name="choose_culture")
+     * @Route("/new/cultures/{display_language}", name="EvocatioCoreBundle_new_cultures")
      * @Method("GET")
      * @Template
      */
     public function newAction() {
         $request = $this->container->get('Request');
-        $current_language = $this->container->get("Doctrine")->getRepository("EvocatioCoreBundle:Language")->findOneBy(array('symbol' => $request->get('display_language')));
+        $doctrine = $this->container->get("Doctrine");
+        $current_language = $doctrine->getRepository("EvocatioCoreBundle:Language")->findOneBy(array('symbol' => $request->get('display_language')));
 
-        $existing_culture = array();
+        $existing_cultures = array();
         foreach ($current_language->getCultures() as $culture) {
-            $existing_culture[] = $culture->getSymbol();
+            $existing_cultures[] = $culture->getSymbol();
         }
 
-        $edit_form = $this->createEditForm($current_language, $existing_culture);
+        $edit_form = $this->createEditForm($current_language, $existing_cultures);
 
 
         return array('edit_form' => $edit_form->createView(), 'language' => $current_language);
     }
 
     /**
-     * @Route("/create/cultures", name="save_culture_core")
+     * @Route("/create/cultures", name="EvocatioFaqBundle_create_cultures")
      * @Method("POST")
      * @Template("EvocatioCoreBundle:Culture:new.html.twig")
      */
     public function createAction() {
         $request = $this->container->get('Request');
-        $current_language = $this->container->get("Doctrine")->getRepository("EvocatioCoreBundle:Language")->findOneBy(array('symbol' => $request->get('display_language')));
+        $doctrine = $this->container->get("Doctrine");
+        $current_language = $doctrine->getRepository("EvocatioCoreBundle:Language")->findOneBy(array('symbol' => $request->get('display_language')));
 
         $edit_form = $this->createEditForm($current_language);
         $edit_form->bindRequest($request);
 
         if ($this->processForm($edit_form, $current_language) == true) {
-            return new RedirectResponse($this->container->get('router')->generate("choose_culture", array('display_language' => $current_language->getSymbol())));
+            return new RedirectResponse($this->container->get('router')->generate("EvocatioCoreBundle_new_cultures", array('display_language' => $current_language->getSymbol())));
         }
 
         return array('form' => $form->createView());
