@@ -1,47 +1,47 @@
 {%  extends "::base.html.twig" %}
-{% block left %}
+{% block theatre %}
 <h1>Faq</h1>
 
 <table class="record_properties">
     <tbody>
         <tr>
             <th>Id</th>
-            <td>{{ faq.id }}</td>
+            <td>{{ entity.id }}</td>
         </tr>
         <tr>
             <th>Actif</th>
-            <td>{{ faq.status }}</td>
+            <td>{{ entity.status }}</td>
         </tr>
         <tr>
             <th>Question</th>
-            <td>{{ faq.question }}</td>
+            <td>{{ entity.question }}</td>
         </tr>
         <tr>
             <th>Reponse</th>
-            <td>{{ faq.reponse }}</td>
+            <td>{{ entity.reponse }}</td>
         </tr>
     </tbody>
 </table>
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('EvocatioFaqBundle_index') }}">
+        <a href="{{ path('EvocatioFaqBundle_list') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('EvocatioFaqBundle_edit', { 'id': faq.id }) }}">
+        <a href="{{ path('EvocatioFaqBundle_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>
     <li>
-        <form action="{{ path('EvocatioFaqBundle_delete', { 'id': faq.id }) }}" method="post">
+        <form action="{{ path('EvocatioFaqBundle_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>
     </li>
 </ul>
-{% endblock left %}
-{% block right %}
-    {% render "EvocatioCoreBundle:Default:i18nSwitcher" %}
-{% endblock right %}
+{% endblock theatre %}
+{% block aside %}
+    {% render "EvocatioCoreBundle:Default:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %}
+{% endblock aside %}
