@@ -122,4 +122,27 @@ class Faq extends Translatable {
     {
         return $this->rank;
     }
+
+    /**
+     * Add translations
+     *
+     * @param Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations
+     * @return Faq
+     */
+    public function addTranslation(\Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations)
+    {
+        $this->translations[] = $translations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove translations
+     *
+     * @param Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations
+     */
+    public function removeTranslation(\Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations)
+    {
+        $this->translations->removeElement($translations);
+    }
 }

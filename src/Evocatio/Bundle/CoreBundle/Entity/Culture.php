@@ -152,4 +152,27 @@ class Culture extends Translatable {
     {
         return $this->language;
     }
+
+    /**
+     * Add translations
+     *
+     * @param Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations
+     * @return Culture
+     */
+    public function addTranslation(\Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations)
+    {
+        $this->translations[] = $translations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove translations
+     *
+     * @param Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations
+     */
+    public function removeTranslation(\Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations)
+    {
+        $this->translations->removeElement($translations);
+    }
 }
