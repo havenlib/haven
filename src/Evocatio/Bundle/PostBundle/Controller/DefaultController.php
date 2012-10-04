@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 // Evocatio includes
 use Evocatio\Bundle\PostBundle\Form\PostType as Form;
 use Evocatio\Bundle\PostBundle\Entity\Post as Entity;
+use Evocatio\Bundle\PostBundle\Entity\PostTranslation as EntityTranslation;
 
 class DefaultController extends ContainerAware {
 
@@ -45,12 +46,12 @@ class DefaultController extends ContainerAware {
 
         return array(
             'entity' => $entity
-            ,"delete_form" => $delete_form->createView()
+            , "delete_form" => $delete_form->createView()
         );
-    }    
-    
+    }
+
     /**
-     * Finds and displays all faqs for admin.
+     * Finds and displays all posts for admin.
      *
      * @Route("/list", name="EvocatioPostBundle_list")
      * @Method("GET")
@@ -74,11 +75,11 @@ class DefaultController extends ContainerAware {
     }
 
     /**
-     * Creates a new faq entity.
+     * Creates a new post entity.
      *
      * @Route("/new", name="EvocatioPostBundle_create")
      * @Method("POST")
-     * @Template("EvocatioPostBundle:Post:new.html.twig")
+     * @Template("EvocatioPostBundle:Default:new.html.twig")
      */
     public function createAction() {
         $edit_form = $this->createEditForm(new Entity());
@@ -150,7 +151,7 @@ class DefaultController extends ContainerAware {
     }
 
     /**
-     * Set a faq entity state to inactive.
+     * Set a post entity state to inactive.
      *
      * @Route("/{id}/state", name="EvocatioPostBundle_toggleState")
      * @Method("GET")
@@ -169,7 +170,7 @@ class DefaultController extends ContainerAware {
     }
 
     /**
-     * Deletes a faq entity.
+     * Deletes a post entity.
      *
      * @Route("/{id}/delete", name="EvocatioPostBundle_delete")
      * @Method("POST")
@@ -189,10 +190,34 @@ class DefaultController extends ContainerAware {
         return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_list'));
     }
 
+    /**
+     * @Route("/{slug}", name="EvocatioPostBundle_show_slug")
+     * @Method("GET")
+     * @Template("EvocatioPostBundle:Default:show.html.twig")
+     */
+    public function showFromSlugAction(EntityTranslation $entityTranslation) {
+//        $delete_form = $this->createDeleteForm($id);
+        $locale = $this->container->get("request")->get("_locale");
+        if ($entityTranslation->getTransLang()->getSymbol() != $locale) {
+            $slug = $entityTranslation->getParent()->getTranslationByLang($locale)->getSlug();
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_show_slug', array("slug" => $slug)));
+        }
+        $entity = $entityTranslation->getParent();
+
+        if (!$entity) {
+            throw new NotFoundHttpException('entity.not.found');
+        }
+
+        $delete_form = $this->createDeleteForm($entity->getId());
+
+        return array("entity" => $entity, 'delete_form' => $delete_form->createView()
+        );
+    }
+
 //  ------------- Privates -------------------------------------------
     /**
      * Creates an edit_form with all the translations objects added for status languages
-     * @param faq $entity
+     * @param post $entity
      * @return Form or RedirectResponse   if validation error
      */
     protected function createEditForm($entity) {
@@ -212,8 +237,8 @@ class DefaultController extends ContainerAware {
      */
     protected function createDeleteForm($id) {
         return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
-                ->add('id', 'hidden')
-                ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
 
