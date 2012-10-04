@@ -1,4 +1,4 @@
-{%  extends "EvocatioCoreBundle:Default:add_template.html.twig" %}
+{%  extends "EvocatioCoreBundle:Template:add_template.html.twig" %}
 {% block formhead %}
     {{ path('EvocatioSecurityBundle_create') }}
 {% endblock formhead %}
@@ -21,6 +21,10 @@
                     <li>{{ form_label(edit_form.plainPassword)}}
             {{ form_errors(edit_form.plainPassword)}}
                             <span>{{ form_widget(edit_form.plainPassword)}}</span>
+                        </li>
+                    <li>{{ form_label(edit_form.locked)}}
+            {{ form_errors(edit_form.locked)}}
+                            <span>{{ form_widget(edit_form.locked)}}</span>
                         </li>
 
                     </ul>

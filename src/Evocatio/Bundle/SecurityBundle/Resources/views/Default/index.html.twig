@@ -3,7 +3,7 @@
 
 {% block title %}Info sur l'authorisation{% endblock %}
 
-{% block left %}
+{% block theatre %}
 &nbsp;
 {%
 if not is_granted("IS_AUTHENTICATED_REMEMBERED")
@@ -11,19 +11,30 @@ if not is_granted("IS_AUTHENTICATED_REMEMBERED")
 <a href="{{ path('login') }}">log in</a>
 {% else %}
 <a href="{{ path('logout') }}">log out</a>
+
 {% for role in app.user.roles  %}
     {{ role }}
 {% endfor %}
 {% endif %}
+<ul>
+    {% for entity in entities %}
+        <li>
+        {{ entity.status }} - <strong>{{ entity.username }}</strong>
+                <span>
+   {{ entity.locked }}
+                    </span> 
+        <a href="{{ path('EvocatioSecurityBundle_show', { 'id': entity.id }) }}">show</a>
+                </li>
+    {% else %}
+                Pas d'entité
+    {% endfor %}
 <p>
 GetRoles is not yet implemented correctly
 </p>
 see:
 <a href="http://symfony.com/doc/current/cookbook/security/entity_provider.html">Référence</a>
 
-{% endblock left %}
 
-{% block right %}
 <h2>Basics</h2>
     <p>The request flow when a user requests a protected resource is straightforward, but incredibly flexible. As you'll see later, authentication can be handled in any number of ways, including via a form login, X.509 certificate, or by authenticating the user via Twitter. Regardless of the authentication method, the request flow is always the same:
     A user accesses a protected resource;
@@ -110,5 +121,5 @@ Of course, this feature needs to be made available to a small group of users. By
 <a href="http://api.symfony.com/2.0/Symfony/Bundle/FrameworkBundle/Templating/GlobalVariables.html#getUser()">Access User info in twig</a>
 </li>
 </ul>
-{% endblock right %}
+{% endblock theatre %}
 

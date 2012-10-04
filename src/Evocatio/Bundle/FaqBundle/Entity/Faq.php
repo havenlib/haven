@@ -4,13 +4,13 @@ namespace Evocatio\Bundle\FaqBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Evocatio\Bundle\CoreBundle\Translatable\Translatable;
+use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 
 /**
  * Evocatio\Bundle\FaqBundle\Entity\Faq
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Translatable\TranslatableRepository")
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
  */
 class Faq extends Translatable {
     /**

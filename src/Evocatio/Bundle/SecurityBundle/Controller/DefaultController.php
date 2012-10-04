@@ -263,7 +263,7 @@ class DefaultController extends ContainerAware {
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioSecurityBundle:User")->findAll();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioSecurityBundle:User")->findOnlines();
 
         return array("entities" => $entities);
     }
@@ -374,6 +374,7 @@ class DefaultController extends ContainerAware {
         }
 
         $edit_form = $this->createEditForm($entity);
+        $delete_form = $this->createDeleteForm($id);
 
         $edit_form->bindRequest($this->container->get('Request'));
         if ($this->processForm($edit_form) === true) {
