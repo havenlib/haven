@@ -13,7 +13,6 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
  * @ORM\Entity()
  */
 class Culture extends Translatable {
-
     const STATUS_INACTIVE = 0;
     const STATUS_PUBLISH = 1;
     const STATUS_DRAFT = 2;
@@ -132,14 +131,12 @@ class Culture extends Translatable {
         return "Evocatio\Bundle\CoreBundle\Entity\CultureTranslation";
     }
 
-
     /**
      * Set language
      *
      * @param Evocatio\Bundle\CoreBundle\Entity\Language $language
      */
-    public function setLanguage(\Evocatio\Bundle\CoreBundle\Entity\Language $language)
-    {
+    public function setLanguage(\Evocatio\Bundle\CoreBundle\Entity\Language $language) {
         $this->language = $language;
     }
 
@@ -148,8 +145,7 @@ class Culture extends Translatable {
      *
      * @return Evocatio\Bundle\CoreBundle\Entity\Language 
      */
-    public function getLanguage()
-    {
+    public function getLanguage() {
         return $this->language;
     }
 
@@ -159,10 +155,9 @@ class Culture extends Translatable {
      * @param Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations
      * @return Culture
      */
-    public function addTranslation(\Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations)
-    {
+    public function addTranslation(\Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations) {
         $this->translations[] = $translations;
-    
+
         return $this;
     }
 
@@ -171,8 +166,16 @@ class Culture extends Translatable {
      *
      * @param Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations
      */
-    public function removeTranslation(\Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations)
-    {
+    public function removeTranslation(\Evocatio\Bundle\CoreBundle\Entity\CultureTranslation $translations) {
         $this->translations->removeElement($translations);
     }
+
+    public function refreshTranslations($languages) {
+        $this->addTranslations($languages);
+        foreach ($this->getTranslations() as $translation) {
+            Locale::setDefault($translation->getTransLang()->getSymbol());
+            $translation->setName(Locale::getDisplayRegion($this->getSymbol()));
+        }
+    }
+
 }
