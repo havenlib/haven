@@ -263,7 +263,7 @@ class DefaultController extends ContainerAware {
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioSecurityBundle:User")->findAll();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioSecurityBundle:User")->findOnlines();
 
         return array("entities" => $entities);
     }
@@ -374,6 +374,7 @@ class DefaultController extends ContainerAware {
         }
 
         $edit_form = $this->createEditForm($entity);
+        $delete_form = $this->createDeleteForm($id);
 
         $edit_form->bindRequest($this->container->get('Request'));
         if ($this->processForm($edit_form) === true) {
@@ -463,6 +464,11 @@ class DefaultController extends ContainerAware {
         if ($edit_form->isValid()) {
             $em = $this->container->get('Doctrine')->getEntityManager();
             $entity = $edit_form->getData();
+            if (0 !== strlen($password = $entity->getPlainPassword())) {
+                $factory = $this->container->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($entity);
+                $entity->setPassword($encoder->encodePassword($password, $entity->getSalt()));
+            }            
             $em->persist($entity);
             $em->flush();
 

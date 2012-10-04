@@ -10,19 +10,18 @@ class UserType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-//                ->add('username')
+                ->add('username')
                 ->add('email')
                 ->add('plainPassword', 'repeated', array('type' => 'password'
-//                    , "first_name" => "mot.de.passe"
-//                    , "second_name" => "repetez.mot.de.passe"
+                    , "first_name" => "mot-de-passe"
+                    , "second_name" => "confirmation"
                     , "invalid_message" => "mot.de.passe.pas.identiques"
-                    , "options" => array("required" => true)))
-//            ->add('salt')
-//                ->add('locked')
-//            ->add('status')
-//            ->add('created_at')
-//            ->add('created_by')
-//            ->add('contact')
+                    ,"required" => false
+                    ,'label' => 'Password'
+                    ))
+            ->add('status')
+                ->add('locked', 'checkbox', array("required" => false))
+
         ;
     }
 

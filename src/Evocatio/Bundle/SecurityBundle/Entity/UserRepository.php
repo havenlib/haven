@@ -6,14 +6,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Doctrine\ORM\EntityRepository;
+
+use Evocatio\Bundle\CoreBundle\Generic\StatusRepository;
 use Doctrine\ORM\NoResultException;
 
 /**
  * UserRepository
  *
  */
-class UserRepository extends EntityRepository implements UserProviderInterface {
+class UserRepository extends StatusRepository implements UserProviderInterface {
     public function loadUserByUsername($username) {
         $q = $this
                 ->createQueryBuilder('u')

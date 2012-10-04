@@ -5,7 +5,7 @@ namespace Evocatio\Bundle\PosBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Evocatio\Bundle\PosBundle\Entity\ProductTranslation;
-use Evocatio\Bundle\CoreBundle\Translatable\Translatable;
+use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 
 /**
  * Evocatio\Bundle\CoreBundle\Entity\TranslationMappedBase
