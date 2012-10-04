@@ -5,6 +5,7 @@ namespace Evocatio\Bundle\SecurityBundle\Controller;
 // Symfony includes
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 // Sensio includes
@@ -20,7 +21,7 @@ use Evocatio\Bundle\SecurityBundle\Form\UserType as Form;
 class DefaultController extends ContainerAware {
 
     /**
-     *  @Route("/login", name="login")
+     *  @Route("/login", name="EvocatioSecurityBundle_login")
      *  @Method("GET")
      */
     public function loginAction() {
