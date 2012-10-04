@@ -8,9 +8,9 @@
 {%
 if not is_granted("IS_AUTHENTICATED_REMEMBERED")
 %}
-<a href="{{ path('login') }}">log in</a>
+<a href="{{ path('EvocatioSecurityBundle_login') }}">log in</a>
 {% else %}
-<a href="{{ path('logout') }}">log out</a>
+<a href="{{ path('EvocatioSecurityBundle_logout') }}">log out</a>
 
 {% for role in app.user.roles  %}
     {{ role }}
