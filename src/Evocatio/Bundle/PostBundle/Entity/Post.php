@@ -228,4 +228,27 @@ class Post extends Translatable {
     {
         return $date?strftime($format, $date->getTimestamp()):"";
     }
+
+    /**
+     * Add translations
+     *
+     * @param Evocatio\Bundle\PostBundle\Entity\PostTranslation $translations
+     * @return Post
+     */
+    public function addTranslation(\Evocatio\Bundle\PostBundle\Entity\PostTranslation $translations)
+    {
+        $this->translations[] = $translations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove translations
+     *
+     * @param Evocatio\Bundle\PostBundle\Entity\PostTranslation $translations
+     */
+    public function removeTranslation(\Evocatio\Bundle\PostBundle\Entity\PostTranslation $translations)
+    {
+        $this->translations->removeElement($translations);
+    }
 }
