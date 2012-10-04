@@ -21,7 +21,7 @@ EvocatioFaqBundle:
       _locale: fr|en
 
 EvocatioCoreBundle:
-    resource: "@EvocatioCoreBundle/Controller/DefaultController.php"
+    resource: "@EvocatioCoreBundle/Controller/"
     type:     annotation
     prefix: /{_locale}/core
 

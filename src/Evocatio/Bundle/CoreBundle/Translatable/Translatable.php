@@ -72,7 +72,7 @@ abstract class Translatable {
      */
     protected function getTranslated($attribut, $language = null) {
         $language = $language?$language:Locale::getPrimaryLanguage(Locale::getDefault());
-        echo Locale::getDefault()." ";
+//        echo Locale::getDefault()." ";
         return $this->getTranslationByLang($language)?$this->getTranslationByLang($language)->{"get".$attribut}():false;
     }
 

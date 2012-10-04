@@ -47,6 +47,7 @@ class DefaultController extends Controller {
                 })
 
         ;
+                
 //        et le met dans un objet language pour peupler notre form
         $existingLanguages = new Language();
         $existingLanguages->setSymbol($languagesArray);
@@ -58,31 +59,6 @@ class DefaultController extends Controller {
         return array('form' => $form->createView(), 'languages' => $languages);
     }
 
-    /**
-     * @Route("/setup/culture", name="setup_culture_core")
-     * @Template()
-     */
-    public function setupCultureAction() {
-        $request = $this->getRequest();
-
-        $form = $this->createForm(new ChooseLanguageType());
-        $form->bindRequest($request);
-
-        $languages = $this->getDoctrine()->getRepository("EvocatioCoreBundle:Language")->findAll();
-        $locales = Locale::getSystemLocales();
-        if ($form->isValid()) {
-            $cultures = array();
-            foreach ($form->get("symbol")->getData() as $symbol) {
-                foreach ($locales as $locale) {
-                    if ($symbol === Locale::getPrimaryLanguage($locale)) {
-                        $cultures[$symbol][$locale] = Locale::getDisplayName($locale);
-                    }
-                }
-            }
-
-            return array('form' => null, 'cultures' => $cultures);
-        }
-    }
 
     private function getFileForLocale() {
 //        devrait aller chercher tout les informations de traduction pour chaque language, pour chaque bundle
@@ -243,8 +219,8 @@ class DefaultController extends Controller {
             $em = $this->getDoctrine()->getEntityManager();
             $languages = $this->getDoctrine()->getRepository("EvocatioCoreBundle:Language")->findAll();
 
-            
-            // Get all languages for translation from form and entyties. 
+
+            // Instantiate all languages from form and entities. 
             foreach ($edit_form->get("symbol")->getData() as $key => $symbol) {
                 $language = current(array_filter($languages, function($language) use ($symbol) {
                                     return $language->getSymbol() == $symbol;
@@ -258,7 +234,7 @@ class DefaultController extends Controller {
 
                 $em->persist($language);
             }
-            
+
             //Translate current language to other languages
             foreach ($languages as $language) {
                 $language->addTranslations($languages);
