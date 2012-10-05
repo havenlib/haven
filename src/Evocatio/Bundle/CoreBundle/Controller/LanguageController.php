@@ -124,6 +124,7 @@ class LanguageController extends ContainerAware {
             //Translate each language to other languages and persist.
             foreach ($languages as $language) {
                 $language->refreshTranslations($languages);
+                $language->refreshCulturesTranslations($languages);
                 $em->persist($language);
             }
             $em->flush();

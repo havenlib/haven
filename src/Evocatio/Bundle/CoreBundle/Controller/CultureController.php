@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Evocatio\Bundle\CoreBundle\Lib\Locale;
 use Evocatio\Bundle\CoreBundle\Entity\Language;
 use \Evocatio\Bundle\CoreBundle\Form\ChooseCultureType;
+use Evocatio\Bundle\CoreBundle\Form\CultureType;
 
 class CultureController extends ContainerAware {
 
@@ -79,15 +80,19 @@ class CultureController extends ContainerAware {
                                 }));
 
                 if (!$culture) {
-                    $cultures[] = $culture_repo->createNewEntity($symbol, $language, 1);
+                    $culture_form = $this->container->get('form.factory')->create(new CultureType());
+                    $culture_form->bind(array('symbol' => $symbol, 'status' => 1));
+                    $culture = $culture_form->getData();
+                    $culture->setLanguage($language);
+                    $language->getCultures()->add($culture);
                 }
             }
 
             //Translate each cultures to other languages, and persist.
-            foreach ($cultures as $culture) {
+            foreach ($language->getCultures() as $culture) {
                 $culture->refreshTranslations($languages);
-                $em->persist($culture);
             }
+            $em->persist($language);
 
             $em->flush();
             return true;
