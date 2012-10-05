@@ -12,14 +12,4 @@ use Evocatio\Bundle\CoreBundle\Generic\StatusRepository;
  * repository methods below.
  */
 class CultureRepository extends StatusRepository {
-
-    public function createNewEntity($symbol = null, $language = null, $status = null) {
-        $entity = new Culture();
-        $entity->setSymbol($symbol);
-        $entity->setStatus($status);
-        $entity->setLanguage($language);
-
-        return $entity;
-    }
-
 }

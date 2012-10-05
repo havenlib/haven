@@ -46,7 +46,7 @@ class Language extends Translatable {
     protected $translations;
 
     /**
-     * @ORM\OneToMany(targetEntity="Culture", mappedBy="language", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Culture", mappedBy="language", cascade={"persist", "merge"})
      */
     protected $cultures;
 
@@ -180,7 +180,6 @@ class Language extends Translatable {
 
     public function refreshTranslations($languages) {
         $this->addTranslations($languages);
-        $this->refreshCulturesTranslations($languages);
         foreach ($this->getTranslations() as $translation) {
             $translation->setName(Locale::getDisplayLanguage($this->getSymbol(), $translation->getTransLang()->getSymbol()));
         }
