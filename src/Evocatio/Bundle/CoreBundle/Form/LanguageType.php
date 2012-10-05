@@ -4,6 +4,7 @@ namespace Evocatio\Bundle\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class LanguageType extends AbstractType
 {
@@ -13,6 +14,12 @@ class LanguageType extends AbstractType
             ->add('symbol')
             ->add('status')
         ;
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+        $resolver->setDefaults(array(
+            'data_class' => 'Evocatio\Bundle\CoreBundle\Entity\Language'
+        ));
     }
 
     public function getName()

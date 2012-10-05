@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 //Evocatio includes
 use Evocatio\Bundle\CoreBundle\Form\ChooseLanguageType;
+use Evocatio\Bundle\CoreBundle\Form\LanguageType;
 use Evocatio\Bundle\CoreBundle\Lib\Locale;
 use Evocatio\Bundle\CoreBundle\Entity\Language;
 
@@ -106,7 +107,7 @@ class LanguageController extends ContainerAware {
             $language_repo = $em->getRepository("EvocatioCoreBundle:Language");
 
             $languages = $language_repo->findAll();
-
+            
             // Create new language if not exist and store them in the languages array
             foreach ($edit_form->get("symboles")->getData() as $key => $symbol) {
                 $language = current(array_filter($languages, function($language) use ($symbol) {
@@ -114,7 +115,9 @@ class LanguageController extends ContainerAware {
                                 }));
 
                 if (!$language) {
-                    $languages[] = $language_repo->createNewEntity($symbol, 1);
+                    $language_form = $this->container->get('form.factory')->create(new LanguageType());
+                    $language_form->bind( array('symbol' => $symbol, "status" => 1 ));
+                    $languages[] = $language_form->getData();
                 }
             }
 
