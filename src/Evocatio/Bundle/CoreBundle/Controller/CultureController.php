@@ -55,7 +55,7 @@ class CultureController extends ContainerAware {
             return new RedirectResponse($this->container->get('router')->generate("EvocatioCoreBundle_new_cultures", array('display_language' => $current_language->getSymbol())));
         }
 
-        return array('form' => $form->createView());
+        return array('form' => $edit_form->createView());
     }
 
     /**
@@ -67,24 +67,23 @@ class CultureController extends ContainerAware {
 
         if ($edit_form->isValid()) {
             $em = $this->container->get("Doctrine")->getEntityManager();
-            $languages = $this->container->get("Doctrine")->getRepository("EvocatioCoreBundle:Language")->findAll();
+            $languages = $em->getRepository("EvocatioCoreBundle:Language")->findAll();
+            $culture_repo = $em->getRepository("EvocatioCoreBundle:Culture");
 
             $cultures = $language->getCultures()->toArray();
 
-            // Instantiate all languages from form and entities. 
+            // Create new culture for current language if not exist and store them in the cultures array. 
             foreach ($edit_form->get("symboles")->getData() as $key => $symbol) {
                 $culture = current(array_filter($cultures, function($culture) use ($symbol) {
                                     return $culture->getSymbol() == $symbol;
                                 }));
+
                 if (!$culture) {
-                    $culture = new \Evocatio\Bundle\CoreBundle\Entity\Culture();
-                    $culture->setSymbol($symbol);
-                    $culture->setStatus(true);
-                    $culture->setLanguage($language);
-                    $cultures[] = $culture;
+                    $cultures[] = $culture_repo->createNewEntity($symbol, $language, 1);
                 }
             }
 
+            //Translate each cultures to other languages, and persist.
             foreach ($cultures as $culture) {
                 $culture->refreshTranslations($languages);
                 $em->persist($culture);
@@ -95,10 +94,6 @@ class CultureController extends ContainerAware {
         }
 
         return $edit_form;
-    }
-
-    public static function persistCultures($languages, $cultures, $em) {
-        //Translate current language to other languages
     }
 
     /**

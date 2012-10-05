@@ -10,7 +10,7 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
  * Evocatio\Bundle\CoreBundle\Entity\Culture
  *
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="CultureRepository")
  */
 class Culture extends Translatable {
     const STATUS_INACTIVE = 0;
@@ -173,8 +173,7 @@ class Culture extends Translatable {
     public function refreshTranslations($languages) {
         $this->addTranslations($languages);
         foreach ($this->getTranslations() as $translation) {
-            Locale::setDefault($translation->getTransLang()->getSymbol());
-            $translation->setName(Locale::getDisplayRegion($this->getSymbol()));
+            $translation->setName(Locale::getDisplayRegion($this->getSymbol(), $translation->getTransLang()->getSymbol()));
         }
     }
 

@@ -58,7 +58,7 @@ class LanguageController extends ContainerAware {
             return new RedirectResponse($this->container->get('router')->generate("EvocatioCoreBundle_new_languages"));
         }
 
-        return array('form' => $form->createView());
+        return array('form' => $edit_form->createView());
     }
 
     /**
@@ -103,34 +103,28 @@ class LanguageController extends ContainerAware {
     public function processForm($edit_form) {
         if ($edit_form->isValid()) {
             $em = $this->container->get("Doctrine")->getEntityManager();
-            $languages = $this->container->get("Doctrine")->getRepository("EvocatioCoreBundle:Language")->findAll();
+            $language_repo = $em->getRepository("EvocatioCoreBundle:Language");
 
+            $languages = $language_repo->findAll();
 
-            // Instantiate all languages from form and entities. 
+            // Create new language if not exist and store them in the languages array
             foreach ($edit_form->get("symboles")->getData() as $key => $symbol) {
                 $language = current(array_filter($languages, function($language) use ($symbol) {
                                     return $language->getSymbol() == $symbol;
                                 }));
+
                 if (!$language) {
-                    $language = new Language();
-                    $language->setSymbol($symbol);
-                    $language->setStatus(true);
-                    $languages[] = $language;
+                    $languages[] = $language_repo->createNewEntity($symbol, 1);
                 }
             }
 
-            //Translate current language to other languages
+            //Translate each language to other languages and persist.
             foreach ($languages as $language) {
                 $language->refreshTranslations($languages);
                 $em->persist($language);
-
-                foreach ($language->getCultures() as $culture) {
-                    $culture->refreshTranslations($languages);
-                    $em->persist($culture);
-                }
             }
-
             $em->flush();
+
             return true;
         }
 
