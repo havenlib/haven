@@ -18,7 +18,7 @@ use Evocatio\Bundle\SecurityBundle\Form\UserType as Form;
 
 //use Evocatio\Bundle\SecurityBundle\Form\LoginType;
 
-class DefaultController extends ContainerAware {
+class LoginController extends ContainerAware {
 
     /**
      *  @Route("/login", name="EvocatioSecurityBundle_login")
@@ -38,7 +38,7 @@ class DefaultController extends ContainerAware {
         $csrfToken = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
         $templating = $this->container->get('templating');
 
-        $render = $templating->render('EvocatioSecurityBundle:Default:login.html.twig', array(
+        $render = $templating->render('EvocatioSecurityBundle:Login:login.html.twig', array(
             // last username entered by the user
             "csrfToken" => $csrfToken,
             "login_form" => $login_form->createView(),
@@ -56,14 +56,6 @@ class DefaultController extends ContainerAware {
         return $response;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
     /**
      * @Route("/register", name="EvocatioSecurityBundle_register")
      */
@@ -77,7 +69,7 @@ class DefaultController extends ContainerAware {
             $render = "L'utilisateur est créer avec succès";
             $message = 'IsRegistered';
         } else {
-            $render = $templating->render('EvocatioSecurityBundle:Default:register.html.twig', array(
+            $render = $templating->render('EvocatioSecurityBundle:Login:register.html.twig', array(
                 // last username entered by the user
 //                    "csrfToken" => $csrfToken,
                 "register_form" => $register_form->createView(),
@@ -174,7 +166,7 @@ class DefaultController extends ContainerAware {
                 }
             }
         }
-        $render = $templating->render("EvocatioSecurityBundle:Default:resetRequest.html.twig", array(
+        $render = $templating->render("EvocatioSecurityBundle:Login:resetRequest.html.twig", array(
             "reset_form" => $reset_form->createView(), "success" => !empty($success) ? $success : null, "error" => !empty($error) ? $error : null
                 ));
         $response = new Response();
@@ -209,7 +201,7 @@ class DefaultController extends ContainerAware {
     public function successAction() {
 //    if is ajax
         $templating = $this->container->get('templating');
-        $render = $templating->render('EvocatioSecurityBundle:Default:userWelcome.html.twig');
+        $render = $templating->render('EvocatioSecurityBundle:Login:userWelcome.html.twig');
         $response = new Response();
         if ($this->container->get('Request')->isXMLHttpRequest()) {
             $render = json_encode(array('message' => 'IsLoggedIn', 'render' => $render));
@@ -248,237 +240,13 @@ class DefaultController extends ContainerAware {
 
         $mail_message = new \Evocatio\Bundle\SecurityBundle\Lib\PasswordResetMailMessage($this->container->get("kernel")->getEnvironment());
         $mail_message->setBaseSujet("Réinitialisation du mot de passe");
-        $mail_message->setBaseHtmlBody($this->container->get("templating")->render("tahuaSiteBundle:mail_templates:forget_password_template.html.twig", array(
+        $mail_message->setBaseHtmlBody($this->container->get("templating")->render("EvocatioSecurityBundle:mail_templates:forget_password_template.html.twig", array(
                     "host" => $prefix . $request->getHttpHost()
                     , "confirmationUrl" => $this->container->get('router')->generate("EvocatioSecurityBundle_resetConfirmation", array("uuid" => $params["user_reset"]->getUuid()), true)
                     , "confirmation" => $params["user_reset"]->getConfirmation()
                 )));
         $mail_message->addParam("host", $prefix . $request->getHttpHost());
-        $ms = $this->container->get("mail_service");
-        $ms->sendAllMessages($mail_message, "sc@evocatio.com");
+        \Evocatio\Bundle\CoreBundle\Lib\MailService::sendAllMessages($mail_message, "sc@evocatio.com");
     }
 
-    /**
-     * @Route("/", name="EvocatioSecurityBundle_index")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioSecurityBundle:User")->findOnlines();
-
-        return array("entities" => $entities);
-    }
-
-    /**
-     * Finds and displays a post entity.
-     *
-     * @Route("/{id}/show", name="EvocatioSecurityBundle_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioSecurityBundle:User")->findOneBy(array('id' => $id));
-
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-
-        $delete_form = $this->createDeleteForm($id);
-
-        return array(
-            'entity' => $entity
-            ,"delete_form" => $delete_form->createView()
-        );
-    }    
-    
-    /**
-     * Finds and displays all users for admin.
-     *
-     * @Route("/list", name="EvocatioSecurityBundle_list")
-     * @Method("GET")
-     * @Template()
-     */
-    public function listAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioSecurityBundle:User")->findAll();
-//        echo "default : " .\Evocatio\Bundle\CoreBundle\Lib\Locale::getDefault();
-        return array("entities" => $entities);
-    }
-
-    /**
-     * @Route("/new", name="EvocatioSecurityBundle_new")
-     * @Method("GET")
-     * @Template
-     */
-    public function newAction() {
-        $edit_form = $this->createEditForm(new Entity());
-
-        return array("edit_form" => $edit_form->createView());
-    }
-
-    /**
-     * Creates a new user entity.
-     *
-     * @Route("/new", name="EvocatioSecurityBundle_create")
-     * @Method("POST")
-     * @Template("EvocatioSecurityBundle:Default:new.html.twig")
-     */
-    public function createAction() {
-        $edit_form = $this->createEditForm(new Entity());
-
-        $edit_form->bindRequest($this->container->get('Request'));
-
-        if ($this->processForm($edit_form) === true) {
-            $this->container->get("session")->setFlash("success", "create.success");
-
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioSecurityBundle_list'));
-        }
-
-        $this->container->get("session")->setFlash("error", "create.error");
-        return array(
-            'edit_form' => $edit_form->createView()
-        );
-    }
-
-    /**
-     * @Route("/{id}/edit", name="EvocatioSecurityBundle_edit")
-     * @return RedirectResponse
-     * @Method("GET")
-     * @Template
-     */
-    public function editAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioSecurityBundle:User")->findOneEditables($id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-        $edit_form = $this->createEditForm($entity);
-        $delete_form = $this->createDeleteForm($id);
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $edit_form->createView(),
-            'delete_form' => $delete_form->createView(),
-        );
-    }
-
-    /**
-     * @Route("/{id}/edit", name="EvocatioSecurityBundle_update")
-     * @return RedirectResponse
-     * @Method("POST")
-     * @Template("EvocatioSecurityBundle:Default:edit.html.twig")
-     */
-    public function updateAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioSecurityBundle:User")->findOneEditables($id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-
-        $edit_form = $this->createEditForm($entity);
-        $delete_form = $this->createDeleteForm($id);
-
-        $edit_form->bindRequest($this->container->get('Request'));
-        if ($this->processForm($edit_form) === true) {
-            $this->container->get("session")->setFlash("success", "update.success");
-
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioSecurityBundle_list'));
-        }
-        $this->container->get("session")->setFlash("error", "update.error");
-
-        return array(
-            'entity' => $entity,
-            'edit_form' => $edit_form->createView(),
-            'delete_form' => $delete_form->createView(),
-        );
-    }
-
-    /**
-     * Set a user entity state to inactive.
-     *
-     * @Route("/{id}/state", name="EvocatioSecurityBundle_toggleState")
-     * @Method("GET")
-     */
-    public function toggleStateAction($id) {
-        $em = $this->container->get('doctrine')->getEntityManager();
-        $entity = $em->find('EvocatioSecurityBundle:User', $id);
-        if (!$entity) {
-            throw new NotFoundHttpException("User non trouvé");
-        }
-        $entity->setStatus(!$entity->getStatus());
-        $em->persist($entity);
-        $em->flush();
-
-        return new RedirectResponse($this->container->get("request")->headers->get('referer'));
-    }
-
-    /**
-     * Deletes a user entity.
-     *
-     * @Route("/{id}/delete", name="EvocatioSecurityBundle_delete")
-     * @Method("POST")
-     */
-    public function deleteAction($id) {
-
-        $em = $this->container->get('Doctrine')->getEntityManager();
-        $entity = $em->getRepository("EvocatioSecurityBundle:User")->find($id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-
-        $em->remove($entity);
-        $em->flush();
-
-        return new RedirectResponse($this->container->get('router')->generate('EvocatioSecurityBundle_list'));
-    }
-
-//  ------------- Privates -------------------------------------------
-    /**
-     * Creates an edit_form with all the translations objects added for status languages
-     * @param user $entity
-     * @return Form or RedirectResponse   if validation error
-     */
-    protected function createEditForm($entity) {
-
-        $edit_form = $this->container->get('form.factory')->create(new Form(), $entity);
-        return $edit_form;
-    }
-
-    /**
-     *  Create the simple delete form
-     * @param integer $id
-     * @return form
-     */
-    protected function createDeleteForm($id) {
-        return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
-                ->add('id', 'hidden')
-                ->getForm()
-        ;
-    }
-
-    /**
-     * Validate and save form, if invalid returns form
-     * @param type $edit_form
-     * @return true or form
-     */
-    protected function processForm($edit_form) {
-        if ($edit_form->isValid()) {
-            $em = $this->container->get('Doctrine')->getEntityManager();
-            $entity = $edit_form->getData();
-            if (0 !== strlen($password = $entity->getPlainPassword())) {
-                $factory = $this->container->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($entity);
-                $entity->setPassword($encoder->encodePassword($password, $entity->getSalt()));
-            }            
-            $em->persist($entity);
-            $em->flush();
-
-            return true;
-        }
-
-        return $edit_form;
-    }
-
-    
-    
 }

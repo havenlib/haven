@@ -12,8 +12,8 @@ class MailService {
      * @param BaseMailMessage $mailMessage
      * @param <type> $to the adresse to send to in case of non production environment
      */
-    public static function sendCurrentMessage(BaseMailMessage $mailMessage, $to = null) {
-        if($env =="prod") {
+    public static function sendCurrentMessage($mailMessage, $to = null) {
+        if(true) {
             $courriel_destinataire = $mailMessage->getCurrentTo();
         } else {
             if (!$to)
@@ -23,9 +23,9 @@ class MailService {
             $mailMessage->setMessage('<p>COURRIEL DE TEST SERA NORMALEMENT ENVOYÉ À: ' . $mailMessage->getCurrentTo() . "</p>");
         }
 
-        $mail = new Swift_Message();
+        $mail = new \Swift_Message();
         $mail->setFrom($mailMessage->getFrom($courriel_destinataire))
-                ->setTo(array($courriel_destinataire => $nom))
+                ->setTo(array($courriel_destinataire => "test"))
                 ->setSubject($mailMessage->getSujet())
                 ->setBody($mailMessage->getTextBody())
                 ->addPart($mailMessage->getHTMLBody(), "text/html");
@@ -34,7 +34,7 @@ class MailService {
 //        sfContext::getInstance()->getMailer()->send($mail);
     }
     
-    public static function sendAllMessages(BaseMailMessage $mailMessage, $to = null){
+    public static function sendAllMessages($mailMessage, $to = null){
         do{
             self::sendCurrentMessage($mailMessage, $to);
         }while($mailMessage->Next() !== false);
