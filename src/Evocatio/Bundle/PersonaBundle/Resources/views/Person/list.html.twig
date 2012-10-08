@@ -1,0 +1,18 @@
+{%  extends "::base.html.twig" %}
+{% block theatre %}
+    <dl>
+        {% for entity in entities %}
+            <dt><div>{{ entity.firstname }}</div> <strong>{{ entity.lastname }}</strong> <a href="{{ path('EvocatioPersonaBundle_PersonEdit', { 'id': entity.id }) }}">edit</a> <a href="{{ path('EvocatioPersonaBundle_PersonShow', { 'id': entity.id }) }}">show</a> </dt>
+            <dd>{{ entity.sex }}</dd>
+        {% else %}
+            aucune entré
+        {% endfor %}
+    </dl>
+<ul>
+    <li>
+        <a href="{{ path('EvocatioPersonaBundle_PersonNew') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{% endblock theatre %}

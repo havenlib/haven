@@ -217,4 +217,27 @@ class Address {
     {
         return $this->state;
     }
+
+    /**
+     * Add contact_address
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\ContactAddress $contactAddress
+     * @return Address
+     */
+    public function addContactAddres(\Evocatio\Bundle\PersonaBundle\Entity\ContactAddress $contactAddress)
+    {
+        $this->contact_address[] = $contactAddress;
+    
+        return $this;
+    }
+
+    /**
+     * Remove contact_address
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\ContactAddress $contactAddress
+     */
+    public function removeContactAddres(\Evocatio\Bundle\PersonaBundle\Entity\ContactAddress $contactAddress)
+    {
+        $this->contact_address->removeElement($contactAddress);
+    }
 }

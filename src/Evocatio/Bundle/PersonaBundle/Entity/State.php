@@ -132,4 +132,27 @@ class State
     {
         return $this->Country;
     }
+
+    /**
+     * Add translations
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\StateTranslation $translations
+     * @return State
+     */
+    public function addTranslation(\Evocatio\Bundle\PersonaBundle\Entity\StateTranslation $translations)
+    {
+        $this->translations[] = $translations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove translations
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\StateTranslation $translations
+     */
+    public function removeTranslation(\Evocatio\Bundle\PersonaBundle\Entity\StateTranslation $translations)
+    {
+        $this->translations->removeElement($translations);
+    }
 }

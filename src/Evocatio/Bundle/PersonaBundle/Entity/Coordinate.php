@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="plane", type="string")
- * @ORM\DiscriminatorMap({"telephone" = "Telephone", "web" = "Web",  "map" = "Map", "time" = "Time", "postal" = "Postal"})
+ * @ORM\DiscriminatorMap({"telephone" = "Telephone",   "map" = "Map", "time" = "Time", "web" = "Web", "postal" = "Postal"})
  */
 abstract class Coordinate {
 
@@ -33,9 +33,10 @@ abstract class Coordinate {
     private $master;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Contact", mappedBy="coordinate", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Persona", inversedBy="coordinate")
+     * @ORM\JoinTable(name="PersonCoordinate")
      */
-    private $contact;
+    private $persona;
 
 
     public function getPlane() {
@@ -94,5 +95,48 @@ abstract class Coordinate {
     public function getContact()
     {
         return $this->contact;
+    }
+
+    /**
+     * Remove contact
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Contact $contact
+     */
+    public function removeContact(\Evocatio\Bundle\PersonaBundle\Entity\Contact $contact)
+    {
+        $this->contact->removeElement($contact);
+    }
+
+    /**
+     * Add persona
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Persona $persona
+     * @return Coordinate
+     */
+    public function addPersona(\Evocatio\Bundle\PersonaBundle\Entity\Persona $persona)
+    {
+        $this->persona[] = $persona;
+    
+        return $this;
+    }
+
+    /**
+     * Remove persona
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Persona $persona
+     */
+    public function removePersona(\Evocatio\Bundle\PersonaBundle\Entity\Persona $persona)
+    {
+        $this->persona->removeElement($persona);
+    }
+
+    /**
+     * Get persona
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getPersona()
+    {
+        return $this->persona;
     }
 }
