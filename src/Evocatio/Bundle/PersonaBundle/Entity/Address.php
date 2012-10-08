@@ -58,4 +58,152 @@ class Address extends Coordinate{
      */
     protected $state;
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     * @return Address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string 
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set address2
+     *
+     * @param string $address2
+     * @return Address
+     */
+    public function setAddress2($address2)
+    {
+        $this->address2 = $address2;
+    
+        return $this;
+    }
+
+    /**
+     * Get address2
+     *
+     * @return string 
+     */
+    public function getAddress2()
+    {
+        return $this->address2;
+    }
+
+    /**
+     * Set code_postal
+     *
+     * @param string $codePostal
+     * @return Address
+     */
+    public function setCodePostal($codePostal)
+    {
+        $this->code_postal = $codePostal;
+    
+        return $this;
+    }
+
+    /**
+     * Get code_postal
+     *
+     * @return string 
+     */
+    public function getCodePostal()
+    {
+        return $this->code_postal;
+    }
+
+    /**
+     * Set ville
+     *
+     * @param string $ville
+     * @return Address
+     */
+    public function setVille($ville)
+    {
+        $this->ville = $ville;
+    
+        return $this;
+    }
+
+    /**
+     * Get ville
+     *
+     * @return string 
+     */
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+    /**
+     * Set country
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Country $country
+     * @return Address
+     */
+    public function setCountry(\Evocatio\Bundle\PersonaBundle\Entity\Country $country = null)
+    {
+        $this->country = $country;
+    
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return Evocatio\Bundle\PersonaBundle\Entity\Country 
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set state
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\State $state
+     * @return Address
+     */
+    public function setState(\Evocatio\Bundle\PersonaBundle\Entity\State $state = null)
+    {
+        $this->state = $state;
+    
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return Evocatio\Bundle\PersonaBundle\Entity\State 
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
 }
