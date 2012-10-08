@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use \Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Evocatio\Bundle\PersonaBundle\Entity\Address
+ * Evocatio\Bundle\PersonaBundle\Entity\Postal
  *
  * @ORM\Entity
  */

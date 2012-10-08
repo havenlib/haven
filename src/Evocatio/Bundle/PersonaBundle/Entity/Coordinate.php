@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="plane", type="string")
- * @ORM\DiscriminatorMap({"telephone" = "Telephone", "web" = "Web",  "map" = "Map", "time" = "Time", "postal" = "Postal"})
+ * @ORM\DiscriminatorMap({"telephone"="Telephone",   "map"="Map", "time"="Time", "web"="Web", "postal"="Postal", "address"="Address"})
  */
 abstract class Coordinate {
 
@@ -33,26 +33,25 @@ abstract class Coordinate {
     private $master;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Contact", mappedBy="coordinate", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Persona", inversedBy="coordinate")
+     * @ORM\JoinTable(name="PersonCoordinate")
      */
-    private $contact;
-
+    private $persona;
 
     public function getPlane() {
         return get_called_class();
     }
-    public function __construct()
-    {
+
+    public function __construct() {
         $this->contact = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -61,8 +60,7 @@ abstract class Coordinate {
      *
      * @param string $master
      */
-    public function setMaster($master)
-    {
+    public function setMaster($master) {
         $this->master = $master;
     }
 
@@ -71,8 +69,7 @@ abstract class Coordinate {
      *
      * @return string 
      */
-    public function getMaster()
-    {
+    public function getMaster() {
         return $this->master;
     }
 
@@ -81,8 +78,7 @@ abstract class Coordinate {
      *
      * @param Evocatio\Bundle\PersonaBundle\Entity\Contact $contact
      */
-    public function addContact(\Evocatio\Bundle\PersonaBundle\Entity\Contact $contact)
-    {
+    public function addContact(\Evocatio\Bundle\PersonaBundle\Entity\Contact $contact) {
         $this->contact[] = $contact;
     }
 
@@ -91,8 +87,47 @@ abstract class Coordinate {
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getContact()
-    {
+    public function getContact() {
         return $this->contact;
     }
+
+    /**
+     * Remove contact
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Contact $contact
+     */
+    public function removeContact(\Evocatio\Bundle\PersonaBundle\Entity\Contact $contact) {
+        $this->contact->removeElement($contact);
+    }
+
+    /**
+     * Add persona
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Persona $persona
+     * @return Coordinate
+     */
+    public function addPersona(\Evocatio\Bundle\PersonaBundle\Entity\Persona $persona) {
+        $this->persona[] = $persona;
+
+        return $this;
+    }
+
+    /**
+     * Remove persona
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Persona $persona
+     */
+    public function removePersona(\Evocatio\Bundle\PersonaBundle\Entity\Persona $persona) {
+        $this->persona->removeElement($persona);
+    }
+
+    /**
+     * Get persona
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getPersona() {
+        return $this->persona;
+    }
+
 }
