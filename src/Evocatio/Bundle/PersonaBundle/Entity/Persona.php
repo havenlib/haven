@@ -44,10 +44,6 @@ class Persona {
         $this->setCreatedBy("1");
     }
 
-//    /**
-//     * @ORM\OneToMany(targetEntity="ContactAddress", mappedBy="contact", cascade={"persist"})
-//     */
-//    protected $contact_address;
      /**
      * @ORM\ManyToMany(targetEntity="Persona", mappedBy="coordinate")
      * @ORM\JoinTable(name="person_coordinate")
