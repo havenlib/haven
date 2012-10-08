@@ -147,4 +147,37 @@ class Country
     {
         return $this->translations;
     }
+
+    /**
+     * Add translations
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\CountryTranslation $translations
+     * @return Country
+     */
+    public function addTranslation(\Evocatio\Bundle\PersonaBundle\Entity\CountryTranslation $translations)
+    {
+        $this->translations[] = $translations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove translations
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\CountryTranslation $translations
+     */
+    public function removeTranslation(\Evocatio\Bundle\PersonaBundle\Entity\CountryTranslation $translations)
+    {
+        $this->translations->removeElement($translations);
+    }
+
+    /**
+     * Remove states
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\State $states
+     */
+    public function removeState(\Evocatio\Bundle\PersonaBundle\Entity\State $states)
+    {
+        $this->states->removeElement($states);
+    }
 }

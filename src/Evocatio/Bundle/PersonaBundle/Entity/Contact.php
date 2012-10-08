@@ -48,12 +48,12 @@ class Contact {
     protected $lastname;
 
     /**
-     * @ORM\Column(name="civilite", type="string", length=255, nullable=true)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
-    protected $civilite;
+    protected $title;
 
     /**
-     * Get civilite
+     * Get title
      *
      * @return string
      */
@@ -235,23 +235,23 @@ class Contact {
     }
 
     /**
-     * Set civilite
+     * Set title
      *
-     * @param string $civilite
+     * @param string $title
      */
-    public function setCivilite($civilite)
+    public function setCivilite($title)
     {
-        $this->civilite = $civilite;
+        $this->title = $title;
     }
 
     /**
-     * Get civilite
+     * Get title
      *
      * @return string 
      */
     public function getCivilite()
     {
-        return $this->civilite;
+        return $this->title;
     }
 
     /**
@@ -292,5 +292,61 @@ class Contact {
     public function getCoordinate()
     {
         return $this->coordinate;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Contact
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Add contact_address
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\ContactAddress $contactAddress
+     * @return Contact
+     */
+    public function addContactAddres(\Evocatio\Bundle\PersonaBundle\Entity\ContactAddress $contactAddress)
+    {
+        $this->contact_address[] = $contactAddress;
+    
+        return $this;
+    }
+
+    /**
+     * Remove contact_address
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\ContactAddress $contactAddress
+     */
+    public function removeContactAddres(\Evocatio\Bundle\PersonaBundle\Entity\ContactAddress $contactAddress)
+    {
+        $this->contact_address->removeElement($contactAddress);
+    }
+
+    /**
+     * Remove coordinate
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+     */
+    public function removeCoordinate(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate)
+    {
+        $this->coordinate->removeElement($coordinate);
     }
 }
