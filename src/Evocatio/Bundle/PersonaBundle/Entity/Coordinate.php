@@ -38,6 +38,7 @@ abstract class Coordinate {
      */
     private $persona;
 
+
     public function getPlane() {
         return get_called_class();
     }
