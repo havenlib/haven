@@ -28,6 +28,11 @@ EvocatioCompanyBundle:
     type:     annotation
     prefix: /{_locale}/company
 
+EvocatioPostalBundle:
+    resource: "@EvocatioPersonaBundle/Controller/PostalController.php"
+    type:     annotation
+    prefix: /{_locale}/postal
+
 EvocatioFaqBundle:
     resource: "@EvocatioFaqBundle/Controller/DefaultController.php"
     type:     annotation
