@@ -23,7 +23,7 @@ class AddressType extends AbstractType {
         ;
     }
     
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver){
         return array("data_class" => "Evocatio\Bundle\PersonaBundle\Entity\Address");
     }
     
