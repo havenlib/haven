@@ -16,8 +16,15 @@ class PersonWithCoorType extends AbstractType
             ->add('lastname')
             ->add('sex')
             ->add('birthday')
-            ->add('coordinate', "collection", array(
+            ->add('postal', "collection", array(
                     'type' => new PostalType(),
+                    'allow_add' => true,
+                    'prototype' => true,
+                    // Post update
+                    'by_reference' => true,
+                    ))
+            ->add('map', "collection", array(
+                    'type' => new MapType(),
                     'allow_add' => true,
                     'prototype' => true,
                     // Post update
