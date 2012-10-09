@@ -185,7 +185,7 @@ class Language extends Translatable {
         }
     }
 
-    public function refreshCulturesTranslations($languages) {
+    public function refreshMyCulturesTranslations($languages) {
         foreach ($this->getCultures() as $culture) {
             $culture->refreshTranslations($languages);
         }

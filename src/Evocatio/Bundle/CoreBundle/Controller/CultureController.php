@@ -72,9 +72,10 @@ class CultureController extends ContainerAware {
             $culture_repo = $em->getRepository("EvocatioCoreBundle:Culture");
 
             $cultures = $language->getCultures()->toArray();
+            $selected_cultures = $edit_form->get("symboles")->getData();
 
             // Create new culture for current language if not exist and store them in the cultures array. 
-            foreach ($edit_form->get("symboles")->getData() as $key => $symbol) {
+            foreach ($selected_cultures as $key => $symbol) {
                 $culture = current(array_filter($cultures, function($culture) use ($symbol) {
                                     return $culture->getSymbol() == $symbol;
                                 }));
@@ -93,12 +94,22 @@ class CultureController extends ContainerAware {
                 $culture->refreshTranslations($languages);
             }
             $em->persist($language);
-
+            $this->removeCultures($selected_cultures, $language->getCultures(), $em);
+            
             $em->flush();
+
             return true;
         }
 
         return $edit_form;
+    }
+
+    public function removeCultures($selected_cultures, $cultures, $em) {
+        foreach ($cultures as $culture) {
+            if (!in_array($culture->getSymbol(), $selected_cultures)) {
+                $em->remove($culture);
+            }
+        }
     }
 
     /**
