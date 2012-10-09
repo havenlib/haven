@@ -69,7 +69,6 @@ class CultureController extends ContainerAware {
         if ($edit_form->isValid()) {
             $em = $this->container->get("Doctrine")->getEntityManager();
             $languages = $em->getRepository("EvocatioCoreBundle:Language")->findAll();
-            $culture_repo = $em->getRepository("EvocatioCoreBundle:Culture");
 
             $cultures = $language->getCultures()->toArray();
             $selected_cultures = $edit_form->get("symboles")->getData();
