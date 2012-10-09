@@ -11,18 +11,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 // Evocatio includes
-use Evocatio\Bundle\PersonaBundle\Form\PostalType as Form;
-use Evocatio\Bundle\PersonaBundle\Entity\Postal as Entity;
+use Evocatio\Bundle\PersonaBundle\Form\PersonWithCoorType as Form;
+use Evocatio\Bundle\PersonaBundle\Entity\Person as Entity;
 
-class PostalController extends ContainerAware {
+class PersonWithCoordinateController extends ContainerAware {
 
     /**
-     * @Route("/", name="EvocatioPersonaBundle_PostalIndex")
+     * @Route("/", name="EvocatioPersonaBundle_PersonWithCoorIndex")
      * @Method("GET")
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Postal")->findAll();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Person")->findAll();
 
         return array("entities" => $entities);
     }
@@ -30,12 +30,12 @@ class PostalController extends ContainerAware {
     /**
      * Finds and displays a persona entity.
      *
-     * @Route("/{id}/show", name="EvocatioPersonaBundle_PostalShow")
+     * @Route("/{id}/show", name="EvocatioPersonaBundle_PersonWithCoorShow")
      * @Method("GET")
      * @Template()
      */
     public function showAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Postal")->find($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Person")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -52,18 +52,18 @@ class PostalController extends ContainerAware {
     /**
      * Finds and displays all personas for admin.
      *
-     * @Route("/list", name="EvocatioPersonaBundle_PostalList")
+     * @Route("/list", name="EvocatioPersonaBundle_PersonWithCoorList")
      * @Method("GET")
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Postal")->findAll();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Person")->findAll();
 //        echo "default : " .\Evocatio\Bundle\CoreBundle\Lib\Locale::getDefault();
         return array("entities" => $entities);
     }
 
     /**
-     * @Route("/new", name="EvocatioPersonaBundle_PostalNew")
+     * @Route("/new", name="EvocatioPersonaBundle_PersonWithCoorNew")
      * @Method("GET")
      * @Template
      */
@@ -76,9 +76,9 @@ class PostalController extends ContainerAware {
     /**
      * Creates a new persona entity.
      *
-     * @Route("/new", name="EvocatioPersonaBundle_PostalCreate")
+     * @Route("/new", name="EvocatioPersonaBundle_PersonWithCoorCreate")
      * @Method("POST")
-     * @Template("EvocatioPersonaBundle:Postal:new.html.twig")
+     * @Template("EvocatioPersonaBundle:PersonWithCoor:new.html.twig")
      */
     public function createAction() {
         $edit_form = $this->createEditForm(new Entity());
@@ -88,7 +88,7 @@ class PostalController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPersonaBundle_PostalList'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioPersonaBundle_PersonWithCoorList'));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -98,13 +98,13 @@ class PostalController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPersonaBundle_PostalEdit")
+     * @Route("/{id}/edit", name="EvocatioPersonaBundle_PersonWithCoorEdit")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Postal")->find($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Person")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -120,13 +120,13 @@ class PostalController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPersonaBundle_PostalUpdate")
+     * @Route("/{id}/edit", name="EvocatioPersonaBundle_PersonWithCoorUpdate")
      * @return RedirectResponse
      * @Method("POST")
-     * @Template("EvocatioPersonaBundle:Postal:edit.html.twig")
+     * @Template("EvocatioPersonaBundle:PersonWithCoor:edit.html.twig")
      */
     public function updateAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Postal")->find($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Person")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -139,7 +139,7 @@ class PostalController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPersonaBundle_PostalList'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioPersonaBundle_PersonWithCoorList'));
         }
         $this->container->get("session")->setFlash("error", "update.error");
 
@@ -153,12 +153,12 @@ class PostalController extends ContainerAware {
     /**
      * Set a persona entity state to inactive.
      *
-     * @Route("/{id}/state", name="EvocatioPersonaBundle_PostalToggleState")
+     * @Route("/{id}/state", name="EvocatioPersonaBundle_PersonWithCoorToggleState")
      * @Method("GET")
      */
     public function toggleStateAction($id) {
         $em = $this->container->get('doctrine')->getEntityManager();
-        $entity = $em->find('EvocatioPersonaBundle:Postal', $id);
+        $entity = $em->find('EvocatioPersonaBundle:Person', $id);
         if (!$entity) {
             throw new NotFoundHttpException("Person non trouvé");
         }
@@ -172,13 +172,13 @@ class PostalController extends ContainerAware {
     /**
      * Deletes a persona entity.
      *
-     * @Route("/{id}/delete", name="EvocatioPersonaBundle_PostalDelete")
+     * @Route("/{id}/delete", name="EvocatioPersonaBundle_PersonWithCoorDelete")
      * @Method("POST")
      */
     public function deleteAction($id) {
 
         $em = $this->container->get('Doctrine')->getEntityManager();
-        $entity = $em->getRepository("EvocatioPersonaBundle:Postal")->find($id);
+        $entity = $em->getRepository("EvocatioPersonaBundle:Person")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -187,7 +187,7 @@ class PostalController extends ContainerAware {
         $em->remove($entity);
         $em->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('EvocatioPersonaBundle_PostalList'));
+        return new RedirectResponse($this->container->get('router')->generate('EvocatioPersonaBundle_PersonWithCoorList'));
     }
 
 //  ------------- Privates -------------------------------------------
@@ -198,7 +198,7 @@ class PostalController extends ContainerAware {
      */
     protected function createEditForm($entity) {
 //        the list of language here will decide what languages will appear in the form for new or edit.
-//        $languages = $this->container->get('Doctrine')->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(Array("status" => array(1, 2)));
+        $languages = $this->container->get('Doctrine')->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(Array("status" => array(1, 2)));
 
 //        $entity->addTranslations($languages);
 

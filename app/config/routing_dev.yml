@@ -6,51 +6,56 @@
 EvocatioLogin:
     resource: "@EvocatioSecurityBundle/Controller/LoginController.php"
     type:     annotation
-    prefix: /auth
+    prefix: /auth/
 
 EvocatioUser:
     resource: "@EvocatioSecurityBundle/Controller/UserController.php"
     type:     annotation
-    prefix: /{_locale}/user
+    prefix: /{_locale}/user/
 
 EvocatioPersonaBundle:
     resource: "@EvocatioPersonaBundle/Controller/PersonaController.php"
     type:     annotation
-    prefix: /persona
+    prefix: /{local}/persona/
 
-EvocatioPersonBundle:
+EvocatioPersonaPerson:
     resource: "@EvocatioPersonaBundle/Controller/PersonController.php"
     type:     annotation
-    prefix: /{_locale}/person
+    prefix: /{_locale}/person/
+
+EvocatioPersonaPersonWithCoor:
+    resource: "@EvocatioPersonaBundle/Controller/PersonWithCoordinateController.php"
+    type:     annotation
+    prefix: /{_locale}/personWithCoor/
 
 EvocatioCompanyBundle:
     resource: "@EvocatioPersonaBundle/Controller/CompanyController.php"
     type:     annotation
-    prefix: /{_locale}/company
+    prefix: /{_locale}/company/
 
 EvocatioPostalBundle:
     resource: "@EvocatioPersonaBundle/Controller/PostalController.php"
     type:     annotation
-    prefix: /{_locale}/postal
+    prefix: /{_locale}/postal/
 
 EvocatioFaqBundle:
     resource: "@EvocatioFaqBundle/Controller/DefaultController.php"
     type:     annotation
-    prefix: /{_locale}/faq
+    prefix: /{_locale}/faq/
 #    requirements: 
 #      _locale: fr|en
 
 EvocatioPostBundle:
     resource: "@EvocatioPostBundle/Controller/DefaultController.php"
     type:     annotation
-    prefix: /{_locale}/post
+    prefix: /{_locale}/post/
 #    requirements: 
 #      _locale: fr|en
 
 EvocatioCoreBundle:
     resource: "@EvocatioCoreBundle/Controller/"
     type:     annotation
-    prefix: /{_locale}/core
+    prefix: /{_locale}/core/
 
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"

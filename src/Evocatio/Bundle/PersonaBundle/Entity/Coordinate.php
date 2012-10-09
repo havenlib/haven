@@ -25,16 +25,16 @@ abstract class Coordinate {
      */
     private $id;
 
-    /**
-     * @var master
-     * 
-     * @ORM\Column(name="master", type="string", length=256)
-     */
-    private $master;
+//    /**
+//     * @var master
+//     * 
+//     * @ORM\Column(name="master", type="string", length=256)
+//     */
+//    private $master;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Persona", inversedBy="coordinate")
-     * @ORM\JoinTable(name="PersonCoordinate")
+     * @ORM\ManyToMany(targetEntity="Persona", inversedBy="coordinate", cascade={"persist"})
+     * @ORM\JoinTable(name="PersonaCoordinate")
      */
     private $persona;
 
@@ -71,7 +71,7 @@ abstract class Coordinate {
      * @return string 
      */
     public function getMaster() {
-        return $this->master;
+        return get_called_class();
     }
 
     /**
