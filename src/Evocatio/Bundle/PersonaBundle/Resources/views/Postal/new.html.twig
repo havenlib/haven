@@ -9,9 +9,9 @@
         <li>{#{ form_label(edit_form.name)}#}
             {#{ form_errors(edit_form.name)}#}
                 <span>{#{ form_widget(edit_form.name)}#}</span>
-            </li>
-                        {{ form_rest(edit_form) }}
-                </fieldset>
+        </li>
+       {{ form_rest(edit_form) }}
+</fieldset>
 {% endblock form %}
 
 {% block back %}

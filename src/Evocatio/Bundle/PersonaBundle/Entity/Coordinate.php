@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\DiscriminatorColumn(name="plane", type="string")
  * @ORM\DiscriminatorMap({"telephone"="Telephone",   "map"="Map", "time"="Time", "web"="Web", "postal"="Postal"})
  */
-abstract class Coordinate {
+ class Coordinate {
 
     /**
      * @var integer $id
@@ -34,7 +34,6 @@ abstract class Coordinate {
 
     /**
      * @ORM\ManyToMany(targetEntity="Persona", inversedBy="coordinate", cascade={"persist"})
-     * @ORM\JoinTable(name="PersonaCoordinate")
      */
     private $persona;
 
@@ -56,52 +55,7 @@ abstract class Coordinate {
         return $this->id;
     }
 
-    /**
-     * Set master
-     *
-     * @param string $master
-     */
-    public function setMaster($master) {
-        $this->master = $master;
-    }
-
-    /**
-     * Get master
-     *
-     * @return string 
-     */
-    public function getMaster() {
-        return get_called_class();
-    }
-
-    /**
-     * Add contact
-     *
-     * @param Evocatio\Bundle\PersonaBundle\Entity\Contact $contact
-     */
-    public function addContact(\Evocatio\Bundle\PersonaBundle\Entity\Contact $contact) {
-        $this->contact[] = $contact;
-    }
-
-    /**
-     * Get contact
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getContact() {
-        return $this->contact;
-    }
-
-    /**
-     * Remove contact
-     *
-     * @param Evocatio\Bundle\PersonaBundle\Entity\Contact $contact
-     */
-    public function removeContact(\Evocatio\Bundle\PersonaBundle\Entity\Contact $contact) {
-        $this->contact->removeElement($contact);
-    }
-
-    /**
+     /**
      * Add persona
      *
      * @param Evocatio\Bundle\PersonaBundle\Entity\Persona $persona
@@ -130,5 +84,4 @@ abstract class Coordinate {
     public function getPersona() {
         return $this->persona;
     }
-
 }
