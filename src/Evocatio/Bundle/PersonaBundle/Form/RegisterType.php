@@ -14,11 +14,11 @@ class RegisterType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                /* ->add('civilite', 'entity', array(
+                /* ->add('title', 'entity', array(
                   'class' => 'tahua\SiteBundle\Entity\Civilite',
                   'multiple' => false, 'expanded' => true,
                   )) */
-//                ->add('civilite', 'choice', array('choices' => array('1' => 'Mme', '2' => 'M'), 'multiple' => false, 'expanded' => true))
+//                ->add('title', 'choice', array('choices' => array('1' => 'Mme', '2' => 'M'), 'multiple' => false, 'expanded' => true))
 //                ->add('username', 'text')
 //                ->add('lastname', 'text', array('required' => true))
                 ->add('email', 'email', array('label' => 'mon.courriel'))
@@ -30,6 +30,7 @@ class RegisterType extends AbstractType {
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
         return array(
             'data_class' => 'Evocatio\Bundle\PersonaBundle\Entity\Contact'
         );

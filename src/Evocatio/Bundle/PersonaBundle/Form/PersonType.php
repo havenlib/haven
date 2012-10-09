@@ -2,28 +2,34 @@
 
 namespace Evocatio\Bundle\PersonaBundle\Form;
 
-// Symfony includes
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ContactNoAddressType extends AbstractType
+class PersonType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'choice', array('choices' => array('1' => 'Mme', '2' => 'M'), 'multiple' => false, 'expanded' => true))
+//            ->add('id')
             ->add('firstname')
             ->add('lastname')
+            ->add('sex')
+            ->add('birthday')
+//            ->add('created_at')
+//            ->add('created_by')
         ;
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array("data_class" => "Evocatio\Bundle\PersonaBundle\Entity\Contact");
+        $resolver->setDefaults(array(
+            'data_class' => 'Evocatio\Bundle\PersonaBundle\Entity\Person'
+        ));
     }
-    
+
     public function getName()
     {
-        return 'evocatio_bundle_contactbundle_contacttype';
+        return 'evocatio_bundle_personabundle_persontype';
     }
 }
