@@ -5,7 +5,6 @@ namespace Evocatio\Bundle\CoreBundle\Controller;
 // Symfony includes
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 // Sensio includes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,7 +26,6 @@ class LanguageController extends ContainerAware {
     public function newAction() {
         echo "<p>-->" . Locale::getDefault() . "</p>";
         echo "<p>session local-->" . $this->container->get("session")->get("_locale") . "</p>";
-        $request = $this->container->get('Request');
         $languages = $this->container->get("Doctrine")->getRepository("EvocatioCoreBundle:Language")->findAll();
 
 
@@ -40,7 +38,6 @@ class LanguageController extends ContainerAware {
         $edit_form = $this->createEditForm($existing_languages);
 
         //assure que la language courante existe
-//        $this->checkDefaultLanguage();
         return array('form' => $edit_form->createView(), 'languages' => $languages);
     }
 
@@ -49,7 +46,7 @@ class LanguageController extends ContainerAware {
      * @Method("POST")
      * @Template("EvocatioCoreBundle:Default:new.html.twig")
      */
-    public function saveSelectedLanguages() {
+    public function createAction() {
         $request = $this->container->get('Request');
 
         $edit_form = $this->createEditForm();
@@ -107,32 +104,43 @@ class LanguageController extends ContainerAware {
             $language_repo = $em->getRepository("EvocatioCoreBundle:Language");
 
             $languages = $language_repo->findAll();
-            
+            $selected_languages = $edit_form->get("symboles")->getData();
+
             // Create new language if not exist and store them in the languages array
-            foreach ($edit_form->get("symboles")->getData() as $key => $symbol) {
+            foreach ($selected_languages as $key => $symbol) {
                 $language = current(array_filter($languages, function($language) use ($symbol) {
                                     return $language->getSymbol() == $symbol;
                                 }));
 
                 if (!$language) {
                     $language_form = $this->container->get('form.factory')->create(new LanguageType());
-                    $language_form->bind( array('symbol' => $symbol, "status" => 1 ));
-                    $languages[] = $language_form->getData();
+                    $language_form->bind(array('symbol' => $symbol, "status" => 1));
+                    $language = $language_form->getData();
+                    $languages[] = $language;
                 }
+                $em->persist($language);
             }
 
             //Translate each language to other languages and persist.
             foreach ($languages as $language) {
                 $language->refreshTranslations($languages);
-                $language->refreshCulturesTranslations($languages);
-                $em->persist($language);
+                $language->refreshMyCulturesTranslations($languages);
             }
+            $this->removeLanguages($selected_languages, $languages, $em);
             $em->flush();
 
             return true;
         }
 
         return $edit_form;
+    }
+    
+    public function removeLanguages($selected_languages, $languages, $em){
+        foreach ($languages as $language){
+            if(!in_array($language->getSymbol(), $selected_languages)){
+                $em->remove($language);
+            }
+        }
     }
 
 }
