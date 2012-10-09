@@ -2,8 +2,8 @@
 {% block theatre %}
     <dl>
         {% for entity in entities %}
-            <dt><div>{{ entity.status?'status':'instatus' }}</div> <strong>{{ entity.question }}</strong></dt>
-            <dd>{{ entity.reponse }}</dd>
+            <dt><div>{{ entity.address }}</div> </dt>
+            <dd></dd>
         {% else %}
             &nbsp;
         {% endfor %}

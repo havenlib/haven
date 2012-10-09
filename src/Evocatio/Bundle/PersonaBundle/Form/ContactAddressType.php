@@ -15,7 +15,7 @@ class ContactAddressType extends AbstractType {
 //            ->add("type", 'text');
     }
     
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver){
         return array("data_class" => "Evocatio\Bundle\PersonaBundle\Entity\ContactAddress");
     }
     

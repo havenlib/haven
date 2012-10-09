@@ -19,7 +19,7 @@ class UserType extends AbstractType {
                     ,"required" => false
                     ,'label' => 'Password'
                     ))
-            ->add('status')
+                ->add('status')
                 ->add('locked', 'checkbox', array("required" => false))
 
         ;

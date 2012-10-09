@@ -3,15 +3,35 @@
 #    type:     annotation
 #    prefix:   /product
 
-EvocatioSecurityBundle:
-    resource: "@EvocatioSecurityBundle/Controller/"
+EvocatioLogin:
+    resource: "@EvocatioSecurityBundle/Controller/LoginController.php"
     type:     annotation
-    prefix: /{_locale}/auth
+    prefix: /auth
 
-#EvocatioPersonaBundle:
-#    resource: "@EvocatioPersonaBundle/Controller/"
-#    type:     annotation
-#    prefix: contact
+EvocatioUser:
+    resource: "@EvocatioSecurityBundle/Controller/UserController.php"
+    type:     annotation
+    prefix: /{_locale}/user
+
+EvocatioPersonaBundle:
+    resource: "@EvocatioPersonaBundle/Controller/PersonaController.php"
+    type:     annotation
+    prefix: /persona
+
+EvocatioPersonBundle:
+    resource: "@EvocatioPersonaBundle/Controller/PersonController.php"
+    type:     annotation
+    prefix: /{_locale}/person
+
+EvocatioCompanyBundle:
+    resource: "@EvocatioPersonaBundle/Controller/CompanyController.php"
+    type:     annotation
+    prefix: /{_locale}/company
+
+EvocatioPostalBundle:
+    resource: "@EvocatioPersonaBundle/Controller/PostalController.php"
+    type:     annotation
+    prefix: /{_locale}/postal
 
 EvocatioFaqBundle:
     resource: "@EvocatioFaqBundle/Controller/DefaultController.php"

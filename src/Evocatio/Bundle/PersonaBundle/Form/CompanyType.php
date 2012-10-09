@@ -6,31 +6,26 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PostalType extends AbstractType
+class CompanyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('master')
-            ->add('address')
-            ->add('address2')
-            ->add('code_postal')
-            ->add('ville')
-//            ->add('persona')
-//            ->add('country')
-//            ->add('state')
+//            ->add('created_at')
+//            ->add('created_by')
+            ->add('name')
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\PersonaBundle\Entity\Postal'
+            'data_class' => 'Evocatio\Bundle\PersonaBundle\Entity\Company'
         ));
     }
 
     public function getName()
     {
-        return 'evocatio_bundle_personabundle_postaltype';
+        return 'evocatio_bundle_personabundle_companytype';
     }
 }
