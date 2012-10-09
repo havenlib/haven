@@ -6,18 +6,18 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Evocatio\Bundle\PosBundle\Entity\Products
+ *
+ * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="plane", type="string")
+ * @ORM\DiscriminatorMap({"generic"="GenericProduct"})
  */
-class Products
+class Product
 {
     /**
      * @var integer $id
      */
     private $id;
-
-    /**
-     * @var string $name
-     */
-    private $name;
 
     /**
      * @var decimal $prix
@@ -30,16 +30,6 @@ class Products
     private $Actif;
 
     /**
-     * @var Evocatio\Bundle\PosBundle\Entity\ProductTranslation
-     */
-    private $translations;
-
-    public function __construct()
-    {
-        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
      * Get id
      *
      * @return integer 
@@ -47,85 +37,5 @@ class Products
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set prix
-     *
-     * @param decimal $prix
-     */
-    public function setPrix($prix)
-    {
-        $this->prix = $prix;
-    }
-
-    /**
-     * Get prix
-     *
-     * @return decimal 
-     */
-    public function getPrix()
-    {
-        return $this->prix;
-    }
-
-    /**
-     * Set Actif
-     *
-     * @param boolean $actif
-     */
-    public function setActif($actif)
-    {
-        $this->Actif = $actif;
-    }
-
-    /**
-     * Get Actif
-     *
-     * @return boolean 
-     */
-    public function getActif()
-    {
-        return $this->Actif;
-    }
-
-    /**
-     * Add translations
-     *
-     * @param Evocatio\Bundle\PosBundle\Entity\ProductTranslation $translations
-     */
-    public function addProductTranslation(\Evocatio\Bundle\PosBundle\Entity\ProductTranslation $translations)
-    {
-        $this->translations[] = $translations;
-    }
-
-    /**
-     * Get translations
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getTranslations()
-    {
-        return $this->translations;
     }
 }

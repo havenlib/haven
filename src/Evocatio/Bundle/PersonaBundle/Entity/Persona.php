@@ -3,13 +3,11 @@
 namespace Evocatio\Bundle\PersonaBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
-
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Evocatio\Bundle\PersonaBundle\Entity\ContactAddress;
-
 
 /**
  * Evocatio\Bundle\PersonaBundle\Entity\Persona
@@ -41,14 +39,13 @@ class Persona {
      */
     private $created_by;
 
-     /**
-     * @ORM\ManyToMany(targetEntity="Coordinate", mappedBy="persona", cascade={"persist"})
+    /**
+     * @ORM\ManyToMany(targetEntity="Coordinate", inversedBy="persona", cascade={"persist"})
      * @ORM\JoinTable(name="PersonaCoordinate",
      *   joinColumns={@ORM\JoinColumn(name="persona_id", referencedColumnName="id")},
      *   inverseJoinColumns={@ORM\JoinColumn(name="coordinate_id", referencedColumnName="id")})
      */
     private $coordinate;
-
 
     /**
      * Get id
@@ -59,17 +56,15 @@ class Persona {
         return $this->id;
     }
 
-
     /**
      * Set created_at
      *
      * @param \DateTime $createdAt
      * @return Persona
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->created_at = $createdAt;
-    
+
         return $this;
     }
 
@@ -78,8 +73,7 @@ class Persona {
      *
      * @return \DateTime 
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->created_at;
     }
 
@@ -89,10 +83,9 @@ class Persona {
      * @param integer $createdBy
      * @return Persona
      */
-    public function setCreatedBy($createdBy)
-    {
+    public function setCreatedBy($createdBy) {
         $this->created_by = $createdBy;
-    
+
         return $this;
     }
 
@@ -101,8 +94,7 @@ class Persona {
      *
      * @return integer 
      */
-    public function getCreatedBy()
-    {
+    public function getCreatedBy() {
         return $this->created_by;
     }
 
@@ -112,10 +104,9 @@ class Persona {
      * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
      * @return Persona
      */
-    public function addCoordinate(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate)
-    {
+    public function addCoordinate(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
         $this->coordinate[] = $coordinate;
-    
+
         return $this;
     }
 
@@ -124,8 +115,7 @@ class Persona {
      *
      * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
      */
-    public function removeCoordinate(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate)
-    {
+    public function removeCoordinate(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
         $this->coordinate->removeElement($coordinate);
     }
 
@@ -134,18 +124,77 @@ class Persona {
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getCoordinate()
-    {
+    public function getCoordinate() {
         return $this->coordinate;
     }
+
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->coordinate = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setCreatedAt(new \DateTime());
         $this->setCreatedBy("1");
     }
-    
+
+    /**
+     * Add coordinate
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+     * @return Persona
+     */
+    public function addMap(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+        return $this->addCoordinate($coordinate);
+    }
+
+    /**
+     * Remove coordinate
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+     */
+    public function removeMap(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+        $this->removeCoordinate($coordinate);
+    }
+
+    /**
+     * Get coordinate
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getMap() {
+        return $this->getCoordinate()->filter(function ($coordinate) {
+                            return get_class($coordinate) == "Evocatio\Bundle\PersonaBundle\Entity\Map";
+                        });
+    }
+
+    /**
+     * Add coordinate
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+     * @return Persona
+     */
+    public function addPostal(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+        return $this->addCoordinate($coordinate);
+    }
+
+    /**
+     * Remove coordinate
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+     */
+    public function removePostal(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+        $this->removeCoordinate($coordinate);
+    }
+
+    /**
+     * Get coordinate
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getPostal() {
+        return $this->getCoordinate()->filter(function ($coordinate) {
+                            return get_class($coordinate) == "Evocatio\Bundle\PersonaBundle\Entity\Postal";
+                        });
+    }
+
 }
