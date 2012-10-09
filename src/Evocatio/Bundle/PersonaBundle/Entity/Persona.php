@@ -3,11 +3,13 @@
 namespace Evocatio\Bundle\PersonaBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Evocatio\Bundle\PersonaBundle\Entity\ContactAddress;
+
 
 /**
  * Evocatio\Bundle\PersonaBundle\Entity\Persona
@@ -39,16 +41,14 @@ class Persona {
      */
     private $created_by;
 
-    public function __construct() {
-        $this->setCreatedAt(new \DateTime());
-        $this->setCreatedBy("1");
-    }
-
      /**
-     * @ORM\ManyToMany(targetEntity="Persona", mappedBy="coordinate")
-     * @ORM\JoinTable(name="person_coordinate")
+     * @ORM\ManyToMany(targetEntity="Coordinate", mappedBy="persona", cascade={"persist"})
+     * @ORM\JoinTable(name="PersonaCoordinate",
+     *   joinColumns={@ORM\JoinColumn(name="persona_id", referencedColumnName="id")},
+     *   inverseJoinColumns={@ORM\JoinColumn(name="coordinate_id", referencedColumnName="id")})
      */
     private $coordinate;
+
 
     /**
      * Get id
@@ -138,4 +138,14 @@ class Persona {
     {
         return $this->coordinate;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->coordinate = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->setCreatedAt(new \DateTime());
+        $this->setCreatedBy("1");
+    }
+    
 }

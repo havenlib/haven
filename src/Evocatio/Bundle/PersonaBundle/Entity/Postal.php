@@ -15,7 +15,7 @@ class Postal extends Coordinate {
 
      /**
      * @Assert\NotBlank
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
      */
     protected $address;
     
@@ -25,28 +25,26 @@ class Postal extends Coordinate {
     protected $address2;
     
     /**
-     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity="Country")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
      */
     protected $country;
     /**
      * @var string $code_postal
      * @Assert\NotBlank
-     * @ORM\Column(name="code_postal", type="string", length=12)
+     * @ORM\Column(name="code_postal", type="string", length=12, nullable=true)
      */
     protected $code_postal;
     /**
      * @var string $ville
      * @Assert\NotBlank
-     * @ORM\Column(name="ville", type="string", length=255)
+     * @ORM\Column(name="ville", type="string", length=255, nullable=true)
      */
     protected $ville;
     
     /**
-     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity="State")
-     * @ORM\JoinColumn(name="state_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="state_id", referencedColumnName="id", nullable=true)
      */
     protected $state;   
 
