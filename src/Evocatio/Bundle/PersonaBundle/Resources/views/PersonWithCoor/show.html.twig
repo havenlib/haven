@@ -47,7 +47,7 @@
         {% for coor in entity.getTime() %}
         <tr>
             <th>Time</th>
-            <td>{{ coor.getMoment() }}</td>
+            <td>{{ coor.getMoment().format('d/m/Y') }}</td>
         </tr>
         {% endfor %}
     </tbody>
