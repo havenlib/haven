@@ -2,7 +2,7 @@
 
 namespace Evocatio\Bundle\PosBundle\Entity;
 
-class DeliveryAddress {
+class Address {
 
     protected $address;
     protected $address2;
