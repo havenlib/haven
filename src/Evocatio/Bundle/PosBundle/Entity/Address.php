@@ -7,16 +7,18 @@ class Address {
     protected $address;
     protected $address2;
     protected $country;
-    protected $code_postal;
-    protected $ville;
+    protected $postal_code;
+    protected $city;
     protected $state;
+
 
     /**
      * Set address
      *
      * @param string $address
      */
-    public function setAddress($address) {
+    public function setAddress($address)
+    {
         $this->address = $address;
     }
 
@@ -25,7 +27,8 @@ class Address {
      *
      * @return string 
      */
-    public function getAddress() {
+    public function getAddress()
+    {
         return $this->address;
     }
 
@@ -34,7 +37,8 @@ class Address {
      *
      * @param string $address2
      */
-    public function setAddress2($address2) {
+    public function setAddress2($address2)
+    {
         $this->address2 = $address2;
     }
 
@@ -43,88 +47,97 @@ class Address {
      *
      * @return string 
      */
-    public function getAddress2() {
+    public function getAddress2()
+    {
         return $this->address2;
     }
 
     /**
-     * Set ville
+     * Set city
      *
-     * @param string $ville
+     * @param string $city
      */
-    public function setVille($ville) {
-        $this->ville = $ville;
+    public function setCity($city)
+    {
+        $this->city = $city;
     }
 
     /**
-     * Get ville
+     * Get city
      *
      * @return string 
      */
-    public function getVille() {
-        return $this->ville;
+    public function getCity()
+    {
+        return $this->city;
     }
 
     /**
-     * Set code_postal
+     * Set postal_code
      *
-     * @param string $codePostal
+     * @param string $postal_code
      * @return Postal
      */
-    public function setCodePostal($codePostal) {
-        $this->code_postal = $codePostal;
-
+    public function setPostalCode($postal_code)
+    {
+        $this->postal_code = $postal_code;
+    
         return $this;
     }
 
     /**
-     * Get code_postal
+     * Get postal_code
      *
      * @return string 
      */
-    public function getCodePostal() {
-        return $this->code_postal;
+    public function getPostalCode()
+    {
+        return $this->postal_code;
     }
 
     /**
      * Set country
      *
-     * @param Evocatio\Bundle\PersonaBundle\Entity\Country $country
+     * @param $country
      * @return Postal
      */
-    public function setCountry(\Evocatio\Bundle\PersonaBundle\Entity\Country $country = null) {
+    public function setCountry($country = null)
+    {
         $this->country = $country;
-
+    
         return $this;
     }
 
     /**
      * Get country
      *
-     * @return Evocatio\Bundle\PersonaBundle\Entity\Country 
+     * @return $country
      */
-    public function getCountry() {
+    public function getCountry()
+    {
         return $this->country;
     }
 
     /**
      * Set state
      *
-     * @param Evocatio\Bundle\PersonaBundle\Entity\State $state
+     * @param  $state
      * @return Postal
      */
-    public function setState(\Evocatio\Bundle\PersonaBundle\Entity\State $state = null) {
+    public function setState( $state = null)
+    {
         $this->state = $state;
-
+    
         return $this;
     }
 
     /**
      * Get state
      *
-     * @return Evocatio\Bundle\PersonaBundle\Entity\State 
+     * @return  
      */
-    public function getState() {
+    public function getState()
+    {
         return $this->state;
     }
 
