@@ -6,7 +6,7 @@ function addAnItem(source){
 }
 
 function showFormElement(tab){
-    tab_num = tab.id.match(/\d/g);
+    tab_num = tab.id.match(/\d+/g);
     
     $(".tab-element").hide();
     $(".tab-element.tab" + tab_num).show();

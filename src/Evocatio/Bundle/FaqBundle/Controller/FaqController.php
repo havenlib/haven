@@ -1,6 +1,6 @@
 <?php
 
-namespace Evocatio\Bundle\PostBundle\Controller;
+namespace Evocatio\Bundle\FaqBundle\Controller;
 
 // Symfony includes
 use Symfony\Component\DependencyInjection\ContainerAware;
@@ -11,19 +11,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 // Evocatio includes
-use Evocatio\Bundle\PostBundle\Form\PostType as Form;
-use Evocatio\Bundle\PostBundle\Entity\Post as Entity;
-use Evocatio\Bundle\PostBundle\Entity\PostTranslation as EntityTranslation;
+use Evocatio\Bundle\FaqBundle\Form\FaqType as Form;
+use Evocatio\Bundle\FaqBundle\Entity\Faq as Entity;
 
-class DefaultController extends ContainerAware {
+class FaqController extends ContainerAware {
 
     /**
-     * @Route("/", name="EvocatioPostBundle_index")
+     * @Route("/", name="EvocatioFaqBundle_index")
      * @Method("GET")
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPostBundle:Post")->findOnlines();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioFaqBundle:Faq")->findOnlines();
 
         return array("entities" => $entities);
     }
@@ -31,12 +30,12 @@ class DefaultController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{id}/show", name="EvocatioPostBundle_show")
+     * @Route("/{id}/show", name="EvocatioFaqBundle_show")
      * @Method("GET")
      * @Template()
      */
     public function showAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPostBundle:Post")->findOneBy(array('id' => $id));
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioFaqBundle:Faq")->findOneBy(array('id' => $id));
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -46,25 +45,25 @@ class DefaultController extends ContainerAware {
 
         return array(
             'entity' => $entity
-            , "delete_form" => $delete_form->createView()
+            ,"delete_form" => $delete_form->createView()
         );
-    }
-
+    }    
+    
     /**
-     * Finds and displays all posts for admin.
+     * Finds and displays all faqs for admin.
      *
-     * @Route("/list", name="EvocatioPostBundle_list")
+     * @Route("/list", name="EvocatioFaqBundle_list")
      * @Method("GET")
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPostBundle:Post")->findAll();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioFaqBundle:Faq")->findAll();
 //        echo "default : " .\Evocatio\Bundle\CoreBundle\Lib\Locale::getDefault();
         return array("entities" => $entities);
     }
 
     /**
-     * @Route("/new", name="EvocatioPostBundle_new")
+     * @Route("/new", name="EvocatioFaqBundle_new")
      * @Method("GET")
      * @Template
      */
@@ -75,11 +74,11 @@ class DefaultController extends ContainerAware {
     }
 
     /**
-     * Creates a new post entity.
+     * Creates a new faq entity.
      *
-     * @Route("/new", name="EvocatioPostBundle_create")
+     * @Route("/new", name="EvocatioFaqBundle_create")
      * @Method("POST")
-     * @Template("EvocatioPostBundle:Default:new.html.twig")
+     * @Template("EvocatioFaqBundle:Faq:new.html.twig")
      */
     public function createAction() {
         $edit_form = $this->createEditForm(new Entity());
@@ -89,7 +88,7 @@ class DefaultController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_list'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioFaqBundle_list'));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -99,13 +98,13 @@ class DefaultController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPostBundle_edit")
+     * @Route("/{id}/edit", name="EvocatioFaqBundle_edit")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPostBundle:Post")->findOneEditables($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioFaqBundle:Faq")->findOneEditables($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -121,13 +120,13 @@ class DefaultController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPostBundle_update")
+     * @Route("/{id}/edit", name="EvocatioFaqBundle_update")
      * @return RedirectResponse
      * @Method("POST")
-     * @Template("EvocatioPostBundle:Default:edit.html.twig")
+     * @Template("EvocatioFaqBundle:Faq:edit.html.twig")
      */
     public function updateAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPostBundle:Post")->findOneEditables($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioFaqBundle:Faq")->findOneEditables($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -140,7 +139,7 @@ class DefaultController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_list'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioFaqBundle_list'));
         }
         $this->container->get("session")->setFlash("error", "update.error");
 
@@ -152,16 +151,16 @@ class DefaultController extends ContainerAware {
     }
 
     /**
-     * Set a post entity state to inactive.
+     * Set a faq entity state to inactive.
      *
-     * @Route("/{id}/state", name="EvocatioPostBundle_toggleState")
+     * @Route("/{id}/state", name="EvocatioFaqBundle_toggleState")
      * @Method("GET")
      */
     public function toggleStateAction($id) {
         $em = $this->container->get('doctrine')->getEntityManager();
-        $entity = $em->find('EvocatioPostBundle:Post', $id);
+        $entity = $em->find('EvocatioFaqBundle:Faq', $id);
         if (!$entity) {
-            throw new NotFoundHttpException("Post non trouvé");
+            throw new NotFoundHttpException("Faq non trouvé");
         }
         $entity->setStatus(!$entity->getStatus());
         $em->persist($entity);
@@ -171,15 +170,15 @@ class DefaultController extends ContainerAware {
     }
 
     /**
-     * Deletes a post entity.
+     * Deletes a faq entity.
      *
-     * @Route("/{id}/delete", name="EvocatioPostBundle_delete")
+     * @Route("/{id}/delete", name="EvocatioFaqBundle_delete")
      * @Method("POST")
      */
     public function deleteAction($id) {
 
         $em = $this->container->get('Doctrine')->getEntityManager();
-        $entity = $em->getRepository("EvocatioPostBundle:Post")->find($id);
+        $entity = $em->getRepository("EvocatioFaqBundle:Faq")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -188,37 +187,13 @@ class DefaultController extends ContainerAware {
         $em->remove($entity);
         $em->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_list'));
-    }
-
-    /**
-     * @Route("/{slug}", name="EvocatioPostBundle_show_slug")
-     * @Method("GET")
-     * @Template("EvocatioPostBundle:Default:show.html.twig")
-     */
-    public function showFromSlugAction(EntityTranslation $entityTranslation) {
-//        $delete_form = $this->createDeleteForm($id);
-        $locale = $this->container->get("request")->get("_locale");
-        if ($entityTranslation->getTransLang()->getSymbol() != $locale) {
-            $slug = $entityTranslation->getParent()->getTranslationByLang($locale)->getSlug();
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_show_slug', array("slug" => $slug)));
-        }
-        $entity = $entityTranslation->getParent();
-
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-
-        $delete_form = $this->createDeleteForm($entity->getId());
-
-        return array("entity" => $entity, 'delete_form' => $delete_form->createView()
-        );
+        return new RedirectResponse($this->container->get('router')->generate('EvocatioFaqBundle_list'));
     }
 
 //  ------------- Privates -------------------------------------------
     /**
      * Creates an edit_form with all the translations objects added for status languages
-     * @param post $entity
+     * @param faq $entity
      * @return Form or RedirectResponse   if validation error
      */
     protected function createEditForm($entity) {
@@ -238,8 +213,8 @@ class DefaultController extends ContainerAware {
      */
     protected function createDeleteForm($id) {
         return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm()
+                ->add('id', 'hidden')
+                ->getForm()
         ;
     }
 

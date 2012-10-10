@@ -51,6 +51,8 @@ abstract class SluggableMappedBase extends TranslationMappedBase {
     
     
     private function normalizeUtf8String($s) {
+        $original_string = $s;
+        
         // Normalizer-class missing!
         if (!class_exists("Normalizer", $autoload = false))
             return $original_string;
