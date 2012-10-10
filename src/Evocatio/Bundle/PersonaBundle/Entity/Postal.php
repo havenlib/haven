@@ -30,17 +30,17 @@ class Postal extends Coordinate {
      */
     protected $country;
     /**
-     * @var string $code_postal
+     * @var string $postal_code
      * @Assert\NotBlank
-     * @ORM\Column(name="code_postal", type="string", length=12, nullable=true)
+     * @ORM\Column(name="postal_code", type="string", length=12, nullable=true)
      */
-    protected $code_postal;
+    protected $postal_code;
     /**
-     * @var string $ville
+     * @var string $city
      * @Assert\NotBlank
-     * @ORM\Column(name="ville", type="string", length=255, nullable=true)
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
      */
-    protected $ville;
+    protected $city;
     
     /**
      * @ORM\ManyToOne(targetEntity="State")
@@ -89,46 +89,46 @@ class Postal extends Coordinate {
     }
 
     /**
-     * Set ville
+     * Set city
      *
-     * @param string $ville
+     * @param string $city
      */
-    public function setVille($ville)
+    public function setCity($city)
     {
-        $this->ville = $ville;
+        $this->city = $city;
     }
 
     /**
-     * Get ville
+     * Get city
      *
      * @return string 
      */
-    public function getVille()
+    public function getCity()
     {
-        return $this->ville;
+        return $this->city;
     }
 
     /**
-     * Set code_postal
+     * Set postal_code
      *
-     * @param string $codePostal
+     * @param string $postal_code
      * @return Postal
      */
-    public function setCodePostal($codePostal)
+    public function setPostalCode($postal_code)
     {
-        $this->code_postal = $codePostal;
+        $this->postal_code = $postal_code;
     
         return $this;
     }
 
     /**
-     * Get code_postal
+     * Get postal_code
      *
      * @return string 
      */
-    public function getCodePostal()
+    public function getPostalCode()
     {
-        return $this->code_postal;
+        return $this->postal_code;
     }
 
     /**
