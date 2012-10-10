@@ -14,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Evocatio\Bundle\PersonaBundle\Form\PersonWithCoorType as Form;
 use Evocatio\Bundle\PersonaBundle\Entity\Person as Entity;
 
-class PersonWithCoordinateController extends ContainerAware {
+class PersonWithCoorController extends ContainerAware {
 
     /**
      * @Route("/", name="EvocatioPersonaBundle_PersonWithCoorIndex")

@@ -28,7 +28,7 @@ class AddressType extends AbstractType {
     }
     
     public function getName() {
-        return "address";
+        return "evocatio_bundle_personabundle_addresstype";
     }
 }
 

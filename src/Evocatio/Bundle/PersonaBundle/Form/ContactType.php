@@ -25,7 +25,7 @@ class ContactType extends AbstractType {
     }
 
     public function getName() {
-        return "Contact";
+        return "evocatio_bundle_personabundle_contacttype";
     }
 
 }

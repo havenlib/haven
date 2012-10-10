@@ -17,6 +17,9 @@ class Time extends Coordinate{
     protected $moment;
     
 
+    public function __construct() {
+        $this->moment = new \DateTime();
+    }
 
     /**
      * Set moment
@@ -37,4 +40,5 @@ class Time extends Coordinate{
     {
         return $this->moment;
     }
+    
 }
