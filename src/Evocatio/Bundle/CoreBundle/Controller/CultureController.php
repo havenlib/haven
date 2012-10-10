@@ -19,7 +19,7 @@ use Evocatio\Bundle\CoreBundle\Form\CultureType;
 class CultureController extends ContainerAware {
 
     /**
-     * @Route("/new/cultures/{display_language}", name="EvocatioCoreBundle_new_cultures")
+     * @Route("/cultures/new/{display_language}", name="EvocatioCoreBundle_new_cultures")
      * @Method("GET")
      * @Template
      */
@@ -40,7 +40,7 @@ class CultureController extends ContainerAware {
     }
 
     /**
-     * @Route("/create/cultures", name="EvocatioFaqBundle_create_cultures")
+     * @Route("/cultures/create", name="EvocatioFaqBundle_create_cultures")
      * @Method("POST")
      * @Template("EvocatioCoreBundle:Culture:new.html.twig")
      */
@@ -69,7 +69,6 @@ class CultureController extends ContainerAware {
         if ($edit_form->isValid()) {
             $em = $this->container->get("Doctrine")->getEntityManager();
             $languages = $em->getRepository("EvocatioCoreBundle:Language")->findAll();
-            $culture_repo = $em->getRepository("EvocatioCoreBundle:Culture");
 
             $cultures = $language->getCultures()->toArray();
             $selected_cultures = $edit_form->get("symboles")->getData();

@@ -19,7 +19,7 @@ use Evocatio\Bundle\CoreBundle\Entity\Language;
 class LanguageController extends ContainerAware {
 
     /**
-     * @Route("/new/languages", name="EvocatioCoreBundle_new_languages")
+     * @Route("/language/new", name="EvocatioCoreBundle_new_languages")
      * @Method("GET")
      * @Template
      */
@@ -42,9 +42,9 @@ class LanguageController extends ContainerAware {
     }
 
     /**
-     * @Route("/create/languages", name="EvocatioCoreBundle_create_languages")
+     * @Route("/language/create", name="EvocatioCoreBundle_create_languages")
      * @Method("POST")
-     * @Template("EvocatioCoreBundle:Default:new.html.twig")
+     * @Template("EvocatioCoreBundle:Core:new.html.twig")
      */
     public function createAction() {
         $request = $this->container->get('Request');
