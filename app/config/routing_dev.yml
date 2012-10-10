@@ -13,10 +13,15 @@ EvocatioUser:
     type:     annotation
     prefix: /{_locale}/user/
 
+EvocatioPosGenericProduct:
+    resource: "@EvocatioPosBundle/Controller/GenericProductController.php"
+    type:     annotation
+    prefix: /{_locale}/generic/
+
 EvocatioPersonaBundle:
     resource: "@EvocatioPersonaBundle/Controller/PersonaController.php"
     type:     annotation
-    prefix: /{local}/persona/
+    prefix: /{_locale}/persona/
 
 EvocatioPersonaPerson:
     resource: "@EvocatioPersonaBundle/Controller/PersonController.php"

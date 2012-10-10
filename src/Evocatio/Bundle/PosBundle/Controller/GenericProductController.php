@@ -11,13 +11,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 // Evocatio includes
-use Evocatio\Bundle\PosBundle\Form\ProductType as Form;
-use Evocatio\Bundle\PosBundle\Entity\Product as Entity;
+use Evocatio\Bundle\PosBundle\Form\GenericProductType as Form;
+use Evocatio\Bundle\PosBundle\Entity\GenericProduct as Entity;
 
-class ProductController extends ContainerAware {
+class GenericProductController extends ContainerAware {
 
     /**
-     * @Route("/", name="EvocatioPosBundle_ProductIndex")
+     * @Route("/", name="EvocatioPosBundle_GenericProductIndex")
      * @Method("GET")
      * @Template()
      */
@@ -28,9 +28,9 @@ class ProductController extends ContainerAware {
     }
 
     /**
-     * Finds and displays a persona entity.
+     * Finds and displays an entity.
      *
-     * @Route("/{id}/show", name="EvocatioPosBundle_ProductShow")
+     * @Route("/{id}/show", name="EvocatioPosBundle_GenericProductShow")
      * @Method("GET")
      * @Template()
      */
@@ -50,9 +50,9 @@ class ProductController extends ContainerAware {
     }
 
     /**
-     * Finds and displays all personas for admin.
+     * Finds and displays all entities for admin.
      *
-     * @Route("/list", name="EvocatioPosBundle_ProductList")
+     * @Route("/list", name="EvocatioPosBundle_GenericProductList")
      * @Method("GET")
      * @Template()
      */
@@ -63,7 +63,7 @@ class ProductController extends ContainerAware {
     }
 
     /**
-     * @Route("/new", name="EvocatioPosBundle_ProductNew")
+     * @Route("/new", name="EvocatioPosBundle_GenericProductNew")
      * @Method("GET")
      * @Template
      */
@@ -74,9 +74,9 @@ class ProductController extends ContainerAware {
     }
 
     /**
-     * Creates a new persona entity.
+     * Creates a new entity.
      *
-     * @Route("/new", name="EvocatioPosBundle_ProductCreate")
+     * @Route("/new", name="EvocatioPosBundle_GenericProductCreate")
      * @Method("POST")
      * @Template("EvocatioPosBundle:Default:new.html.twig")
      */
@@ -88,7 +88,7 @@ class ProductController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_ProductList'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_GenericProductList'));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -98,7 +98,7 @@ class ProductController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPosBundle_ProductEdit")
+     * @Route("/{id}/edit", name="EvocatioPosBundle_GenericProductEdit")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -120,7 +120,7 @@ class ProductController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPosBundle_ProductUpdate")
+     * @Route("/{id}/edit", name="EvocatioPosBundle_GenericProductUpdate")
      * @return RedirectResponse
      * @Method("POST")
      * @Template("EvocatioPosBundle:Default:edit.html.twig")
@@ -139,7 +139,7 @@ class ProductController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_ProductList'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_GenericProductList'));
         }
         $this->container->get("session")->setFlash("error", "update.error");
 
@@ -151,16 +151,16 @@ class ProductController extends ContainerAware {
     }
 
     /**
-     * Set a persona entity state to inactive.
+     * Set an entity state to inactive.
      *
-     * @Route("/{id}/state", name="EvocatioPosBundle_ProductToggleState")
+     * @Route("/{id}/state", name="EvocatioPosBundle_GenericProductToggleState")
      * @Method("GET")
      */
     public function toggleStateAction($id) {
         $em = $this->container->get('doctrine')->getEntityManager();
         $entity = $em->find('EvocatioPosBundle:GenericProduct', $id);
         if (!$entity) {
-            throw new NotFoundHttpException("Product non trouvé");
+            throw new NotFoundHttpException("GenericProduct non trouvé");
         }
         $entity->setStatus(!$entity->getStatus());
         $em->persist($entity);
@@ -170,9 +170,9 @@ class ProductController extends ContainerAware {
     }
 
     /**
-     * Deletes a persona entity.
+     * Deletes a entity.
      *
-     * @Route("/{id}/delete", name="EvocatioPosBundle_ProductDelete")
+     * @Route("/{id}/delete", name="EvocatioPosBundle_GenericProductDelete")
      * @Method("POST")
      */
     public function deleteAction($id) {
@@ -187,20 +187,20 @@ class ProductController extends ContainerAware {
         $em->remove($entity);
         $em->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_ProductList'));
+        return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_GenericProductList'));
     }
 
 //  ------------- Privates -------------------------------------------
     /**
      * Creates an edit_form with all the translations objects added for status languages
-     * @param persona $entity
+     * @param $entity
      * @return Form or RedirectResponse   if validation error
      */
     protected function createEditForm($entity) {
 //        the list of language here will decide what languages will appear in the form for new or edit.
         $languages = $this->container->get('Doctrine')->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(Array("status" => array(1, 2)));
 
-//        $entity->addTranslations($languages);
+        $entity->addTranslations($languages);
 
         $edit_form = $this->container->get('form.factory')->create(new Form(), $entity);
         return $edit_form;

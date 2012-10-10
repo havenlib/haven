@@ -1,7 +1,10 @@
 function addAnItem(source){
+    // this function will add an item to a collection from a data-prototype as created by symfony 2's form with option allow_add and data-prototype set to true
+    // It will use the length of the child in the data-prototype div, or, the length of all the childs of all the div with the data-join-class class.
+    // This is to allow use to create many forms for a single type of relationship in a table inheritance situtation
     newnode = document.createElement("div");
-    nodes_to_count_id = $("#"+source).attr('data-join-class')?"."+$("#"+source).attr('data-join-class'):"#"+source;
-    newnode.innerHTML =$("#"+source).attr('data-prototype').replace(/__name__/gi,$(nodes_to_count_id).children().length);
+    next_id = $("#"+source).attr('data-join-class')?$("."+$("#"+source).attr('data-join-class')).children().length:$("#"+source).children().length;
+    newnode.innerHTML =$("#"+source).attr('data-prototype').replace(/__name__/gi, next_id);
     document.getElementById(source).appendChild(newnode);
 }
 
