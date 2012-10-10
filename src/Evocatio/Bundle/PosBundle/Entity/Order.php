@@ -18,10 +18,10 @@ class Order {
      */
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Evocatio\Bundle\PersonaBundle\Entity\Contact")
-     */
-    protected $utilisateur;
+//    /**
+//     * @ORM\ManyToOne(targetEntity="Evocatio\Bundle\PersonaBundle\Entity\Contact")
+//     */
+//    protected $utilisateur;
     
     /**
      * @ORM\Column(name="date", type="date")
@@ -54,7 +54,7 @@ class Order {
      protected $livraison_nom;
 
      /**
-      * @ORM\Column(name="livraison_address1", type="string", length="256")
+      * @ORM\Column(name="livraison_address1", type="string", length=256)
       */
      protected $livraison_address1;
 
@@ -226,7 +226,7 @@ class Order {
     public function __construct()
     {
         $this->order_taxes_applicables = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->order_products = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->order_products = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -988,5 +988,38 @@ class Order {
     public function getOrderTaxesApplicables()
     {
         return $this->order_taxes_applicables;
+    }
+
+    /**
+     * Add order_taxes_applicables
+     *
+     * @param Evocatio\Bundle\PosBundle\Entity\OrderTax $orderTaxesApplicables
+     * @return Order
+     */
+    public function addOrderTaxesApplicable(\Evocatio\Bundle\PosBundle\Entity\OrderTax $orderTaxesApplicables)
+    {
+        $this->order_taxes_applicables[] = $orderTaxesApplicables;
+    
+        return $this;
+    }
+
+    /**
+     * Remove order_taxes_applicables
+     *
+     * @param Evocatio\Bundle\PosBundle\Entity\OrderTax $orderTaxesApplicables
+     */
+    public function removeOrderTaxesApplicable(\Evocatio\Bundle\PosBundle\Entity\OrderTax $orderTaxesApplicables)
+    {
+        $this->order_taxes_applicables->removeElement($orderTaxesApplicables);
+    }
+
+    /**
+     * Remove order_products
+     *
+     * @param Evocatio\Bundle\PosBundle\Entity\OrderProduct $orderProducts
+     */
+    public function removeOrderProduct(\Evocatio\Bundle\PosBundle\Entity\OrderProduct $orderProducts)
+    {
+        $this->order_products->removeElement($orderProducts);
     }
 }

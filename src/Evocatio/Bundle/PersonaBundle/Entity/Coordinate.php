@@ -33,7 +33,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 //    private $master;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Persona", inversedBy="coordinate", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Persona", mappedBy="coordinate", cascade={"persist"})
+     * @ORM\JoinTable(name="PersonaCoordinate")
      */
     private $persona;
 
