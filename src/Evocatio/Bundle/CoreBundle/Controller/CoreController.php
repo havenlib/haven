@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Evocatio\Bundle\CoreBundle\Lib\Locale;
 use Evocatio\Bundle\CoreBundle\Entity\Language;
 
-class DefaultController extends ContainerAware {
+class CoreController extends ContainerAware {
 
     /**
      * @Route("/changeLanguage", name="change_language")
@@ -55,7 +55,7 @@ class DefaultController extends ContainerAware {
         $languages = $status ? $rep->findByStatus(true) : $rep->findAll();
         return new Response(
                         $this->container->get('templating')->render(
-                                $template ? $template : 'EvocatioCoreBundle:Default:i18nSwitcher.html.twig'
+                                $template ? $template : 'EvocatioCoreBundle:Core:i18nSwitcher.html.twig'
                                 , array('languages' => $languages)
                 ));
     }
