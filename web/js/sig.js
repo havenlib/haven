@@ -1,6 +1,7 @@
 function addAnItem(source){
     newnode = document.createElement("div");
-    newnode.innerHTML =document.getElementById(source).getAttribute('data-prototype').replace(/__name__/gi, document.getElementById(source).childNodes.length);
+    nodes_to_count_id = $("#"+source).attr('data-join-class')?"."+$("#"+source).attr('data-join-class'):"#"+source;
+    newnode.innerHTML =$("#"+source).attr('data-prototype').replace(/__name__/gi,$(nodes_to_count_id).children().length);
     document.getElementById(source).appendChild(newnode);
 }
 
