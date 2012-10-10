@@ -22,14 +22,14 @@ class PersonWithCoorType extends AbstractType
                     'prototype' => true,
                     // Post update
                     'by_reference' => true,
-                    ))
+                    "attr" => array("class" => "coordinate", "data-join-class" => "coordinate")))
             ->add('map', "collection", array(
                     'type' => new MapType(),
                     'allow_add' => true,
                     'prototype' => true,
                     // Post update
                     'by_reference' => true,
-                    ))
+                    "attr" => array("class" => "coordinate", "data-join-class" => "coordinate")))
 //            ->add('created_by')
         ;
     }

@@ -20,10 +20,16 @@
             <th>Email</th>
             <td>{{ entity.getLastname() }}</td>
         </tr>
-        {% for coor in entity.getCoordinate() %}
+        {% for coor in entity.getPostal() %}
         <tr>
-            <th>coor</th>
+            <th>address</th>
             <td>{{ coor.getAddress() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getMap() %}
+        <tr>
+            <th>long</th>
+            <td>{{ coor.getLng() }}</td>
         </tr>
         {% endfor %}
     </tbody>
