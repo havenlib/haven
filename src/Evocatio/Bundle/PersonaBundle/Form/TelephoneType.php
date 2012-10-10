@@ -4,6 +4,7 @@ namespace Evocatio\Bundle\PersonaBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Description of TelephoneType
@@ -18,14 +19,14 @@ class TelephoneType extends AbstractType {
                 ->add('type', 'text');
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver){
-        return array(
-            'data_class' => 'Evocatio\Bundle\PersonaBundle\Entity\Telephone'
-        );
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+        $resolver->setDefaults(array(
+        'data_class' => 'Evocatio\Bundle\PersonaBundle\Entity\Telephone'
+        ));
     }
 
     public function getName() {
-        return 'telephone';
+        return 'evocatio_bundle_personabundle_telephonetype';
     }
 
 }

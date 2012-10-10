@@ -28,8 +28,26 @@
         {% endfor %}
         {% for coor in entity.getMap() %}
         <tr>
-            <th>long</th>
+            <th>Long</th>
             <td>{{ coor.getLng() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getWeb() %}
+        <tr>
+            <th>Web</th>
+            <td>{{ coor.getWeb() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getTelephone() %}
+        <tr>
+            <th>Telephone</th>
+            <td>{{ coor.getTelephone() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getTime() %}
+        <tr>
+            <th>Time</th>
+            <td>{{ coor.getMoment() }}</td>
         </tr>
         {% endfor %}
     </tbody>

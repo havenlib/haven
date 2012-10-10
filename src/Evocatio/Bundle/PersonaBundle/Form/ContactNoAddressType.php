@@ -24,6 +24,6 @@ class ContactNoAddressType extends AbstractType
     
     public function getName()
     {
-        return 'evocatio_bundle_contactbundle_contacttype';
+        return 'evocatio_bundle_contactbundle_contactnoaddresstype';
     }
 }

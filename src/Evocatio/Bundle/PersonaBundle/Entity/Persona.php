@@ -197,4 +197,94 @@ class Persona {
                         });
     }
 
+    /**
+     * Add coordinate
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+     * @return Persona
+     */
+    public function addWeb(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+        return $this->addCoordinate($coordinate);
+    }
+
+    /**
+     * Remove coordinate
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+     */
+    public function removeWeb(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+        $this->removeCoordinate($coordinate);
+    }
+
+    /**
+     * Get coordinate
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getWeb() {
+        return $this->getCoordinate()->filter(function ($coordinate) {
+                            return get_class($coordinate) == "Evocatio\Bundle\PersonaBundle\Entity\Web";
+                        });
+    }
+
+    /**
+     * Add coordinate
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+     * @return Persona
+     */
+    public function addTelephone(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+        return $this->addCoordinate($coordinate);
+    }
+
+    /**
+     * Remove coordinate
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+     */
+    public function removeTelephone(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+        $this->removeCoordinate($coordinate);
+    }
+
+    /**
+     * Get coordinate
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTelephone() {
+        return $this->getCoordinate()->filter(function ($coordinate) {
+                            return get_class($coordinate) == "Evocatio\Bundle\PersonaBundle\Entity\Telephone";
+                        });
+    }
+
+    /**
+     * Add coordinate
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+     * @return Persona
+     */
+    public function addTime(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+        return $this->addCoordinate($coordinate);
+    }
+
+    /**
+     * Remove coordinate
+     *
+     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+     */
+    public function removeTime(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+        $this->removeCoordinate($coordinate);
+    }
+
+    /**
+     * Get coordinate
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTime() {
+        return $this->getCoordinate()->filter(function ($coordinate) {
+                            return get_class($coordinate) == "Evocatio\Bundle\PersonaBundle\Entity\Time";
+                        });
+    }
+
 }

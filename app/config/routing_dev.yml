@@ -24,7 +24,7 @@ EvocatioPersonaPerson:
     prefix: /{_locale}/person/
 
 EvocatioPersonaPersonWithCoor:
-    resource: "@EvocatioPersonaBundle/Controller/PersonWithCoordinateController.php"
+    resource: "@EvocatioPersonaBundle/Controller/PersonWithCoorController.php"
     type:     annotation
     prefix: /{_locale}/personWithCoor/
 

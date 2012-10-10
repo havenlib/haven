@@ -15,7 +15,6 @@ class PersonWithCoorType extends AbstractType
             ->add('firstname')
             ->add('lastname')
             ->add('sex')
-            ->add('birthday')
             ->add('postal', "collection", array(
                     'type' => new PostalType(),
                     'allow_add' => true,
@@ -30,7 +29,24 @@ class PersonWithCoorType extends AbstractType
                     // Post update
                     'by_reference' => true,
                     "attr" => array("class" => "coordinate", "data-join-class" => "coordinate")))
-//            ->add('created_by')
+            ->add('web', "collection", array(
+                    'type' => new WebType(),
+                    'allow_add' => true,
+                    'prototype' => true,
+                    'by_reference' => true,
+                    "attr" => array("class" => "coordinate", "data-join-class" => "coordinate")))
+            ->add('telephone', "collection", array(
+                    'type' => new TelephoneType(),
+                    'allow_add' => true,
+                    'prototype' => true,
+                    'by_reference' => true,
+                    "attr" => array("class" => "coordinate", "data-join-class" => "coordinate")))
+            ->add('time', "collection", array(
+                    'type' => new TimeType(),
+                    'allow_add' => true,
+                    'prototype' => true,
+                    'by_reference' => true,
+                    "attr" => array("class" => "coordinate", "data-join-class" => "coordinate")))
         ;
     }
 
