@@ -39,14 +39,14 @@ EvocatioPostalBundle:
     prefix: /{_locale}/postal/
 
 EvocatioFaqBundle:
-    resource: "@EvocatioFaqBundle/Controller/DefaultController.php"
+    resource: "@EvocatioFaqBundle/Controller/FaqController.php"
     type:     annotation
     prefix: /{_locale}/faq/
 #    requirements: 
 #      _locale: fr|en
 
 EvocatioPostBundle:
-    resource: "@EvocatioPostBundle/Controller/DefaultController.php"
+    resource: "@EvocatioPostBundle/Controller/PostController.php"
     type:     annotation
     prefix: /{_locale}/post/
 #    requirements: 
