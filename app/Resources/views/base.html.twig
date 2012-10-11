@@ -66,15 +66,15 @@
 
                 <div id="main">
                 {% block main %}
+                    <div class="left">
                     {% block aside %}
-                        <div class="left">
-                        </div>
                     {% endblock aside %}
+                    </div>
+                    <div class="middle">
                     {% block theatre %}
-                        <div class="right">
                             this is the theater
-                        </div>
                     {% endblock theatre %}
+                    </div>
                 {% endblock main %}
                 </div>
 
