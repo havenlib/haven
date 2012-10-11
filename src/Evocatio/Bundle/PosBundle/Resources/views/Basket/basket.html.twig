@@ -1,0 +1,13 @@
+        {% if entity is not empty%}
+        <table>
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ dump(entity) }}</td>
+                </tr>
+              
+            </tbody>
+        </table>
+        {% else %}
+        Pas de basket
+        {% endif %}

@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\PosBundle\Entity\OrderProductRepository")
+ * @ORM\Entity()
  */
 class OrderProduct
 {
@@ -31,18 +31,16 @@ class OrderProduct
     protected $product;
 
     /**
-     * @ORM\Column(name="quantite", type="integer")
+     * @ORM\Column(name="quantity", type="integer")
      */
-    protected $quantite;
+    protected $quantity;
 
      /**
-     * @var decimal $prix
+     * @var decimal $price
      *
-     * @ORM\Column(name="prix", type="decimal", precision=10, scale = 2, nullable=false)
+     * @ORM\Column(name="price", type="decimal", precision=10, scale = 2, nullable=false)
      */
-    protected $prix;
-
-
+    protected $price;
 
     /**
      * Get id
@@ -55,83 +53,62 @@ class OrderProduct
     }
 
     /**
-     * Set quantite
+     * Set quantity
      *
-     * @param integer $quantite
+     * @param integer $quantity
+     * @return OrderProduct
      */
-    public function setQuantite($quantite)
+    public function setQuantity($quantity)
     {
-        $this->quantite = $quantite;
+        $this->quantity = $quantity;
+    
+        return $this;
     }
 
     /**
-     * Get quantite
+     * Get quantity
      *
      * @return integer 
      */
-    public function getQuantite()
+    public function getQuantity()
     {
-        return $this->quantite;
+        return $this->quantity;
     }
 
     /**
-     * Set prix
+     * Set price
      *
-     * @param decimal $prix
+     * @param float $price
+     * @return OrderProduct
      */
-    public function setPrix($prix)
+    public function setPrice($price)
     {
-        $this->prix = $prix;
+        $this->price = $price;
+    
+        return $this;
     }
 
     /**
-     * Get prix
+     * Get price
      *
-     * @return decimal 
+     * @return float 
      */
-    public function getPrix()
+    public function getPrice()
     {
-        return $this->prix;
+        return $this->price;
     }
-
-    /**
-     * Get prixFormate
-     *
-     * @return decimal
-     */
-    public function getPrixFormate()
-    {
-        return \money_format('%i', $this->prix);
-    }
-
-    /**
-     * Get prixFormate
-     *
-     * @return decimal
-     */
-    public function getTotalFormate()
-    {
-        return \money_format('%i', $this->quantite*$this->prix);
-    }
-    /**
-     * Get prixFormate
-     *
-     * @return decimal
-     */
-    public function getTotal()
-    {
-        return $this->quantite*$this->prix;
-    }
-
 
     /**
      * Set order
      *
      * @param Evocatio\Bundle\PosBundle\Entity\Order $order
+     * @return OrderProduct
      */
-    public function setOrder(\Evocatio\Bundle\PosBundle\Entity\Order $order)
+    public function setOrder(\Evocatio\Bundle\PosBundle\Entity\Order $order = null)
     {
         $this->order = $order;
+    
+        return $this;
     }
 
     /**
@@ -147,11 +124,14 @@ class OrderProduct
     /**
      * Set product
      *
-     * @param Evocatio\Bundle\PosBundle\Entity\Product $produc
+     * @param Evocatio\Bundle\PosBundle\Entity\Product $product
+     * @return OrderProduct
      */
-    public function setProduct(\Evocatio\Bundle\PosBundle\Entity\Product $product)
+    public function setProduct(\Evocatio\Bundle\PosBundle\Entity\Product $product = null)
     {
         $this->product = $product;
+    
+        return $this;
     }
 
     /**

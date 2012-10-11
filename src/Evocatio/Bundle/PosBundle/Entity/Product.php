@@ -36,12 +36,14 @@ class Product extends Translatable {
      */
     private $status;
 
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -51,9 +53,10 @@ class Product extends Translatable {
      * @param float $price
      * @return Product
      */
-    public function setPrice($price) {
+    public function setPrice($price)
+    {
         $this->price = $price;
-
+    
         return $this;
     }
 
@@ -62,7 +65,8 @@ class Product extends Translatable {
      *
      * @return float 
      */
-    public function getPrice() {
+    public function getPrice()
+    {
         return $this->price;
     }
 
@@ -72,9 +76,10 @@ class Product extends Translatable {
      * @param boolean $status
      * @return Product
      */
-    public function setStatus($status) {
+    public function setStatus($status)
+    {
         $this->status = $status;
-
+    
         return $this;
     }
 
@@ -83,8 +88,8 @@ class Product extends Translatable {
      *
      * @return boolean 
      */
-    public function getStatus() {
+    public function getStatus()
+    {
         return $this->status;
     }
-
 }
