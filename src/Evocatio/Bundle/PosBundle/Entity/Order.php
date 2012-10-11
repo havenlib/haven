@@ -853,4 +853,14 @@ class Order {
     {
         return $this->order_products;
     }
+
+    /**
+     * Get order_products
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function setOrderProducts($OrderProducts)
+    {
+        $this->order_products=$OrderProducts;
+    }
 }

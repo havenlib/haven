@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 // Evocatio includes
 use Evocatio\Bundle\PosBundle\Form\BasketType as Form;
-use Evocatio\Bundle\PosBundle\Entity\Basket as Entity;
+use Evocatio\Bundle\PosBundle\Entity\Order as Entity;
 
 class BasketController extends ContainerAware {
 
@@ -22,7 +22,7 @@ class BasketController extends ContainerAware {
      * @Template()
      */
     public function indexAction() {
-        $entity = unserialize($this->container->get("session")->get("basket"));
+        $entity = $this->getBasketFromSession();
 
         return array("entity" => $entity);
     }
@@ -35,7 +35,7 @@ class BasketController extends ContainerAware {
      * @Template()
      */
     public function showAction($id) {
-        $entity = unserialize($this->container->get("session")->get("basket"));
+        $entity = $this->getBasketFromSession();
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -57,7 +57,10 @@ class BasketController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-        $entity = unserialize($this->container->get("session")->get("basket"));
+        $entity = $this->getBasketFromSession();
+        echo "<pre>";
+        echo \Doctrine\Common\Util\Debug::dump($entity, 7);
+        echo "</pre>";
 
         return array("entity" => $entity);
     }
@@ -104,9 +107,9 @@ class BasketController extends ContainerAware {
      * @Template
      */
     public function editAction() {
-        $entity = unserialize($this->container->get("session")->get("basket"));
-        foreach ($entity->getLineItems() as $line_item)
-            $line_item->setProduct($this->container->get("doctrine")->getEntityManager()->merge($line_item->getProduct()));
+//        $this->container->get("session")->set("basket", null);
+        $entity = $this->getBasketFromSession();
+
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
         }
@@ -127,23 +130,31 @@ class BasketController extends ContainerAware {
      * @Template("EvocatioPosBundle:Basket:edit.html.twig")
      */
     public function updateAction() {
-        $entity = unserialize($this->container->get("session")->get("basket"));
-        foreach ($entity->getLineItems() as $line_item)
-            $line_item->setProduct($this->container->get("doctrine")->getEntityManager()->merge($line_item->getProduct()));
+        $entity = $this->getBasketFromSession();
+        $basket_post = $this->container->get('Request')->get("evocatio_bundle_posbundle_baskettype");
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
         }
         $edit_form = $this->createEditForm($entity);
 //        $delete_form = $this->createDeleteForm($id);
+        echo "<pre>-->";
+        print_r($basket_post);
+        echo "<br /><-->";
+        unset($basket_post["order_products"][1]);
+        print_r($basket_post);
+        echo "<--<br />";
+//            print_r(get_class_methods($this->container->get('Request')));
+        echo "</pre>";
+//        die();
 
-        $edit_form->bindRequest($this->container->get('Request'));
+        $edit_form->bind($basket_post);
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
 
             return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_BasketList'));
         }
-        $this->container->get("session")->setFlash("error", "update.error");
+//        $this->container->get("session")->setFlash("error", "update.error");
 
         return array(
             'entity' => $entity,
@@ -225,12 +236,54 @@ class BasketController extends ContainerAware {
     protected function processForm($edit_form) {
         if ($edit_form->isValid()) {
             $entity = $edit_form->getData();
-            $this->container->get("session")->set("basket",  serialize($entity));
+            $em = $this->container->get('doctrine')->getEntityManager();
+            $em->persist($entity);
+            $em->flush();
+            $this->container->get("session")->set("basket", $entity);
 
             return true;
         }
-
         return $edit_form;
+    }
+
+    private function getBasketFromSession() {
+        if (!$entity = $this->container->get("session")->get("basket")) {
+
+            return new Entity();
+        }
+
+        $array_collection = new \Doctrine\Common\Collections\ArrayCollection();
+        
+        $em=$this->container->get("doctrine")->getEntityManager();
+        $test = $entity->getOrderProducts()->map(function($line_item) use ($em, $array_collection){
+            if($line_item->getProduct() != NULL){
+                $line_item->setProduct($em->merge($line_item->getProduct()));
+                $array_collection->add($line_item);
+            }
+        });
+
+
+
+//        if ($entity->getOrderProducts()) {
+//            foreach ($entity->getOrderProducts() as $line_item) {
+//                if ($line_item->getProduct() != null) {
+//                    $line_item->setProduct($this->container->get("doctrine")->getEntityManager()->merge($line_item->getProduct()));
+//                    $array_collection->add($line_item);
+//                }
+//            }
+//        }
+        $entity->getOrderProducts()->clear();
+        $entity->setOrderProducts($array_collection);
+//        
+//        
+//        $test = new \Evocatio\Bundle\PosBundle\Entity\OrderProduct();
+//        $entity->addOrderProduct($test);
+//        echo print_r(($array_collection->getKeys()));
+//            $entity = $this->container->get("doctrine")->getEntityManager()->merge($entity);
+//        $em = $this->container->get('doctrine')->getEntityManager();
+//        $em->persist($entity);
+//        $em->flush();
+        return $entity;
     }
 
 }

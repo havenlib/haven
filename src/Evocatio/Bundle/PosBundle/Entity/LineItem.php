@@ -12,7 +12,7 @@ class LineItem{
         return $this->product;
     }
 
-    public function setProduct(Product $product) {
+    public function setProduct($product) {
         $this->product = $product;
         
         return $this;
