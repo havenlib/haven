@@ -9,24 +9,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
-class FaqController extends \Evocatio\Bundle\FaqBundle\Controller\FaqController {
+class PostController extends \Evocatio\Bundle\PostBundle\Controller\PostController {
 
     /**
-     * Creates a new faq entity.
+     * Creates a new post entity.
      *
-     * @Route("/new", name="EvocatioFaqBundle_FaqCreate")
+     * @Route("/new", name="EvocatioPostBundle_PostCreate")
      * @Method("POST")
-     * @Template("WebsiteSiteBundle:Faq:new.html.twig")
+     * @Template("EvocatioPostBundle:Post:new.html.twig")
      */
     public function createAction() {
         return parent::createAction();
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioFaqBundle_FaqUpdate")
+     * @Route("/{id}/edit", name="EvocatioPostBundle_PostUpdate")
      * @return RedirectResponse
      * @Method("POST")
-     * @Template("WebsiteSiteBundle:Faq:edit.html.twig")
+     * @Template("WebsiteSiteBundle:Post:edit.html.twig")
      */
     public function updateAction($id) {
         return parent::updateAction($id);

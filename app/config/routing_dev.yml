@@ -55,10 +55,10 @@ EvocatioPostalBundle:
 #    requirements: 
 #      _locale: fr|en
 
-EvocatioPostBundle:
-    resource: "@EvocatioPostBundle/Controller/PostController.php"
-    type:     annotation
-    prefix: /{_locale}/post/
+#EvocatioPostBundle:
+#    resource: "@EvocatioPostBundle/Controller/PostController.php"
+#    type:     annotation
+#    prefix: /{_locale}/post/
 #    requirements: 
 #      _locale: fr|en
 
