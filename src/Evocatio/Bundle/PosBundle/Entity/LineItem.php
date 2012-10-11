@@ -8,6 +8,7 @@ class LineItem{
     private $quantity;
 
     public function getProduct() {
+        
         return $this->product;
     }
 

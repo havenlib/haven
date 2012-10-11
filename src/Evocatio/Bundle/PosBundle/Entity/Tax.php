@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Le rang 0 est applicable mais non cummulable,
  * Tous ce qui a un rang non null est composé ex: TPS: rang 1, TVQ rang 2 , on peut pense à un spécial pour 0, le rang sinon commence à 1
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\PosBundle\Entity\TaxRepository")
+ * @ORM\Entity()
  */
 class Tax {
 
@@ -30,23 +30,23 @@ class Tax {
 
 
     /**
-     * @ORM\Column(name="nom", type="string", length=8)
+     * @ORM\Column(name="name", type="string", length=8)
      */
-    protected $nom;
+    protected $name;
 
     /**
-     * @ORM\Column(name="taux", type="float", nullable=false)
+     * @ORM\Column(name="rate", type="float", nullable=false)
      */
-    protected $taux;
+    protected $rate;
 
     /**
-     * le rang servira lorsque le taux est composé, il sert à dire à quel rang la taxe sera calcule, ex Québec TPS rang 0 (calculé seule) puis TVQ rang 1 (calculé avec le total de base + rangs précédent)
+     * le rang servira lorsque le rate est composé, il sert à dire à quel rang la taxe sera calcule, ex Québec TPS rang 0 (calculé seule) puis TVQ rang 1 (calculé avec le total de base + rangs précédent)
      * @ORM\Column(name="rang", type="integer", nullable=true)
      */
     protected $rang;
 
 
-    
+
     /**
      * Get id
      *
@@ -58,53 +58,62 @@ class Tax {
     }
 
     /**
-     * Set nom
+     * Set name
      *
-     * @param string $nom
+     * @param string $name
+     * @return Tax
      */
-    public function setNom($nom)
+    public function setName($name)
     {
-        $this->nom = $nom;
+        $this->name = $name;
+    
+        return $this;
     }
 
     /**
-     * Get nom
+     * Get name
      *
      * @return string 
      */
-    public function getNom()
+    public function getName()
     {
-        return $this->nom;
+        return $this->name;
     }
 
     /**
-     * Set taux
+     * Set rate
      *
-     * @param decimal $taux
+     * @param float $rate
+     * @return Tax
      */
-    public function setTaux($taux)
+    public function setRate($rate)
     {
-        $this->taux = $taux;
+        $this->rate = $rate;
+    
+        return $this;
     }
 
     /**
-     * Get taux
+     * Get rate
      *
-     * @return decimal 
+     * @return float 
      */
-    public function getTaux()
+    public function getRate()
     {
-        return $this->taux;
+        return $this->rate;
     }
 
     /**
      * Set rang
      *
      * @param integer $rang
+     * @return Tax
      */
     public function setRang($rang)
     {
         $this->rang = $rang;
+    
+        return $this;
     }
 
     /**
@@ -117,22 +126,23 @@ class Tax {
         return $this->rang;
     }
 
-    
-
     /**
      * Set state
      *
      * @param Evocatio\Bundle\PersonaBundle\Entity\State $state
+     * @return Tax
      */
-    public function setState(\Evocatio\Bundle\PersonaBundle\Entity\State $state)
+    public function setState(\Evocatio\Bundle\PersonaBundle\Entity\State $state = null)
     {
         $this->state = $state;
+    
+        return $this;
     }
 
     /**
      * Get state
      *
-     * @return Evocatio\Bundle\PersonaBundle\Entity\State
+     * @return Evocatio\Bundle\PersonaBundle\Entity\State 
      */
     public function getState()
     {

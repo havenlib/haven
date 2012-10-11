@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\PosBundle\Entity\OrderTaxRepository")
+ * @ORM\Entity()
  */
 class OrderTax {
     /**
@@ -21,93 +21,32 @@ class OrderTax {
     protected $order;
     
     /**
-     * @ORM\Column(name="nom", type="string", length=8)
+     * @ORM\Column(name="name", type="string", length=8)
      */
-    protected $nom;
+    protected $name;
 
      /**
       *
-      * @ORM\Column(name="taux", type="float")
+      * @ORM\Column(name="rate", type="float")
       */
-     protected $taux;
+     protected $rate;
      /**
       *
-      * @ORM\Column(name="applicable_sur", type="decimal", scale=2)
+      * @ORM\Column(name="applied_on", type="decimal", scale=2)
       */
-     protected $applicable_sur;
+     protected $applied_on;
      /**
       *
-      * @ORM\Column(name="montant_applique", type="decimal", scale=2)
+      * @ORM\Column(name="applied_amount", type="decimal", scale=2)
       */
-     protected $montant_applique;
+     protected $applied_amount;
 
     /**
-     * le rang servira lorsque le taux est composé, il sert à dire à quel rang la taxe sera calcule, ex Québec TPS rang 0 (calculé seule) puis TVQ rang 1 (calculé avec le total de base + rangs précédent)
-     * @ORM\Column(name="rang", type="integer", nullable=true)
+     * le rank servira lorsque le rate est composé, il sert à dire à quel rank la taxe sera calcule, ex Québec TPS rank 0 (calculé seule) puis TVQ rank 1 (calculé avec le total de base + ranks précédent)
+     * @ORM\Column(name="rank", type="integer", nullable=true)
      */
-    protected $rang;
+    protected $rank;
 
-
-
-    /**
-     * Set taux
-     *
-     * @param decimal $taux
-     */
-    public function setTaux($taux)
-    {
-        $this->taux = $taux;
-    }
-
-    /**
-     * Get taux
-     *
-     * @return decimal 
-     */
-    public function getTaux()
-    {
-        return $this->taux;
-    }
-
-    /**
-     * Set order
-     *
-     * @param Evocatio\Bundle\PosBundle\Entity\Order $order
-     */
-    public function setOrder(\Evocatio\Bundle\PosBundle\Entity\Order $order)
-    {
-        $this->order = $order;
-    }
-
-    /**
-     * Get order
-     *
-     * @return Evocatio\Bundle\PosBundle\Entity\Order 
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
-    /**
-     * Set rang
-     *
-     * @param integer $rang
-     */
-    public function setRang($rang)
-    {
-        $this->rang = $rang;
-    }
-
-    /**
-     * Get rang
-     *
-     * @return integer 
-     */
-    public function getRang()
-    {
-        return $this->rang;
-    }
 
     /**
      * Get id
@@ -120,71 +59,140 @@ class OrderTax {
     }
 
     /**
-     * Set nom
+     * Set name
      *
-     * @param string $nom
+     * @param string $name
+     * @return OrderTax
      */
-    public function setNom($nom)
+    public function setName($name)
     {
-        $this->nom = $nom;
+        $this->name = $name;
+    
+        return $this;
     }
 
     /**
-     * Get nom
+     * Get name
      *
      * @return string 
      */
-    public function getNom()
+    public function getName()
     {
-        return $this->nom;
+        return $this->name;
     }
 
     /**
-     * Set applicable_sur
+     * Set rate
      *
-     * @param decimal $applicableSur
+     * @param float $rate
+     * @return OrderTax
      */
-    public function setApplicableSur($applicableSur)
+    public function setRate($rate)
     {
-        $this->applicable_sur = $applicableSur;
+        $this->rate = $rate;
+    
+        return $this;
     }
 
     /**
-     * Get applicable_sur
+     * Get rate
      *
-     * @return decimal 
+     * @return float 
      */
-    public function getApplicableSur()
+    public function getRate()
     {
-        return $this->applicable_sur;
+        return $this->rate;
     }
 
     /**
-     * Set montant_applique
+     * Set applied_on
      *
-     * @param decimal $montantApplique
+     * @param float $appliedOn
+     * @return OrderTax
      */
-    public function setMontantApplique($montantApplique)
+    public function setAppliedOn($appliedOn)
     {
-        $this->montant_applique = $montantApplique;
+        $this->applied_on = $appliedOn;
+    
+        return $this;
     }
 
     /**
-     * Get montant_applique
+     * Get applied_on
      *
-     * @return decimal 
+     * @return float 
      */
-    public function getMontantApplique()
+    public function getAppliedOn()
     {
-        return $this->montant_applique;
+        return $this->applied_on;
     }
+
     /**
-     * Get montant_applique
+     * Set applied_amount
      *
-     * @return decimal
+     * @param float $appliedAmount
+     * @return OrderTax
      */
-    public function getMontantAppliqueFormate()
+    public function setAppliedAmount($appliedAmount)
     {
-        return \money_format("%i", $this->montant_applique);
+        $this->applied_amount = $appliedAmount;
+    
+        return $this;
+    }
+
+    /**
+     * Get applied_amount
+     *
+     * @return float 
+     */
+    public function getAppliedAmount()
+    {
+        return $this->applied_amount;
+    }
+
+    /**
+     * Set rank
+     *
+     * @param integer $rank
+     * @return OrderTax
+     */
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+    
+        return $this;
+    }
+
+    /**
+     * Get rank
+     *
+     * @return integer 
+     */
+    public function getRank()
+    {
+        return $this->rank;
+    }
+
+    /**
+     * Set order
+     *
+     * @param Evocatio\Bundle\PosBundle\Entity\Order $order
+     * @return OrderTax
+     */
+    public function setOrder(\Evocatio\Bundle\PosBundle\Entity\Order $order = null)
+    {
+        $this->order = $order;
+    
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return Evocatio\Bundle\PosBundle\Entity\Order 
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }

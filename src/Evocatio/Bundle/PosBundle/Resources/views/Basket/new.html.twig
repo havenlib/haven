@@ -1,0 +1,18 @@
+{%  extends "EvocatioCoreBundle:Template:add_template.html.twig" %}
+{% block formhead %}
+    {{ path('EvocatioPosBundle_BasketCreate') }}
+{% endblock formhead %}
+
+{% block form %}
+                <fieldset>
+                        {{ form_rest(edit_form) }}
+                </fieldset>
+
+                <input type=button value="add line" onclick="javascript:addAnItem('evocatio_bundle_posbundle_baskettype_line_items')" />
+{% endblock form %}
+
+{% block back %}
+                <a href="{{ path('EvocatioPosBundle_BasketList') }}">
+                    Back to the list
+                </a>
+{% endblock back %}

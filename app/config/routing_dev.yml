@@ -13,6 +13,11 @@ EvocatioUser:
     type:     annotation
     prefix: /{_locale}/user/
 
+EvocatioBasket:
+    resource: "@EvocatioPosBundle/Controller/BasketController.php"
+    type:     annotation
+    prefix: /{_locale}/basket/
+
 EvocatioPosGenericProduct:
     resource: "@EvocatioPosBundle/Controller/GenericProductController.php"
     type:     annotation
