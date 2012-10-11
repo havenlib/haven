@@ -1,10 +1,10 @@
 {%  extends "EvocatioFaqBundle:Faq:new.html.twig" %}
 {% block formhead %}
-{{ path("EvocatioFaqBundle_update", { "id": entity.id }) }}
+{{ path("EvocatioFaqBundle_FaqUpdate", { "id": entity.id }) }}
 {% endblock formhead %}
 {% block delete %}
 <li>
-    <form action="{{ path('EvocatioFaqBundle_delete', { 'id': entity.id }) }}" method="post">
+    <form action="{{ path('EvocatioFaqBundle_FaqDelete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
         <button type="submit">Delete</button>
     </form>
