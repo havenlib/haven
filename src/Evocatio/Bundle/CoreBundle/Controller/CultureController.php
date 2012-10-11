@@ -40,7 +40,7 @@ class CultureController extends ContainerAware {
     }
 
     /**
-     * @Route("/cultures/create", name="EvocatioFaqBundle_create_cultures")
+     * @Route("/cultures/create", name="EvocatioCoreBundle_create_cultures")
      * @Method("POST")
      * @Template("EvocatioCoreBundle:Culture:new.html.twig")
      */
