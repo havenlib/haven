@@ -1,5 +1,13 @@
 {%  extends "::base.html.twig" %}
+{% block aside %}
+    <div>
+        Actualités
+        {% render "WebsiteSiteBundle:Post:index" %}
+    </div>
+{% endblock aside %}
+
 {% block theatre %}
+Faq
 {% include ('WebsiteSiteBundle:Faq:Snippets/definition_list.html.twig') %}
 {% endblock theatre %}
 
