@@ -48,10 +48,10 @@ EvocatioPostalBundle:
     type:     annotation
     prefix: /{_locale}/postal/
 
-EvocatioFaqBundle:
-    resource: "@EvocatioFaqBundle/Controller/FaqController.php"
-    type:     annotation
-    prefix: /{_locale}/faq/
+#EvocatioFaqBundle:
+#    resource: "@EvocatioFaqBundle/Controller/FaqController.php"
+#    type:     annotation
+#    prefix: /{_locale}/faq/
 #    requirements: 
 #      _locale: fr|en
 

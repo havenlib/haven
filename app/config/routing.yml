@@ -1,3 +1,12 @@
+website_site:
+    resource: "@WebsiteSiteBundle/Controller/"
+    type:     annotation
+    prefix:   /
+    
+WebsiteSiteBundle_Faq:
+    resource: "@WebsiteSiteBundle/Controller/FaqController.php"
+    type:     annotation
+    prefix: /{_locale}/faq/
 # Internal routing configuration to handle ESI
 #_internal:
 #    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
