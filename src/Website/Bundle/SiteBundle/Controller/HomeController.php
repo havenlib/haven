@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 class HomeController extends ContainerAware
 {
     /**
-     * @Route("/")
+     * @Route("/", name="WebsiteSiteBundle_Home")
      * @Template()
      */
     public function indexAction()

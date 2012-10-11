@@ -3,7 +3,58 @@ root {
 }
 
 body {
+    margin: 0;
+    background: #1F1D1F;
+    background-image: url('../bundles/websitesite/images/bg_repeat.png');
+    background-repeat: repeat-x;
+    background-position: center 2px;
+    border-top: 2px solid white;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
+    .wrapper{
+        background-image: url('../bundles/websitesite/images/vtexture.png');
+        background-repeat: no-repeat;
+        background-position: top center;
+    }
+
+    header, #main{
+        width: 940px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
 }
 
+header{
+    .menu{
+        list-style: none;
+        background: rgba(255, 255, 255, 0.5);
+        overflow: hidden;
+        display: inline-block;
+        padding: 0 5px;
+        .rounded-corners (21px);
+        border: 1px solid white;
 
+        .menu-item{
+            float: left;
+
+            a{
+                font-weight: 800;
+                font-family: Open Sans, sans-serif;
+                margin: 5px 3px 5px 0;
+                padding: 0 15px;
+                display: block;
+                color: #1F1D1F;
+                text-decoration: none;
+                line-height: 30px;
+            }
+        }
+    }
+}
+
+/** Mixins **/
+.rounded-corners (@radius: 5px) {
+  border-radius: @radius;
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+}
