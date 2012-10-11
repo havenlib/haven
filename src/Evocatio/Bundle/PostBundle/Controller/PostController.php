@@ -18,7 +18,7 @@ use Evocatio\Bundle\PostBundle\Entity\PostTranslation as EntityTranslation;
 class PostController extends ContainerAware {
 
     /**
-     * @Route("/", name="EvocatioPostBundle_index")
+     * @Route("/", name="EvocatioPostBundle_PostIndex")
      * @Method("GET")
      * @Template()
      */
@@ -31,7 +31,7 @@ class PostController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{id}/show", name="EvocatioPostBundle_show")
+     * @Route("/{id}/show", name="EvocatioPostBundle_PostShow")
      * @Method("GET")
      * @Template()
      */
@@ -53,7 +53,7 @@ class PostController extends ContainerAware {
     /**
      * Finds and displays all posts for admin.
      *
-     * @Route("/list", name="EvocatioPostBundle_list")
+     * @Route("/list", name="EvocatioPostBundle_PostList")
      * @Method("GET")
      * @Template()
      */
@@ -64,7 +64,7 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/new", name="EvocatioPostBundle_new")
+     * @Route("/new", name="EvocatioPostBundle_PostNew")
      * @Method("GET")
      * @Template
      */
@@ -77,7 +77,7 @@ class PostController extends ContainerAware {
     /**
      * Creates a new post entity.
      *
-     * @Route("/new", name="EvocatioPostBundle_create")
+     * @Route("/new", name="EvocatioPostBundle_PostCreate")
      * @Method("POST")
      * @Template("EvocatioPostBundle:Post:new.html.twig")
      */
@@ -89,7 +89,7 @@ class PostController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_list'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_PostList'));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -99,7 +99,7 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPostBundle_edit")
+     * @Route("/{id}/edit", name="EvocatioPostBundle_PostEdit")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -121,7 +121,7 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPostBundle_update")
+     * @Route("/{id}/edit", name="EvocatioPostBundle_PostUpdate")
      * @return RedirectResponse
      * @Method("POST")
      * @Template("EvocatioPostBundle:Post:edit.html.twig")
@@ -140,7 +140,7 @@ class PostController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_list'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_PostList'));
         }
         $this->container->get("session")->setFlash("error", "update.error");
 
@@ -154,7 +154,7 @@ class PostController extends ContainerAware {
     /**
      * Set a post entity state to inactive.
      *
-     * @Route("/{id}/state", name="EvocatioPostBundle_toggleState")
+     * @Route("/{id}/state", name="EvocatioPostBundle_PostToggleState")
      * @Method("GET")
      */
     public function toggleStateAction($id) {
@@ -173,7 +173,7 @@ class PostController extends ContainerAware {
     /**
      * Deletes a post entity.
      *
-     * @Route("/{id}/delete", name="EvocatioPostBundle_delete")
+     * @Route("/{id}/delete", name="EvocatioPostBundle_PostDelete")
      * @Method("POST")
      */
     public function deleteAction($id) {
@@ -188,11 +188,11 @@ class PostController extends ContainerAware {
         $em->remove($entity);
         $em->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_list'));
+        return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_PostList'));
     }
 
     /**
-     * @Route("/{slug}", name="EvocatioPostBundle_show_slug")
+     * @Route("/{slug}", name="EvocatioPostBundle_PostShowSlug")
      * @Method("GET")
      * @Template("EvocatioPostBundle:Post:show.html.twig")
      */
