@@ -7,6 +7,11 @@ WebsiteSiteBundle_Faq:
     resource: "@WebsiteSiteBundle/Controller/FaqController.php"
     type:     annotation
     prefix: /{_locale}/faq/
+    
+WebsiteSiteBundle_Post:
+    resource: "@WebsiteSiteBundle/Controller/PostController.php"
+    type:     annotation
+    prefix: /{_locale}/post/
 # Internal routing configuration to handle ESI
 #_internal:
 #    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
