@@ -17,7 +17,7 @@ use Evocatio\Bundle\FaqBundle\Entity\Faq as Entity;
 class FaqController extends ContainerAware {
 
     /**
-     * @Route("/", name="EvocatioFaqBundle_index")
+     * @Route("/", name="EvocatioFaqBundle_FaqIndex")
      * @Method("GET")
      * @Template()
      */
@@ -30,7 +30,7 @@ class FaqController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{id}/show", name="EvocatioFaqBundle_show")
+     * @Route("/{id}/show", name="EvocatioFaqBundle_FaqShow")
      * @Method("GET")
      * @Template()
      */
@@ -52,7 +52,7 @@ class FaqController extends ContainerAware {
     /**
      * Finds and displays all faqs for admin.
      *
-     * @Route("/list", name="EvocatioFaqBundle_list")
+     * @Route("/list", name="EvocatioFaqBundle_FaqList")
      * @Method("GET")
      * @Template()
      */
@@ -63,7 +63,7 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * @Route("/new", name="EvocatioFaqBundle_new")
+     * @Route("/new", name="EvocatioFaqBundle_FaqNew")
      * @Method("GET")
      * @Template
      */
@@ -76,7 +76,7 @@ class FaqController extends ContainerAware {
     /**
      * Creates a new faq entity.
      *
-     * @Route("/new", name="EvocatioFaqBundle_create")
+     * @Route("/new", name="EvocatioFaqBundle_FaqCreate")
      * @Method("POST")
      * @Template("EvocatioFaqBundle:Faq:new.html.twig")
      */
@@ -88,7 +88,7 @@ class FaqController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioFaqBundle_list'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioFaqBundle_FaqList'));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -98,7 +98,7 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioFaqBundle_edit")
+     * @Route("/{id}/edit", name="EvocatioFaqBundle_FaqEdit")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -120,7 +120,7 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioFaqBundle_update")
+     * @Route("/{id}/edit", name="EvocatioFaqBundle_FaqUpdate")
      * @return RedirectResponse
      * @Method("POST")
      * @Template("EvocatioFaqBundle:Faq:edit.html.twig")
@@ -139,7 +139,7 @@ class FaqController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioFaqBundle_list'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioFaqBundle_FaqList'));
         }
         $this->container->get("session")->setFlash("error", "update.error");
 
@@ -153,7 +153,7 @@ class FaqController extends ContainerAware {
     /**
      * Set a faq entity state to inactive.
      *
-     * @Route("/{id}/state", name="EvocatioFaqBundle_toggleState")
+     * @Route("/{id}/state", name="EvocatioFaqBundle_FaqToggleState")
      * @Method("GET")
      */
     public function toggleStateAction($id) {
@@ -172,7 +172,7 @@ class FaqController extends ContainerAware {
     /**
      * Deletes a faq entity.
      *
-     * @Route("/{id}/delete", name="EvocatioFaqBundle_delete")
+     * @Route("/{id}/delete", name="EvocatioFaqBundle_FaqDelete")
      * @Method("POST")
      */
     public function deleteAction($id) {
@@ -187,7 +187,7 @@ class FaqController extends ContainerAware {
         $em->remove($entity);
         $em->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('EvocatioFaqBundle_list'));
+        return new RedirectResponse($this->container->get('router')->generate('EvocatioFaqBundle_FaqList'));
     }
 
 //  ------------- Privates -------------------------------------------
