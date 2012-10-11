@@ -1,0 +1,23 @@
+{%  extends "::base.html.twig" %}
+{% block theatre %}
+    <dl>
+        {% for entity in entities %}
+            <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.question }}</strong> <a href="{{ path('EvocatioFaqBundle_FaqEdit', { 'id': entity.id }) }}">edit</a> <a href="{{ path('EvocatioFaqBundle_FaqShow', { 'id': entity.id }) }}">show</a> </dt>
+            <dd>{{ entity.reponse }}</dd>
+        {% else %}
+            aucun
+        {% endfor %}
+    </dl>
+<ul>
+    <li>
+        <a href="{{ path('EvocatioFaqBundle_FaqNew') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{% endblock theatre %}
+{% block aside %}
+    {% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %}
+{% endblock aside %}
+
+

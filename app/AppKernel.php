@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new Evocatio\Bundle\FaqBundle\EvocatioFaqBundle(),
             new Evocatio\Bundle\PostBundle\EvocatioPostBundle(),
             new Evocatio\Bundle\PosBundle\EvocatioPosBundle(),
+            new Website\Bundle\SiteBundle\WebsiteSiteBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
