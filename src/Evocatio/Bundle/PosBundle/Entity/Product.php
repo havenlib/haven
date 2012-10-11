@@ -13,7 +13,7 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
  * @ORM\DiscriminatorColumn(name="plane", type="string")
  * @ORM\DiscriminatorMap({"generic"="GenericProduct"})
  */
-class Product extends Translatable {
+class Product extends Translatable implements \Serializable {
 
     /**
      * @var integer $id 
@@ -32,7 +32,7 @@ class Product extends Translatable {
 
     /**
      * @var boolean $status
-     * @ORM\Column(name="status", type="boolean")
+     * @ORM\Column(name="status", type="boolean", nullable=true)
      */
     private $status;
 
@@ -92,4 +92,24 @@ class Product extends Translatable {
     {
         return $this->status;
     }
+    
+    public function serialize(){
+        return serialize(get_object_vars($this));
+    }
+
+    public function unserialize($data){
+        $data = unserialize($data);
+        $this->id = $data["id"];
+        $this->setStatus($data["status"]);
+        $this->setPrice($data["price"]);
+    }
+    
+    public function getName($lang = null) {
+        throw new \Exception("Every product type should have a name and a description function ".get_called_class());
+    }    
+    
+    public function getDescription($lang = null) {
+        throw new \Exception("Every product type should have a name and a description function ".get_called_class());
+    }    
+    
 }

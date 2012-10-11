@@ -2,7 +2,7 @@
 {% block theatre %}
     <dl>
         {% if entity is not empty %}
-            {% for line in entity.getLineItems %}
+            {% for line in entity.getOrderProducts %}
             <div>{{ line.product.name }}</div> 
             {% endfor %}
         {% else %}

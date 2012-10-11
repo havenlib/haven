@@ -9,7 +9,7 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 /**
  *  Evocatio\Bundle\PosBundle\Entity\Generic
  * 
- *  @ORM\Entity()
+ *  @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
  */
 class GenericProduct extends Product {
 
@@ -17,7 +17,7 @@ class GenericProduct extends Product {
     /**
      * @ORM\OneToMany(targetEntity="GenericProductTranslation", mappedBy="parent", cascade={"persist"})
      */
-    protected $translations;
+    private $translations;
 
 
     protected function getTranslationClass() {
@@ -64,6 +64,7 @@ class GenericProduct extends Product {
     public function getName($lang = null) {
         return $this->getTranslated('Name', $lang);
     }
+    
     /**
      * Description must return an overall description of the product,
      * For non-generic it should return a concatenation of other descriptive fields,

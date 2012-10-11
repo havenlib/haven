@@ -22,7 +22,7 @@ class GenericProductController extends ContainerAware {
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findAll();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findOnlines();
 
         return array("entities" => $entities);
     }
@@ -104,7 +104,7 @@ class GenericProductController extends ContainerAware {
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->find($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findOneEditables($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -126,7 +126,7 @@ class GenericProductController extends ContainerAware {
      * @Template("EvocatioPosBundle:Default:edit.html.twig")
      */
     public function updateAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->find($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findOneEditables($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
