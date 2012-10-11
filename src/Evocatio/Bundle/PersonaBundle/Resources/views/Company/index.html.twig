@@ -1,0 +1,16 @@
+{%  extends "::base.html.twig" %}
+{% block theatre %}
+    <dl>
+        {% for entity in entities %}
+            <dt><div>{{ entity.name }}</div> </dt>
+            <dd></dd>
+        {% else %}
+            &nbsp;
+        {% endfor %}
+    </dl>
+<ul>
+</ul>
+{% endblock theatre %}
+
+
+
