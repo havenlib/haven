@@ -28,12 +28,12 @@ class BasketProductType extends AbstractType {
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\PosBundle\Entity\OrderProduct'
+            'data_class' => 'Evocatio\Bundle\PosBundle\Entity\PurchaseProduct'
         ));
     }
 
     public function getName() {
-        return 'evocatio_bundle_posbundle_orderproducttype';
+        return 'evocatio_bundle_posbundle_purchaseproducttype';
     }
 
 }

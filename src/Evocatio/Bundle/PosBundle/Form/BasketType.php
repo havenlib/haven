@@ -11,7 +11,7 @@ class BasketType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('memo')
-                ->add('order_products', "collection", array(
+                ->add('purchase_products', "collection", array(
                     "type" => new BasketProductType(),
                     'allow_add' => true,
                     'allow_delete' => true,
@@ -22,7 +22,7 @@ class BasketType extends AbstractType {
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\PosBundle\Entity\Order',
+            'data_class' => 'Evocatio\Bundle\PosBundle\Entity\Purchase',
         ));
     }
 
