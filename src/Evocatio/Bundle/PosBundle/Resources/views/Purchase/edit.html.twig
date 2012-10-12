@@ -1,0 +1,4 @@
+{%  extends "EvocatioPosBundle:Purchase:new.html.twig" %}
+{% block formhead %}
+    {{ path('EvocatioPosBundle_PurchaseUpdate', {"id":entity.id}) }}
+{% endblock formhead %}

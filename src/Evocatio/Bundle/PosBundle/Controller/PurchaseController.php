@@ -11,18 +11,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 // Evocatio includes
-use Evocatio\Bundle\PosBundle\Form\GenericProductType as Form;
-use Evocatio\Bundle\PosBundle\Entity\GenericProduct as Entity;
-
-class GenericProductController extends ContainerAware {
+use Evocatio\Bundle\PosBundle\Form\PurchaseType as Form;
+use Evocatio\Bundle\PosBundle\Entity\Purchase as Entity;
+/**
+ * This controller is really meant to be admin stuff, the users access to his purchase is through the basket controller
+ */
+class PurchaseController extends ContainerAware {
 
     /**
-     * @Route("/", name="EvocatioPosBundle_GenericProductIndex")
+     * @Route("/", name="EvocatioPosBundle_PurchaseIndex")
      * @Method("GET")
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findOnlines();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Purchase")->findAll();
 
         return array("entities" => $entities);
     }
@@ -30,12 +32,12 @@ class GenericProductController extends ContainerAware {
     /**
      * Finds and displays an entity.
      *
-     * @Route("/{id}/show", name="EvocatioPosBundle_GenericProductShow")
+     * @Route("/{id}/show", name="EvocatioPosBundle_PurchaseShow")
      * @Method("GET")
      * @Template()
      */
     public function showAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->find($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Purchase")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -52,18 +54,18 @@ class GenericProductController extends ContainerAware {
     /**
      * Finds and displays all entities for admin.
      *
-     * @Route("/list", name="EvocatioPosBundle_GenericProductList")
+     * @Route("/list", name="EvocatioPosBundle_PurchaseList")
      * @Method("GET")
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findAll();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Purchase")->findAll();
 //        echo "default : " .\Evocatio\Bundle\CoreBundle\Lib\Locale::getDefault();
         return array("entities" => $entities);
     }
 
     /**
-     * @Route("/new", name="EvocatioPosBundle_GenericProductNew")
+     * @Route("/new", name="EvocatioPosBundle_PurchaseNew")
      * @Method("GET")
      * @Template
      */
@@ -76,9 +78,9 @@ class GenericProductController extends ContainerAware {
     /**
      * Creates a new entity.
      *
-     * @Route("/new", name="EvocatioPosBundle_GenericProductCreate")
+     * @Route("/new", name="EvocatioPosBundle_PurchaseCreate")
      * @Method("POST")
-     * @Template("EvocatioPosBundle:GenericProduct:new.html.twig")
+     * @Template("EvocatioPosBundle:Purchase:new.html.twig")
      */
     public function createAction() {
         $edit_form = $this->createEditForm(new Entity());
@@ -88,7 +90,7 @@ class GenericProductController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_GenericProductList'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_PurchaseList'));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -98,13 +100,13 @@ class GenericProductController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPosBundle_GenericProductEdit")
+     * @Route("/{id}/edit", name="EvocatioPosBundle_PurchaseEdit")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findOneEditables($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Purchase")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -120,13 +122,13 @@ class GenericProductController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPosBundle_GenericProductUpdate")
+     * @Route("/{id}/edit", name="EvocatioPosBundle_PurchaseUpdate")
      * @return RedirectResponse
      * @Method("POST")
-     * @Template("EvocatioPosBundle:GenericProduct:edit.html.twig")
+     * @Template("EvocatioPosBundle:Purchase:edit.html.twig")
      */
     public function updateAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findOneEditables($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Purchase")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -139,7 +141,7 @@ class GenericProductController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_GenericProductList'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_PurchaseList'));
         }
         $this->container->get("session")->setFlash("error", "update.error");
 
@@ -153,14 +155,14 @@ class GenericProductController extends ContainerAware {
     /**
      * Set an entity state to inactive.
      *
-     * @Route("/{id}/state", name="EvocatioPosBundle_GenericProductToggleState")
+     * @Route("/{id}/state", name="EvocatioPosBundle_PurchaseToggleState")
      * @Method("GET")
      */
     public function toggleStateAction($id) {
         $em = $this->container->get('doctrine')->getEntityManager();
-        $entity = $em->find('EvocatioPosBundle:GenericProduct', $id);
+        $entity = $em->find('EvocatioPosBundle:Purchase', $id);
         if (!$entity) {
-            throw new NotFoundHttpException("GenericProduct non trouvé");
+            throw new NotFoundHttpException("Purchase non trouvé");
         }
         $entity->setStatus(!$entity->getStatus());
         $em->persist($entity);
@@ -172,13 +174,13 @@ class GenericProductController extends ContainerAware {
     /**
      * Deletes a entity.
      *
-     * @Route("/{id}/delete", name="EvocatioPosBundle_GenericProductDelete")
+     * @Route("/{id}/delete", name="EvocatioPosBundle_PurchaseDelete")
      * @Method("POST")
      */
     public function deleteAction($id) {
 
         $em = $this->container->get('Doctrine')->getEntityManager();
-        $entity = $em->getRepository("EvocatioPosBundle:GenericProduct")->find($id);
+        $entity = $em->getRepository("EvocatioPosBundle:Purchase")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -187,7 +189,7 @@ class GenericProductController extends ContainerAware {
         $em->remove($entity);
         $em->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_GenericProductList'));
+        return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_PurchaseList'));
     }
 
 //  ------------- Privates -------------------------------------------
@@ -200,7 +202,7 @@ class GenericProductController extends ContainerAware {
 //        the list of language here will decide what languages will appear in the form for new or edit.
         $languages = $this->container->get('Doctrine')->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(Array("status" => array(1, 2)));
 
-        $entity->addTranslations($languages);
+//        $entity->addTranslations($languages);
 
         $edit_form = $this->container->get('form.factory')->create(new Form(), $entity);
         return $edit_form;

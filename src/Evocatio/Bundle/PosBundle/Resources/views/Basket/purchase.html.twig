@@ -1,4 +1,4 @@
-{%  extends "EvocatioPosBundle:Basket:new.html.twig" %}
+{%  extends "EvocatioPosBundle:Purchase:new.html.twig" %}
 {% block formhead %}
-    {{ path('EvocatioPosBundle_BasketConfirmPurchase') }}
+    {{ path('EvocatioPosBundle_BasketConfirmPurchase', {"id":entity.id}) }}
 {% endblock formhead %}
