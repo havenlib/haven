@@ -6,10 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  *
- * @ORM\Table(name="Order")
+ * @ORM\Table(name="Purchase")
  * @ORM\Entity()
  */
-class Order {
+class Purchase {
 
     /**
      * @ORM\Column(name="id", type="integer")
@@ -127,20 +127,20 @@ class Order {
      protected $invoicing_country;
      /**
       * le total sans les tax ni le shipping
-      * @ORM\Column(name="order_total_raw", type="decimal", scale=2)
+      * @ORM\Column(name="purchase_total_raw", type="decimal", scale=2)
       */
-     protected $order_total_raw;
+     protected $purchase_total_raw;
 
      /**
       * le montant total des tax
-      * @ORM\Column(name="order_tax", type="decimal", scale=2)
+      * @ORM\Column(name="purchase_tax", type="decimal", scale=2)
       */
-     protected $order_total_tax;
+     protected $purchase_total_tax;
      /**
       * le total charger avec les tax et la delivery
-      * @ORM\Column(name="order_total_charges", type="decimal", scale=2)
+      * @ORM\Column(name="purchase_total_charges", type="decimal", scale=2)
       */
-     protected $order_total_charges;
+     protected $purchase_total_charges;
 
      /**
       * @ORM\Column(name="delivery_charge", type="decimal", scale=2 )
@@ -151,20 +151,20 @@ class Order {
       * Le code international de 3 lettre pour la currency
       * @ORM\Column(name="currency", type="string", length=3)
       */
-     protected $order_currency;
+     protected $purchase_currency;
 
      /**
-      * ici mettre une tables de tax pour la order lien a table tax pour savoir lesquelle s'appliques, il faut aussi des règles d'application
+      * ici mettre une tables de tax pour la purchase lien a table tax pour savoir lesquelle s'appliques, il faut aussi des règles d'application
       * ce n'est pas ici le calcul des tax juste la liste de tax (ex: TPS, TVQ et leurs valeurs, donc ManyToManyWithExtraField , l'extra field à la valeur du moment pour la taxe
-      * @ORM\OneToMany(targetEntity="OrderTax", mappedBy="order", cascade={"persist"})
+      * @ORM\OneToMany(targetEntity="PurchaseTax", mappedBy="purchase", cascade={"persist"})
       */
-     protected $order_tax_applicables;
+     protected $purchase_tax_applicables;
 
      /**
       *
-      * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="order", cascade={"persist"})
+      * @ORM\OneToMany(targetEntity="PurchaseProduct", mappedBy="purchase", cascade={"persist"})
       */
-     protected $order_products;
+     protected $purchase_products;
 
 
      /**
@@ -175,8 +175,8 @@ class Order {
   
     public function __construct()
     {
-        $this->order_tax_applicables = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->order_products = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->purchase_tax_applicables = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->purchase_products = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -194,7 +194,7 @@ class Order {
      * Set date
      *
      * @param \DateTime $date
-     * @return Order
+     * @return Purchase
      */
     public function setDate($date)
     {
@@ -217,7 +217,7 @@ class Order {
      * Set last_update
      *
      * @param \DateTime $lastUpdate
-     * @return Order
+     * @return Purchase
      */
     public function setLastUpdate($lastUpdate)
     {
@@ -240,7 +240,7 @@ class Order {
      * Set status
      *
      * @param integer $status
-     * @return Order
+     * @return Purchase
      */
     public function setStatus($status)
     {
@@ -263,7 +263,7 @@ class Order {
      * Set memo
      *
      * @param string $memo
-     * @return Order
+     * @return Purchase
      */
     public function setMemo($memo)
     {
@@ -286,7 +286,7 @@ class Order {
      * Set delivery_name
      *
      * @param string $deliveryName
-     * @return Order
+     * @return Purchase
      */
     public function setDeliveryName($deliveryName)
     {
@@ -309,7 +309,7 @@ class Order {
      * Set delivery_address1
      *
      * @param string $deliveryAddress1
-     * @return Order
+     * @return Purchase
      */
     public function setDeliveryAddress1($deliveryAddress1)
     {
@@ -332,7 +332,7 @@ class Order {
      * Set delivery_address2
      *
      * @param string $deliveryAddress2
-     * @return Order
+     * @return Purchase
      */
     public function setDeliveryAddress2($deliveryAddress2)
     {
@@ -355,7 +355,7 @@ class Order {
      * Set delivery_telephone
      *
      * @param string $deliveryTelephone
-     * @return Order
+     * @return Purchase
      */
     public function setDeliveryTelephone($deliveryTelephone)
     {
@@ -378,7 +378,7 @@ class Order {
      * Set delivery_city
      *
      * @param string $deliveryCity
-     * @return Order
+     * @return Purchase
      */
     public function setDeliveryCity($deliveryCity)
     {
@@ -401,7 +401,7 @@ class Order {
      * Set delivery_postal_code
      *
      * @param string $deliveryPostalCode
-     * @return Order
+     * @return Purchase
      */
     public function setDeliveryPostalCode($deliveryPostalCode)
     {
@@ -424,7 +424,7 @@ class Order {
      * Set delivery_state
      *
      * @param string $deliveryState
-     * @return Order
+     * @return Purchase
      */
     public function setDeliveryState($deliveryState)
     {
@@ -447,7 +447,7 @@ class Order {
      * Set delivery_country
      *
      * @param string $deliveryCountry
-     * @return Order
+     * @return Purchase
      */
     public function setDeliveryCountry($deliveryCountry)
     {
@@ -470,7 +470,7 @@ class Order {
      * Set invoicing_name
      *
      * @param string $invoicingName
-     * @return Order
+     * @return Purchase
      */
     public function setInvoicingName($invoicingName)
     {
@@ -493,7 +493,7 @@ class Order {
      * Set invoicing_address1
      *
      * @param string $invoicingAddress1
-     * @return Order
+     * @return Purchase
      */
     public function setInvoicingAddress1($invoicingAddress1)
     {
@@ -516,7 +516,7 @@ class Order {
      * Set invoicing_address2
      *
      * @param string $invoicingAddress2
-     * @return Order
+     * @return Purchase
      */
     public function setInvoicingAddress2($invoicingAddress2)
     {
@@ -539,7 +539,7 @@ class Order {
      * Set invoicing_telephone
      *
      * @param string $invoicingTelephone
-     * @return Order
+     * @return Purchase
      */
     public function setInvoicingTelephone($invoicingTelephone)
     {
@@ -562,7 +562,7 @@ class Order {
      * Set invoicing_city
      *
      * @param string $invoicingCity
-     * @return Order
+     * @return Purchase
      */
     public function setInvoicingCity($invoicingCity)
     {
@@ -585,7 +585,7 @@ class Order {
      * Set invoicing_postal_code
      *
      * @param string $invoicingPostalCode
-     * @return Order
+     * @return Purchase
      */
     public function setInvoicingPostalCode($invoicingPostalCode)
     {
@@ -608,7 +608,7 @@ class Order {
      * Set invoicing_state
      *
      * @param string $invoicingState
-     * @return Order
+     * @return Purchase
      */
     public function setInvoicingState($invoicingState)
     {
@@ -631,7 +631,7 @@ class Order {
      * Set invoicing_country
      *
      * @param string $invoicingCountry
-     * @return Order
+     * @return Purchase
      */
     public function setInvoicingCountry($invoicingCountry)
     {
@@ -651,79 +651,79 @@ class Order {
     }
 
     /**
-     * Set order_total_raw
+     * Set purchase_total_raw
      *
-     * @param float $orderTotalRaw
-     * @return Order
+     * @param float $purchaseTotalRaw
+     * @return Purchase
      */
-    public function setOrderTotalRaw($orderTotalRaw)
+    public function setPurchaseTotalRaw($purchaseTotalRaw)
     {
-        $this->order_total_raw = $orderTotalRaw;
+        $this->purchase_total_raw = $purchaseTotalRaw;
     
         return $this;
     }
 
     /**
-     * Get order_total_raw
+     * Get purchase_total_raw
      *
      * @return float 
      */
-    public function getOrderTotalRaw()
+    public function getPurchaseTotalRaw()
     {
-        return $this->order_total_raw;
+        return $this->purchase_total_raw;
     }
 
     /**
-     * Set order_total_tax
+     * Set purchase_total_tax
      *
-     * @param float $orderTotalTax
-     * @return Order
+     * @param float $purchaseTotalTax
+     * @return Purchase
      */
-    public function setOrderTotalTax($orderTotalTax)
+    public function setPurchaseTotalTax($purchaseTotalTax)
     {
-        $this->order_total_tax = $orderTotalTax;
+        $this->purchase_total_tax = $purchaseTotalTax;
     
         return $this;
     }
 
     /**
-     * Get order_total_tax
+     * Get purchase_total_tax
      *
      * @return float 
      */
-    public function getOrderTotalTax()
+    public function getPurchaseTotalTax()
     {
-        return $this->order_total_tax;
+        return $this->purchase_total_tax;
     }
 
     /**
-     * Set order_total_charges
+     * Set purchase_total_charges
      *
-     * @param float $orderTotalCharges
-     * @return Order
+     * @param float $purchaseTotalCharges
+     * @return Purchase
      */
-    public function setOrderTotalCharges($orderTotalCharges)
+    public function setPurchaseTotalCharges($purchaseTotalCharges)
     {
-        $this->order_total_charges = $orderTotalCharges;
+        $this->purchase_total_charges = $purchaseTotalCharges;
     
         return $this;
     }
 
     /**
-     * Get order_total_charges
+     * Get purchase_total_charges
      *
      * @return float 
      */
-    public function getOrderTotalCharges()
+    public function getPurchaseTotalCharges()
     {
-        return $this->order_total_charges;
+        return $this->purchase_total_charges;
     }
 
     /**
      * Set delivery_charge
      *
      * @param float $deliveryCharge
-     * @return Order
+     * @return Purchase
      */
     public function setDeliveryCharge($deliveryCharge)
     {
@@ -743,33 +743,33 @@ class Order {
     }
 
     /**
-     * Set order_currency
+     * Set purchase_currency
      *
-     * @param string $orderCurrency
-     * @return Order
+     * @param string $purchaseCurrency
+     * @return Purchase
      */
-    public function setOrderCurrency($orderCurrency)
+    public function setPurchaseCurrency($purchaseCurrency)
     {
-        $this->order_currency = $orderCurrency;
+        $this->purchase_currency = $purchaseCurrency;
     
         return $this;
     }
 
     /**
-     * Get order_currency
+     * Get purchase_currency
      *
      * @return string 
      */
-    public function getOrderCurrency()
+    public function getPurchaseCurrency()
     {
-        return $this->order_currency;
+        return $this->purchase_currency;
     }
 
     /**
      * Set confirmation
      *
      * @param string $confirmation
-     * @return Order
+     * @return Purchase
      */
     public function setConfirmation($confirmation)
     {
@@ -789,78 +789,79 @@ class Order {
     }
 
     /**
-     * Add order_tax_applicables
+     * Add purchase_tax_applicables
      *
-     * @param Evocatio\Bundle\PosBundle\Entity\OrderTax $orderTaxApplicables
-     * @return Order
+     * @param Evocatio\Bundle\PosBundle\Entity\PurchaseTax $purchaseTaxApplicables
+     * @return Purchase
      */
-    public function addOrderTaxApplicable(\Evocatio\Bundle\PosBundle\Entity\OrderTax $orderTaxApplicables)
+    public function addPurchaseTaxApplicable(\Evocatio\Bundle\PosBundle\Entity\PurchaseTax $purchaseTaxApplicables)
     {
-        $this->order_tax_applicables[] = $orderTaxApplicables;
+        $this->purchase_tax_applicables[] = $purchaseTaxApplicables;
     
         return $this;
     }
 
     /**
-     * Remove order_tax_applicables
+     * Remove purchase_tax_applicables
      *
-     * @param Evocatio\Bundle\PosBundle\Entity\OrderTax $orderTaxApplicables
+     * @param Evocatio\Bundle\PosBundle\Entity\PurchaseTax $purchaseTaxApplicables
      */
-    public function removeOrderTaxApplicable(\Evocatio\Bundle\PosBundle\Entity\OrderTax $orderTaxApplicables)
+    public function removePurchaseTaxApplicable(\Evocatio\Bundle\PosBundle\Entity\PurchaseTax $purchaseTaxApplicables)
     {
-        $this->order_tax_applicables->removeElement($orderTaxApplicables);
+        $this->purchase_tax_applicables->removeElement($purchaseTaxApplicables);
     }
 
     /**
-     * Get order_tax_applicables
+     * Get purchase_tax_applicables
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getOrderTaxApplicables()
+    public function getPurchaseTaxApplicables()
     {
-        return $this->order_tax_applicables;
+        return $this->purchase_tax_applicables;
     }
 
     /**
-     * Add order_products
+     * Add purchase_products
      *
-     * @param Evocatio\Bundle\PosBundle\Entity\OrderProduct $orderProducts
-     * @return Order
+     * @param Evocatio\Bundle\PosBundle\Entity\PurchaseProduct $purchaseProducts
+     * @return Purchase
      */
-    public function addOrderProduct(\Evocatio\Bundle\PosBundle\Entity\OrderProduct $orderProducts)
+    public function addPurchaseProduct(\Evocatio\Bundle\PosBundle\Entity\PurchaseProduct $purchaseProducts)
     {
-        $this->order_products[] = $orderProducts;
+        $purchaseProducts->setPurchase($this);
+        $this->purchase_products[] = $purchaseProducts;
     
         return $this;
     }
 
     /**
-     * Remove order_products
+     * Remove purchase_products
      *
-     * @param Evocatio\Bundle\PosBundle\Entity\OrderProduct $orderProducts
+     * @param Evocatio\Bundle\PosBundle\Entity\PurchaseProduct $purchaseProducts
      */
-    public function removeOrderProduct(\Evocatio\Bundle\PosBundle\Entity\OrderProduct $orderProducts)
+    public function removePurchaseProduct(\Evocatio\Bundle\PosBundle\Entity\PurchaseProduct $purchaseProducts)
     {
-        $this->order_products->removeElement($orderProducts);
+        $this->purchase_products->removeElement($purchaseProducts);
     }
 
     /**
-     * Get order_products
+     * Get purchase_products
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getOrderProducts()
+    public function getPurchaseProducts()
     {
-        return $this->order_products;
+        return $this->purchase_products;
     }
 
     /**
-     * Get order_products
+     * Get purchase_products
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function setOrderProducts($OrderProducts)
+    public function setPurchaseProducts($PurchaseProducts)
     {
-        $this->order_products=$OrderProducts;
+        $this->purchase_products=$PurchaseProducts;
     }
 }

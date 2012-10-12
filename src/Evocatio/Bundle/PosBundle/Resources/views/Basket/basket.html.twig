@@ -1,13 +1,18 @@
-        {% if entity is not empty%}
-        <table>
-            <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ dump(entity) }}</td>
-                </tr>
-              
-            </tbody>
-        </table>
+    <dl>
+        {% if entity is not empty %}
+            {% for line in entity.getPurchaseProducts %}
+            <div>{{ line.product.name }}</div> 
+            <div>{{ line.price }}</div> 
+            {% endfor %}
         {% else %}
-        Pas de basket
+            aucune entré
         {% endif %}
+            
+    </dl>
+<ul>
+    <li>
+        <a href="{{ path('EvocatioPosBundle_BasketEdit') }}">
+            edit basket
+        </a>
+    </li>
+</ul>

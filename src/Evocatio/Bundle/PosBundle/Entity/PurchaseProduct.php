@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity()
  */
-class OrderProduct
+class PurchaseProduct
 {
 
      /**
@@ -19,10 +19,10 @@ class OrderProduct
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Order", inversedBy="order_products")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Purchase", inversedBy="purchase_products")
+     * @ORM\JoinColumn(name="purchase_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $order;
+    protected $purchase;
 
     /**
      * @ORM\ManyToOne(targetEntity="Evocatio\Bundle\PosBundle\Entity\Product")
@@ -56,7 +56,7 @@ class OrderProduct
      * Set quantity
      *
      * @param integer $quantity
-     * @return OrderProduct
+     * @return PurchaseProduct
      */
     public function setQuantity($quantity)
     {
@@ -79,7 +79,7 @@ class OrderProduct
      * Set price
      *
      * @param float $price
-     * @return OrderProduct
+     * @return PurchaseProduct
      */
     public function setPrice($price)
     {
@@ -99,33 +99,33 @@ class OrderProduct
     }
 
     /**
-     * Set order
+     * Set purchase
      *
-     * @param Evocatio\Bundle\PosBundle\Entity\Order $order
-     * @return OrderProduct
+     * @param Evocatio\Bundle\PosBundle\Entity\Purchase $purchase
+     * @return PurchaseProduct
      */
-    public function setOrder(\Evocatio\Bundle\PosBundle\Entity\Order $order = null)
+    public function setPurchase(\Evocatio\Bundle\PosBundle\Entity\Purchase $purchase = null)
     {
-        $this->order = $order;
+        $this->purchase = $purchase;
     
         return $this;
     }
 
     /**
-     * Get order
+     * Get purchase
      *
-     * @return Evocatio\Bundle\PosBundle\Entity\Order 
+     * @return Evocatio\Bundle\PosBundle\Entity\Purchase 
      */
-    public function getOrder()
+    public function getPurchase()
     {
-        return $this->order;
+        return $this->purchase;
     }
 
     /**
      * Set product
      *
      * @param Evocatio\Bundle\PosBundle\Entity\Product $product
-     * @return OrderProduct
+     * @return PurchaseProduct
      */
     public function setProduct(\Evocatio\Bundle\PosBundle\Entity\Product $product = null)
     {

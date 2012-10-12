@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class OrderType extends AbstractType
+class PurchaseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -31,11 +31,11 @@ class OrderType extends AbstractType
             ->add('invoicing_postal_code')
             ->add('invoicing_state')
             ->add('invoicing_country')
-            ->add('order_total_raw')
-            ->add('order_total_tax')
-            ->add('order_total_charges')
+            ->add('purchase_total_raw')
+            ->add('purchase_total_tax')
+            ->add('purchase_total_charges')
             ->add('delivery_charge')
-            ->add('order_currency')
+            ->add('purchase_currency')
             ->add('confirmation')
         ;
     }
@@ -43,12 +43,12 @@ class OrderType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\PosBundle\Entity\Order'
+            'data_class' => 'Evocatio\Bundle\PosBundle\Entity\Purchase'
         ));
     }
 
     public function getName()
     {
-        return 'evocatio_bundle_posbundle_ordertype';
+        return 'evocatio_bundle_posbundle_purchasetype';
     }
 }
