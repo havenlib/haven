@@ -22,7 +22,7 @@
                 </tr>
                 <tr>
                     <th>Price</th>
-                    <td>{{ entity.getPrice() }}</td>
+                    <td>{{ entity.getPrice(".2n", app.getRequest().get("_locale")) }}</td>
                 </tr>
             </tbody>
         </table>
