@@ -8,10 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity()
  */
-class PurchaseProduct
-{
+class PurchaseProduct implements \Serializable {
 
-     /**
+    /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -35,7 +34,7 @@ class PurchaseProduct
      */
     protected $quantity;
 
-     /**
+    /**
      * @var decimal $price
      *
      * @ORM\Column(name="price", type="decimal", precision=10, scale = 2, nullable=false)
@@ -47,8 +46,7 @@ class PurchaseProduct
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -58,10 +56,9 @@ class PurchaseProduct
      * @param integer $quantity
      * @return PurchaseProduct
      */
-    public function setQuantity($quantity)
-    {
+    public function setQuantity($quantity) {
         $this->quantity = $quantity;
-    
+
         return $this;
     }
 
@@ -70,8 +67,7 @@ class PurchaseProduct
      *
      * @return integer 
      */
-    public function getQuantity()
-    {
+    public function getQuantity() {
         return $this->quantity;
     }
 
@@ -81,10 +77,9 @@ class PurchaseProduct
      * @param float $price
      * @return PurchaseProduct
      */
-    public function setPrice($price)
-    {
+    public function setPrice($price) {
         $this->price = $price;
-    
+
         return $this;
     }
 
@@ -93,8 +88,7 @@ class PurchaseProduct
      *
      * @return float 
      */
-    public function getPrice()
-    {
+    public function getPrice() {
         return $this->price;
     }
 
@@ -104,10 +98,9 @@ class PurchaseProduct
      * @param Evocatio\Bundle\PosBundle\Entity\Purchase $purchase
      * @return PurchaseProduct
      */
-    public function setPurchase(\Evocatio\Bundle\PosBundle\Entity\Purchase $purchase = null)
-    {
+    public function setPurchase(\Evocatio\Bundle\PosBundle\Entity\Purchase $purchase = null) {
         $this->purchase = $purchase;
-    
+
         return $this;
     }
 
@@ -116,8 +109,7 @@ class PurchaseProduct
      *
      * @return Evocatio\Bundle\PosBundle\Entity\Purchase 
      */
-    public function getPurchase()
-    {
+    public function getPurchase() {
         return $this->purchase;
     }
 
@@ -127,10 +119,9 @@ class PurchaseProduct
      * @param Evocatio\Bundle\PosBundle\Entity\Product $product
      * @return PurchaseProduct
      */
-    public function setProduct(\Evocatio\Bundle\PosBundle\Entity\Product $product = null)
-    {
+    public function setProduct(\Evocatio\Bundle\PosBundle\Entity\Product $product = null) {
         $this->product = $product;
-    
+
         return $this;
     }
 
@@ -139,8 +130,22 @@ class PurchaseProduct
      *
      * @return Evocatio\Bundle\PosBundle\Entity\Product 
      */
-    public function getProduct()
-    {
+    public function getProduct() {
         return $this->product;
     }
+
+    public function serialize() {
+        $serialized = get_object_vars($this);
+        $serialized["product"] = serialize($this->getProduct());
+        return $serialized;
+    }
+
+    public function unserialize($data) {
+        $data = unserialize($data);
+        $this->id = $data["id"];        
+        $this->setProduct($data["product"]);
+        $this->setQuantity($data["quantity"]);
+        $this->setPrice($data["price"]);
+    }
+
 }

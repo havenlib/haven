@@ -350,15 +350,19 @@ class BasketController extends ContainerAware {
 
             return new Entity();
         }
+        
 //        create an arraycollection to put the unserialized item an replace the current collection.
 //        the goal being to reorder the array keys 
         $em = $this->container->get("doctrine")->getEntityManager();
-
+        $em->merge($entity);
+//        echo "<p>".get_class($entity)."</p>";
 //      have to reattach the items(products) to the entitymanager
         $entity->getPurchaseProducts()->map(function($line_item) use ($em) {
+            
                     if ($line_item->getProduct() != NULL) {
                         $line_item->setProduct($em->merge($line_item->getProduct()));
                         $line_item->setPrice($line_item->getProduct()->getPrice());
+//        echo "<p>".get_class($line_item)."</p><pre>".\Doctrine\Common\Util\Debug::dump($line_item)."</pre>";die();
                         $line_item = $em->merge($line_item);
                     }
                 });
