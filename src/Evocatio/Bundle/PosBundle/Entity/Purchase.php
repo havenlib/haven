@@ -24,14 +24,14 @@ class Purchase {
 //    protected $utilisateur;
     
     /**
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="created_at", type="date")
      */
-    protected $date;
+    protected $created_at;
 
     /**
-     * @ORM\Column(name="last_update", type="date")
+     * @ORM\Column(name="updated_at", type="date")
      */
-    protected $last_update;
+    protected $updated_at;
 
     /**
      * @ORM\Column(name="status", type="integer")
@@ -173,13 +173,17 @@ class Purchase {
      protected $confirmation;
 
   
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->purchase_tax_applicables = new \Doctrine\Common\Collections\ArrayCollection();
         $this->purchase_products = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->created_at = new \DateTime();
+        $this->updated_at = new \DateTime();
     }
     
-
     /**
      * Get id
      *
@@ -191,49 +195,49 @@ class Purchase {
     }
 
     /**
-     * Set date
+     * Set created_at
      *
-     * @param \DateTime $date
+     * @param \DateTime $createdAt
      * @return Purchase
      */
-    public function setDate($date)
+    public function setCreatedAt($createdAt)
     {
-        $this->date = $date;
+        $this->created_at = $createdAt;
     
         return $this;
     }
 
     /**
-     * Get date
+     * Get created_at
      *
      * @return \DateTime 
      */
-    public function getDate()
+    public function getCreatedAt()
     {
-        return $this->date;
+        return $this->created_at;
     }
 
     /**
-     * Set last_update
+     * Set updated_at
      *
-     * @param \DateTime $lastUpdate
+     * @param \DateTime $updatedAt
      * @return Purchase
      */
-    public function setLastUpdate($lastUpdate)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->last_update = $lastUpdate;
+        $this->updated_at = $updatedAt;
     
         return $this;
     }
 
     /**
-     * Get last_update
+     * Get updated_at
      *
      * @return \DateTime 
      */
-    public function getLastUpdate()
+    public function getUpdatedAt()
     {
-        return $this->last_update;
+        return $this->updated_at;
     }
 
     /**
@@ -829,7 +833,6 @@ class Purchase {
      */
     public function addPurchaseProduct(\Evocatio\Bundle\PosBundle\Entity\PurchaseProduct $purchaseProducts)
     {
-        $purchaseProducts->setPurchase($this);
         $this->purchase_products[] = $purchaseProducts;
     
         return $this;
@@ -853,15 +856,5 @@ class Purchase {
     public function getPurchaseProducts()
     {
         return $this->purchase_products;
-    }
-
-    /**
-     * Get purchase_products
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function setPurchaseProducts($PurchaseProducts)
-    {
-        $this->purchase_products=$PurchaseProducts;
     }
 }

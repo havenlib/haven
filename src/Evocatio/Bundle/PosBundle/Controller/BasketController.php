@@ -193,20 +193,26 @@ class BasketController extends ContainerAware {
      */
     public function confirmPurchaseAction() {
 
-        $entity = $this->getBasketFromSession();
+        $old_entity = $this->getBasketFromSession();
 //        $entity = new Entity();
+        $entity = clone $old_entity;
         $purchase_post = $this->container->get('Request')->get("evocatio_bundle_posbundle_purchasetype");
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
         }
         $edit_form = $this->createPurchaseForm($entity);
+        echo "<pre>--> pre bind()";
+        \Doctrine\Common\Util\Debug::dump($this->container->get("session")->get("basket"));;
         $edit_form->bind($purchase_post);
 
         if ($this->processPurchaseForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
-
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_BasketPaiement'));
+        echo "<pre>--> after bind()";
+        \Doctrine\Common\Util\Debug::dump($this->container->get("session")->get("basket"));;
+        echo "</pre>";
+        die();
+//            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_BasketPaiement'));
         }
 //        $this->container->get("session")->setFlash("error", "update.error");
 
@@ -321,16 +327,16 @@ class BasketController extends ContainerAware {
      * @return true or form
      */
     protected function processPurchaseForm($edit_form) {
-
+        
         if ($edit_form->isValid()) {
             $entity = $edit_form->getData();
-//              update purchase and purchase product here for price taxes and other
+////              update purchase and purchase product here for price taxes and other
             foreach($entity->getPurchaseProducts() as $pp){
                 $pp->setPurchase($entity);
             }
             $em = $this->container->get('doctrine')->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
+//            $em->persist($entity);
+//            $em->flush();
 
             return true;
         }
