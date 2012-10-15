@@ -199,9 +199,9 @@ class PostController extends ContainerAware {
     public function showFromSlugAction(EntityTranslation $entityTranslation) {
 //        $delete_form = $this->createDeleteForm($id);
         $locale = $this->container->get("request")->get("_locale");
-        if ($entityTranslation->getTransLang()->getSymbol() != $locale) {
-            $slug = $entityTranslation->getParent()->getTranslationByLang($locale)->getSlug();
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_show_slug', array("slug" => $slug)));
+        if ($entityTranslation->getTransLang()->getSymbol() != \Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale) && $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))){
+            $slug = $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))->getSlug();
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_PostShowSlug', array("slug" => $slug)));
         }
         $entity = $entityTranslation->getParent();
 

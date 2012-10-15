@@ -191,30 +191,6 @@ class PersonaController extends ContainerAware {
         return new RedirectResponse($this->container->get('router')->generate('EvocatioPersonaBundle_list'));
     }
 
-    /**
-     * @Route("/{slug}", name="EvocatioPersonaBundle_show_slug")
-     * @Method("GET")
-     * @Template("EvocatioPersonaBundle:Default:show.html.twig")
-     */
-    public function showFromSlugAction(EntityTranslation $entityTranslation) {
-//        $delete_form = $this->createDeleteForm($id);
-        $locale = $this->container->get("request")->get("_locale");
-        if ($entityTranslation->getTransLang()->getSymbol() != $locale) {
-            $slug = $entityTranslation->getParent()->getTranslationByLang($locale)->getSlug();
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPersonaBundle_show_slug', array("slug" => $slug)));
-        }
-        $entity = $entityTranslation->getParent();
-
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-
-        $delete_form = $this->createDeleteForm($entity->getId());
-
-        return array("entity" => $entity, 'delete_form' => $delete_form->createView()
-        );
-    }
-
 //  ------------- Privates -------------------------------------------
     /**
      * Creates an edit_form with all the translations objects added for status languages
