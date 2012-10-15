@@ -65,8 +65,14 @@ class Product extends Translatable {
      *
      * @return float 
      */
-    public function getPrice()
+    public function getPrice($format = null, $locale = null)
     {
+        if($format){
+            if($locale){
+                setlocale(LC_MONETARY, $locale);
+            }
+            return money_format("%".$format, $this->price);
+        }
         return $this->price;
     }
 
