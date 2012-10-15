@@ -21,13 +21,13 @@ class PurchaseProduct implements \Serializable {
      * @ORM\ManyToOne(targetEntity="Purchase", inversedBy="purchase_products")
      * @ORM\JoinColumn(name="purchase_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $purchase;
+    private $purchase;
 
     /**
      * @ORM\ManyToOne(targetEntity="Evocatio\Bundle\PosBundle\Entity\Product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
-    protected $product;
+    private $product;
 
     /**
      * @ORM\Column(name="quantity", type="integer")
@@ -135,15 +135,17 @@ class PurchaseProduct implements \Serializable {
     }
 
     public function serialize() {
-        $serialized = get_object_vars($this);
-        $serialized["product"] = serialize($this->getProduct());
-        return $serialized;
+        $data["id"] = $this->id;        
+        $data["product"]= serialize($this->getProduct());
+        $data["quantity"] = $this->getQuantity();
+        $data["price"] = $this->getPrice();
+        return serialize($data);
     }
 
     public function unserialize($data) {
         $data = unserialize($data);
         $this->id = $data["id"];        
-        $this->setProduct($data["product"]);
+        $this->setProduct(unserialize($data["product"]));
         $this->setQuantity($data["quantity"]);
         $this->setPrice($data["price"]);
     }
