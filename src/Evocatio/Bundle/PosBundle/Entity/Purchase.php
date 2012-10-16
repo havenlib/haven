@@ -1,4 +1,5 @@
 <?php
+
 namespace Evocatio\Bundle\PosBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -22,7 +23,7 @@ class Purchase {
 //     * @ORM\ManyToOne(targetEntity="Evocatio\Bundle\PersonaBundle\Entity\Contact")
 //     */
 //    protected $utilisateur;
-    
+
     /**
      * @ORM\Column(name="created_at", type="date")
      */
@@ -39,158 +40,155 @@ class Purchase {
     protected $status;
 
     /**
-     * @ORM\Column(name="memo", type="string", length=256, nullable=true)
+     * @ORM\Column(name="memo", type="string", length=256, nullable=true, nullable = true)
      */
-     protected $memo;
+    protected $memo;
 
-     /**
-      * concatenate name and firstname for people, or just group name
-      * @ORM\Column(name="delivery_name", type="string", length=256)
-      */
-     protected $delivery_name;
+    /**
+     * concatenate name and firstname for people, or just group name
+     * @ORM\Column(name="delivery_name", type="string", length=256, nullable = true)
+     */
+    protected $delivery_name;
 
-     /**
-      * @ORM\Column(name="delivery_address1", type="string", length=256)
-      */
-     protected $delivery_address1;
+    /**
+     * @ORM\Column(name="delivery_address1", type="string", length=256, nullable = true)
+     */
+    protected $delivery_address1;
 
-     /**
-      * @ORM\Column(name="delivery_address2", type="string", length=256, nullable = true)
-      */
-     protected $delivery_address2;
+    /**
+     * @ORM\Column(name="delivery_address2", type="string", length=256, nullable = true)
+     */
+    protected $delivery_address2;
 
-     /**
-      * @ORM\Column(name="delivery_telephone", type="string", length=24, nullable = true )
-      */
-     protected $delivery_telephone;
+    /**
+     * @ORM\Column(name="delivery_telephone", type="string", length=24, nullable = true )
+     */
+    protected $delivery_telephone;
 
+    /**
+     * @ORM\Column(name="delivery_city", type="string", length=64, nullable = true)
+     */
+    protected $delivery_city;
 
-     /**
-      * @ORM\Column(name="delivery_city", type="string", length=64)
-      */
-     protected $delivery_city;
+    /**
+     * @ORM\Column(name="delivery_postal_code", type="string", length=16, nullable = true)
+     */
+    protected $delivery_postal_code;
 
-     /**
-      * @ORM\Column(name="delivery_postal_code", type="string", length=16)
-      */
-     protected $delivery_postal_code;
-     /**
-      * @ORM\Column(name="delivery_state", type="string", length=24)
-      */
-     protected $delivery_state;
-     /**
-      * @ORM\Column(name="delivery_country", type="string", length=24)
-      */
-     protected $delivery_country;
+    /**
+     * @ORM\Column(name="delivery_state", type="string", length=24, nullable = true)
+     */
+    protected $delivery_state;
 
+    /**
+     * @ORM\Column(name="delivery_country", type="string", length=24, nullable = true)
+     */
+    protected $delivery_country;
 
-     /**
-      * concatenate name and firstname for people, or just group name
-      * @ORM\Column(name="invoicing_name", type="string", length=256)
-      */
-     protected $invoicing_name;
+    /**
+     * concatenate name and firstname for people, or just group name
+     * @ORM\Column(name="invoicing_name", type="string", length=256, nullable = true)
+     */
+    protected $invoicing_name;
 
-     /**
-      * @ORM\Column(name="invoicing_address1", type="string", length=256)
-      */
-     protected $invoicing_address1;
+    /**
+     * @ORM\Column(name="invoicing_address1", type="string", length=256, nullable = true)
+     */
+    protected $invoicing_address1;
 
-     /**
-      * @ORM\Column(name="invoicing_address2", type="string", length=256, nullable = true)
-      */
-     protected $invoicing_address2;
+    /**
+     * @ORM\Column(name="invoicing_address2", type="string", length=256, nullable = true)
+     */
+    protected $invoicing_address2;
 
-     /**
-      * @ORM\Column(name="invoicing_telephone", type="string", length=24, nullable = true)
-      */
-     protected $invoicing_telephone;
+    /**
+     * @ORM\Column(name="invoicing_telephone", type="string", length=24, nullable = true)
+     */
+    protected $invoicing_telephone;
 
+    /**
+     * @ORM\Column(name="invoicing_city", type="string", length=64, nullable = true)
+     */
+    protected $invoicing_city;
 
-     /**
-      * @ORM\Column(name="invoicing_city", type="string", length=64)
-      */
-     protected $invoicing_city;
+    /**
+     * @ORM\Column(name="invoicing_postal_code", type="string", length=16, nullable = true)
+     */
+    protected $invoicing_postal_code;
 
-     /**
-      * @ORM\Column(name="invoicing_postal_code", type="string", length=16)
-      */
-     protected $invoicing_postal_code;
+    /**
+     * @ORM\Column(name="invoicing_state", type="string", length=24, nullable = true)
+     */
+    protected $invoicing_state;
 
-     /**
-      * @ORM\Column(name="invoicing_state", type="string", length=24)
-      */
-     protected $invoicing_state;
+    /**
+     * @ORM\Column(name="invoicing_country", type="string", length=24, nullable = true)
+     */
+    protected $invoicing_country;
 
-     /**
-      * @ORM\Column(name="invoicing_country", type="string", length=24)
-      */
-     protected $invoicing_country;
-     /**
-      * le total sans les tax ni le shipping
-      * @ORM\Column(name="purchase_total_raw", type="decimal", scale=2)
-      */
-     protected $purchase_total_raw;
+    /**
+     * le total sans les tax ni le shipping
+     * @ORM\Column(name="purchase_total_raw", type="decimal", scale=2, nullable = true)
+     */
+    protected $purchase_total_raw;
 
-     /**
-      * le montant total des tax
-      * @ORM\Column(name="purchase_tax", type="decimal", scale=2)
-      */
-     protected $purchase_total_tax;
-     /**
-      * le total charger avec les tax et la delivery
-      * @ORM\Column(name="purchase_total_charges", type="decimal", scale=2)
-      */
-     protected $purchase_total_charges;
+    /**
+     * le montant total des tax
+     * @ORM\Column(name="purchase_tax", type="decimal", scale=2, nullable = true)
+     */
+    protected $purchase_total_tax;
 
-     /**
-      * @ORM\Column(name="delivery_charge", type="decimal", scale=2 )
-      */
-     protected $delivery_charge;
+    /**
+     * le total charger avec les tax et la delivery
+     * @ORM\Column(name="purchase_total_charges", type="decimal", scale=2, nullable = true)
+     */
+    protected $purchase_total_charges;
 
-     /**
-      * Le code international de 3 lettre pour la currency
-      * @ORM\Column(name="currency", type="string", length=3)
-      */
-     protected $purchase_currency;
+    /**
+     * @ORM\Column(name="delivery_charge", type="decimal", scale=2 , nullable = true)
+     */
+    protected $delivery_charge;
 
-     /**
-      * ici mettre une tables de tax pour la purchase lien a table tax pour savoir lesquelle s'appliques, il faut aussi des règles d'application
-      * ce n'est pas ici le calcul des tax juste la liste de tax (ex: TPS, TVQ et leurs valeurs, donc ManyToManyWithExtraField , l'extra field à la valeur du moment pour la taxe
-      * @ORM\OneToMany(targetEntity="PurchaseTax", mappedBy="purchase", cascade={"persist"})
-      */
-     protected $purchase_tax_applicables;
+    /**
+     * Le code international de 3 lettre pour la currency
+     * @ORM\Column(name="currency", type="string", length=3, nullable = true)
+     */
+    protected $purchase_currency;
 
-     /**
-      *
-      * @ORM\OneToMany(targetEntity="PurchaseProduct", mappedBy="purchase", cascade={"persist"})
-      */
-     protected $purchase_products;
+    /**
+     * ici mettre une tables de tax pour la purchase lien a table tax pour savoir lesquelle s'appliques, il faut aussi des règles d'application
+     * ce n'est pas ici le calcul des tax juste la liste de tax (ex: TPS, TVQ et leurs valeurs, donc ManyToManyWithExtraField , l'extra field à la valeur du moment pour la taxe
+     * @ORM\OneToMany(targetEntity="PurchaseTax", mappedBy="purchase", cascade={"persist"})
+     */
+    protected $purchase_tax_applicables;
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="PurchaseProduct", mappedBy="purchase", cascade={"persist"})
+     */
+    protected $purchase_products;
 
-     /**
-      * @ORM\Column(name="confirmation", type="text", nullable=true)
-      */
-     protected $confirmation;
+    /**
+     * @ORM\Column(name="confirmation", type="text", nullable=true)
+     */
+    protected $confirmation;
 
-  
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->purchase_tax_applicables = new \Doctrine\Common\Collections\ArrayCollection();
         $this->purchase_products = new \Doctrine\Common\Collections\ArrayCollection();
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
     }
-    
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -200,10 +198,9 @@ class Purchase {
      * @param \DateTime $createdAt
      * @return Purchase
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->created_at = $createdAt;
-    
+
         return $this;
     }
 
@@ -212,8 +209,7 @@ class Purchase {
      *
      * @return \DateTime 
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->created_at;
     }
 
@@ -223,10 +219,9 @@ class Purchase {
      * @param \DateTime $updatedAt
      * @return Purchase
      */
-    public function setUpdatedAt($updatedAt)
-    {
+    public function setUpdatedAt($updatedAt) {
         $this->updated_at = $updatedAt;
-    
+
         return $this;
     }
 
@@ -235,8 +230,7 @@ class Purchase {
      *
      * @return \DateTime 
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt() {
         return $this->updated_at;
     }
 
@@ -246,10 +240,9 @@ class Purchase {
      * @param integer $status
      * @return Purchase
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -258,8 +251,7 @@ class Purchase {
      *
      * @return integer 
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -269,10 +261,9 @@ class Purchase {
      * @param string $memo
      * @return Purchase
      */
-    public function setMemo($memo)
-    {
+    public function setMemo($memo) {
         $this->memo = $memo;
-    
+
         return $this;
     }
 
@@ -281,8 +272,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getMemo()
-    {
+    public function getMemo() {
         return $this->memo;
     }
 
@@ -292,10 +282,9 @@ class Purchase {
      * @param string $deliveryName
      * @return Purchase
      */
-    public function setDeliveryName($deliveryName)
-    {
+    public function setDeliveryName($deliveryName) {
         $this->delivery_name = $deliveryName;
-    
+
         return $this;
     }
 
@@ -304,8 +293,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getDeliveryName()
-    {
+    public function getDeliveryName() {
         return $this->delivery_name;
     }
 
@@ -315,10 +303,9 @@ class Purchase {
      * @param string $deliveryAddress1
      * @return Purchase
      */
-    public function setDeliveryAddress1($deliveryAddress1)
-    {
+    public function setDeliveryAddress1($deliveryAddress1) {
         $this->delivery_address1 = $deliveryAddress1;
-    
+
         return $this;
     }
 
@@ -327,8 +314,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getDeliveryAddress1()
-    {
+    public function getDeliveryAddress1() {
         return $this->delivery_address1;
     }
 
@@ -338,10 +324,9 @@ class Purchase {
      * @param string $deliveryAddress2
      * @return Purchase
      */
-    public function setDeliveryAddress2($deliveryAddress2)
-    {
+    public function setDeliveryAddress2($deliveryAddress2) {
         $this->delivery_address2 = $deliveryAddress2;
-    
+
         return $this;
     }
 
@@ -350,8 +335,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getDeliveryAddress2()
-    {
+    public function getDeliveryAddress2() {
         return $this->delivery_address2;
     }
 
@@ -361,10 +345,9 @@ class Purchase {
      * @param string $deliveryTelephone
      * @return Purchase
      */
-    public function setDeliveryTelephone($deliveryTelephone)
-    {
+    public function setDeliveryTelephone($deliveryTelephone) {
         $this->delivery_telephone = $deliveryTelephone;
-    
+
         return $this;
     }
 
@@ -373,8 +356,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getDeliveryTelephone()
-    {
+    public function getDeliveryTelephone() {
         return $this->delivery_telephone;
     }
 
@@ -384,10 +366,9 @@ class Purchase {
      * @param string $deliveryCity
      * @return Purchase
      */
-    public function setDeliveryCity($deliveryCity)
-    {
+    public function setDeliveryCity($deliveryCity) {
         $this->delivery_city = $deliveryCity;
-    
+
         return $this;
     }
 
@@ -396,8 +377,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getDeliveryCity()
-    {
+    public function getDeliveryCity() {
         return $this->delivery_city;
     }
 
@@ -407,10 +387,9 @@ class Purchase {
      * @param string $deliveryPostalCode
      * @return Purchase
      */
-    public function setDeliveryPostalCode($deliveryPostalCode)
-    {
+    public function setDeliveryPostalCode($deliveryPostalCode) {
         $this->delivery_postal_code = $deliveryPostalCode;
-    
+
         return $this;
     }
 
@@ -419,8 +398,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getDeliveryPostalCode()
-    {
+    public function getDeliveryPostalCode() {
         return $this->delivery_postal_code;
     }
 
@@ -430,10 +408,9 @@ class Purchase {
      * @param string $deliveryState
      * @return Purchase
      */
-    public function setDeliveryState($deliveryState)
-    {
+    public function setDeliveryState($deliveryState) {
         $this->delivery_state = $deliveryState;
-    
+
         return $this;
     }
 
@@ -442,8 +419,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getDeliveryState()
-    {
+    public function getDeliveryState() {
         return $this->delivery_state;
     }
 
@@ -453,10 +429,9 @@ class Purchase {
      * @param string $deliveryCountry
      * @return Purchase
      */
-    public function setDeliveryCountry($deliveryCountry)
-    {
+    public function setDeliveryCountry($deliveryCountry) {
         $this->delivery_country = $deliveryCountry;
-    
+
         return $this;
     }
 
@@ -465,8 +440,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getDeliveryCountry()
-    {
+    public function getDeliveryCountry() {
         return $this->delivery_country;
     }
 
@@ -476,10 +450,9 @@ class Purchase {
      * @param string $invoicingName
      * @return Purchase
      */
-    public function setInvoicingName($invoicingName)
-    {
+    public function setInvoicingName($invoicingName) {
         $this->invoicing_name = $invoicingName;
-    
+
         return $this;
     }
 
@@ -488,8 +461,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getInvoicingName()
-    {
+    public function getInvoicingName() {
         return $this->invoicing_name;
     }
 
@@ -499,10 +471,9 @@ class Purchase {
      * @param string $invoicingAddress1
      * @return Purchase
      */
-    public function setInvoicingAddress1($invoicingAddress1)
-    {
+    public function setInvoicingAddress1($invoicingAddress1) {
         $this->invoicing_address1 = $invoicingAddress1;
-    
+
         return $this;
     }
 
@@ -511,8 +482,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getInvoicingAddress1()
-    {
+    public function getInvoicingAddress1() {
         return $this->invoicing_address1;
     }
 
@@ -522,10 +492,9 @@ class Purchase {
      * @param string $invoicingAddress2
      * @return Purchase
      */
-    public function setInvoicingAddress2($invoicingAddress2)
-    {
+    public function setInvoicingAddress2($invoicingAddress2) {
         $this->invoicing_address2 = $invoicingAddress2;
-    
+
         return $this;
     }
 
@@ -534,8 +503,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getInvoicingAddress2()
-    {
+    public function getInvoicingAddress2() {
         return $this->invoicing_address2;
     }
 
@@ -545,10 +513,9 @@ class Purchase {
      * @param string $invoicingTelephone
      * @return Purchase
      */
-    public function setInvoicingTelephone($invoicingTelephone)
-    {
+    public function setInvoicingTelephone($invoicingTelephone) {
         $this->invoicing_telephone = $invoicingTelephone;
-    
+
         return $this;
     }
 
@@ -557,8 +524,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getInvoicingTelephone()
-    {
+    public function getInvoicingTelephone() {
         return $this->invoicing_telephone;
     }
 
@@ -568,10 +534,9 @@ class Purchase {
      * @param string $invoicingCity
      * @return Purchase
      */
-    public function setInvoicingCity($invoicingCity)
-    {
+    public function setInvoicingCity($invoicingCity) {
         $this->invoicing_city = $invoicingCity;
-    
+
         return $this;
     }
 
@@ -580,8 +545,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getInvoicingCity()
-    {
+    public function getInvoicingCity() {
         return $this->invoicing_city;
     }
 
@@ -591,10 +555,9 @@ class Purchase {
      * @param string $invoicingPostalCode
      * @return Purchase
      */
-    public function setInvoicingPostalCode($invoicingPostalCode)
-    {
+    public function setInvoicingPostalCode($invoicingPostalCode) {
         $this->invoicing_postal_code = $invoicingPostalCode;
-    
+
         return $this;
     }
 
@@ -603,8 +566,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getInvoicingPostalCode()
-    {
+    public function getInvoicingPostalCode() {
         return $this->invoicing_postal_code;
     }
 
@@ -614,10 +576,9 @@ class Purchase {
      * @param string $invoicingState
      * @return Purchase
      */
-    public function setInvoicingState($invoicingState)
-    {
+    public function setInvoicingState($invoicingState) {
         $this->invoicing_state = $invoicingState;
-    
+
         return $this;
     }
 
@@ -626,8 +587,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getInvoicingState()
-    {
+    public function getInvoicingState() {
         return $this->invoicing_state;
     }
 
@@ -637,10 +597,9 @@ class Purchase {
      * @param string $invoicingCountry
      * @return Purchase
      */
-    public function setInvoicingCountry($invoicingCountry)
-    {
+    public function setInvoicingCountry($invoicingCountry) {
         $this->invoicing_country = $invoicingCountry;
-    
+
         return $this;
     }
 
@@ -649,8 +608,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getInvoicingCountry()
-    {
+    public function getInvoicingCountry() {
         return $this->invoicing_country;
     }
 
@@ -660,10 +618,9 @@ class Purchase {
      * @param float $purchaseTotalRaw
      * @return Purchase
      */
-    public function setPurchaseTotalRaw($purchaseTotalRaw)
-    {
+    public function setPurchaseTotalRaw($purchaseTotalRaw) {
         $this->purchase_total_raw = $purchaseTotalRaw;
-    
+
         return $this;
     }
 
@@ -672,8 +629,7 @@ class Purchase {
      *
      * @return float 
      */
-    public function getPurchaseTotalRaw()
-    {
+    public function getPurchaseTotalRaw() {
         return $this->purchase_total_raw;
     }
 
@@ -683,10 +639,9 @@ class Purchase {
      * @param float $purchaseTotalTax
      * @return Purchase
      */
-    public function setPurchaseTotalTax($purchaseTotalTax)
-    {
+    public function setPurchaseTotalTax($purchaseTotalTax) {
         $this->purchase_total_tax = $purchaseTotalTax;
-    
+
         return $this;
     }
 
@@ -695,8 +650,7 @@ class Purchase {
      *
      * @return float 
      */
-    public function getPurchaseTotalTax()
-    {
+    public function getPurchaseTotalTax() {
         return $this->purchase_total_tax;
     }
 
@@ -706,10 +660,9 @@ class Purchase {
      * @param float $purchaseTotalCharges
      * @return Purchase
      */
-    public function setPurchaseTotalCharges($purchaseTotalCharges)
-    {
+    public function setPurchaseTotalCharges($purchaseTotalCharges) {
         $this->purchase_total_charges = $purchaseTotalCharges;
-    
+
         return $this;
     }
 
@@ -718,8 +671,7 @@ class Purchase {
      *
      * @return float 
      */
-    public function getPurchaseTotalCharges()
-    {
+    public function getPurchaseTotalCharges() {
         return $this->purchase_total_charges;
     }
 
@@ -729,10 +681,9 @@ class Purchase {
      * @param float $deliveryCharge
      * @return Purchase
      */
-    public function setDeliveryCharge($deliveryCharge)
-    {
+    public function setDeliveryCharge($deliveryCharge) {
         $this->delivery_charge = $deliveryCharge;
-    
+
         return $this;
     }
 
@@ -741,8 +692,7 @@ class Purchase {
      *
      * @return float 
      */
-    public function getDeliveryCharge()
-    {
+    public function getDeliveryCharge() {
         return $this->delivery_charge;
     }
 
@@ -752,10 +702,9 @@ class Purchase {
      * @param string $purchaseCurrency
      * @return Purchase
      */
-    public function setPurchaseCurrency($purchaseCurrency)
-    {
+    public function setPurchaseCurrency($purchaseCurrency) {
         $this->purchase_currency = $purchaseCurrency;
-    
+
         return $this;
     }
 
@@ -764,8 +713,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getPurchaseCurrency()
-    {
+    public function getPurchaseCurrency() {
         return $this->purchase_currency;
     }
 
@@ -775,10 +723,9 @@ class Purchase {
      * @param string $confirmation
      * @return Purchase
      */
-    public function setConfirmation($confirmation)
-    {
+    public function setConfirmation($confirmation) {
         $this->confirmation = $confirmation;
-    
+
         return $this;
     }
 
@@ -787,8 +734,7 @@ class Purchase {
      *
      * @return string 
      */
-    public function getConfirmation()
-    {
+    public function getConfirmation() {
         return $this->confirmation;
     }
 
@@ -798,10 +744,9 @@ class Purchase {
      * @param Evocatio\Bundle\PosBundle\Entity\PurchaseTax $purchaseTaxApplicables
      * @return Purchase
      */
-    public function addPurchaseTaxApplicable(\Evocatio\Bundle\PosBundle\Entity\PurchaseTax $purchaseTaxApplicables)
-    {
+    public function addPurchaseTaxApplicable(\Evocatio\Bundle\PosBundle\Entity\PurchaseTax $purchaseTaxApplicables) {
         $this->purchase_tax_applicables[] = $purchaseTaxApplicables;
-    
+
         return $this;
     }
 
@@ -810,8 +755,7 @@ class Purchase {
      *
      * @param Evocatio\Bundle\PosBundle\Entity\PurchaseTax $purchaseTaxApplicables
      */
-    public function removePurchaseTaxApplicable(\Evocatio\Bundle\PosBundle\Entity\PurchaseTax $purchaseTaxApplicables)
-    {
+    public function removePurchaseTaxApplicable(\Evocatio\Bundle\PosBundle\Entity\PurchaseTax $purchaseTaxApplicables) {
         $this->purchase_tax_applicables->removeElement($purchaseTaxApplicables);
     }
 
@@ -820,8 +764,7 @@ class Purchase {
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getPurchaseTaxApplicables()
-    {
+    public function getPurchaseTaxApplicables() {
         return $this->purchase_tax_applicables;
     }
 
@@ -831,10 +774,9 @@ class Purchase {
      * @param Evocatio\Bundle\PosBundle\Entity\PurchaseProduct $purchaseProducts
      * @return Purchase
      */
-    public function addPurchaseProduct(\Evocatio\Bundle\PosBundle\Entity\PurchaseProduct $purchaseProducts)
-    {
+    public function addPurchaseProduct(\Evocatio\Bundle\PosBundle\Entity\PurchaseProduct $purchaseProducts) {
         $this->purchase_products[] = $purchaseProducts;
-    
+
         return $this;
     }
 
@@ -843,8 +785,7 @@ class Purchase {
      *
      * @param Evocatio\Bundle\PosBundle\Entity\PurchaseProduct $purchaseProducts
      */
-    public function removePurchaseProduct(\Evocatio\Bundle\PosBundle\Entity\PurchaseProduct $purchaseProducts)
-    {
+    public function removePurchaseProduct(\Evocatio\Bundle\PosBundle\Entity\PurchaseProduct $purchaseProducts) {
         $this->purchase_products->removeElement($purchaseProducts);
     }
 
@@ -853,8 +794,8 @@ class Purchase {
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getPurchaseProducts()
-    {
+    public function getPurchaseProducts() {
         return $this->purchase_products;
     }
+
 }
