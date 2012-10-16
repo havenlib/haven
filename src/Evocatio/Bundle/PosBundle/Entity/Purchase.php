@@ -10,7 +10,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="Purchase")
  * @ORM\Entity()
  */
-class Purchase {
+class Purchase  implements \Serializable 
+{
 
     /**
      * @ORM\Column(name="id", type="integer")
@@ -164,7 +165,7 @@ class Purchase {
 
     /**
      *
-     * @ORM\OneToMany(targetEntity="PurchaseProduct", mappedBy="purchase", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="PurchaseProduct", mappedBy="purchase", cascade={"all"})
      */
     protected $purchase_products;
 
@@ -779,6 +780,12 @@ class Purchase {
 
         return $this;
     }
+    
+    public function setPurchaseProducts( $purchaseProducts) {
+        $this->purchase_products = $purchaseProducts;
+
+        return $this;
+    }
 
     /**
      * Remove purchase_products
@@ -796,6 +803,88 @@ class Purchase {
      */
     public function getPurchaseProducts() {
         return $this->purchase_products;
+    }
+
+    public function serialize() {
+        $data["id"] = $this->id;
+        $data["memo"] = $this->memo;
+
+
+        $data["delivery_address1"] = $this->delivery_address1;
+        $data["delivery_address2"] = $this->delivery_address2;
+        $data["delivery_city"] = $this->delivery_city;
+        $data["delivery_country"] = $this->delivery_country;
+        $data["delivery_name"] = $this->delivery_name;
+        $data["delivery_postal_code"] = $this->delivery_postal_code;
+        $data["delivery_state"] = $this->delivery_state;
+        $data["delivery_telephone"] = $this->delivery_telephone;
+
+        $data["invoicing_address1"] = $this->invoicing_address1;
+        $data["invoicing_address2"] = $this->invoicing_address2;
+        $data["invoicing_city"] = $this->invoicing_city;
+        $data["invoicing_country"] = $this->invoicing_country;
+        $data["invoicing_name"] = $this->invoicing_name;
+        $data["invoicing_postal_code"] = $this->invoicing_postal_code;
+        $data["invoicing_state"] = $this->invoicing_state;
+        $data["invoicing_telephone"] = $this->invoicing_telephone;
+
+        $data["purchase_products"] = serialize($this->getPurchaseProducts());
+        
+        $data["purchase_currency"] = $this->purchase_currency;
+        $data["purchase_tax_applicables"] = $this->purchase_tax_applicables;
+        $data["purchase_total_charges"] = $this->purchase_total_charges;
+        $data["purchase_total_raw"] = $this->purchase_total_raw;
+        $data["purchase_total_tax"] = $this->purchase_total_tax;
+
+        $data["delivery_charge"] = $this->delivery_charge;
+
+        $data["status"] = $this->status;
+        $data["confirmation"] = $this->confirmation;
+
+        $data["updated_at"] = $this->updated_at;
+        $data["created_at"] = $this->created_at;
+        return serialize($data);
+    }
+
+    public function unserialize($data) {
+        $data = unserialize($data);
+        $this->id = $data["id"];
+        $this->memo = $data["memo"];
+
+
+        $this->delivery_address1 = $data["delivery_address1"];
+        $this->delivery_address2 = $data["delivery_address2"];
+        $this->delivery_city = $data["delivery_city"];
+        $this->delivery_country = $data["delivery_country"];
+        $this->delivery_name = $data["delivery_name"];
+        $this->delivery_postal_code = $data["delivery_postal_code"];
+        $this->delivery_state = $data["delivery_state"];
+        $this->delivery_telephone = $data["delivery_telephone"];
+
+        $this->invoicing_address1 = $data["invoicing_address1"];
+        $this->invoicing_address2 = $data["invoicing_address2"];
+        $this->invoicing_city = $data["invoicing_city"];
+        $this->invoicing_country = $data["invoicing_country"];
+        $this->invoicing_name = $data["invoicing_name"];
+        $this->invoicing_postal_code = $data["invoicing_postal_code"];
+        $this->invoicing_state = $data["invoicing_state"];
+        $this->invoicing_telephone = $data["invoicing_telephone"];
+
+        $this->setPurchaseProducts(unserialize($data["purchase_products"]));
+        
+        $this->purchase_currency = $data["purchase_currency"];
+        $this->purchase_tax_applicables = $data["purchase_tax_applicables"];
+        $this->purchase_total_charges = $data["purchase_total_charges"];
+        $this->purchase_total_raw = $data["purchase_total_raw"];
+        $this->purchase_total_tax = $data["purchase_total_tax"];
+
+        $this->delivery_charge = $data["delivery_charge"];
+
+        $this->status = $data["status"];
+        $this->confirmation = $data["confirmation"];
+
+        $this->updated_at = $data["updated_at"];
+        $this->created_at = $data["created_at"];
     }
 
 }

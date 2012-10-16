@@ -8,8 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity()
  */
-class PurchaseProduct implements \Serializable {
-
+class PurchaseProduct  implements \Serializable {
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -121,6 +120,7 @@ class PurchaseProduct implements \Serializable {
      */
     public function setProduct(\Evocatio\Bundle\PosBundle\Entity\Product $product = null) {
         $this->product = $product;
+        $this->price = $this->getProduct()->getPrice();
 
         return $this;
     }
