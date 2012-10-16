@@ -65,8 +65,6 @@ class BasketController extends ContainerAware {
         return array("entity" => $entity);
     }
 
-
-
     /**
      * @Route("/reset", name="EvocatioPosBundle_BasketReset")
      * @Method("GET")
@@ -74,10 +72,11 @@ class BasketController extends ContainerAware {
      */
     public function resetAction() {
 
-       $this->container->get("session")->set("basket", new Entity());
+        $this->container->get("session")->set("basket", new Entity());
 
         return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_BasketEdit'));
     }
+
 //
 //    /**
 //     * Creates a new basket entity.
@@ -138,7 +137,7 @@ class BasketController extends ContainerAware {
 
         $entity = $this->getBasketFromSession();
         $basket_post = $this->container->get('Request')->get("evocatio_bundle_posbundle_baskettype");
-
+echo "mets en ";
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
         }
@@ -148,7 +147,7 @@ class BasketController extends ContainerAware {
         if ($this->saveToSession($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_BasketList'));
+//            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_BasketList'));
         }
 //        $this->container->get("session")->setFlash("error", "update.error");
 
@@ -158,6 +157,7 @@ class BasketController extends ContainerAware {
 //            'delete_form' => $delete_form->createView(),
         );
     }
+
     /**
      * Finds and displays all baskets for admin.
      *
@@ -183,8 +183,7 @@ class BasketController extends ContainerAware {
 //            'delete_form' => $delete_form->createView(),
         );
     }
-    
-    
+
     /**
      * @Route("/confirmPurchase", name="EvocatioPosBundle_BasketConfirmPurchase")
      * @return RedirectResponse
@@ -193,51 +192,51 @@ class BasketController extends ContainerAware {
      */
     public function confirmPurchaseAction() {
 
-        $new_entity = $this->getBasketFromSession();
-//        $entity = new Entity();
-//        $new_entity = clone $entity;
+        $entity = $this->getBasketFromSession();
+
         $purchase_post = $this->container->get('Request')->get("evocatio_bundle_posbundle_purchasetype");
 
-        if (!$new_entity) {
+        if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
         }
-        
-        $edit_form = $this->createPurchaseForm($new_entity);
-        
+
+        $edit_form = $this->createPurchaseForm($entity);
+
         $edit_form->bind($purchase_post);
         if ($this->processPurchaseForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
             return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_BasketPayment'));
         }
-//        $this->container->get("session")->setFlash("error", "update.error");
+        $this->container->get("session")->setFlash("error", "update.error");
 
         return array(
-            'entity' => $$new_entity,
+            'entity' => $entity,
             'edit_form' => $edit_form->createView(),
 //            'delete_form' => $delete_form->createView(),
         );
     }
 
-//    /**
-//     * Set a basket entity state to inactive.
-//     *
-//     * @Route("/{id}/state", name="EvocatioPosBundle_BasketToggleState")
-//     * @Method("GET")
-//     */
-//    public function toggleStateAction($id) {
-//
-//        $em = $this->container->get('doctrine')->getEntityManager();
-//        $entity = $em->find('EvocatioPosBundle:Basket', $id);
-//
-//        if (!$entity) {
-//            throw new NotFoundHttpException("Basket non trouvé");
-//        }
-//        $entity->setStatus(!$entity->getStatus());
-//        $em->persist($entity);
-//        $em->flush();
-//
-//        return new RedirectResponse($this->container->get("request")->headers->get('referer'));
-//    }
+    /**
+     * Start payment workflow.
+     *
+     * @Route("/{id}/state", name="EvocatioPosBundle_BasketToggleState")
+     * @Method("GET")
+     */
+    public function toggleStateAction($id) {
+
+        $em = $this->container->get('doctrine')->getEntityManager();
+        $entity = $em->find('EvocatioPosBundle:Basket', $id);
+
+        if (!$entity) {
+            throw new NotFoundHttpException("Basket non trouvé");
+        }
+        $entity->setStatus(!$entity->getStatus());
+        $em->persist($entity);
+        $em->flush();
+
+        return new RedirectResponse($this->container->get("request")->headers->get('referer'));
+    }
+
 //
 //    /**
 //     * Deletes a basket entity.
@@ -259,7 +258,6 @@ class BasketController extends ContainerAware {
 //
 //        return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_BasketList'));
 //    }
-
 //  ------------- Privates -------------------------------------------
     /**
      * Creates an edit_form with all the translations objects added for status languages
@@ -307,7 +305,11 @@ class BasketController extends ContainerAware {
 
         if ($edit_form->isValid()) {
             $entity = $edit_form->getData();
+
             $em = $this->container->get('doctrine')->getEntityManager();
+
+//            $entity->removePurchaseProduct($entity->getPurchaseProducts()->first());
+            $em->detach($entity);
             $this->container->get("session")->set("basket", $entity);
 
             return true;
@@ -322,16 +324,21 @@ class BasketController extends ContainerAware {
      * @return true or form
      */
     protected function processPurchaseForm($edit_form) {
-        
+
         if ($edit_form->isValid()) {
             $entity = $edit_form->getData();
 ////              update purchase and purchase product here for price taxes and other
-            foreach($entity->getPurchaseProducts() as $pp){
-                $pp->setPurchase($entity);
-            }
+//            foreach ($entity->getPurchaseProducts() as $pp) {
+//                $pp->setPurchase($entity);
+//                echo $pp->getId();
+//            }
             $em = $this->container->get('doctrine')->getEntityManager();
+
             $em->persist($entity);
             $em->flush();
+//            detach to put the new information back in the session.
+
+            $this->saveToSession($edit_form);
 
             return true;
         }
@@ -342,22 +349,43 @@ class BasketController extends ContainerAware {
     private function getBasketFromSession() {
 
         if (!$entity = $this->container->get("session")->get("basket")) {
-
             return new Entity();
         }
-        
-//        create an arraycollection to put the unserialized item an replace the current collection.
-//        the goal being to reorder the array keys 
         $em = $this->container->get("doctrine")->getEntityManager();
-//      have to reattach the items(products) to the entitymanager
-        $entity->getPurchaseProducts()->map(function($line_item) use ($em) {
-            
-                    if ($line_item->getProduct() != NULL) {
-                        $product = $em->getRepository("EvocatioPosBundle:Product")->find($line_item->getProduct()->getId());
-                        $line_item->setProduct($product);
-                        $line_item->setPrice($line_item->getProduct()->getPrice());
-                    }
-                });
+
+
+
+        echo "<p>STATE_MANAGED: " . \Doctrine\ORM\UnitOfWork::STATE_MANAGED . "</p>";
+        echo "<p>STATE_REMOVED: " . \Doctrine\ORM\UnitOfWork::STATE_REMOVED . "</p>";
+        echo "<p>STATE_DETACHED: " . \Doctrine\ORM\UnitOfWork::STATE_DETACHED . "</p>";
+        echo "<p>STATE_NEW: " . \Doctrine\ORM\UnitOfWork::STATE_NEW . "</p>";
+        echo "<p>STATE_REMOVED: " . \Doctrine\ORM\UnitOfWork::STATE_REMOVED . "</p>";
+
+
+        echo "<p>" . $em->getUnitOfWork()->getEntityState($entity) . "</p>";
+        
+//        If the state is detached for the entity, then merge
+//        if ($em->getUnitOfWork()->getEntityState($entity) == 3) {
+            $entity = $em->merge($entity);
+//        }
+//        else{
+//                    $entity->getPurchaseProducts()->map(function($line_item) use ($em) {
+//
+//                    if ($line_item->getProduct() != NULL) {
+//                            $product = $em->getRepository("EvocatioPosBundle:Product")->find($line_item->getProduct()->getId());
+//                            $line_item->setProduct($product);
+//                            $line_item->setPrice($line_item->getProduct()->getPrice());
+//                        }
+//                    });
+//        }
+        echo "<p>" . $em->getUnitOfWork()->getEntityState($entity) . "</p>";
+
+
+
+
+
+//        die();
+//        $entity = $em->merge($entity);
 
         return $entity;
     }
