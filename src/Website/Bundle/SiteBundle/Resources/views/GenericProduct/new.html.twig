@@ -1,0 +1,27 @@
+{%  extends "WebsiteSiteBundle:Template:multilangue_add_template.html.twig" %}
+{% block formhead %}
+    {{ path('EvocatioPosBundle_GenericProductCreate') }}
+{% endblock formhead %}
+
+{% block form %}
+<fieldset>
+        <ul>
+            <li>{{ form_label(edit_form.status)}}
+                <span>{{ form_widget(edit_form.status)}}</span>
+            </li>
+                {% for key, translation in edit_form.translations %}
+            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_widget(translation)}}
+                </li>
+              {% endfor %}
+                    </ul>
+                        {{ form_rest(edit_form) }}
+                </fieldset>
+
+{% endblock form %}
+
+{% block back %}
+                <a href="{{ path('EvocatioPosBundle_GenericProductList') }}">
+                    Back to the list
+                </a>
+{% endblock back %}

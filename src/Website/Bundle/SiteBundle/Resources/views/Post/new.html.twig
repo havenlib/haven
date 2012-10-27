@@ -1,4 +1,4 @@
-{%  extends "EvocatioCoreBundle:Template:multilangue_add_template.html.twig" %}
+{%  extends "WebsiteSiteBundle:Template:multilangue_add_template.html.twig" %}
 {% block formhead %}
     {{ path('EvocatioPostBundle_PostCreate') }}
 {% endblock formhead %}
@@ -45,21 +45,14 @@
                         {{ form_widget(translation.file)}}
             </li>
             <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
-                <div>
+             
                         {{ form_errors(translation.content) }}
                         {{ form_label(translation.content) }}
-                        <span>
-                            Pour coller des textes en provenance de pages web ou de Microsoft Word utilisez le bouton
-                            qui éliminera tout formatage
-                            <span>
-                                Remplir en {{ translation.vars.value.getTransLang.getName }}
-                            </span>
-                        </span>
-                    </div>
-                    <div>
+                    <span class="widget">
                         {{ form_widget(translation.content, {'attr': {'class': 'ckeditor ckeditor-admin'} }) }}
-                        </div>
-                    </li>
+                    </span>
+                </li>
+                      
               {% endfor %}
                 </ul>
                         {{ form_rest(edit_form) }}

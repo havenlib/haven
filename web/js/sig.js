@@ -1,3 +1,4 @@
+
 function addAnItem(source){
     // this function will add an item to a collection from a data-prototype as created by symfony 2's form with option allow_add and data-prototype set to true
     // It will use the length of the child in the data-prototype div, or, the length of all the childs of all the div with the data-join-class class.

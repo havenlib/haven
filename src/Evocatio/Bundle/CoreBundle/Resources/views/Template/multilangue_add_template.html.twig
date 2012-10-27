@@ -1,34 +1,32 @@
 {%  extends "::base.html.twig" %}
 {% block theatre %}
+<div class="edit-form">
 <h1>Ajouter/Modifier une entite</h1>
-<div class="tabs">
+<div class="nav nav-tabs">
     {% for key, translation in edit_form.translations %}
         <li id="tab{{ translation.vars.value.getTransLang.id }}" class="tab{% if loop.index == 1 %} active{% endif%}" onclick="showFormElement(this)"><a href="#" onclick="return false" data-toggle="tab">{{ translation.vars.value.getTransLang.name }}</a></li>
     {% endfor %}    
-    </div>
+</div>
     {{ form_errors(edit_form)}}
     <form action="{% block formhead %}{% endblock formhead %}" method="post" {{ form_enctype(edit_form) }} >
-    {% block form %}
-    {% endblock form %}
+    {% block form %} {% endblock form %}
             <div>
                 <div>
-                    <input type="submit" value="OK">
+                    <button type="submit" class="btn">Ok</button>
                 </div>
             </div>
         </form>
-        <ul>
-            <li>
-    {% block back %}
-    {% endblock back %}
-                </li>
+    <ul>
+        <li>
+        {% block back %}
+        {% endblock back %}
+        </li>
     {% block delete %}
     {% endblock delete %}
-            </ul>
+    </ul>
+</div>
 {% endblock theatre %}
 
-{% block aside %}
-    {% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %}
-{% endblock aside %}
 {% block javascripts %}
     {{ parent() }}
     <script src="/js/sig.js" type="text/javascript"></script>
