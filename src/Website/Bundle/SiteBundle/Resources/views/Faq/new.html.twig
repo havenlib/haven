@@ -1,44 +1,37 @@
-{%  extends "EvocatioCoreBundle:Template:multilangue_add_template.html.twig" %}
+{%  extends "WebsiteSiteBundle:Template:multilangue_add_template.html.twig" %}
 {% block formhead %}
     {{ path('EvocatioFaqBundle_FaqCreate') }}
 {% endblock formhead %}
 
 {% block form %}
 <fieldset>
-        <ul>
-            <li>{{ form_label(edit_form.status)}}
-                <span>{{ form_widget(edit_form.status)}}</span>
-            </li>
-                {% for key, translation in edit_form.translations %}
+    <ul>
+        <li>
+            {{ form_label(edit_form.status)}}
+            {{ form_widget(edit_form.status)}}
+        </li>
+        
+        {% for key, translation in edit_form.translations %}
             <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
-                        {{ form_errors(translation.question) }}
-                        {{ form_label(translation.question) }}
-                        {{ form_widget(translation.question)}}
-                </li>
-                <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
-                    <div>
-                        {{ form_errors(translation.reponse) }}
-                        {{ form_label(translation.reponse) }}
-                            <span>
-                                Pour coller des textes en provenance de pages web ou de Microsoft Word utilisez le bouton
-                                qui éliminera tout formatage
-                                <span>
-                                    Remplir en {{ translation.vars.value.getTransLang.getName }}
-                                </span>
-                            </span>
-                        </div>
-                        <div>
-                        {{ form_widget(translation.reponse, {'attr': {'class': 'ckeditor ckeditor-admin'} }) }}
-                            </div>
-                        </li>
-              {% endfor %}
-                    </ul>
-                        {{ form_rest(edit_form) }}
-                </fieldset>
+              {% include 'WebsiteSiteBundle:Faq:Snippets/form_widget.html.twig' with { 'widget' : translation.question } %}
+            </li>
+
+            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                {{ form_label(translation.reponse) }}
+            
+                <span class="widget">
+                {{ form_widget(translation.reponse, {'attr': {'class': 'ckeditor ckeditor-admin'} }) }}
+                </span>
+                {{ form_errors(translation.reponse) }}
+            </li>
+        {% endfor %}
+    </ul>
+    {{ form_rest(edit_form) }}
+</fieldset>
 {% endblock form %}
 
 {% block back %}
-                <a href="{{ path('EvocatioFaqBundle_FaqList') }}">
-                    Back to the list
-                </a>
+<a href="{{ path('EvocatioFaqBundle_FaqList') }}">
+    Back to the list
+</a>
 {% endblock back %}

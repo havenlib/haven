@@ -1,0 +1,13 @@
+<div class="btn-group">
+  <a class="btn" href="#"> Langue ({{ app.request.get('_locale') }})</a>
+  
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+    <span class="caret"></span>
+  </a>
+  
+  <ul class="dropdown-menu">
+    {% for language in languages %}
+    <li><a href="{{ path('change_language') }}?lang={{ language.symbol }}" >{{ language.name }}</a></li>
+    {% endfor %}
+  </ul>
+</div>

@@ -48,17 +48,9 @@
                 <div>
                         {{ form_errors(translation.content) }}
                         {{ form_label(translation.content) }}
-                        <span>
-                            Pour coller des textes en provenance de pages web ou de Microsoft Word utilisez le bouton
-                            qui éliminera tout formatage
-                            <span>
-                                Remplir en {{ translation.vars.value.getTransLang.getName }}
-                            </span>
-                        </span>
-                    </div>
-                    <div>
+
                         {{ form_widget(translation.content, {'attr': {'class': 'ckeditor ckeditor-admin'} }) }}
-                        </div>
+
                     </li>
               {% endfor %}
                 </ul>

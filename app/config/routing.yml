@@ -12,6 +12,16 @@ WebsiteSiteBundle_Post:
     resource: "@WebsiteSiteBundle/Controller/PostController.php"
     type:     annotation
     prefix: /{_locale}/post/
+    
+WebsiteSiteBundle_User:
+    resource: "@WebsiteSiteBundle/Controller/UserController.php"
+    type:     annotation
+    prefix: /{_locale}/user/
+    
+WebsiteSiteBundle_PosGenericProduct:
+    resource: "@WebsiteSiteBundle/Controller/GenericProductController.php"
+    type:     annotation
+    prefix: /{_locale}/generic/
 # Internal routing configuration to handle ESI
 #_internal:
 #    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"

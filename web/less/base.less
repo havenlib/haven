@@ -1,61 +1,96 @@
 @import "mixin.less";
-
+@import "color.less";
 root { 
     display: block;
 }
 
 body {
-    margin: 0;
-    background: #1F1D1F;
-    background-image: url('../bundles/websitesite/images/bg_repeat.png');
-    background-repeat: repeat-x;
-    background-position: center 2px;
-    border-top: 2px solid white;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-    .wrapper{
-        min-height: 496px;
-        background-image: url('../bundles/websitesite/images/vtexture.png');
-        background-repeat: no-repeat;
-        background-position: top center;
-    }
-
-    header, #main{
-        width: 940px;
+    footer, header, #main{
         margin-left: auto;
         margin-right: auto;
+        width: 940px;
     }
-    
+
+    form fieldset ul{
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+    }    
+    margin: 0;
 }
 
-header{
+body.backend{
+    footer{ 
+        padding-top: 50px; 
+        text-align: center; 
+    }
 
-    nav{
-        float: right;
-        margin-top: 40px;
+    header{
+        min-height: 120px;
+        .lang{
+            margin-top: 40px;
+        }
+    }
+
+    #main{
+
+        .edit-form form fieldset ul li{ min-height: 30px; }
+        .edit-form form fieldset{
+            input:focus:required:invalid:focus{ border-color: rgba(233, 50, 45, 0.8); .input-textarea-radius(233, 50, 45); }
+            label{ float: left; margin-right: 20px; min-width: 100px; }
+            textarea:focus, input:focus{ border-color: rgba(248, 148, 6, 0.8); .input-textarea-radius(248, 148, 6); }
+
+            .widget{  /* Required by textarea to be well formated */ display: inline-block; }
+        }
+    }
+
+}
+
+body.frontend{
+    background-color: #dedadb;
+    header{
+        .lang{
+            margin-top: 40px;
+        }
     }
 
     .menu{
-        list-style: none;
-        background: rgba(255, 255, 255, 0.8);
         display: inline-block;
-        padding: 0 5px;
-        .rounded-corners (21px);
-        border: 1px solid white;
+        list-style: none;
+        margin: 0 auto;
 
         .menu-item{
             float: left;
+        }
+    }
 
-            a{
-                font-weight: 800;
-                font-family: Open Sans, sans-serif;
-                margin: 5px 3px 5px 0;
-                padding: 0 15px;
-                display: block;
-                color: #1F1D1F;
-                text-decoration: none;
-                line-height: 30px;
+    #main{
+        position: relative;
+
+        .bulle{ position: absolute; top: -15px; left: 235px; width: 400px; height: 265px; background-image: url('../bundles/websitesite/images/bulle.png'); }
+        .homepage {
+            .mec{ margin-top: 200px; margin-left: 170px; }
+        }
+        .menu-separator{ width: 940px; height: 2px; background-color: #fc9e00; }
+        .middle{ min-height: 565px; }
+
+
+        .menu-wraper{
+            margin-top: 40px;
+            .menu{
+                margin-top: 15px;
+                .menu-item{
+                    a{ font-weight: 800; font-size: 18px; padding: 0 8px; font-family: Helvetica, sans-serif; color: #a2a2a2; letter-spacing:-1.5px; }
+                }
+
+                .menu-item:last-child{
+                    a{ color: white; }
+                }
             }
+            text-align: center;
         }
     }
 }
+
+
