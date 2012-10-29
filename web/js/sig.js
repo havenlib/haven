@@ -57,12 +57,12 @@ function ajaxRegister(form, data){
                 $("#register_div").html(obj.render);
             }else if(obj.message=="IsRegistered"){
                 $("#signin_menu").html(obj.render);
-//                $("#user-greeter").hide();
-//                $("#user-greeter").html(obj.render).fadeIn("slow");
+            //                $("#user-greeter").hide();
+            //                $("#user-greeter").html(obj.render).fadeIn("slow");
 
-//                $(form).parentsUntil('.container').fadeOut("slow");
-//                $("a.signin").remove();
-//                $("#monespace").removeAttr('onclick');
+            //                $(form).parentsUntil('.container').fadeOut("slow");
+            //                $("a.signin").remove();
+            //                $("#monespace").removeAttr('onclick');
             }
         }
     });
@@ -87,3 +87,13 @@ function ajaxResetRequest(form, data){
     });
     return false;
 }
+
+$(document).ready(
+    function (){
+        $(".datepicker" ).datepicker({
+            showOn: "button",
+            buttonImage: "/images/calendar.png",
+            buttonImageOnly: true
+        });
+    }
+    );

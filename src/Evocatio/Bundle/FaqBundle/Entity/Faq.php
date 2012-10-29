@@ -3,7 +3,6 @@
 namespace Evocatio\Bundle\FaqBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 
 /**
@@ -13,6 +12,10 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
  * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
  */
 class Faq extends Translatable {
+
+    const STATUS_INACTIVE = 0;
+    const STATUS_PUBLISH = 1;
+
     /**
      * @var integer $id
      *
@@ -28,7 +31,7 @@ class Faq extends Translatable {
      * @ORM\Column(name="status", type="boolean", nullable=true)
      */
     protected $status;
-    
+
     /**
      * @var integer $rank
      *
@@ -40,7 +43,6 @@ class Faq extends Translatable {
      * @ORM\OneToMany(targetEntity="FaqTranslation", mappedBy="parent", cascade={"persist"})
      */
     protected $translations;
-
 
     public function __construct() {
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
@@ -61,6 +63,9 @@ class Faq extends Translatable {
      * @param boolean $status
      */
     public function setStatus($status) {
+        if (!in_array($status, array(self::STATUS_INACTIVE, self::STATUS_PUBLISH))) {
+            throw new \InvalidArgumentException("Invalid status");
+        }
         $this->status = $status;
     }
 
@@ -91,15 +96,15 @@ class Faq extends Translatable {
         return $this->translations;
     }
 
-    public function getReponse($lang = null){
+    public function getReponse($lang = null) {
         return $this->getTranslated('Reponse', $lang);
     }
 
-    public function getQuestion($lang = null){
+    public function getQuestion($lang = null) {
         return $this->getTranslated('Question', $lang);
     }
 
-    protected function getTranslationClass(){
+    protected function getTranslationClass() {
         return "Evocatio\Bundle\FaqBundle\Entity\FaqTranslation";
     }
 
@@ -108,8 +113,7 @@ class Faq extends Translatable {
      *
      * @param string $rank
      */
-    public function setRank($rank)
-    {
+    public function setRank($rank) {
         $this->rank = $rank;
     }
 
@@ -118,8 +122,7 @@ class Faq extends Translatable {
      *
      * @return string 
      */
-    public function getRank()
-    {
+    public function getRank() {
         return $this->rank;
     }
 
@@ -129,10 +132,9 @@ class Faq extends Translatable {
      * @param Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations
      * @return Faq
      */
-    public function addTranslation(\Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations)
-    {
+    public function addTranslation(\Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations) {
         $this->translations[] = $translations;
-    
+
         return $this;
     }
 
@@ -141,8 +143,8 @@ class Faq extends Translatable {
      *
      * @param Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations
      */
-    public function removeTranslation(\Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations)
-    {
+    public function removeTranslation(\Evocatio\Bundle\FaqBundle\Entity\FaqTranslation $translations) {
         $this->translations->removeElement($translations);
     }
+
 }

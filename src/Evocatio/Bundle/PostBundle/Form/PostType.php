@@ -12,9 +12,19 @@ class PostType extends AbstractType {
                 ->add('status', 'choice', array(
                     'choices' => array(0 => "Inactive", 1 => "Publish", 2 => "Draft")
                 ))
-                ->add('postbegin_at', "date", array('required' => false))
-                ->add('postend_at', "date", array('required' => false))
-                ->add('translations', 'collection', array('type'=> new PostTranslationType()))
+                ->add('postbegin_at', "date", array(
+                    'required' => false,
+                    'widget' => 'single_text',
+                    'input' => 'datetime',
+                    'format' => 'dd-MM-yyyy',
+                ))
+                ->add('postend_at', "date", array(
+                    'required' => false,
+                    'widget' => 'single_text',
+                    'input' => 'datetime',
+                    'format' => 'dd-MM-yyyy',
+                ))
+                ->add('translations', 'collection', array('type' => new PostTranslationType()))
 
         ;
     }
