@@ -59,6 +59,9 @@
                     <div class="lang pull-right">
                         {% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale"), "template" : "WebsiteSiteBundle:Core:i18nSwitcher.html.twig"} %}
                     </div>
+                    <div>
+                        {% render "EvocatioSecurityBundle:Login:login" %}
+                    </div>
                     {% endblock header %}
                 </header>
 
@@ -78,9 +81,10 @@
                         <div class="menu-wraper">
                             <div class="menu-separator"> </div>
                             <ul class="menu">
-                                <li class="menu-item"><a href="#">WEP APPS</a></li>
-                                <li class="menu-item"><a href="#">HOSTING</a></li>
-                                <li class="menu-item"><a href="#">LIBRAIRY</a></li>
+                                <li class="menu-item"><a href="#">ACCUEIL</a></li>
+                                <li class="menu-item"><a href="#">ACTUALITÉS</a></li>
+                                <li class="menu-item"><a href="#">PRODUITS</a></li>
+                                <li class="menu-item"><a href="#">LIBRAIRIE</a></li>
                                 <li class="menu-item"><a href="{{ path('EvocatioFaqBundle_FaqIndex') }}">FAQ</a></li>
                                 <li class="menu-item"><a href="#">CONTACT</a></li>
                             </ul>
