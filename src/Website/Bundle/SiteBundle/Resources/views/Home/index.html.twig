@@ -5,7 +5,7 @@
     <div class="bulle"></div>
     
     <div>
-    {% render "EvocatioPostBundle:Post:listWidget" with {"_locale" : app.getRequest().get("_locale")} %}
+    {% render "EvocatioPostBundle:Post:listWidget" with {"template" : 'WebsiteSiteBundle:Post:list_widget.html.twig'} %}
     </div>
 </div>
 {% endblock theatre %}

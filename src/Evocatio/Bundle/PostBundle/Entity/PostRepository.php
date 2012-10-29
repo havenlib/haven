@@ -1,4 +1,5 @@
 <?php
+
 namespace Evocatio\Bundle\PostBundle\Entity;
 
 use \Evocatio\Bundle\CoreBundle\Generic\StatusRepository;
@@ -9,7 +10,19 @@ use \Evocatio\Bundle\CoreBundle\Generic\StatusRepository;
  * @author lbreleur
  */
 class PostRepository extends StatusRepository {
-    //put your code here
+
+    /**
+     * 
+     * @return type
+     * Return a query for last crated news.
+     */
+    public function findLastCreated() {
+        $query_builder = $this->createQueryBuilder('p');
+        $query = $query_builder->orderBy("p.created_at", "ASC")->getQuery();
+
+        return $query;
+    }
+
 }
 
 ?>
