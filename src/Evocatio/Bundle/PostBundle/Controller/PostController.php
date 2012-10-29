@@ -215,14 +215,13 @@ class PostController extends ContainerAware {
         return array("entity" => $entity, 'delete_form' => $delete_form->createView()
         );
     }
-    
 
-    public function listWidgetAction($template = null, $nb = null, $last_created = true){
+    public function listWidgetAction($template = null, $nb = null, $last_created = true) {
         $repo = $this->container->get('doctrine')->getRepository("EvocatioPostBundle:Post");
-        $posts = $repo->findLastCreated();
-        
-        
-        return new Response($this->container->get('templating')->render($template ? $template : 'EvocatioPostBundle:Post:listWidget.html.twig'));
+        $entities = $repo->findLastCreated()->getResult();
+
+
+        return new Response($this->container->get('templating')->render($template ? $template : 'EvocatioPostBundle:Post:list_widget.html.twig', array('entities' => $entities)));
     }
 
 //  ------------- Privates -------------------------------------------
