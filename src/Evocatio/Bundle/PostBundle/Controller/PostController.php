@@ -6,6 +6,7 @@ namespace Evocatio\Bundle\PostBundle\Controller;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Response;
 // Sensio includes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -213,6 +214,15 @@ class PostController extends ContainerAware {
 
         return array("entity" => $entity, 'delete_form' => $delete_form->createView()
         );
+    }
+    
+
+    public function listWidgetAction($template = null, $nb = null, $last_created = true){
+        $repo = $this->container->get('doctrine')->getRepository("EvocatioPostBundle:Post");
+        $posts = $repo->findLastCreated();
+        
+        
+        return new Response($this->container->get('templating')->render($template ? $template : 'EvocatioPostBundle:Post:listWidget.html.twig'));
     }
 
 //  ------------- Privates -------------------------------------------

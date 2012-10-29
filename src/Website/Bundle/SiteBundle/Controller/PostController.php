@@ -16,7 +16,7 @@ class PostController extends \Evocatio\Bundle\PostBundle\Controller\PostControll
      *
      * @Route("/new", name="EvocatioPostBundle_PostCreate")
      * @Method("POST")
-     * @Template("EvocatioPostBundle:Post:new.html.twig")
+     * @Template("WebsiteSiteBundle:Post:new.html.twig")
      */
     public function createAction() {
         return parent::createAction();

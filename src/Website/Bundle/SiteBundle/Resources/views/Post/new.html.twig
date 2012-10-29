@@ -11,12 +11,12 @@
             <span>{{ form_widget(edit_form.status)}}</span>
         </li>
         <li>{{ form_label(edit_form.postbegin_at)}}
+            <span>{{ form_widget(edit_form.postbegin_at, {'attr': {'class': 'datepicker'} })}}</span>
             {{ form_errors(edit_form.postbegin_at)}}
-            <span>{{ form_widget(edit_form.postbegin_at)}}</span>
         </li>
         <li>{{ form_label(edit_form.postend_at)}}
+            <span>{{ form_widget(edit_form.postend_at, {'attr': {'class': 'datepicker'} })}}</span>
             {{ form_errors(edit_form.postend_at)}}
-            <span>{{ form_widget(edit_form.postend_at)}}</span>
         </li>
                 {% for key, translation in edit_form.translations %}
         <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
@@ -57,6 +57,7 @@
                 </ul>
                         {{ form_rest(edit_form) }}
             </fieldset>
+
 {% endblock form %}
 
 {% block back %}

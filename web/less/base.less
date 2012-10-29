@@ -5,34 +5,17 @@ root {
 }
 
 body {
-
-    footer, header, #main{
-        margin-left: auto;
-        margin-right: auto;
-        width: 940px;
-    }
-
-    form fieldset ul{
-        list-style-type: none;
-        margin: 0px;
-        padding: 0px;
-    }    
+    footer, header, #main{ margin-left: auto; margin-right: auto; width: 940px; }
+    form fieldset ul{ .no-style-ul; }    
     margin: 0;
 }
 
 body.backend{
-    footer{ 
-        padding-top: 50px; 
-        text-align: center; 
-    }
-
+    footer{ padding-top: 50px; text-align: center; }
     header{
+        .lang{ margin-top: 40px; }
         min-height: 120px;
-        .lang{
-            margin-top: 40px;
-        }
     }
-
     #main{
 
         .edit-form form fieldset ul li{ min-height: 30px; }
@@ -41,28 +24,25 @@ body.backend{
             label{ float: left; margin-right: 20px; min-width: 100px; }
             textarea:focus, input:focus{ border-color: rgba(248, 148, 6, 0.8); .input-textarea-radius(248, 148, 6); }
 
-            .widget{  /* Required by textarea to be well formated */ display: inline-block; }
+            .widget{  /*Required by textarea to be well formated*/ display: inline-block; }
+        }
+        .admin-entities-lines{
+            li{margin-left: 10px;}
         }
     }
-
 }
 
 body.frontend{
     background-color: #dedadb;
     header{
-        .lang{
-            margin-top: 40px;
-        }
+        .lang{ margin-top: 40px; }
     }
 
     .menu{
         display: inline-block;
         list-style: none;
         margin: 0 auto;
-
-        .menu-item{
-            float: left;
-        }
+        .menu-item{ float: left; }
     }
 
     #main{

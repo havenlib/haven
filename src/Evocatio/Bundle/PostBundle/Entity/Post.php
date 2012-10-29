@@ -9,7 +9,7 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
  * Evocatio\Bundle\PostBundle\Entity\Post
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\PostBundle\Entity\PostRepository")
  */
 class Post extends Translatable {
 
