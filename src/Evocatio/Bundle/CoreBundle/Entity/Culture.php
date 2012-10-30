@@ -10,7 +10,7 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
  * Evocatio\Bundle\CoreBundle\Entity\Culture
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="CultureRepository")
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
  */
 class Culture extends Translatable {
     const STATUS_INACTIVE = 0;

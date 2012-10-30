@@ -26,7 +26,7 @@ class CoreController extends ContainerAware {
         $request = $this->container->get("Request");
 
         // if language exists and is status, set current language to it
-        if ($doctrine->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(array('status' => 1, 'symbol' => $request->get("lang")))) {
+        if ($doctrine->getEntityManager()->getRepository("EvocatioCoreBundle:Culture")->findBy(array('status' => 1, 'symbol' => $request->get("lang")))) {
 //        get the base URL to remove form http_referer to get URI
             $urlBaseReferer = $router->getContext()->getScheme() . "://" . $router->getContext()->getHost() . $router->getContext()->getBaseUrl();
 //        figuring out the referers route information 
@@ -51,7 +51,7 @@ class CoreController extends ContainerAware {
      * @param <boolean> $status         Si l'on doit retourner seulement les languages statuss
      */
     public function i18nSwitcherAction($template = null, $status = true) {
-        $rep = $this->container->get("Doctrine")->getRepository("EvocatioCoreBundle:Language");
+        $rep = $this->container->get("Doctrine")->getRepository("EvocatioCoreBundle:Culture");
         $languages = $status ? $rep->findByStatus(true) : $rep->findAll();
         return new Response(
                         $this->container->get('templating')->render(

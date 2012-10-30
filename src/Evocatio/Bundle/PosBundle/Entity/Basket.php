@@ -19,7 +19,8 @@ class Basket {
     }
 
     public function removeLineItem(LineItem $line_item) {
-        $this->line_items->removeElement($line_item);
+        echo "<br>".\Doctrine\Common\Util\Debug::dump($line_item,1)."<br />";
+//        $this->line_items->removeElement($line_item);
     }
 
     public function getTotal() {
