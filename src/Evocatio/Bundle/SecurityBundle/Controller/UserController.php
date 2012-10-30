@@ -26,7 +26,7 @@ class UserController extends ContainerAware {
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioSecurityBundle:User")->findOnlines();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioSecurityBundle:User")->findOnlines()->getResult();
 
         return array("entities" => $entities);
     }

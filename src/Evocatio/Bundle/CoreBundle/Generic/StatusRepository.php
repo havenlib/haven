@@ -3,6 +3,7 @@
 namespace Evocatio\Bundle\CoreBundle\Generic;
 
 use Doctrine\ORM\EntityRepository;
+use \Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * Evocatio\Bundle\CoreBundle\Generic\StatusRepository
@@ -27,13 +28,26 @@ class StatusRepository extends EntityRepository {
         return $query_builder;
     }
 
-    public function findOneEditables($id){
+    public function findOneEditables($id) {
         return $this->getQBuilderBaseEditables($id)
-        ->getQuery()->getOneOrNullResult();
+                        ->getQuery()->getOneOrNullResult();
     }
 
-    public function findOnlines(){
-        return $this->findBy(array("status"=>1));
+    /**
+     * Find all entities actualy online(status = 1). If $return_qb is set to true
+     * the current QueryBuilder will be returned allow to link queries else return a query. 
+     * 
+     * @param boolean $return_qb
+     * @param \Doctrine\DBAL\Query\QueryBuilder $query_builder
+     * @return type
+     */
+    public function findOnlines($return_qb = false, \Doctrine\ORM\QueryBuilder $query_builder = null) {
+
+        if (!$query_builder)
+            $query_builder = $this->createQueryBuilder('e');
+
+        $query_builder->andWhere("e.status = 1");
+        return ($return_qb) ? $query_builder : $query_builder->getQuery();
     }
 
 }

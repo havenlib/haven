@@ -11,11 +11,11 @@
             <span>{{ form_widget(edit_form.status)}}</span>
         </li>
         <li>{{ form_label(edit_form.postbegin_at)}}
-            <span>{{ form_widget(edit_form.postbegin_at, {'attr': {'class': 'datepicker'} })}}</span>
+            <span>{{ form_widget(edit_form.postbegin_at)}}</span>
             {{ form_errors(edit_form.postbegin_at)}}
         </li>
         <li>{{ form_label(edit_form.postend_at)}}
-            <span>{{ form_widget(edit_form.postend_at, {'attr': {'class': 'datepicker'} })}}</span>
+            <span>{{ form_widget(edit_form.postend_at)}}</span>
             {{ form_errors(edit_form.postend_at)}}
         </li>
                 {% for key, translation in edit_form.translations %}

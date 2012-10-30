@@ -14,14 +14,14 @@ class PostType extends AbstractType {
                 ))
                 ->add('postbegin_at', "date", array(
                     'required' => false,
-                    'widget' => 'single_text',
-                    'input' => 'datetime',
+//                    'widget' => 'single_text',
+//                    'input' => 'timestamp',
                     'format' => 'dd-MM-yyyy',
                 ))
                 ->add('postend_at', "date", array(
                     'required' => false,
-                    'widget' => 'single_text',
-                    'input' => 'datetime',
+//                    'widget' => 'single_text',
+//                    'input' => 'timestamp',
                     'format' => 'dd-MM-yyyy',
                 ))
                 ->add('translations', 'collection', array('type' => new PostTranslationType()))
