@@ -23,7 +23,7 @@ class PersonaController extends ContainerAware {
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Persona")->findOnlines()->getResult();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Persona")->findOnlines();
 
         return array("entities" => $entities);
     }

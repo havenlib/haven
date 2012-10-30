@@ -41,7 +41,7 @@ class CoreController extends ContainerAware {
 
             return new RedirectResponse($this->container->get('router')->generate($route, $routeArray));
         }
-        return new RedirectResponse($this->getRequest()->server->get('HTTP_REFERER'));
+        return new RedirectResponse($request->server->get('HTTP_REFERER'));
     }
 
     /**
@@ -51,7 +51,7 @@ class CoreController extends ContainerAware {
      * @param <boolean> $status         Si l'on doit retourner seulement les languages statuss
      */
     public function i18nSwitcherAction($template = null, $status = true) {
-        $rep = $this->container->get("Doctrine")->getRepository("EvocatioCoreBundle:Culture");
+        $rep = $this->container->get("Doctrine")->getRepository("EvocatioCoreBundle:Language");
         $languages = $status ? $rep->findByStatus(true) : $rep->findAll();
         return new Response(
                         $this->container->get('templating')->render(

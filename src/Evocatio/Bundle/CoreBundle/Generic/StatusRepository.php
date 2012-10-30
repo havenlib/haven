@@ -34,20 +34,32 @@ class StatusRepository extends EntityRepository {
     }
 
     /**
-     * Find all entities actualy online(status = 1). If $return_qb is set to true
-     * the current QueryBuilder will be returned allow to link queries else return a query. 
+     * Filter QueryBuilder with online.
      * 
-     * @param boolean $return_qb
      * @param \Doctrine\DBAL\Query\QueryBuilder $query_builder
-     * @return type
+     * @return \Doctrine\DBAL\Query\QueryBuilder
      */
-    public function findOnlines($return_qb = false, \Doctrine\ORM\QueryBuilder $query_builder = null) {
+    protected function filterOnlines(\Doctrine\ORM\QueryBuilder $query_builder = null) {
 
         if (!$query_builder)
             $query_builder = $this->createQueryBuilder('e');
 
         $query_builder->andWhere("e.status = 1");
-        return ($return_qb) ? $query_builder : $query_builder->getQuery();
+        return $query_builder;
     }
+    
+    /**
+     * Find all entities actualy online(status = 1). If $return_qb is set to true
+     * the current QueryBuilder will be returned allow to link queries else return a query. 
+     * 
+     * @return type
+     */
+    public function findOnlines(){
+        $query_builder = $this->createQueryBuilder("e");
+        $query_builder = $this->filterOnlines($query_builder);
+        
+        return $query_builder->getQuery()->getResult();
+    }
+    
 
 }

@@ -36,6 +36,14 @@
     </head>
     <body class="backend">
         <div class="wrapper">
+            <div class="menu">
+                <ul>
+                    <li>Faq</li>
+                    <li>Actualités</li>
+                    <li>Produits</li>
+                </ul>
+            </div>
+                
             {% if app.session.hasFlash("notice")%}
                     <div class="notice">
                 {{ app.session.flash("notice") }}

@@ -20,11 +20,13 @@ class PostRepository extends StatusRepository {
      * @return type
      */
     public function findLastCreatedOnline($qt = null) {
-        $query_builder = $this->findOnlines(true)
-                ->orderBy("e.created_at", "ASC")
+        $query_builder = $this->createQueryBuilder("e");
+        $query_builder->orderBy("e.created_at", "ASC")
                 ->setMaxResults($qt);
+        $query_builder = $this->filterOnlines($query_builder);
 
-        return $query_builder->getQuery();
+
+        return $query_builder->getQuery()->getResult();
     }
 
 }
