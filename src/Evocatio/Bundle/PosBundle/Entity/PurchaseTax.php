@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity()
  */
-class OrderTax {
+class PurchaseTax {
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -15,10 +15,10 @@ class OrderTax {
      */
     protected $id;
     /**
-     * @ORM\ManyToOne(targetEntity="Order", inversedBy="order_taxes_applicables")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Purchase", inversedBy="purchase_taxes_applicables")
+     * @ORM\JoinColumn(name="purchase_id", referencedColumnName="id")
      */
-    protected $order;
+    protected $purchase;
     
     /**
      * @ORM\Column(name="name", type="string", length=8)
@@ -62,7 +62,7 @@ class OrderTax {
      * Set name
      *
      * @param string $name
-     * @return OrderTax
+     * @return PurchaseTax
      */
     public function setName($name)
     {
@@ -85,7 +85,7 @@ class OrderTax {
      * Set rate
      *
      * @param float $rate
-     * @return OrderTax
+     * @return PurchaseTax
      */
     public function setRate($rate)
     {
@@ -108,7 +108,7 @@ class OrderTax {
      * Set applied_on
      *
      * @param float $appliedOn
-     * @return OrderTax
+     * @return PurchaseTax
      */
     public function setAppliedOn($appliedOn)
     {
@@ -131,7 +131,7 @@ class OrderTax {
      * Set applied_amount
      *
      * @param float $appliedAmount
-     * @return OrderTax
+     * @return PurchaseTax
      */
     public function setAppliedAmount($appliedAmount)
     {
@@ -154,7 +154,7 @@ class OrderTax {
      * Set rank
      *
      * @param integer $rank
-     * @return OrderTax
+     * @return PurchaseTax
      */
     public function setRank($rank)
     {
@@ -174,25 +174,25 @@ class OrderTax {
     }
 
     /**
-     * Set order
+     * Set purchase
      *
-     * @param Evocatio\Bundle\PosBundle\Entity\Order $order
-     * @return OrderTax
+     * @param Evocatio\Bundle\PosBundle\Entity\Purchase $purchase
+     * @return PurchaseTax
      */
-    public function setOrder(\Evocatio\Bundle\PosBundle\Entity\Order $order = null)
+    public function setPurchase(\Evocatio\Bundle\PosBundle\Entity\Purchase $purchase = null)
     {
-        $this->order = $order;
+        $this->purchase = $purchase;
     
         return $this;
     }
 
     /**
-     * Get order
+     * Get purchase
      *
-     * @return Evocatio\Bundle\PosBundle\Entity\Order 
+     * @return Evocatio\Bundle\PosBundle\Entity\Purchase 
      */
-    public function getOrder()
+    public function getPurchase()
     {
-        return $this->order;
+        return $this->purchase;
     }
 }

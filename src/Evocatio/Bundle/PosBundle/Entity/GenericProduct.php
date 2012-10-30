@@ -3,22 +3,21 @@
 namespace Evocatio\Bundle\PosBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 use Evocatio\Bundle\PosBundle\Entity\GenericTranslation;
 use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 
 /**
  *  Evocatio\Bundle\PosBundle\Entity\Generic
  * 
- *  @ORM\Entity()
+ *  @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
  */
 class GenericProduct extends Product {
-
 
     /**
      * @ORM\OneToMany(targetEntity="GenericProductTranslation", mappedBy="parent", cascade={"persist"})
      */
-    protected $translations;
-
+    private $translations;
 
     protected function getTranslationClass() {
         return "Evocatio\Bundle\PosBundle\Entity\GenericProductTranslation";
@@ -64,6 +63,7 @@ class GenericProduct extends Product {
     public function getName($lang = null) {
         return $this->getTranslated('Name', $lang);
     }
+
     /**
      * Description must return an overall description of the product,
      * For non-generic it should return a concatenation of other descriptive fields,

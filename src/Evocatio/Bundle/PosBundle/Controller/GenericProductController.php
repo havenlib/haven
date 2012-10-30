@@ -22,7 +22,7 @@ class GenericProductController extends ContainerAware {
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findAll();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findOnlines();
 
         return array("entities" => $entities);
     }
@@ -78,7 +78,7 @@ class GenericProductController extends ContainerAware {
      *
      * @Route("/new", name="EvocatioPosBundle_GenericProductCreate")
      * @Method("POST")
-     * @Template("EvocatioPosBundle:Default:new.html.twig")
+     * @Template("EvocatioPosBundle:GenericProduct:new.html.twig")
      */
     public function createAction() {
         $edit_form = $this->createEditForm(new Entity());
@@ -104,7 +104,7 @@ class GenericProductController extends ContainerAware {
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->find($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findOneEditables($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -123,10 +123,10 @@ class GenericProductController extends ContainerAware {
      * @Route("/{id}/edit", name="EvocatioPosBundle_GenericProductUpdate")
      * @return RedirectResponse
      * @Method("POST")
-     * @Template("EvocatioPosBundle:Default:edit.html.twig")
+     * @Template("EvocatioPosBundle:GenericProduct:edit.html.twig")
      */
     public function updateAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->find($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findOneEditables($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
