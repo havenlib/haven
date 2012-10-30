@@ -24,7 +24,7 @@ class PostController extends ContainerAware {
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPostBundle:Post")->findOnlines();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPostBundle:Post")->findOnlines()->getResult();
 
         return array("entities" => $entities);
     }
@@ -218,7 +218,7 @@ class PostController extends ContainerAware {
 
     public function listWidgetAction($template = null, $nb = null, $last_created = true) {
         $repo = $this->container->get('doctrine')->getRepository("EvocatioPostBundle:Post");
-        $entities = $repo->findLastCreated()->getResult();
+        $entities = $repo->findLastCreatedOnline(2)->getResult();
 
 
         return new Response($this->container->get('templating')->render($template ? $template : 'EvocatioPostBundle:Post:list_widget.html.twig', array('entities' => $entities)));

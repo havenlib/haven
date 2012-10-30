@@ -3,6 +3,7 @@
 namespace Evocatio\Bundle\PostBundle\Entity;
 
 use \Evocatio\Bundle\CoreBundle\Generic\StatusRepository;
+use \Doctrine\ORM\QueryBuilder;
 
 /**
  * Description of PostRepository
@@ -12,15 +13,18 @@ use \Evocatio\Bundle\CoreBundle\Generic\StatusRepository;
 class PostRepository extends StatusRepository {
 
     /**
+     * Return a query for last crated post.
      * 
+     * @param boolean $return_qb
+     * @param \Doctrine\ORM\QueryBuilder $query_builder
      * @return type
-     * Return a query for last crated news.
      */
-    public function findLastCreated() {
-        $query_builder = $this->createQueryBuilder('p');
-        $query = $query_builder->orderBy("p.created_at", "ASC")->getQuery();
+    public function findLastCreatedOnline($nb = null) {
+        $query_builder = $this->findOnlines(true)
+                ->orderBy("e.created_at", "ASC")
+                ->setMaxResults($nb);
 
-        return $query;
+        return $query_builder->getQuery();
     }
 
 }
