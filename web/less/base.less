@@ -23,7 +23,6 @@ body.backend{
             input:focus:required:invalid:focus{ border-color: rgba(233, 50, 45, 0.8); .input-textarea-radius(233, 50, 45); }
             label{ float: left; margin-right: 20px; min-width: 100px; }
             textarea:focus, input:focus{ border-color: rgba(248, 148, 6, 0.8); .input-textarea-radius(248, 148, 6); }
-
             .widget{  /*Required by textarea to be well formated*/ display: inline-block; }
         }
         .admin-entities-lines{
@@ -38,20 +37,20 @@ body.frontend{
         .lang{ margin-top: 40px; }
     }
 
-    .menu{
-        display: inline-block;
-        list-style: none;
-        margin: 0 auto;
-        .menu-item{ float: left; }
-    }
 
     #main{
-        position: relative;
-
+        .breadcrumb{ display: inline-block; }
         .bulle{ position: absolute; top: -15px; left: 235px; width: 400px; height: 265px; background-image: url('../bundles/websitesite/images/bulle.png'); }
         .homepage {
             .mec{ margin-top: 200px; margin-left: 170px; }
         }
+        .menu{
+            display: inline-block;
+            list-style: none;
+            margin: 0 auto;
+            .menu-item{ float: left; }
+        }
+
         .menu-separator{ width: 940px; height: 2px; background-color: #fc9e00; }
         .middle{ min-height: 565px; }
 
@@ -70,6 +69,11 @@ body.frontend{
             }
             text-align: center;
         }
+        position: relative;
+    }
+
+    footer{
+        
     }
 }
 
