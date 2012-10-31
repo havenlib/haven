@@ -21,7 +21,7 @@ use Evocatio\Bundle\SecurityBundle\Form\UserType as Form;
 class LoginController extends ContainerAware {
 
     /**
-     *  @Route("/login", name="EvocatioSecurityBundle_login")
+     *  @Route("/auth/login", name="EvocatioSecurityBundle_login")
      *  @Method("GET")
      */
     public function loginAction() {
@@ -57,12 +57,12 @@ class LoginController extends ContainerAware {
     }
 
     /**
-     * @Route("/register", name="EvocatioSecurityBundle_register")
+     * @Route("/auth/register", name="EvocatioSecurityBundle_register")
      */
     public function registerAction() {
         $templating = $this->container->get('templating');
-        $user = new User();
-        $register_form = $this->container->get("form.factory")->create(new \tahua\SiteBundle\Form\RegisterType($user));
+        $user = new Entity();
+        $register_form = $this->container->get("form.factory")->create(new Form($user));
         $request = $this->container->get("request");
 
         if ($request->getMethod() == "POST" && $this->register($register_form, $request->get("register"))) {
@@ -90,7 +90,7 @@ class LoginController extends ContainerAware {
 
     /**
      * reset confirmation by the user
-     * @Route("/confirmation/{uuid}", name="EvocatioSecurityBundle_resetConfirmation") 
+     * @Route("/auth/confirmation/{uuid}", name="EvocatioSecurityBundle_resetConfirmation") 
      */
     public function resetConfirmationAction($uuid) {
         $em = $this->container->get("doctrine")->getEntityManager();
@@ -128,7 +128,7 @@ class LoginController extends ContainerAware {
     }
 
     /**
-     * @Route("/reset_request", name="EvocatioSecurityBundle_resetRequest") 
+     * @Route("/auth/reset_request", name="EvocatioSecurityBundle_resetRequest") 
      */
     public function resetRequestAction() {
 
@@ -180,7 +180,7 @@ class LoginController extends ContainerAware {
     }
 
     /**
-     *  @Route("/login_check", name="login_check")
+     *  @Route("/auth/login_check", name="login_check")
      *  @template
      */
     public function loginCheckAction() {
@@ -188,7 +188,7 @@ class LoginController extends ContainerAware {
     }
 
     /**
-     *  @Route("/logout", name="EvocatioSecurityBundle_logout")
+     *  @Route("/auth/logout", name="EvocatioSecurityBundle_logout")
      *  @template
      */
     public function logoutAction() {
@@ -196,7 +196,7 @@ class LoginController extends ContainerAware {
     }
 
     /**
-     *  @Route("/success", name="login_succes")
+     *  @Route("/auth/success", name="login_succes")
      */
     public function successAction() {
 //    if is ajax

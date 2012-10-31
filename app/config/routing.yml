@@ -6,12 +6,12 @@ website_site:
 WebsiteSiteBundle_Faq:
     resource: "@WebsiteSiteBundle/Controller/FaqController.php"
     type:     annotation
-    prefix: /{_locale}/faq/
+    prefix: /{_locale}/
     
 WebsiteSiteBundle_Post:
     resource: "@WebsiteSiteBundle/Controller/PostController.php"
     type:     annotation
-    prefix: /{_locale}/post/
+    prefix: /{_locale}/
     
 WebsiteSiteBundle_User:
     resource: "@WebsiteSiteBundle/Controller/UserController.php"
@@ -22,6 +22,18 @@ WebsiteSiteBundle_PosGenericProduct:
     resource: "@WebsiteSiteBundle/Controller/GenericProductController.php"
     type:     annotation
     prefix: /{_locale}/generic/
+    
+EvocatioLogin:
+    resource: "@WebsiteSiteBundle/Controller/LoginController.php"
+    type:     annotation
+    prefix: /
+    
+#login:
+#    pattern:   /login
+#    defaults:  { _controller: AcmeSecurityBundle:Security:login }
+#login_check:
+#    pattern:   /login_check
+#    defaults:  { _controller: WebsiteSiteBundle:Login:loginCheck }
 # Internal routing configuration to handle ESI
 #_internal:
 #    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
