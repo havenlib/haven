@@ -60,7 +60,7 @@
                         {% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale"), "template" : "WebsiteSiteBundle:Core:i18nSwitcher.html.twig"} %}
                     </div>
                     <div>
-                        {% render "EvocatioSecurityBundle:Login:login" %}
+                        {% render "EvocatioSecurityBundle:Login:login" with {"_locale" : app.getRequest().get("_locale")}  %}
                     </div>
                     {% endblock header %}
                 </header>

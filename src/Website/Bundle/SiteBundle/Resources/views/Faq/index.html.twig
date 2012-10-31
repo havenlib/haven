@@ -2,7 +2,7 @@
 {% block aside %}
     <div>
         Actualités
-        {% render "WebsiteSiteBundle:Post:index" %}
+    {% render "EvocatioPostBundle:Post:listWidget" with {"_locale" : app.getRequest().get("_locale"),"template" : 'WebsiteSiteBundle:Post:list_widget.html.twig', 'qt' : 2} %}
     </div>
 {% endblock aside %}
 
