@@ -12,9 +12,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="plane", type="string")
- * @ORM\DiscriminatorMap({"telephone"="Telephone",   "map"="Map", "time"="Time", "web"="Web", "postal"="Postal"})
+ * @ORM\DiscriminatorMap({"telephone"="Telephone", "map"="Map", "time"="Time", "web"="Web", "postal"="Postal"})
  */
- class Coordinate {
+class Coordinate {
 
     /**
      * @var integer $id
@@ -38,7 +38,6 @@ use Doctrine\Common\Collections\ArrayCollection;
      */
     private $persona;
 
-
     public function getPlane() {
         return get_called_class();
     }
@@ -56,7 +55,7 @@ use Doctrine\Common\Collections\ArrayCollection;
         return $this->id;
     }
 
-     /**
+    /**
      * Add persona
      *
      * @param Evocatio\Bundle\PersonaBundle\Entity\Persona $persona
@@ -85,4 +84,5 @@ use Doctrine\Common\Collections\ArrayCollection;
     public function getPersona() {
         return $this->persona;
     }
+
 }

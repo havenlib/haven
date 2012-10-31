@@ -14,7 +14,7 @@ class FaqController extends \Evocatio\Bundle\FaqBundle\Controller\FaqController 
     /**
      * Creates a new faq entity.
      *
-     * @Route("/new", name="EvocatioFaqBundle_FaqCreate")
+     * @Route("/admin/faq/new", name="EvocatioFaqBundle_FaqCreate")
      * @Method("POST")
      * @Template("WebsiteSiteBundle:Faq:new.html.twig")
      */
@@ -23,7 +23,7 @@ class FaqController extends \Evocatio\Bundle\FaqBundle\Controller\FaqController 
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioFaqBundle_FaqUpdate")
+     * @Route("/admin/faq/{id}/edit", name="EvocatioFaqBundle_FaqUpdate")
      * @return RedirectResponse
      * @Method("POST")
      * @Template("WebsiteSiteBundle:Faq:edit.html.twig")

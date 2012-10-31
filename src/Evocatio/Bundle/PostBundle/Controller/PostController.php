@@ -16,10 +16,11 @@ use Evocatio\Bundle\PostBundle\Form\PostType as Form;
 use Evocatio\Bundle\PostBundle\Entity\Post as Entity;
 use Evocatio\Bundle\PostBundle\Entity\PostTranslation as EntityTranslation;
 
+
 class PostController extends ContainerAware {
 
     /**
-     * @Route("/", name="EvocatioPostBundle_PostIndex")
+     * @Route("/post/", name="EvocatioPostBundle_PostIndex")
      * @Method("GET")
      * @Template()
      */
@@ -32,7 +33,7 @@ class PostController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{id}/show", name="EvocatioPostBundle_PostShow")
+     * @Route("/admin/post/{id}/show", name="EvocatioPostBundle_PostShow")
      * @Method("GET")
      * @Template()
      */
@@ -54,7 +55,7 @@ class PostController extends ContainerAware {
     /**
      * Finds and displays all posts for admin.
      *
-     * @Route("/list", name="EvocatioPostBundle_PostList")
+     * @Route("/admin/post/list", name="EvocatioPostBundle_PostList")
      * @Method("GET")
      * @Template()
      */
@@ -65,7 +66,7 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/new", name="EvocatioPostBundle_PostNew")
+     * @Route("/admin/post/new", name="EvocatioPostBundle_PostNew")
      * @Method("GET")
      * @Template
      */
@@ -78,7 +79,7 @@ class PostController extends ContainerAware {
     /**
      * Creates a new post entity.
      *
-     * @Route("/new", name="EvocatioPostBundle_PostCreate")
+     * @Route("/admin/post/new", name="EvocatioPostBundle_PostCreate")
      * @Method("POST")
      * @Template("EvocatioPostBundle:Post:new.html.twig")
      */
@@ -100,7 +101,7 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPostBundle_PostEdit")
+     * @Route("/admin/post/{id}/edit", name="EvocatioPostBundle_PostEdit")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -122,7 +123,7 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPostBundle_PostUpdate")
+     * @Route("/admin/post/{id}/edit", name="EvocatioPostBundle_PostUpdate")
      * @return RedirectResponse
      * @Method("POST")
      * @Template("EvocatioPostBundle:Post:edit.html.twig")
@@ -155,7 +156,7 @@ class PostController extends ContainerAware {
     /**
      * Set a post entity state to inactive.
      *
-     * @Route("/{id}/state", name="EvocatioPostBundle_PostToggleState")
+     * @Route("/post/{id}/state", name="EvocatioPostBundle_PostToggleState")
      * @Method("GET")
      */
     public function toggleStateAction($id) {
@@ -174,7 +175,7 @@ class PostController extends ContainerAware {
     /**
      * Deletes a post entity.
      *
-     * @Route("/{id}/delete", name="EvocatioPostBundle_PostDelete")
+     * @Route("/admin/post/{id}/delete", name="EvocatioPostBundle_PostDelete")
      * @Method("POST")
      */
     public function deleteAction($id) {
@@ -193,7 +194,7 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/{slug}", name="EvocatioPostBundle_PostShowSlug")
+     * @Route("/post/{slug}", name="EvocatioPostBundle_PostShowSlug")
      * @Method("GET")
      * @Template("EvocatioPostBundle:Post:show.html.twig")
      */

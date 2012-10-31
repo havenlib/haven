@@ -4,3 +4,4 @@ jms_security_extra:
 
 imports:
     - { resource: "@EvocatioSecurityBundle/Resources/config/security.yml" }
+#    - { resource: "@WebsiteSiteBundle/Resources/config/security.yml" }

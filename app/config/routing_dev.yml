@@ -3,10 +3,10 @@
 #    type:     annotation
 #    prefix:   /product
 
-EvocatioLogin:
-    resource: "@EvocatioSecurityBundle/Controller/LoginController.php"
-    type:     annotation
-    prefix: /auth/
+#EvocatioLogin:
+#    resource: "@EvocatioSecurityBundle/Controller/LoginController.php"
+#    type:     annotation
+#    prefix: /auth/
 
 #EvocatioUser:
 #    resource: "@EvocatioSecurityBundle/Controller/UserController.php"
