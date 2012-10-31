@@ -51,7 +51,7 @@ class CoreController extends ContainerAware {
      * @param <boolean> $status         Si l'on doit retourner seulement les languages statuss
      */
     public function i18nSwitcherAction($template = null, $status = true) {
-        $rep = $this->container->get("Doctrine")->getRepository("EvocatioCoreBundle:Language");
+        $rep = $this->container->get("Doctrine")->getRepository("EvocatioCoreBundle:Culture");
         $languages = $status ? $rep->findByStatus(true) : $rep->findAll();
         return new Response(
                         $this->container->get('templating')->render(
