@@ -8,10 +8,9 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 /**
  * Evocatio\Bundle\PosBundle\Entity\Products
  *
- * @ORM\Entity
- * @ORM\InheritanceType("JOINED")
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
  * @ORM\DiscriminatorColumn(name="plane", type="string")
- * @ORM\DiscriminatorMap({"generic"="GenericProduct"})
+ * @ORM\DiscriminatorMap({"generic"="GenericProduct", "librarymodule"="Website\Bundle\SiteBundle\Entity\LibraryModule"})
  */
 class Product extends Translatable  implements \Serializable 
 {
@@ -114,7 +113,7 @@ class Product extends Translatable  implements \Serializable
         $this->setPrice($data["price"]);
     }
     
-    public function getName() {
+    protected function getName() {
         throw new \Exception("Every product type should have a name and a description function ".get_called_class());
     }    
     

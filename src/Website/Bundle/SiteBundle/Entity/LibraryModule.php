@@ -1,26 +1,26 @@
 <?php
 
-namespace Evocatio\Bundle\PosBundle\Entity;
+namespace Website\Bundle\SiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Evocatio\Bundle\PosBundle\Entity\GenericTranslation;
+use Website\Bundle\SiteBundle\Entity\LibraryModuleTranslation;
 use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 
 /**
- *  Evocatio\Bundle\PosBundle\Entity\Generic
+ *  Website\Bundle\SiteBundle\Entity\LibraryModule
  * 
- *  @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
+* @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
  */
-class GenericProduct extends Product {
+class LibraryModule extends \Evocatio\Bundle\PosBundle\Entity\Product {
 
     /**
-     * @ORM\OneToMany(targetEntity="GenericProductTranslation", mappedBy="parent", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="LibraryModuleTranslation", mappedBy="parent", cascade={"persist"})
      */
     private $translations;
 
     protected function getTranslationClass() {
-        return "Evocatio\Bundle\PosBundle\Entity\GenericProductTranslation";
+        return "Website\Bundle\SiteBundle\Entity\LibraryModuleTranslation";
     }
 
     /**
@@ -33,10 +33,10 @@ class GenericProduct extends Product {
     /**
      * Add translations
      *
-     * @param Evocatio\Bundle\PosBundle\Entity\FaqTranslation $translations
-     * @return GenericProduct
+     * @param Website\Bundle\SiteBundle\Entity\LibraryModuleTranslation $translations
+     * @return LibraryModule
      */
-    public function addTranslation(\Evocatio\Bundle\PosBundle\Entity\FaqTranslation $translations) {
+    public function addTranslation(\Website\Bundle\SiteBundle\Entity\LibraryModuleTranslation $translations) {
         $this->translations[] = $translations;
 
         return $this;
@@ -45,9 +45,9 @@ class GenericProduct extends Product {
     /**
      * Remove translations
      *
-     * @param Evocatio\Bundle\PosBundle\Entity\FaqTranslation $translations
+     * @param Website\Bundle\SiteBundle\Entity\LibraryModuleTranslation $translations
      */
-    public function removeTranslation(\Evocatio\Bundle\PosBundle\Entity\FaqTranslation $translations) {
+    public function removeTranslation(\Website\Bundle\SiteBundle\Entity\LibraryModuleTranslation $translations) {
         $this->translations->removeElement($translations);
     }
 

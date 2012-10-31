@@ -19,9 +19,9 @@ WebsiteSiteBundle_User:
     prefix: /{_locale}/user/
     
 WebsiteSiteBundle_PosGenericProduct:
-    resource: "@WebsiteSiteBundle/Controller/GenericProductController.php"
+    resource: "@WebsiteSiteBundle/Controller/LibraryModuleController.php"
     type:     annotation
-    prefix: /{_locale}/generic/
+    prefix: /{_locale}/librarymodule/
     
 EvocatioLogin:
     resource: "@WebsiteSiteBundle/Controller/LoginController.php"
