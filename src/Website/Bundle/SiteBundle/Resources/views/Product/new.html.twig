@@ -1,6 +1,6 @@
 {%  extends "WebsiteSiteBundle:Template:multilangue_add_template.html.twig" %}
 {% block formhead %}
-    {{ path('EvocatioPosBundle_GenericProductCreate') }}
+    {{ path('EvocatioPosBundle_ProductCreate', {'discriminator' : app.getRequest().get("discriminator")}) }}
 {% endblock formhead %}
 
 
@@ -23,7 +23,7 @@
 
 
 {% block back %}
-                <a href="{{ path('EvocatioPosBundle_GenericProductList') }}">
+                <a href="{{ path('EvocatioPosBundle_ProductList') }}">
                     Back to the list
                 </a>
 {% endblock back %}
