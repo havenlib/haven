@@ -29,7 +29,7 @@
 
 <ul>
     <li>
-        <a href="{{ path('EvocatioPosBundle_ProductIndex') }}">
+        <a href="{{ path('EvocatioPosBundle_ProductList') }}">
             Back to the list
         </a>
     </li>
@@ -39,10 +39,10 @@
         </a>
     </li>
     <li>
-        <form action="{{ path('EvocatioPosBundle_ProductDelete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
+   <!--     <form action="{#{ path('EvocatioPosBundle_ProductDelete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }#}
             <button type="submit">Delete</button>
-        </form>
+        </form> -->
     </li>
 </ul>
 {% endblock theatre %}

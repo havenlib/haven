@@ -11,46 +11,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 // Evocatio includes
-//use Evocatio\Bundle\PosBundle\Form\ProductType as Form;
 use Evocatio\Bundle\PosBundle\Entity\Product as Entity;
-//Other includes
-use Doctrine\Common\Annotations\AnnotationReader;
-use \ReflectionClass;
 
-class ProductController extends ContainerAware {
 
-    /**
-     * @Route("/", name="EvocatioPosBundle_ProductIndex")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Product")->findAll();
-
-        return array("entities" => $entities);
-    }
-
-    /**
-     * Finds and displays a persona entity.
-     *
-     * @Route("/{id}/show", name="EvocatioPosBundle_ProductShow")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Product")->find($id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-
-        $delete_form = $this->createDeleteForm($id);
-
-        return array(
-            'entity' => $entity
-            , "delete_form" => $delete_form->createView()
-        );
-    }
+class ProductAdminController extends ContainerAware {
 
     /**
      * Finds and displays all personas for admin.
@@ -61,7 +25,6 @@ class ProductController extends ContainerAware {
      */
     public function listAction() {
         $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Product")->findAll();
-//        echo "default : " .\Evocatio\Bundle\CoreBundle\Lib\Locale::getDefault();
         return array("entities" => $entities);
     }
 
@@ -195,6 +158,20 @@ class ProductController extends ContainerAware {
 
         return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_ProductList'));
     }
+    
+    /**
+     *
+     * @Route("/choose-discriminator", name="EvocatioPosBundle_ProductChooseDiscriminator")
+     * @Method("GET")
+     * @Template
+     */
+    public function chooseDiscriminatorAction() {
+        $discriminator_map = Entity::getDiscriminatorMap();
+        
+        return array(
+            "discriminator_keys" => array_keys($discriminator_map->value)
+        );
+    }
 
 //  ------------- Privates -------------------------------------------
     /**
@@ -242,19 +219,15 @@ class ProductController extends ContainerAware {
         return $edit_form;
     }
 
-    protected function getEntity($discriminator = null) {
-        $reader = new AnnotationReader();
-        $class_annotations = $reader->getClassAnnotations(new ReflectionClass(new Entity()));
-        $discriminator_map = current(array_filter($class_annotations, function ($object) {
-                            return ($object instanceof \Doctrine\ORM\Mapping\DiscriminatorMap);
-                        }));
 
+    protected function getEntity($discriminator = null) {
+        $discriminator_map = $this->getDiscriminatorMap();
         return (!empty($discriminator_map->value[$discriminator])) ? new $discriminator_map->value[$discriminator] : new Entity();
     }
 
     protected function getForm($entity, $form_class = null) {
-        $form_class = (!empty($form_class))? $form_class : str_replace('\\Entity\\', '\\Form\\', get_class($entity)) . "Type";
-        return new $form_class; 
+        $form_class = (!empty($form_class)) ? $form_class : str_replace('\\Entity\\', '\\Form\\', get_class($entity)) . "Type";
+        return new $form_class;
     }
 
 }

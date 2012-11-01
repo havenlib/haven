@@ -4,7 +4,8 @@ namespace Evocatio\Bundle\PosBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Evocatio\Bundle\CoreBundle\Generic\Translatable;
-
+use Doctrine\Common\Annotations\AnnotationReader;
+use \ReflectionClass;
 /**
  * Evocatio\Bundle\PosBundle\Entity\Products
  *
@@ -16,8 +17,7 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
  * "librarymodule"="Website\Bundle\SiteBundle\Entity\LibraryModule"
  * })
  */
-class Product extends Translatable  implements \Serializable 
-{
+class Product extends Translatable implements \Serializable {
 
     /**
      * @var integer $id 
@@ -40,14 +40,12 @@ class Product extends Translatable  implements \Serializable
      */
     private $status;
 
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -57,10 +55,9 @@ class Product extends Translatable  implements \Serializable
      * @param float $price
      * @return Product
      */
-    public function setPrice($price)
-    {
+    public function setPrice($price) {
         $this->price = $price;
-    
+
         return $this;
     }
 
@@ -69,13 +66,12 @@ class Product extends Translatable  implements \Serializable
      *
      * @return float 
      */
-    public function getPrice($format = null, $locale = null)
-    {
-        if($format){
-            if($locale){
+    public function getPrice($format = null, $locale = null) {
+        if ($format) {
+            if ($locale) {
                 setlocale(LC_MONETARY, $locale);
             }
-            return money_format("%".$format, $this->price);
+            return money_format("%" . $format, $this->price);
         }
         return $this->price;
     }
@@ -86,10 +82,9 @@ class Product extends Translatable  implements \Serializable
      * @param boolean $status
      * @return Product
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -98,31 +93,38 @@ class Product extends Translatable  implements \Serializable
      *
      * @return boolean 
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
-    
-    public function serialize(){
+
+    public function serialize() {
         $data["id"] = $this->id;
         $data["status"] = $this->getStatus();
         $data["price"] = $this->getPrice();
         return serialize($data);
     }
 
-    public function unserialize($data){
+    public function unserialize($data) {
         $data = unserialize($data);
         $this->id = $data["id"];
         $this->setStatus($data["status"]);
         $this->setPrice($data["price"]);
     }
-    
+
     protected function getName() {
-        throw new \Exception("Every product type should have a name and a description function ".get_called_class());
-    }    
-    
+        throw new \Exception("Every product type should have a name and a description function " . get_called_class());
+    }
+
     public function getDescription() {
-        throw new \Exception("Every product type should have a name and a description function ".get_called_class());
-    }    
-    
+        throw new \Exception("Every product type should have a name and a description function " . get_called_class());
+    }
+
+    public static function getDiscriminatorMap() {
+        $reader = new AnnotationReader();
+        $class_annotations = $reader->getClassAnnotations(new ReflectionClass(self));
+        return current(array_filter($class_annotations, function ($object) {
+                                    return ($object instanceof \Doctrine\ORM\Mapping\DiscriminatorMap);
+                                }));
+    }
+
 }
