@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class ProductController extends \Evocatio\Bundle\PosBundle\Controller\ProductController {
+class ProductAdminController extends \Evocatio\Bundle\PosBundle\Controller\ProductAdminController{
 
     /**
      * Creates a new product entity.

@@ -1,0 +1,14 @@
+{%  extends "::base.html.twig" %}
+{% block theatre %}
+<ul>
+        {% for discriminator_key in discriminator_keys %}
+        <li>        
+            <a href="{{ path('EvocatioPosBundle_ProductNew', {'discriminator' : discriminator_key}) }}">
+                Create a new entry {{ discriminator_key }}
+            </a>
+        </li>
+        {% else %}
+        {% endfor %}
+    </ul>
+</ul>
+{% endblock theatre %}

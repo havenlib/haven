@@ -12,7 +12,13 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="plane", type="string")
- * @ORM\DiscriminatorMap({"telephone"="Telephone", "map"="Map", "time"="Time", "web"="Web", "postal"="Postal"})
+ * @ORM\DiscriminatorMap({
+    * "telephone"="Evocatio\Bundle\PersonaBundle\Entity\Telephone", 
+    * "map"="Evocatio\Bundle\PersonaBundle\Entity\Map", 
+    * "time"="Evocatio\Bundle\PersonaBundle\Entity\Time", 
+    * "web"="Evocatio\Bundle\PersonaBundle\Entity\Web", 
+    * "postal"="Evocatio\Bundle\PersonaBundle\Entity\Postal"
+ * })
  */
 class Coordinate {
 
