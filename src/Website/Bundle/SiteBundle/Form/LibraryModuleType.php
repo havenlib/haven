@@ -18,7 +18,7 @@ class LibraryModuleType extends AbstractType {
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\PosBundle\Entity\Product'
+            'data_class' => 'Website\Bundle\SiteBundle\Entity\LibraryModule'
         ));
     }
 

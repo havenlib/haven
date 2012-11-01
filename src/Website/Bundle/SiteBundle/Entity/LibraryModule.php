@@ -73,5 +73,6 @@ class LibraryModule extends \Evocatio\Bundle\PosBundle\Entity\Product {
     public function getDescription($lang = null) {
         return $this->getTranslated('Description', $lang);
     }
+    
 
 }

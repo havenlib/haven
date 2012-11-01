@@ -9,6 +9,7 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
  * Evocatio\Bundle\PosBundle\Entity\Products
  *
  * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
+ * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="plane", type="string")
  * @ORM\DiscriminatorMap({"generic"="GenericProduct", "librarymodule"="Website\Bundle\SiteBundle\Entity\LibraryModule"})
  */
