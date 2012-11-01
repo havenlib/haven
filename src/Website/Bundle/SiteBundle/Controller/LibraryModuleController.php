@@ -8,30 +8,32 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Evocatio\Bundle\PosBundle\Controller\ProductController;
+
 use Website\Bundle\SiteBundle\Form\LibraryModuleType as Form;
 use Website\Bundle\SiteBundle\Entity\LibraryModule as Entity;
 
-class LibraryModuleController extends \Symfony\Component\DependencyInjection\ContainerAware {
+use Doctrine\Common\Annotations\AnnotationReader;
+use \ReflectionClass;
+class LibraryModuleController extends ProductController {
 
+    protected $base_class = "\Evocatio\Bundle\PosBundle\Entity\Product";
+    
     /**
-     * @Route("/", name="EvocatioPosBundle_GenericProductIndex")
+     * @Route("/", name="EvocatioPosBundle_ProductIndex")
      * @Method("GET")
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("WebsiteSiteBundle:LibraryModule")->findOnlines();
-
-        foreach ($entities as $entity){
-            echo $entity->getName();
-        }
-        die();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findAll();
+        
         return array("entities" => $entities);
     }
 
     /**
-     * Finds and displays an entity.
+     * Finds and displays a persona entity.
      *
-     * @Route("/{id}/show", name="EvocatioPosBundle_GenericProductShow")
+     * @Route("/{id}/show", name="EvocatioPosBundle_ProductShow")
      * @Method("GET")
      * @Template()
      */
@@ -51,35 +53,45 @@ class LibraryModuleController extends \Symfony\Component\DependencyInjection\Con
     }
 
     /**
-     * Finds and displays all entities for admin.
+     * Finds and displays all personas for admin.
      *
-     * @Route("/list", name="EvocatioPosBundle_GenericProductList")
+     * @Route("/list", name="EvocatioPosBundle_ProductList")
      * @Method("GET")
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Product")->findAll();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findAll();
 //        echo "default : " .\Evocatio\Bundle\CoreBundle\Lib\Locale::getDefault();
         return array("entities" => $entities);
     }
 
     /**
-     * @Route("/new", name="EvocatioPosBundle_GenericProductNew")
+     * @Route("/new", name="EvocatioPosBundle_ProductNew")
      * @Method("GET")
      * @Template
      */
     public function newAction() {
-        $edit_form = $this->createEditForm(new Entity());
-
+        $entity = new Entity();
+        $edit_form = $this->createEditForm($entity);
+        
+        $reader = new AnnotationReader();
+        $class_annotations = $reader->getClassAnnotations(new ReflectionClass(get_class(new $this->base_class)));
+        
+        echo "<pre>";
+        print_r($class_annotations);
+        print_r($class_annotations[3]);
+        die();
+        
+//         array_search ( mixed $needle , array $haystack [, bool $strict = false ] );
         return array("edit_form" => $edit_form->createView());
     }
 
     /**
-     * Creates a new entity.
+     * Creates a new persona entity.
      *
-     * @Route("/new", name="EvocatioPosBundle_GenericProductCreate")
+     * @Route("/new", name="EvocatioPosBundle_ProductCreate")
      * @Method("POST")
-     * @Template("EvocatioPosBundle:GenericProduct:new.html.twig")
+     * @Template("EvocatioPosBundle:Default:new.html.twig")
      */
     public function createAction() {
         $edit_form = $this->createEditForm(new Entity());
@@ -89,7 +101,7 @@ class LibraryModuleController extends \Symfony\Component\DependencyInjection\Con
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_GenericProductList'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_ProductList'));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -99,13 +111,13 @@ class LibraryModuleController extends \Symfony\Component\DependencyInjection\Con
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPosBundle_GenericProductEdit")
+     * @Route("/{id}/edit", name="EvocatioPosBundle_ProductEdit")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Product")->findOneEditables($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -121,13 +133,13 @@ class LibraryModuleController extends \Symfony\Component\DependencyInjection\Con
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPosBundle_GenericProductUpdate")
+     * @Route("/{id}/edit", name="EvocatioPosBundle_ProductUpdate")
      * @return RedirectResponse
      * @Method("POST")
-     * @Template("EvocatioPosBundle:GenericProduct:edit.html.twig")
+     * @Template("EvocatioPosBundle:Default:edit.html.twig")
      */
     public function updateAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findOneEditables($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -140,7 +152,7 @@ class LibraryModuleController extends \Symfony\Component\DependencyInjection\Con
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_GenericProductList'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_ProductList'));
         }
         $this->container->get("session")->setFlash("error", "update.error");
 
@@ -152,16 +164,16 @@ class LibraryModuleController extends \Symfony\Component\DependencyInjection\Con
     }
 
     /**
-     * Set an entity state to inactive.
+     * Set a persona entity state to inactive.
      *
-     * @Route("/{id}/state", name="EvocatioPosBundle_GenericProductToggleState")
+     * @Route("/{id}/state", name="EvocatioPosBundle_ProductToggleState")
      * @Method("GET")
      */
     public function toggleStateAction($id) {
         $em = $this->container->get('doctrine')->getEntityManager();
         $entity = $em->find('EvocatioPosBundle:GenericProduct', $id);
         if (!$entity) {
-            throw new NotFoundHttpException("GenericProduct non trouvé");
+            throw new NotFoundHttpException("Product non trouvé");
         }
         $entity->setStatus(!$entity->getStatus());
         $em->persist($entity);
@@ -171,9 +183,9 @@ class LibraryModuleController extends \Symfony\Component\DependencyInjection\Con
     }
 
     /**
-     * Deletes a entity.
+     * Deletes a persona entity.
      *
-     * @Route("/{id}/delete", name="EvocatioPosBundle_GenericProductDelete")
+     * @Route("/{id}/delete", name="EvocatioPosBundle_ProductDelete")
      * @Method("POST")
      */
     public function deleteAction($id) {
@@ -188,13 +200,13 @@ class LibraryModuleController extends \Symfony\Component\DependencyInjection\Con
         $em->remove($entity);
         $em->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_GenericProductList'));
+        return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_ProductList'));
     }
 
 //  ------------- Privates -------------------------------------------
     /**
      * Creates an edit_form with all the translations objects added for status languages
-     * @param $entity
+     * @param persona $entity
      * @return Form or RedirectResponse   if validation error
      */
     protected function createEditForm($entity) {
