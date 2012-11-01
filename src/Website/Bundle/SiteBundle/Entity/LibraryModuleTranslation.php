@@ -33,6 +33,13 @@ class LibraryModuleTranslation extends TranslationMappedBase
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * @var text $advantage
+     *
+     * @ORM\Column(name="advantage", type="text", nullable=true)
+     */
+    private $advantage;
     
     /**
      * @ORM\ManyToOne(targetEntity="LibraryModule", inversedBy="translations")
@@ -118,5 +125,28 @@ class LibraryModuleTranslation extends TranslationMappedBase
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Set advantage
+     *
+     * @param string $advantage
+     * @return LibraryModuleTranslation
+     */
+    public function setAdvantage($advantage)
+    {
+        $this->advantage = $advantage;
+    
+        return $this;
+    }
+
+    /**
+     * Get advantage
+     *
+     * @return string 
+     */
+    public function getAdvantage()
+    {
+        return $this->advantage;
     }
 }

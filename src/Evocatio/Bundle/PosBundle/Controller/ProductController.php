@@ -11,8 +11,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 // Evocatio includes
-use Evocatio\Bundle\PosBundle\Form\ProductType as Form;
+//use Evocatio\Bundle\PosBundle\Form\ProductType as Form;
 use Evocatio\Bundle\PosBundle\Entity\Product as Entity;
+//Other includes
+use Doctrine\Common\Annotations\AnnotationReader;
+use \ReflectionClass;
 
 class ProductController extends ContainerAware {
 
@@ -22,7 +25,7 @@ class ProductController extends ContainerAware {
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findAll();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Product")->findAll();
 
         return array("entities" => $entities);
     }
@@ -35,7 +38,7 @@ class ProductController extends ContainerAware {
      * @Template()
      */
     public function showAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->find($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Product")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -57,18 +60,20 @@ class ProductController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->findAll();
+        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Product")->findAll();
 //        echo "default : " .\Evocatio\Bundle\CoreBundle\Lib\Locale::getDefault();
         return array("entities" => $entities);
     }
 
     /**
-     * @Route("/new", name="EvocatioPosBundle_ProductNew")
+     * @Route("/new/{discriminator}", name="EvocatioPosBundle_ProductNew")
      * @Method("GET")
      * @Template
      */
-    public function newAction() {
-        $edit_form = $this->createEditForm(new Entity());
+    public function newAction($discriminator) {
+
+        $entity = $this->getEntity($discriminator);
+        $edit_form = $this->createEditForm($entity);
 
         return array("edit_form" => $edit_form->createView());
     }
@@ -76,12 +81,13 @@ class ProductController extends ContainerAware {
     /**
      * Creates a new persona entity.
      *
-     * @Route("/new", name="EvocatioPosBundle_ProductCreate")
+     * @Route("/new/{discriminator}", name="EvocatioPosBundle_ProductCreate")
      * @Method("POST")
      * @Template("EvocatioPosBundle:Default:new.html.twig")
      */
-    public function createAction() {
-        $edit_form = $this->createEditForm(new Entity());
+    public function createAction($discriminator) {
+        $entity = $this->getEntity($discriminator);
+        $edit_form = $this->createEditForm($entity);
 
         $edit_form->bindRequest($this->container->get('Request'));
 
@@ -104,7 +110,7 @@ class ProductController extends ContainerAware {
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->find($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Product")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -126,7 +132,7 @@ class ProductController extends ContainerAware {
      * @Template("EvocatioPosBundle:Default:edit.html.twig")
      */
     public function updateAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:GenericProduct")->find($id);
+        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPosBundle:Product")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -158,7 +164,7 @@ class ProductController extends ContainerAware {
      */
     public function toggleStateAction($id) {
         $em = $this->container->get('doctrine')->getEntityManager();
-        $entity = $em->find('EvocatioPosBundle:GenericProduct', $id);
+        $entity = $em->find('EvocatioPosBundle:Product', $id);
         if (!$entity) {
             throw new NotFoundHttpException("Product non trouvé");
         }
@@ -178,7 +184,7 @@ class ProductController extends ContainerAware {
     public function deleteAction($id) {
 
         $em = $this->container->get('Doctrine')->getEntityManager();
-        $entity = $em->getRepository("EvocatioPosBundle:GenericProduct")->find($id);
+        $entity = $em->getRepository("EvocatioPosBundle:Product")->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -200,9 +206,9 @@ class ProductController extends ContainerAware {
 //        the list of language here will decide what languages will appear in the form for new or edit.
         $languages = $this->container->get('Doctrine')->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(Array("status" => array(1, 2)));
 
-//        $entity->addTranslations($languages);
+        $entity->addTranslations($languages);
 
-        $edit_form = $this->container->get('form.factory')->create(new Form(), $entity);
+        $edit_form = $this->container->get('form.factory')->create($this->getForm($entity), $entity);
         return $edit_form;
     }
 
@@ -234,6 +240,21 @@ class ProductController extends ContainerAware {
         }
 
         return $edit_form;
+    }
+
+    protected function getEntity($discriminator = null) {
+        $reader = new AnnotationReader();
+        $class_annotations = $reader->getClassAnnotations(new ReflectionClass(new Entity()));
+        $discriminator_map = current(array_filter($class_annotations, function ($object) {
+                            return ($object instanceof \Doctrine\ORM\Mapping\DiscriminatorMap);
+                        }));
+
+        return (!empty($discriminator_map->value[$discriminator])) ? new $discriminator_map->value[$discriminator] : new Entity();
+    }
+
+    protected function getForm($entity, $form_class = null) {
+        $form_class = (!empty($form_class))? $form_class : str_replace('\\Entity\\', '\\Form\\', get_class($entity)) . "Type";
+        return new $form_class; 
     }
 
 }

@@ -13,6 +13,7 @@ class LibraryModuleTranslationType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
+            ->add('advantage')
         ;
     }
 

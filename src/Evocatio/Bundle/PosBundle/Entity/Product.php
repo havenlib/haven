@@ -11,7 +11,10 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
  * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="plane", type="string")
- * @ORM\DiscriminatorMap({"generic"="GenericProduct", "librarymodule"="Website\Bundle\SiteBundle\Entity\LibraryModule"})
+ * @ORM\DiscriminatorMap({
+ * "generic"="Evocatio\Bundle\PosBundle\Entity\GenericProduct", 
+ * "librarymodule"="Website\Bundle\SiteBundle\Entity\LibraryModule"
+ * })
  */
 class Product extends Translatable  implements \Serializable 
 {

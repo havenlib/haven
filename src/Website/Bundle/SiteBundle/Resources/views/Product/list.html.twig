@@ -1,0 +1,17 @@
+{%  extends "::base.html.twig" %}
+{% block theatre %}
+    <dl>
+        {% for entity in entities %}
+            <div>{{ entity.name }}</div> <strong>{{ entity.description }}</strong> <a href="{{ path('EvocatioPosBundle_ProductEdit', { 'id': entity.id, 'discriminator' : app.getRequest().get("discriminator") }) }}">edit</a> <a href="{{ path('EvocatioPosBundle_ProductShow', { 'id': entity.id }) }}">show</a>
+        {% else %}
+            aucune entré
+        {% endfor %}
+    </dl>
+<ul>
+    <li>
+        <a href="{{ path('EvocatioPosBundle_ProductNew', {'discriminator' : app.getRequest().get("discriminator")}) }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{% endblock theatre %}
