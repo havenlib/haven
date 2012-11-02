@@ -1,5 +1,5 @@
 {%  extends "::admin_base.html.twig" %}
-{% block theatre %}
+{% block content %}
 <h1>Ajouter/Modifier une entite</h1>
 
     {{ form_errors(edit_form)}}
@@ -22,7 +22,7 @@
     {% block delete %}
     {% endblock delete %}
         </ul>
-{% endblock theatre %}
+{% endblock content %}
 
 {% block javascripts %}
     {{ parent() }}

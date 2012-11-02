@@ -1,5 +1,5 @@
 {%  extends "::admin_base.html.twig" %}
-{% block theatre %}
+{% block content %}
 <h1>Ajouter/Modifier une entite</h1>
 <div class="nav nav-tabs">
     {% for key, translation in edit_form.translations %}
@@ -25,7 +25,7 @@
     {% endblock delete %}
     </ul>
 </div>
-{% endblock theatre %}
+{% endblock content %}
 
 {% block javascripts %}
     {{ parent() }}

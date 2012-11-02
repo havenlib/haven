@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% block theatre %}
+{% block content %}
 <h1>Faq</h1>
 
 <table class="record_properties">
@@ -41,7 +41,7 @@
         </form>
     </li>
 </ul>
-{% endblock theatre %}
+{% endblock content %}
 {% block aside %}
     {% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %}
 {% endblock aside %}
