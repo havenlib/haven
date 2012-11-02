@@ -5,7 +5,7 @@ root {
 }
 
 body {
-    footer, header, #main{ margin-left: auto; margin-right: auto; width: 940px; }
+    footer, header, #navigation, #main, .breadcrumb{ margin-left: auto; margin-right: auto; width: 940px; }
     form fieldset ul{ .no-style-ul; }    
     margin: 0;
 }
@@ -36,44 +36,49 @@ body.frontend{
     header{
         .lang{ margin-top: 40px; }
     }
+    .breadcrumb{
+        background-color: transparent ;
+    }
 
+    .bulle{ position: absolute; top: -15px; left: 235px; width: 400px; height: 265px; background-image: url('../bundles/websitesite/images/bulle.png'); }
+    .homepage {
+        .mec{ margin-top: 200px; margin-left: 170px; }
+    }
 
     #main{
-        .breadcrumb{ display: inline-block; }
-        .bulle{ position: absolute; top: -15px; left: 235px; width: 400px; height: 265px; background-image: url('../bundles/websitesite/images/bulle.png'); }
-        .homepage {
-            .mec{ margin-top: 200px; margin-left: 170px; }
-        }
-        .menu{
-            display: inline-block;
-            list-style: none;
-            margin: 0 auto;
-            .menu-item{ float: left; }
-        }
-
-        .menu-separator{ width: 940px; height: 2px; background-color: #fc9e00; }
-        .middle{ min-height: 565px; }
-
-
-        .menu-wraper{
-            margin-top: 40px;
-            .menu{
-                margin-top: 15px;
-                .menu-item{
-                    a{ font-weight: 800; font-size: 18px; padding: 0 8px; font-family: Helvetica, sans-serif; color: #a2a2a2; letter-spacing:-1.5px; }
-                }
-
-                .menu-item:last-child{
-                    a{ color: white; }
-                }
+        overflow : auto;
+     //   .breadcrumb{ display: inline-block;}
+        .content{ 
+            min-height: 450px; 
+            width: 75%;
+            float: left;
+            > div{
+                padding-left :15px;
             }
-            text-align: center;
         }
-        position: relative;
+        aside{
+            float:right;
+            width: 25%;
+        }
+        clear:both;
     }
 
     footer{
-        
+            hr { width: 940px; height: 2px; background-color: #fc9e00; }
+            ul{
+                display: inline-block;
+                list-style: none;
+                margin: 0 auto;
+                li{
+                    font-weight: 800; font-size: 18px; padding: 0 8px; font-family: Helvetica, sans-serif;  letter-spacing:-1.5px; 
+                    float: left;
+                    a{ color: #a2a2a2; }
+                    &:last-child{
+                        a{ color: white; }
+                    }
+                }
+            }
+            text-align: center;
     }
 }
 

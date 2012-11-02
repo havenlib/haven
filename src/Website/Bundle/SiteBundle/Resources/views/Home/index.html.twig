@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% block theatre %}
+{% block content %}
 <div class="homepage">
     <img class="mec" src="/bundles/websitesite/images/mec.png" />
     <div class="bulle"></div>
@@ -8,4 +8,4 @@
     {% render "EvocatioPostBundle:Post:listWidget" with {"_locale" : app.getRequest().get("_locale"), "template" : 'WebsiteSiteBundle:Post:list_widget.html.twig', 'qt' : 2} %}
     </div>
 </div>
-{% endblock theatre %}
+{% endblock content %}

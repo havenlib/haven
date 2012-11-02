@@ -1,21 +1,16 @@
 
-{% block theatre %}
 <div>
     <h3>Actualités</h3>
-<ul>
-    {% for entity in entities %}
-        <li>
-        {{ entity.status }} - <strong>{{ entity.title }}</strong>
-                <span>
-   {{ entity.excerpt }}
-                    </span> 
-                    <a href="{{ path('EvocatioPostBundle_PostShowSlug', { 'slug': entity.slug }) }}">show</a>
-                </li>
-    {% else %}
-                <li> Pas d'entité </li>
-    {% endfor %}
-            </ul>
+    <article>
+        <section>{% for entity in entities %}
+            <h4>{{ entity.title|raw }}</h4>
+            <div>{{ entity.excerpt |raw}}</div> 
+            <a href="{{ path('EvocatioPostBundle_PostShowSlug', { 'slug': entity.slug }) }}">show more</a>
+        {% else %}
+            Pas d'entité 
+        {% endfor %}
+        </section>
+    </article>
 </div>
-{% endblock theatre %}
 
 

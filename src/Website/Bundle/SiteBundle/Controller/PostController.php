@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Evocatio\Bundle\PostBundle\Entity\PostTranslation as EntityTranslation;
 
 
 class PostController extends \Evocatio\Bundle\PostBundle\Controller\PostController {
@@ -30,6 +31,15 @@ class PostController extends \Evocatio\Bundle\PostBundle\Controller\PostControll
      */
     public function updateAction($id) {
         return parent::updateAction($id);
+    }
+    
+    /**
+     * @Route("/post/{slug}", name="EvocatioPostBundle_PostShowSlug")
+     * @Method("GET")
+     * @Template("WebsiteSiteBundle:Post:show.html.twig")
+     */
+    public function showFromSlugAction(EntityTranslation $entityTranslation) {
+        return parent::showFromSlugAction($entityTranslation);
     }
 
 }
