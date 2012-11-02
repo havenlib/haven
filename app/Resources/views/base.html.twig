@@ -63,14 +63,7 @@
                 </ul>                
                 <div id="navigation" class="navbar">
                     <div class="navbar-inner">
-                        <ul class="nav">
-                            <li><a href="#">ACCUEIL</a></li>
-                            <li><a href="{{ path('EvocatioPostBundle_PostIndex') }}">ACTUALITÉS</a></li>
-                            <li><a href="#">PRODUITS</a></li>
-                            <li><a href="#">LIBRAIRIE</a></li>
-                            <li><a href="{{ path('EvocatioFaqBundle_FaqIndex') }}">FAQ</a></li>
-                            <li><a href="#">CONTACT</a></li>
-                        </ul>
+                        {% include "WebsiteSiteBundle:Home:navigation.html.twig" %}
                     </div>
                 </div>
                 <div id="main">{% block main %}
@@ -87,14 +80,7 @@
                 </div>
                 <footer>{% block footer %}
                     <hr /> 
-                    <ul>
-                        <li><a href="#">ACCUEIL</a></li>
-                        <li><a href="#">ACTUALITÉS</a></li>
-                        <li><a href="#">PRODUITS</a></li>
-                        <li><a href="#">LIBRAIRIE</a></li>
-                        <li><a href="{{ path('EvocatioFaqBundle_FaqIndex') }}">FAQ</a></li>
-                        <li><a href="#">CONTACT</a></li>
-                    </ul>
+                        {% include "WebsiteSiteBundle:Home:navigation.html.twig" %}
                     {% endblock footer %}
                 </footer>{% endblock body %}
             {% block javascripts %}
