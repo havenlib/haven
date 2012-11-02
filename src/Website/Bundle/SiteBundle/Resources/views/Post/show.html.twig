@@ -2,8 +2,8 @@
 {% block content %}
 <article class="record_properties">
     <section>
-            <h4>{{ entity.getTitle() }}</h4>
-            <div>{{ entity.getContent() }}</div>
+            <h4>{{ entity.getTitle()|raw }}</h4>
+            <div>{{ entity.getContent()|raw }}</div>
             <div>{{ entity.getPath() }}</div>
 
     </section>
