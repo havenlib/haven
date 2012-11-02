@@ -86,7 +86,6 @@ class JoinedAdminController extends ContainerAware {
      */
     public function editAction($id) {
         $entity = $this->container->get("Doctrine")->getRepository($this->getEntityClass())->find($id);
-
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
         }
@@ -216,7 +215,8 @@ class JoinedAdminController extends ContainerAware {
 //        the list of language here will decide what languages will appear in the form for new or edit.
         $languages = $this->container->get('Doctrine')->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(Array("status" => array(1, 2)));
 
-        $entity->addTranslations($languages);
+        if (method_exists($entity, "addTranslations"))
+            $entity->addTranslations($languages);
 
         $edit_form = $this->container->get('form.factory')->create($this->getForm($entity), $entity);
         return $edit_form;

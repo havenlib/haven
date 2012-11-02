@@ -23,13 +23,14 @@ EvocatioPurchase:
     type:     annotation
     prefix: /{_locale}/purchase/
 
-EvocatioPosGenericProduct:
-    resource: "@EvocatioPosBundle/Controller/GenericProductController.php"
-    type:     annotation
-    prefix: /{_locale}/generic/
 
-EvocatioPersonaBundle:
-    resource: "@EvocatioPersonaBundle/Controller/PersonaController.php"
+EvocatioPersonaBundle_PersonaAdmin:
+    resource: "@EvocatioPersonaBundle/Controller/PersonaAdminController.php"
+    type:     annotation
+    prefix: /{_locale}/persona/
+
+EvocatioPersonaBundle_PersonaView:
+    resource: "@EvocatioPersonaBundle/Controller/PersonaViewController.php"
     type:     annotation
     prefix: /{_locale}/persona/
 

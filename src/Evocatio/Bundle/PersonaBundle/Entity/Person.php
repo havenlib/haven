@@ -9,8 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * 
  */
-class Person extends Persona{
-
+class Person extends Persona {
 
     /**
      * @var string $firstname
@@ -45,17 +44,15 @@ class Person extends Persona{
      */
     private $id;
 
-
     /**
      * Set firstname
      *
      * @param string $firstname
      * @return Person
      */
-    public function setFirstname($firstname)
-    {
+    public function setFirstname($firstname) {
         $this->firstname = $firstname;
-    
+
         return $this;
     }
 
@@ -64,8 +61,7 @@ class Person extends Persona{
      *
      * @return string 
      */
-    public function getFirstname()
-    {
+    public function getFirstname() {
         return $this->firstname;
     }
 
@@ -75,10 +71,9 @@ class Person extends Persona{
      * @param string $lastname
      * @return Person
      */
-    public function setLastname($lastname)
-    {
+    public function setLastname($lastname) {
         $this->lastname = $lastname;
-    
+
         return $this;
     }
 
@@ -87,8 +82,7 @@ class Person extends Persona{
      *
      * @return string 
      */
-    public function getLastname()
-    {
+    public function getLastname() {
         return $this->lastname;
     }
 
@@ -98,10 +92,9 @@ class Person extends Persona{
      * @param integer $sex
      * @return Person
      */
-    public function setSex($sex)
-    {
+    public function setSex($sex) {
         $this->sex = $sex;
-    
+
         return $this;
     }
 
@@ -110,8 +103,7 @@ class Person extends Persona{
      *
      * @return integer 
      */
-    public function getSex()
-    {
+    public function getSex() {
         return $this->sex;
     }
 
@@ -121,10 +113,9 @@ class Person extends Persona{
      * @param \DateTime $birthday
      * @return Person
      */
-    public function setBirthday($birthday)
-    {
+    public function setBirthday($birthday) {
         $this->birthday = $birthday;
-    
+
         return $this;
     }
 
@@ -133,8 +124,13 @@ class Person extends Persona{
      *
      * @return \DateTime 
      */
-    public function getBirthday()
-    {
+    public function getBirthday() {
         return $this->birthday;
     }
+
+    public function getDiscriminator() {
+        $discriminator_map = Company::getDiscriminatorMap();
+        return array_search(get_class($this), $discriminator_map->value);
+    }
+
 }
