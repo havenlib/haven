@@ -221,11 +221,31 @@ class ProductAdminController extends ContainerAware {
     }
 
 
+    /**
+     * Return a new entity, based on discriminator parameter. 
+     * Read the dicrminator map of the base joined entity, check if 
+     * the discriminator parameter exist in this map and create an 
+     * new entity based on the corresponding class else return the 
+     * base joined entity.
+     * 
+     * @param type $discriminator
+     * @return type
+     * 
+     */
     protected function getEntity($discriminator = null) {
         $discriminator_map = Entity::getDiscriminatorMap();
         return (!empty($discriminator_map->value[$discriminator])) ? new $discriminator_map->value[$discriminator] : new Entity();
     }
 
+    /**
+     * Return a new FormType class.
+     * Search an existing FormType based on the entity else 
+     * a form class can be directly passed.
+     * 
+     * @param type $entity
+     * @param type $form_class
+     * @return \Evocatio\Bundle\PosBundle\Controller\AbstractType
+     */
     protected function getForm($entity, $form_class = null) {
         $form_class = (!empty($form_class)) ? $form_class : str_replace('\\Entity\\', '\\Form\\', get_class($entity)) . "Type";
         return new $form_class;
