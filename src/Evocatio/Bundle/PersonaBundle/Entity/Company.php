@@ -43,4 +43,9 @@ class Company extends Persona {
     public function getName() {
         return $this->name;
     }
+    
+    public function getDiscriminator(){
+        $discriminator_map = Company::getDiscriminatorMap();
+        return array_search(get_class($this), $discriminator_map->value);
+    }
 }
