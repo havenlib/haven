@@ -162,6 +162,7 @@ class ProductAdminController extends ContainerAware {
     /**
      *
      * @Route("/choose-discriminator", name="EvocatioPosBundle_ProductChooseDiscriminator")
+     * @Route("/new", name="EvocatioPosBundle_ProductChooseDiscrimdinator")
      * @Method("GET")
      * @Template
      */
@@ -221,7 +222,7 @@ class ProductAdminController extends ContainerAware {
 
 
     protected function getEntity($discriminator = null) {
-        $discriminator_map = $this->getDiscriminatorMap();
+        $discriminator_map = Entity::getDiscriminatorMap();
         return (!empty($discriminator_map->value[$discriminator])) ? new $discriminator_map->value[$discriminator] : new Entity();
     }
 

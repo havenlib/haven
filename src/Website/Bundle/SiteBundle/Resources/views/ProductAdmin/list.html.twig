@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% block theatre %}
+{% block content %}
     <dl>
         {% for entity in entities %}
             <div>{{ entity.name }}</div> <strong>{{ entity.description }}</strong> <a href="{{ path('EvocatioPosBundle_ProductEdit', { 'id': entity.id, 'discriminator' : app.getRequest().get("discriminator") }) }}">edit</a> <a href="{{ path('EvocatioPosBundle_ProductShow', { 'id': entity.id }) }}">show</a>
@@ -14,4 +14,4 @@
         </a>
     </li>
 </ul>
-{% endblock theatre %}
+{% endblock content %}
