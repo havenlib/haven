@@ -1,8 +1,9 @@
-<dl>
-    {% for entity in entities %}
-        <dt><div>{{ entity.status?'status':'instatus' }}</div> <strong>{{ entity.question }}</strong></dt>
-        <dd>{{ entity.reponse }}</dd>
+<dl>{% for entity in entities %}
+    <dt>
+    <em>{{ entity.question | raw}}</em>
+    </dt>
+    <dd>{{ entity.reponse | raw }}</dd>
     {% else %}
-        &nbsp;
+    &nbsp;
     {% endfor %}
 </dl>

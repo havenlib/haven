@@ -3,7 +3,7 @@
 
 {% block title %}Info sur l'authorisation{% endblock %}
 
-{% block theatre %}
+{% block content %}
 &nbsp;
 {%
 if not is_granted("IS_AUTHENTICATED_REMEMBERED")
@@ -121,5 +121,5 @@ Of course, this feature needs to be made available to a small group of users. By
 <a href="http://api.symfony.com/2.0/Symfony/Bundle/FrameworkBundle/Templating/GlobalVariables.html#getUser()">Access User info in twig</a>
 </li>
 </ul>
-{% endblock theatre %}
+{% endblock content %}
 
