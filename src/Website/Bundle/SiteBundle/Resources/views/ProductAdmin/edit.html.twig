@@ -1,4 +1,4 @@
-{%  extends "WebsiteSiteBundle:Product:new.html.twig" %}
+{%  extends "WebsiteSiteBundle:ProductAdmin:new.html.twig" %}
 {% block formhead %}
     {{ path('EvocatioPosBundle_ProductUpdate', { 'id': edit_form.vars.value.id, 'discriminator' : app.getRequest().get("discriminator") }) }}
 {% endblock formhead %}

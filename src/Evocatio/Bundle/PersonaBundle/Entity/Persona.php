@@ -8,13 +8,18 @@ use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Evocatio\Bundle\PersonaBundle\Entity\ContactAddress;
+use Doctrine\Common\Annotations\AnnotationReader;
+use \ReflectionClass;
 
 /**
  * Evocatio\Bundle\PersonaBundle\Entity\Persona
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\PersonaBundle\Entity\PersonaRepository")
  * @InheritanceType("JOINED")
  * @DiscriminatorColumn(name="discr", type="string")
- * @DiscriminatorMap({"persona" = "Persona","person" = "Person", "company" = "Company"})
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\PersonaBundle\Entity\PersonaRepository")
+ * @DiscriminatorMap({
+ * "person" = "Evocatio\Bundle\PersonaBundle\Entity\Person", 
+ * "company" = "Evocatio\Bundle\PersonaBundle\Entity\Company"
+ * })
  */
 class Persona {
 
@@ -285,6 +290,11 @@ class Persona {
         return $this->getCoordinate()->filter(function ($coordinate) {
                             return get_class($coordinate) == "Evocatio\Bundle\PersonaBundle\Entity\Time";
                         });
+    }
+
+    public static function getDiscriminatorMap() {
+        $reader = new AnnotationReader();
+        return $reader->getClassAnnotation(new ReflectionClass(__CLASS__), "\Doctrine\ORM\Mapping\DiscriminatorMap");
     }
 
 }

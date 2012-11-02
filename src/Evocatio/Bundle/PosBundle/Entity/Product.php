@@ -121,10 +121,7 @@ class Product extends Translatable implements \Serializable {
 
     public static function getDiscriminatorMap() {
         $reader = new AnnotationReader();
-        $class_annotations = $reader->getClassAnnotations(new ReflectionClass(__CLASS__));
-        return current(array_filter($class_annotations, function ($object) {
-                                    return ($object instanceof \Doctrine\ORM\Mapping\DiscriminatorMap);
-                                }));
+        return $reader->getClassAnnotation(new ReflectionClass(__CLASS__), "\Doctrine\ORM\Mapping\DiscriminatorMap");
     }
 
 }
