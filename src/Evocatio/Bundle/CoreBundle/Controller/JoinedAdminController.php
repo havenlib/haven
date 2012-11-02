@@ -6,22 +6,23 @@ namespace Evocatio\Bundle\CoreBundle\Controller;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Response;
 // Sensio includes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Doctrine\Common\Annotations\AnnotationReader;
 
 class JoinedAdminController extends ContainerAware {
-    
-    
+
     protected $base_class = null;
-    
+
     /**
      * Finds and displays all personas for admin.
      *
-     * @Route("/list", name="EvocatioPosBundle_ProductList")
+     * @Route("/list", name="EvocatioCoreBundle_JoinedList")
      * @Method("GET")
-     * @Template()
+     * @Template
      */
     public function listAction() {
         $entities = $this->container->get("Doctrine")->getRepository($this->getEntityClass())->findAll();
@@ -29,7 +30,7 @@ class JoinedAdminController extends ContainerAware {
     }
 
     /**
-     * @Route("/new/{discriminator}", name="EvocatioPosBundle_ProductNew")
+     * @Route("/new/{discriminator}", name="EvocatioCoreBundle_JoinedNew")
      * @Method("GET")
      * @Template
      */
@@ -44,9 +45,9 @@ class JoinedAdminController extends ContainerAware {
     /**
      * Creates a new joined entity.
      *
-     * @Route("/new/{discriminator}", name="EvocatioPosBundle_ProductCreate")
+     * @Route("/new/{discriminator}", name="EvocatioCoreBundle_JoinedCreate")
      * @Method("POST")
-     * @Template("EvocatioPosBundle:Default:new.html.twig")
+     * @Template
      */
     public function createAction($discriminator) {
         $entity = $this->getEntity($discriminator);
@@ -57,21 +58,29 @@ class JoinedAdminController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "create.success");
 
-            
-            $test =  \Symfony\Bundle\FrameworkBundle\Templating\TemplateReference::getTemplate();
-            echo $test->getLogicalName();
-            die();
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_ProductList'));
+            /**
+             * Use AnnotationReader to get dynamically the route of listAction for redirection after create success.
+             * When this controller is extended, the route for redirection is get from the child controller to avoid
+             * a 404 error and do the redirection from the child controller route rather than this controller. 
+             */
+            $reader = new AnnotationReader();
+            $route = $reader->getMethodAnnotation(new \ReflectionMethod($this, 'listAction'), "\Sensio\Bundle\FrameworkExtraBundle\Configuration\Route");
+
+            return new RedirectResponse($this->container->get('router')->generate($route->getName()));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
-        return array(
+
+        $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
+        $params = array(
             'edit_form' => $edit_form->createView()
         );
+
+        return new Response($this->container->get('templating')->render($template, $params));
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPosBundle_ProductEdit")
+     * @Route("/{id}/edit", name="EvocatioCoreBundle_JoinedEdit")
      * @Method("GET")
      * @Template
      */
@@ -92,10 +101,10 @@ class JoinedAdminController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPosBundle_ProductUpdate")
+     * @Route("/{id}/edit", name="EvocatioCoreBundle_JoinedUpdate")
      * @return RedirectResponse
      * @Method("POST")
-     * @Template("EvocatioPosBundle:Default:edit.html.twig")
+     * @Template
      */
     public function updateAction($id) {
         $entity = $this->container->get("Doctrine")->getRepository($this->getEntityClass())->find($id);
@@ -111,28 +120,40 @@ class JoinedAdminController extends ContainerAware {
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_ProductList'));
+            /**
+             * Use AnnotationReader to get dynamically the route of listAction for redirection after create success.
+             * When this controller is extended, the route for redirection is get from the child controller to avoid
+             * a 404 error and do the redirection from the child controller route rather than this controller. 
+             */
+            $reader = new AnnotationReader();
+            $route = $reader->getMethodAnnotation(new \ReflectionMethod($this, 'listAction'), "\Sensio\Bundle\FrameworkExtraBundle\Configuration\Route");
+
+            return new RedirectResponse($this->container->get('router')->generate($route->getName()));
         }
         $this->container->get("session")->setFlash("error", "update.error");
 
-        return array(
+
+        $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
+        $params = array(
             'entity' => $entity,
             'edit_form' => $edit_form->createView(),
             'delete_form' => $delete_form->createView(),
         );
+
+        return new Response($this->container->get('templating')->render($template, $params));
     }
 
     /**
      * Set a persona entity state to inactive.
      *
-     * @Route("/{id}/state", name="EvocatioPosBundle_ProductToggleState")
+     * @Route("/{id}/state", name="EvocatioCoreBundle_JoinedToggleState")
      * @Method("GET")
      */
     public function toggleStateAction($id) {
         $em = $this->container->get('doctrine')->getEntityManager();
-        $entity = $em->find(get_class($this->getEntity()), $id);
+        $entity = $em->find($this->getEntityClass(), $id);
         if (!$entity) {
-            throw new NotFoundHttpException("Product non trouvé");
+            throw new NotFoundHttpException('entity.not.found');
         }
         $entity->setStatus(!$entity->getStatus());
         $em->persist($entity);
@@ -142,9 +163,9 @@ class JoinedAdminController extends ContainerAware {
     }
 
     /**
-     * Deletes a persona entity.
+     * Deletes a entity.
      *
-     * @Route("/{id}/delete", name="EvocatioPosBundle_ProductDelete")
+     * @Route("/{id}/delete", name="EvocatioCoreBundle_JoinedDelete")
      * @Method("POST")
      */
     public function deleteAction($id) {
@@ -159,20 +180,27 @@ class JoinedAdminController extends ContainerAware {
         $em->remove($entity);
         $em->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_ProductList'));
+        /**
+         * Use AnnotationReader to get dynamically the route of listAction for redirection after create success.
+         * When this controller is extended, the route for redirection is get from the child controller to avoid
+         * a 404 error and do the redirection from the child controller route rather than this controller. 
+         */
+        $reader = new AnnotationReader();
+        $route = $reader->getMethodAnnotation(new \ReflectionMethod($this, 'listAction'), "\Sensio\Bundle\FrameworkExtraBundle\Configuration\Route");
+
+        return new RedirectResponse($this->container->get('router')->generate($route->getName()));
     }
-    
+
     /**
      *
-     * @Route("/choose-discriminator", name="EvocatioPosBundle_ProductChooseDiscriminator")
-     * @Route("/new", name="EvocatioPosBundle_ProductChooseDiscrimdinator")
+     * @Route("/choose-discriminator", name="EvocatioCoreBundle_JoinedChooseDiscriminator")
      * @Method("GET")
      * @Template
      */
     public function chooseDiscriminatorAction() {
         $base_class = $this->base_class;
         $discriminator_map = $base_class::getDiscriminatorMap();
-        
+
         return array(
             "discriminator_keys" => array_keys($discriminator_map->value)
         );
@@ -224,7 +252,6 @@ class JoinedAdminController extends ContainerAware {
         return $edit_form;
     }
 
-
     /**
      * Return a new entity, based on discriminator parameter. 
      * Read the dicrminator map of the base joined entity, check if 
@@ -237,14 +264,14 @@ class JoinedAdminController extends ContainerAware {
      * 
      */
     protected function getEntity($discriminator = null) {
-        
-        if($this->base_class == null){
-            throw new \Exception("You should precise a new base class");
+
+        if ($this->base_class == null) {
+            throw new \Exception("Base class necessary in controller");
         }
-        
+
         $base_class = $this->base_class;
         $discriminator_map = $base_class::getDiscriminatorMap();
-        
+
         return (!empty($discriminator_map->value[$discriminator])) ? new $discriminator_map->value[$discriminator] : $base_class;
     }
 
@@ -261,9 +288,8 @@ class JoinedAdminController extends ContainerAware {
         $form_class = (!empty($form_class)) ? $form_class : str_replace('\\Entity\\', '\\Form\\', get_class($entity)) . "Type";
         return new $form_class;
     }
-    
-    
-    private function getEntityClass(){
+
+    private function getEntityClass() {
         return get_class($this->getEntity());
     }
 
