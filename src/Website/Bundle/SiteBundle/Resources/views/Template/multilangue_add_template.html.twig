@@ -1,4 +1,7 @@
 {%  extends "::admin_base.html.twig" %}
+{# Note: to make a multiple upload file in twig add [] to the full_name
+                        {{ form_widget(translation.file,{'full_name': translation.file.get('full_name') ~ '[]'})}} 
+#}
 {% block content %}
 <h1>Ajouter/Modifier une entite</h1>
 <div class="nav nav-tabs">
