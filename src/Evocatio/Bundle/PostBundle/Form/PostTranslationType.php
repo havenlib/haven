@@ -16,7 +16,7 @@ class PostTranslationType extends AbstractType
             ->add('excerpt', "text", array('required' => false))
             ->add('subtitle', "text", array('required' => false))
             ->add('content', "textarea", array('required' => false))
-            ->add('file', "file", array('required' => false))
+            ->add('file', "file", array('required' => false, "attr" => array("multiple" => true)))
 //            ->add('slug', "textarea", array('required' => false))
         ;
     }
