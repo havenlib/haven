@@ -24,6 +24,7 @@ class PostType extends AbstractType {
 //                    'input' => 'timestamp',
                     'format' => 'dd-MM-yyyy',
                 ))
+//                ->add('file', "file", array('required' => false, "attr" => array("multiple" => true)))
                 ->add('translations', 'collection', array('type' => new PostTranslationType()))
 
         ;

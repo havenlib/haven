@@ -16,7 +16,6 @@ use Evocatio\Bundle\PostBundle\Form\PostType as Form;
 use Evocatio\Bundle\PostBundle\Entity\Post as Entity;
 use Evocatio\Bundle\PostBundle\Entity\PostTranslation as EntityTranslation;
 
-
 class PostController extends ContainerAware {
 
     /**
@@ -135,18 +134,22 @@ class PostController extends ContainerAware {
             throw new NotFoundHttpException('entity.not.found');
         }
 
+
         $edit_form = $this->createEditForm($entity);
         $delete_form = $this->createDeleteForm($id);
-echo "<pre>";
-            
-            print_r(($this->container->get("request")->files->all()));
-            print_r(($this->container->get("request")->request->all()));
-            echo "</pre>";
+//        echo "<pre>";
+
+        $files_post = $this->container->get("request")->files->get($edit_form->getName());
+
+        $this->container->get("uploader")->moveFiles($files_post, "yeah");
+
         $edit_form->bindRequest($this->container->get('Request'));
+
+
         if ($this->processForm($edit_form) === true) {
-            $this->container->get("session")->setFlash("success", "update.success");  
+            $this->container->get("session")->setFlash("success", "update.success");
             echo "<pre>";
-            
+
             print_r(($this->container->get("request")->files->all()));
             print_r(($this->container->get("request")->request->all()));
             echo "</pre>";
@@ -209,7 +212,7 @@ echo "<pre>";
     public function showFromSlugAction(EntityTranslation $entityTranslation) {
 //        $delete_form = $this->createDeleteForm($id);
         $locale = $this->container->get("request")->get("_locale");
-        if ($entityTranslation->getTransLang()->getSymbol() != \Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale) && $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))){
+        if ($entityTranslation->getTransLang()->getSymbol() != \Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale) && $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))) {
             $slug = $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))->getSlug();
             return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_PostShowSlug', array("slug" => $slug)));
         }
