@@ -8,60 +8,60 @@
     <ul>
         <li>{{ form_label(edit_form.status)}}
             {{ form_errors(edit_form.status)}}
-            <span>{{ form_widget(edit_form.status)}}</span>
-        </li>
-        <li>{{ form_label(edit_form.postbegin_at)}}
-            <span>{{ form_widget(edit_form.postbegin_at)}}</span>
+                <span>{{ form_widget(edit_form.status)}}</span>
+            </li>
+            <li>{{ form_label(edit_form.postbegin_at)}}
+                <span>{{ form_widget(edit_form.postbegin_at)}}</span>
             {{ form_errors(edit_form.postbegin_at)}}
-        </li>
-        <li>{{ form_label(edit_form.postend_at)}}
-            <span>{{ form_widget(edit_form.postend_at)}}</span>
+            </li>
+            <li>{{ form_label(edit_form.postend_at)}}
+                <span>{{ form_widget(edit_form.postend_at)}}</span>
             {{ form_errors(edit_form.postend_at)}}
-        </li>
+            </li>
                 {% for key, translation in edit_form.translations %}
-        <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                         {{ form_errors(translation.name) }}
                         {{ form_label(translation.name) }}
                         {{ form_widget(translation.name)}}
-            </li>
-        <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                </li>
+                <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                         {{ form_errors(translation.title) }}
                         {{ form_label(translation.title) }}
                         {{ form_widget(translation.title)}}
-            </li>
-        <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                    </li>
+                    <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                         {{ form_errors(translation.excerpt) }}
                         {{ form_label(translation.excerpt) }}
                         {{ form_widget(translation.excerpt)}}
-            </li>
-        <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        </li>
+                        <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                         {{ form_errors(translation.subtitle) }}
                         {{ form_label(translation.subtitle) }}
                         {{ form_widget(translation.subtitle)}}
-            </li>
-        <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                            </li>
+                            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                         {{ form_errors(translation.file) }}
                         {{ form_label(translation.file) }}
-                        {{ form_widget(translation.file)}}
-            </li>
-            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
-             
+                        {{ form_widget(translation.file,{'full_name': translation.file.get('full_name') ~ '[]'})}}
+                                </li>
+                                <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+
                         {{ form_errors(translation.content) }}
                         {{ form_label(translation.content) }}
-                    <span class="widget">
+                                    <span class="widget">
                         {{ form_widget(translation.content, {'attr': {'class': 'ckeditor ckeditor-admin'} }) }}
-                    </span>
-                </li>
-                      
+                                        </span>
+                                    </li>
+
               {% endfor %}
-                </ul>
+                                </ul>
                         {{ form_rest(edit_form) }}
-            </fieldset>
+                            </fieldset>
 
 {% endblock form %}
 
 {% block back %}
-            <a href="{{ path('EvocatioPostBundle_PostList') }}">
-                Back to the list
-            </a>
+                            <a href="{{ path('EvocatioPostBundle_PostList') }}">
+                                Back to the list
+                            </a>
 {% endblock back %}
