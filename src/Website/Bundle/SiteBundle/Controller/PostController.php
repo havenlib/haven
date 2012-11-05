@@ -15,7 +15,7 @@ class PostController extends \Evocatio\Bundle\PostBundle\Controller\PostControll
     /**
      * Creates a new post entity.
      *
-     * @Route("/new", name="EvocatioPostBundle_PostCreate")
+     * @Route("/admin/post/new", name="EvocatioPostBundle_PostCreate")
      * @Method("POST")
      * @Template("WebsiteSiteBundle:Post:new.html.twig")
      */
@@ -24,7 +24,7 @@ class PostController extends \Evocatio\Bundle\PostBundle\Controller\PostControll
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPostBundle_PostUpdate")
+     * @Route("/admin/post/{id}/edit", name="EvocatioPostBundle_PostUpdate")
      * @return RedirectResponse
      * @Method("POST")
      * @Template("WebsiteSiteBundle:Post:edit.html.twig")

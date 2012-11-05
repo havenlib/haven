@@ -54,6 +54,11 @@
                                     </li>
 
               {% endfor %}
+                            <li class="tab-element">
+                        {#{ form_errors(edit_form.file) }}
+                        {{ form_label(edit_form.file) }}
+                        {{ form_widget(edit_form.file,{'full_name': edit_form.file.get('full_name') ~ '[]'})}#}
+                                </li>
                                 </ul>
                         {{ form_rest(edit_form) }}
                             </fieldset>
