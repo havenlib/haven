@@ -61,6 +61,7 @@ class PersonaAdminController extends JoinedAdminController {
      * @Template
      */
     public function editAction($id) {
+//        ini_set('xdebug.max_nesting_level', 200);
         return parent::editAction($id);
     }
     
