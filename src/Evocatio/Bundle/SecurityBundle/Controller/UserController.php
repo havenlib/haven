@@ -21,7 +21,7 @@ use Evocatio\Bundle\SecurityBundle\Form\UserType as Form;
 class UserController extends ContainerAware {
 
     /**
-     * @Route("/", name="EvocatioSecurityBundle_index")
+     * @Route("/user/", name="EvocatioSecurityBundle_index")
      * @Method("GET")
      * @Template()
      */
@@ -34,7 +34,7 @@ class UserController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{id}/show", name="EvocatioSecurityBundle_show")
+     * @Route("/user/{id}/show", name="EvocatioSecurityBundle_show")
      * @Method("GET")
      * @Template()
      */
@@ -56,7 +56,7 @@ class UserController extends ContainerAware {
     /**
      * Finds and displays all users for admin.
      *
-     * @Route("/list", name="EvocatioSecurityBundle_list")
+     * @Route("/admin/user/list", name="EvocatioSecurityBundle_list")
      * @Method("GET")
      * @Template()
      */
@@ -67,7 +67,7 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * @Route("/new", name="EvocatioSecurityBundle_new")
+     * @Route("/admin/user/new", name="EvocatioSecurityBundle_new")
      * @Method("GET")
      * @Template
      */
@@ -80,7 +80,7 @@ class UserController extends ContainerAware {
     /**
      * Creates a new user entity.
      *
-     * @Route("/new", name="EvocatioSecurityBundle_create")
+     * @Route("/admin/user/new", name="EvocatioSecurityBundle_create")
      * @Method("POST")
      * @Template("EvocatioSecurityBundle:Default:new.html.twig")
      */
@@ -102,7 +102,7 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioSecurityBundle_edit")
+     * @Route("/admin/user/{id}/edit", name="EvocatioSecurityBundle_edit")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -124,7 +124,7 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioSecurityBundle_update")
+     * @Route("/admin/user/{id}/edit", name="EvocatioSecurityBundle_update")
      * @return RedirectResponse
      * @Method("POST")
      * @Template("EvocatioSecurityBundle:Default:edit.html.twig")
@@ -157,7 +157,7 @@ class UserController extends ContainerAware {
     /**
      * Set a user entity state to inactive.
      *
-     * @Route("/{id}/state", name="EvocatioSecurityBundle_toggleState")
+     * @Route("/admin/user/{id}/state", name="EvocatioSecurityBundle_toggleState")
      * @Method("GET")
      */
     public function toggleStateAction($id) {
@@ -176,7 +176,7 @@ class UserController extends ContainerAware {
     /**
      * Deletes a user entity.
      *
-     * @Route("/{id}/delete", name="EvocatioSecurityBundle_delete")
+     * @Route("/admin/user/{id}/delete", name="EvocatioSecurityBundle_delete")
      * @Method("POST")
      */
     public function deleteAction($id) {
