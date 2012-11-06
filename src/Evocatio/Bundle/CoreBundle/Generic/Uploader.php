@@ -34,16 +34,24 @@ class Uploader {
         return $relative_location . "/" . $file->getClientOriginalName();
     }
 
-    public function moveFiles($data, $location = null) {
+    public function moveFiles($data, $location = null, $final = array(), $key = null) {
         if (is_array($data)) {
-            foreach ($data as $d) {
-                $this->moveFiles($d, $location);
+            foreach ($data as $key => $d) {
+                $this->moveFiles($d, $location, $final, $key);
             }
         } else if ($data instanceof UploadedFile) {
-            $this->moveFile($data, $location);
+//            $data = array(
+//                'name' => $data->getClientOriginalName(),
+//                'size' => $data->getSize(),
+//                'path' => $this->moveFile($data, $location)
+//            );
+            unset($data);
         }
+        
+        return $data;
     }
 
+    
 }
 
 ?>
