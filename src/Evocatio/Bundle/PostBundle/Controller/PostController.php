@@ -137,24 +137,52 @@ class PostController extends ContainerAware {
 
         $edit_form = $this->createEditForm($entity);
         $delete_form = $this->createDeleteForm($id);
-//        echo "<pre>";
 
-        $files_post = $this->container->get("request")->files->all();
+        $files_from_post = $this->container->get("request")->files->get($edit_form->getName());
+        $parameters = $this->container->get("request")->request->all();
+        echo "<pre>";
+//        $test = array();
+//        echo "ffp: " . print_r(
+//                );
+        
+                $result = $this->recurse($this->container->get("request")->files->all());
+        
+        echo "<br />-----------------> result";
+        print_r($result);
+        echo "<br />-----------------> all";
+        print_r($parameters);
+        echo "<br />-----------------> final array";
+        print_r(array_merge_recursive($parameters['evocatio_bundle_postbundle_posttype']['translations'][0], $result['evocatio_bundle_postbundle_posttype']['translations'][0]));
+        die();
+//        foreach ($files_from_post['translations'] as $key => $files_tranlations) {
+//            foreach ($files_tranlations['file'] as $file) {
+//                if ($file) {
+//                    $test["file_type"][] =  array(
+//                        'name' => $file->getClientOriginalName(),
+//                        'size' => $file->getSize(),
+//                        'path' => $this->container->get("uploader")->moveFile($file, 'testhome')
+//                    );
+//                }
+//            }
+//        }
 
-        $this->container->get("uploader")->moveFiles($files_post, "yeah");
-
+        $this->container->get("request")->request->add($parameters);
         $edit_form->bindRequest($this->container->get('Request'));
 
 
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
-            echo "<pre>";
-
             print_r(($this->container->get("request")->files->all()));
             print_r(($this->container->get("request")->request->all()));
+
+
+            $this->container->get("request")->request->add();
+            print_r(($this->container->get("request")->request->all()));
+
             echo "</pre>";
 //            return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_PostList'));
         }
+
         $this->container->get("session")->setFlash("error", "update.error");
 
         return array(
@@ -162,6 +190,49 @@ class PostController extends ContainerAware {
             'edit_form' => $edit_form->createView(),
             'delete_form' => $delete_form->createView(),
         );
+    }
+
+    private function recurse($array) {
+        $result = null;
+        foreach ($array as $key => $data) {
+            if ($data instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+                $result[$this->getMimeType($data->getMimeType())][] = array(
+                    'name' => $data->getClientOriginalName(),
+                    'size' => $data->getSize(),
+                    'path' => $this->container->get("uploader")->moveFile($data, 'testhome')
+                );
+            } else if (is_array($data)) {
+                $temp = $this->recurse($data);
+                if (!empty($temp)) {
+                    if ($key === "file") {
+//                        done mon chemin à levenement fin recurse($mon emplacement en string)
+                        $result = $temp;
+                    } else {
+                        echo $key;
+                        $result[$key] = $temp;
+                    }
+                }
+            }
+        }
+//            echo print_r(array_keys($result));
+        return $result;
+    }
+
+    public function getMimeType($mime_type) {
+        switch ($mime_type) {
+            case "image/jpeg":
+                return "image";
+                break;
+            case "application/pdf":
+                return "pdf";
+                break;
+            case "text/plain":
+                return "text";
+                break;
+            default:
+                return "other";
+                break;
+        }
     }
 
     /**

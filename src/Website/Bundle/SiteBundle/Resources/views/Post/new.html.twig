@@ -44,6 +44,26 @@
                         {{ form_label(translation.file) }}
                         {{ form_widget(translation.file,{'full_name': translation.file.get('full_name') ~ '[]'})}}
                                 </li>
+                            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.image) }}
+                        {#{ form_label(translation.image) }#}
+                        {{ form_widget(translation.image,{'full_name': translation.image.get('full_name') ~ '[]'})}}
+                                </li>
+                            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.pdf) }}
+                        {#{ form_label(translation.pdf) }#}
+                        {{ form_widget(translation.pdf,{'full_name': translation.pdf.get('full_name') ~ '[]'})}}
+                                </li>
+                            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.other) }}
+                        {#{ form_label(translation.other) }#}
+                        {{ form_widget(translation.other,{'full_name': translation.other.get('full_name') ~ '[]'})}}
+                                </li>
+                            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.text) }}
+                        {#{ form_label(translation.text) }#}
+                        {{ form_widget(translation.text,{'full_name': translation.text.get('full_name') ~ '[]'})}}
+                                </li>
                                 <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
 
                         {{ form_errors(translation.content) }}
@@ -62,7 +82,7 @@
                                 </ul>
                         {{ form_rest(edit_form) }}
                             </fieldset>
-
+                <input type=button value="add single_file" onclick="javascript:addAnItem('evocatio_bundle_postbundle_posttype_translations_0_single_file')" />
 {% endblock form %}
 
 {% block back %}
