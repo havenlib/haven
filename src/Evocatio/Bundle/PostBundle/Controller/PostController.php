@@ -139,7 +139,7 @@ class PostController extends ContainerAware {
         $delete_form = $this->createDeleteForm($id);
 //        echo "<pre>";
 
-        $files_post = $this->container->get("request")->files->get($edit_form->getName());
+        $files_post = $this->container->get("request")->files->all();
 
         $this->container->get("uploader")->moveFiles($files_post, "yeah");
 
