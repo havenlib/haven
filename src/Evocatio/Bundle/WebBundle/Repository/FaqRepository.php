@@ -19,21 +19,21 @@ class FaqRepository extends StatusRepository {
         return $this->query_builder;
     }
 
-    public function setQueryBuilder($query_builder) {
+    public function setQueryBuilder(\Doctrine\ORM\QueryBuilder $query_builder) {
         $this->query_builder = $query_builder;
     }
 
-    public function findAll($status = null, $return_repo = false) {
+    public function findAll($status = null, $return_result = true) {
 
         $this->query_builder = $this->createQueryBuilder("d");
 
         if (!is_null($status))
-            $this->query_builder = $this->filterByStatus($status, true)->getQueryBuilder();
+            $this->query_builder = $this->filterByStatus($status, false)->getQueryBuilder();
 
-        return ($return_repo) ? $this : $this->getResult();
+        return ($return_result) ? $this->getResult() : $this;
     }
 
-    private function filterByStatus($status, $return_repo = false) {
+    private function filterByStatus($status, $return_result = true) {
 
         if (is_null($this->query_builder))
             $this->query_builder = $this->findAll();
@@ -41,7 +41,7 @@ class FaqRepository extends StatusRepository {
         $this->query_builder->andWhere("d.status in (:status)");
         $this->query_builder->setParameter("status", $status);
 
-        return ($return_repo) ? $this : $this->getResult();
+        return ($return_result) ? $this->getResult() : $this;
     }
 
     public function getResult() {

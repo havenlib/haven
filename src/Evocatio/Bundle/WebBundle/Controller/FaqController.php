@@ -52,7 +52,7 @@ class FaqController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("faq.read_handler")->getAllOnline();
+        $entities = $this->container->get("faq.read_handler")->getAllPublished();
         return array("entities" => $entities);
     }
 
