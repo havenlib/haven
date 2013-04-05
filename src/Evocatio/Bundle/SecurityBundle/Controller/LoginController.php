@@ -61,8 +61,8 @@ class LoginController extends ContainerAware {
      */
     public function registerAction() {
         $templating = $this->container->get('templating');
-        $user = new Entity();
-        $register_form = $this->container->get("form.factory")->create(new Form($user));
+        $user = new User();
+        $register_form = $this->container->get("form.factory")->create(new \Evocatio\Bundle\SecurityBundle\Form\RegisterType($user));
         $request = $this->container->get("request");
 
         if ($request->getMethod() == "POST" && $this->register($register_form, $request->get("register"))) {
@@ -121,10 +121,10 @@ class LoginController extends ContainerAware {
                 $em->flush();
                 $this->container->get("session")->setFlash("success", "c'est réussi");
 
-                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->container->get("router")->generate("tahuaSiteBundle_homepage"));
+                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->container->get("router")->generate("EvocatioSecurityBundle_homepage"));
             }
         }
-        return new Response($templating->render("tahuaSiteBundle:Admin:resetConfirmation.html.twig", array("confirm_form" => $confirm_form->createView(), "uuid" => $uuid)));
+        return new Response($templating->render("EvocatioSecurityBundle:Admin:resetConfirmation.html.twig", array("confirm_form" => $confirm_form->createView(), "uuid" => $uuid)));
     }
 
     /**

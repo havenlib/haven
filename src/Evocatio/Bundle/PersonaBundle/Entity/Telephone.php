@@ -5,7 +5,7 @@ namespace Evocatio\Bundle\PersonaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * tahua\SiteBundle\Entity\Telephone
+ * Evocatio\Bundle\PersonaBundle\Entity\Telephone
  *
  * @ORM\Entity()
  */

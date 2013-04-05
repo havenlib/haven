@@ -12,7 +12,7 @@ class ProductType extends AbstractType
 
         $builder
 //	    ->add('category', 'entity', array(
-//                    'class' => 'tahua\SiteBundle\Entity\Category',
+//                    'class' => 'Evocatio\Bundle\SiteBundle\Entity\Category',
 //                    'multiple' => false, 'expanded' => false,'property' => 'nom',
 //                ))
 //            ->add('Titre', 'text', array('required' => true))
