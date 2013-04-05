@@ -32,12 +32,12 @@ class Person extends Persona {
      */
     private $sex;
 
-    /**
-     * @var datetime $birthday
-     *
-     * @ORM\Column(name="birthday", type="datetime")
-     */
-    private $birthday;
+//    /**
+//     * @var datetime $birthday
+//     *
+//     * @ORM\Column(name="birthday", type="datetime", nullable=true)
+//     */
+//    private $birthday;
 
     /**
      * @var integer $id

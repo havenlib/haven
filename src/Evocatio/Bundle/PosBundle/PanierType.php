@@ -14,7 +14,7 @@ class ptype extends AbstractType
         $builder
             ->add('date', date)
             ->add('product', 'collection', array(
-                    'type' => new \tahua\SiteBundle\Form\ProductForm(),
+                    'type' => new \Evocatio\Bundle\PosBundle\Form\ProductForm(),
                     'allow_add' => true,
                     'prototype' => true,
                     // Post update

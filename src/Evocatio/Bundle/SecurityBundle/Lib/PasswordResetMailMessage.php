@@ -12,7 +12,7 @@ class PasswordResetMailMessage extends BaseMailMessage {
 
     public function __construct($env = 'dev') {
         parent::__construct($env);
-        $this->setFrom(array("/default/" => 'info@tahua.co' ,
+        $this->setFrom(array("/default/" => 'info@evocatio.com' ,
              "/evocatio.com/" => "sig@stephanchampagne.com"));
          $this->setDestinataire(array("sc@evocatio.com" => array()));
     }
