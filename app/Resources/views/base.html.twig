@@ -53,7 +53,7 @@
                     <a class="logo" href="{{ path('WebsiteSiteBundle_Home')}}">
                         <img src="/bundles/websitesite/images/evocatio_modified.png" alt="evocatio-logo" />
                     </a>
-                    <div class="lang pull-right">{% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale"), "template" : "WebsiteSiteBundle:Core:i18nSwitcher.html.twig"} %}
+                    <div class="lang pull-right">{#% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale"), "template" : "WebsiteSiteBundle:Core:i18nSwitcher.html.twig"} %#}
                     </div>
                     {% endblock header %}
                 </header>
@@ -68,7 +68,7 @@
                 </div>
                 <div id="main">{% block main %}
                     <aside>{% block aside %}
-                           {% render "EvocatioPostBundle:Post:listWidget" with {"_locale" : app.getRequest().get("_locale"),"template" : 'WebsiteSiteBundle:Post:list_widget.html.twig', 'qt' : 2} %}
+                           {#% render "EvocatioPostBundle:Post:listWidget" with {"_locale" : app.getRequest().get("_locale"),"template" : 'WebsiteSiteBundle:Post:list_widget.html.twig', 'qt' : 2} %#}
                            {% endblock aside %}
                     </aside>
                     <div class="content">
