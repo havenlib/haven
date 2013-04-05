@@ -41,7 +41,7 @@ class CoreController extends ContainerAware {
 
             return new RedirectResponse($this->container->get('router')->generate($route, $routeArray));
         }
-        return new RedirectResponse($this->getRequest()->server->get('HTTP_REFERER'));
+        return new RedirectResponse($request->server->get('HTTP_REFERER'));
     }
 
     /**

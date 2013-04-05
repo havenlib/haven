@@ -14,4 +14,10 @@ use Evocatio\Bundle\CoreBundle\Generic\StatusRepository;
  */
 class FaqRepository extends StatusRepository {
 
+    public function findAllOnlines(){
+        $query_builder = $this->createQueryBuilder('e');
+        $query_builder = $this->filterOnlines($query_builder);
+
+        return $query_builder->getQuery()->getResult();
+    }
 }

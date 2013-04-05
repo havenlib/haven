@@ -3,15 +3,15 @@
 #    type:     annotation
 #    prefix:   /product
 
-EvocatioLogin:
-    resource: "@EvocatioSecurityBundle/Controller/LoginController.php"
-    type:     annotation
-    prefix: /auth/
+#EvocatioLogin:
+#    resource: "@EvocatioSecurityBundle/Controller/LoginController.php"
+#    type:     annotation
+#    prefix: /auth/
 
-EvocatioUser:
-    resource: "@EvocatioSecurityBundle/Controller/UserController.php"
-    type:     annotation
-    prefix: /{_locale}/user/
+#EvocatioUser:
+#    resource: "@EvocatioSecurityBundle/Controller/UserController.php"
+#    type:     annotation
+#    prefix: /{_locale}/user/
 
 EvocatioBasket:
     resource: "@EvocatioPosBundle/Controller/BasketController.php"
@@ -23,13 +23,14 @@ EvocatioPurchase:
     type:     annotation
     prefix: /{_locale}/purchase/
 
-EvocatioPosGenericProduct:
-    resource: "@EvocatioPosBundle/Controller/GenericProductController.php"
-    type:     annotation
-    prefix: /{_locale}/generic/
 
-EvocatioPersonaBundle:
-    resource: "@EvocatioPersonaBundle/Controller/PersonaController.php"
+EvocatioPersonaBundle_PersonaAdmin:
+    resource: "@EvocatioPersonaBundle/Controller/PersonaAdminController.php"
+    type:     annotation
+    prefix: /{_locale}/persona/
+
+EvocatioPersonaBundle_PersonaView:
+    resource: "@EvocatioPersonaBundle/Controller/PersonaViewController.php"
     type:     annotation
     prefix: /{_locale}/persona/
 
@@ -53,17 +54,17 @@ EvocatioPostalBundle:
     type:     annotation
     prefix: /{_locale}/postal/
 
-EvocatioFaqBundle:
-    resource: "@EvocatioFaqBundle/Controller/FaqController.php"
-    type:     annotation
-    prefix: /{_locale}/faq/
+#EvocatioFaqBundle:
+#    resource: "@EvocatioFaqBundle/Controller/FaqController.php"
+#    type:     annotation
+#    prefix: /{_locale}/faq/
 #    requirements: 
 #      _locale: fr|en
 
-EvocatioPostBundle:
-    resource: "@EvocatioPostBundle/Controller/PostController.php"
-    type:     annotation
-    prefix: /{_locale}/post/
+#EvocatioPostBundle:
+#    resource: "@EvocatioPostBundle/Controller/PostController.php"
+#    type:     annotation
+#    prefix: /{_locale}/post/
 #    requirements: 
 #      _locale: fr|en
 

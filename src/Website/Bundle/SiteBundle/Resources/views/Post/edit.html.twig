@@ -1,0 +1,12 @@
+{%  extends "WebsiteSiteBundle:Post:new.html.twig" %}
+{% block formhead %}
+    {{ path('EvocatioPostBundle_PostUpdate', { 'id': edit_form.vars.value.id }) }}
+{% endblock formhead %}
+{% block delete %}
+<li>
+    <form action="{{ path('EvocatioPostBundle_PostDelete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <button type="submit">Delete</button>
+    </form>
+</li>
+{% endblock delete %}

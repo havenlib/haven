@@ -17,7 +17,7 @@ class FaqType extends AbstractType {
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver){
         return array(
             'data_class' => "Evocatio\Bundle\FaqBundle\Entity\Faq"
         );

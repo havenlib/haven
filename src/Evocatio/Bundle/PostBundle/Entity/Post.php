@@ -4,12 +4,13 @@ namespace Evocatio\Bundle\PostBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Evocatio\Bundle\CoreBundle\Generic\Translatable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Evocatio\Bundle\PostBundle\Entity\Post
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\PostBundle\Entity\PostRepository")
  */
 class Post extends Translatable {
 
@@ -65,7 +66,12 @@ class Post extends Translatable {
      * @ORM\OneToMany(targetEntity="PostTranslation", mappedBy="parent", cascade={"persist"})
      */
     protected $translations;
-
+    
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    public $file;
+    
     public function __construct() {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
@@ -80,7 +86,9 @@ class Post extends Translatable {
     public function getId() {
         return $this->id;
     }
-
+    public function getFile(){
+        return $this->file;
+    }
     /**
      * Set created_at
      *

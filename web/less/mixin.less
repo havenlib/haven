@@ -1,0 +1,30 @@
+/** Mixins **/
+.rounded-corners (@radius: 5px) {
+  border-radius: @radius;
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+}
+
+.input-textarea-radius(@r, @g, @b){
+    .radius(@r, @g, @b, 0.8);
+}
+
+.radius(@r, @g, @b, @scope){
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(@r, @g, @b, @scope);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(@r, @g, @b, @scope);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(@r, @g, @b, @scope);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(@r, @g, @b, @scope);
+}
+
+.ul-li-left-full-weight{
+    .no-style-ul;
+    overflow: auto;
+    display: inline-block;
+    li{ float: left; }
+}
+
+.no-style-ul{
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
