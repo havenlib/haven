@@ -5,6 +5,7 @@ namespace Evocatio\Bundle\WebBundle\Lib;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Evocatio\Bundle\WebBundle\Entity\Faq;
 
 class FaqReadHandler {
 
@@ -30,8 +31,8 @@ class FaqReadHandler {
         return $this->em->getRepository("EvocatioWebBundle:Faq")->findAll();
     }
 
-    public function getAllOnline() {
-        return $this->em->getRepository("EvocatioWebBundle:Faq")->findAll(1);
+    public function getAllPublished() {
+        return $this->em->getRepository("EvocatioWebBundle:Faq")->findAll(Faq::STATUS_PUBLISH);
     }
 
 }
