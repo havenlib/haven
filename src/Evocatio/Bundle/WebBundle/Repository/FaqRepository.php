@@ -23,17 +23,17 @@ class FaqRepository extends StatusRepository {
         $this->query_builder = $query_builder;
     }
 
-    public function findAll($status = null, $return_result = true) {
+    public function findAll($status = null) {
 
         $this->query_builder = $this->createQueryBuilder("d");
 
         if (!is_null($status))
-            $this->query_builder = $this->filterByStatus($status, false)->getQueryBuilder();
+            $this->query_builder = $this->filterByStatus($status)->getQueryBuilder();
 
-        return ($return_result) ? $this->getResult() : $this;
+        return $this->getResult();
     }
 
-    private function filterByStatus($status, $return_result = true) {
+    private function filterByStatus($status) {
 
         if (is_null($this->query_builder))
             $this->query_builder = $this->findAll();
@@ -41,7 +41,7 @@ class FaqRepository extends StatusRepository {
         $this->query_builder->andWhere("d.status in (:status)");
         $this->query_builder->setParameter("status", $status);
 
-        return ($return_result) ? $this->getResult() : $this;
+        return $this;
     }
 
     public function getResult() {
