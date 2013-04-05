@@ -1,3 +1,4 @@
+
 function addAnItem(source){
     // this function will add an item to a collection from a data-prototype as created by symfony 2's form with option allow_add and data-prototype set to true
     // It will use the length of the child in the data-prototype div, or, the length of all the childs of all the div with the data-join-class class.
@@ -56,12 +57,12 @@ function ajaxRegister(form, data){
                 $("#register_div").html(obj.render);
             }else if(obj.message=="IsRegistered"){
                 $("#signin_menu").html(obj.render);
-//                $("#user-greeter").hide();
-//                $("#user-greeter").html(obj.render).fadeIn("slow");
+            //                $("#user-greeter").hide();
+            //                $("#user-greeter").html(obj.render).fadeIn("slow");
 
-//                $(form).parentsUntil('.container').fadeOut("slow");
-//                $("a.signin").remove();
-//                $("#monespace").removeAttr('onclick');
+            //                $(form).parentsUntil('.container').fadeOut("slow");
+            //                $("a.signin").remove();
+            //                $("#monespace").removeAttr('onclick');
             }
         }
     });
@@ -86,3 +87,13 @@ function ajaxResetRequest(form, data){
     });
     return false;
 }
+
+$(document).ready(
+    function (){
+        $(".datepicker" ).datepicker({
+            showOn: "button",
+            buttonImage: "/images/calendar.png",
+            buttonImageOnly: true
+        });
+    }
+    );

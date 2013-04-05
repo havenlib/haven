@@ -13,7 +13,7 @@ class UserType extends AbstractType {
                 ->add('username')
                 ->add('email')
                 ->add('plainPassword', 'repeated', array('type' => 'password'
-                    , "first_name" => "mot-de-passe"
+                    , "first_name" => "password"
                     , "second_name" => "confirmation"
                     , "invalid_message" => "mot.de.passe.pas.identiques"
                     ,"required" => false

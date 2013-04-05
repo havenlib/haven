@@ -6,6 +6,7 @@ namespace Evocatio\Bundle\PostBundle\Controller;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Response;
 // Sensio includes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -18,7 +19,7 @@ use Evocatio\Bundle\PostBundle\Entity\PostTranslation as EntityTranslation;
 class PostController extends ContainerAware {
 
     /**
-     * @Route("/", name="EvocatioPostBundle_PostIndex")
+     * @Route("/post/", name="EvocatioPostBundle_PostIndex")
      * @Method("GET")
      * @Template()
      */
@@ -31,7 +32,7 @@ class PostController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{id}/show", name="EvocatioPostBundle_PostShow")
+     * @Route("/admin/post/{id}/show", name="EvocatioPostBundle_PostShow")
      * @Method("GET")
      * @Template()
      */
@@ -53,7 +54,7 @@ class PostController extends ContainerAware {
     /**
      * Finds and displays all posts for admin.
      *
-     * @Route("/list", name="EvocatioPostBundle_PostList")
+     * @Route("/admin/post/list", name="EvocatioPostBundle_PostList")
      * @Method("GET")
      * @Template()
      */
@@ -64,7 +65,7 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/new", name="EvocatioPostBundle_PostNew")
+     * @Route("/admin/post/new", name="EvocatioPostBundle_PostNew")
      * @Method("GET")
      * @Template
      */
@@ -77,7 +78,7 @@ class PostController extends ContainerAware {
     /**
      * Creates a new post entity.
      *
-     * @Route("/new", name="EvocatioPostBundle_PostCreate")
+     * @Route("/admin/post/new", name="EvocatioPostBundle_PostCreate")
      * @Method("POST")
      * @Template("EvocatioPostBundle:Post:new.html.twig")
      */
@@ -99,7 +100,7 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPostBundle_PostEdit")
+     * @Route("/admin/post/{id}/edit", name="EvocatioPostBundle_PostEdit")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -121,7 +122,7 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPostBundle_PostUpdate")
+     * @Route("/admin/post/{id}/edit", name="EvocatioPostBundle_PostUpdate")
      * @return RedirectResponse
      * @Method("POST")
      * @Template("EvocatioPostBundle:Post:edit.html.twig")
@@ -133,15 +134,55 @@ class PostController extends ContainerAware {
             throw new NotFoundHttpException('entity.not.found');
         }
 
+
         $edit_form = $this->createEditForm($entity);
         $delete_form = $this->createDeleteForm($id);
 
+        $files_from_post = $this->container->get("request")->files->get($edit_form->getName());
+        $parameters = $this->container->get("request")->request->all();
+        echo "<pre>";
+//        $test = array();
+//        echo "ffp: " . print_r(
+//                );
+        
+                $result = $this->recurse($this->container->get("request")->files->all());
+        
+        echo "<br />-----------------> result";
+        print_r($result);
+        echo "<br />-----------------> all";
+        print_r($parameters);
+        echo "<br />-----------------> final array";
+        print_r(array_merge_recursive($parameters['evocatio_bundle_postbundle_posttype']['translations'][0], $result['evocatio_bundle_postbundle_posttype']['translations'][0]));
+        die();
+//        foreach ($files_from_post['translations'] as $key => $files_tranlations) {
+//            foreach ($files_tranlations['file'] as $file) {
+//                if ($file) {
+//                    $test["file_type"][] =  array(
+//                        'name' => $file->getClientOriginalName(),
+//                        'size' => $file->getSize(),
+//                        'path' => $this->container->get("uploader")->moveFile($file, 'testhome')
+//                    );
+//                }
+//            }
+//        }
+
+        $this->container->get("request")->request->add($parameters);
         $edit_form->bindRequest($this->container->get('Request'));
+
+
         if ($this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "update.success");
+            print_r(($this->container->get("request")->files->all()));
+            print_r(($this->container->get("request")->request->all()));
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_PostList'));
+
+            $this->container->get("request")->request->add();
+            print_r(($this->container->get("request")->request->all()));
+
+            echo "</pre>";
+//            return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_PostList'));
         }
+
         $this->container->get("session")->setFlash("error", "update.error");
 
         return array(
@@ -151,10 +192,53 @@ class PostController extends ContainerAware {
         );
     }
 
+    private function recurse($array) {
+        $result = null;
+        foreach ($array as $key => $data) {
+            if ($data instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+                $result[$this->getMimeType($data->getMimeType())][] = array(
+                    'name' => $data->getClientOriginalName(),
+                    'size' => $data->getSize(),
+                    'path' => $this->container->get("uploader")->moveFile($data, 'testhome')
+                );
+            } else if (is_array($data)) {
+                $temp = $this->recurse($data);
+                if (!empty($temp)) {
+                    if ($key === "file") {
+//                        done mon chemin à levenement fin recurse($mon emplacement en string)
+                        $result = $temp;
+                    } else {
+                        echo $key;
+                        $result[$key] = $temp;
+                    }
+                }
+            }
+        }
+//            echo print_r(array_keys($result));
+        return $result;
+    }
+
+    public function getMimeType($mime_type) {
+        switch ($mime_type) {
+            case "image/jpeg":
+                return "image";
+                break;
+            case "application/pdf":
+                return "pdf";
+                break;
+            case "text/plain":
+                return "text";
+                break;
+            default:
+                return "other";
+                break;
+        }
+    }
+
     /**
      * Set a post entity state to inactive.
      *
-     * @Route("/{id}/state", name="EvocatioPostBundle_PostToggleState")
+     * @Route("/post/{id}/state", name="EvocatioPostBundle_PostToggleState")
      * @Method("GET")
      */
     public function toggleStateAction($id) {
@@ -173,7 +257,7 @@ class PostController extends ContainerAware {
     /**
      * Deletes a post entity.
      *
-     * @Route("/{id}/delete", name="EvocatioPostBundle_PostDelete")
+     * @Route("/admin/post/{id}/delete", name="EvocatioPostBundle_PostDelete")
      * @Method("POST")
      */
     public function deleteAction($id) {
@@ -192,14 +276,14 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/{slug}", name="EvocatioPostBundle_PostShowSlug")
+     * @Route("/post/{slug}", name="EvocatioPostBundle_PostShowSlug")
      * @Method("GET")
      * @Template("EvocatioPostBundle:Post:show.html.twig")
      */
     public function showFromSlugAction(EntityTranslation $entityTranslation) {
 //        $delete_form = $this->createDeleteForm($id);
         $locale = $this->container->get("request")->get("_locale");
-        if ($entityTranslation->getTransLang()->getSymbol() != \Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale) && $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))){
+        if ($entityTranslation->getTransLang()->getSymbol() != \Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale) && $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))) {
             $slug = $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))->getSlug();
             return new RedirectResponse($this->container->get('router')->generate('EvocatioPostBundle_PostShowSlug', array("slug" => $slug)));
         }
@@ -213,6 +297,14 @@ class PostController extends ContainerAware {
 
         return array("entity" => $entity, 'delete_form' => $delete_form->createView()
         );
+    }
+
+    public function listWidgetAction($template = null, $qt = null) {
+        $repo = $this->container->get('doctrine')->getRepository("EvocatioPostBundle:Post");
+        $entities = $repo->findLastCreatedOnline($qt);
+
+
+        return new Response($this->container->get('templating')->render($template ? $template : 'EvocatioPostBundle:Post:list_widget.html.twig', array('entities' => $entities)));
     }
 
 //  ------------- Privates -------------------------------------------

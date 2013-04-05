@@ -17,4 +17,14 @@
         </service>
     </services>
     -->
+    
+    <parameters>
+        <parameter key="evocatio_core.uploader.class">Evocatio\Bundle\CoreBundle\Generic\Uploader</parameter>
+    </parameters>
+
+    <services>
+        <service id="uploader" class="%evocatio_core.uploader.class%">
+            <argument type="service" id="kernel" />
+        </service>
+    </services>
 </container>
