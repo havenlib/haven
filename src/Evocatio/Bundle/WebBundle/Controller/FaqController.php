@@ -22,7 +22,7 @@ class FaqController extends ContainerAware {
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioWebBundle:Faq")->findOnlines();
+        $entities = $this->container->get("faq.read_handler")->getAllPublished();
 
         return array("entities" => $entities);
     }
