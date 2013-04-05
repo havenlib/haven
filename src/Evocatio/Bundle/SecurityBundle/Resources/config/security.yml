@@ -30,8 +30,8 @@ security:
         ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
 
     access_control:
-        - { path: "^/[a-z_A-Z]{5}/admin", roles: IS_AUTHENTICATED_FULLY}
-        - { path: "^/[a-z]{2}/admin", roles: IS_AUTHENTICATED_FULLY}
+#        - { path: "^/[a-z_A-Z]{5}/admin", roles: IS_AUTHENTICATED_FULLY}
+#        - { path: "^/[a-z]{2}/admin", roles: IS_AUTHENTICATED_FULLY}
 #        - { path: "^/[a-z]{2}/admin/.*/list$", roles: ROLE_ADMIN }
 #        - { path: "^/[a-z]{2}/admin/.*/new$", roles: ROLE_ADMIN }
 #        - { path: "^/[a-z]{2}/admin/.*/[0-9]+/edit$", roles: ROLE_ADMIN }

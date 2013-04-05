@@ -1,3 +1,8 @@
+evocatio_web:
+    resource: "@EvocatioWebBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 website_site:
     resource: "@WebsiteSiteBundle/Controller/"
     type:     annotation
