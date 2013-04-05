@@ -32,7 +32,7 @@ class FaqReadHandler {
     }
 
     public function getAllPublished() {
-        return $this->em->getRepository("EvocatioWebBundle:Faq")->findAll(Faq::STATUS_PUBLISH);
+        return $this->em->getRepository("EvocatioWebBundle:Faq")->findAll(Faq::STATUS_PUBLISHED);
     }
 
 }
