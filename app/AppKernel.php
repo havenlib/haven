@@ -23,10 +23,10 @@ class AppKernel extends Kernel
             new Evocatio\Bundle\CoreBundle\EvocatioCoreBundle(),
             new Evocatio\Bundle\SecurityBundle\EvocatioSecurityBundle(),
             new Evocatio\Bundle\PersonaBundle\EvocatioPersonaBundle(),
-            new Evocatio\Bundle\FaqBundle\EvocatioFaqBundle(),
             new Evocatio\Bundle\PostBundle\EvocatioPostBundle(),
             new Evocatio\Bundle\PosBundle\EvocatioPosBundle(),
             new Website\Bundle\SiteBundle\WebsiteSiteBundle(),
+            new Evocatio\Bundle\WebBundle\EvocatioWebBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

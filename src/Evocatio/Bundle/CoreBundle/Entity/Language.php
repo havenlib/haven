@@ -10,9 +10,10 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
  * Evocatio\Bundle\CoreBundle\Entity\Language
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Repository\LanguageRepository")
  */
 class Language extends Translatable {
+
     const STATUS_INACTIVE = 0;
     const STATUS_PUBLISH = 1;
     const STATUS_DRAFT = 2;
@@ -32,6 +33,13 @@ class Language extends Translatable {
      * @ORM\Column(name="symbol", type="string", length=8)
      */
     private $symbol;
+
+    /**
+     * @var integer $rank
+     *
+     * @ORM\Column(name="rank", type="integer", nullable=true)
+     */
+    private $rank;
 
     /**
      * @var boolean $status
@@ -191,4 +199,27 @@ class Language extends Translatable {
         }
     }
 
+
+    /**
+     * Set rank
+     *
+     * @param integer $rank
+     * @return Language
+     */
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+    
+        return $this;
+    }
+
+    /**
+     * Get rank
+     *
+     * @return integer 
+     */
+    public function getRank()
+    {
+        return $this->rank;
+    }
 }

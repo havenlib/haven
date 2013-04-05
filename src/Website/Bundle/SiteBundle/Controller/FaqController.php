@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
-class FaqController extends \Evocatio\Bundle\FaqBundle\Controller\FaqController {
+class FaqController extends \Evocatio\Bundle\WebBundle\Controller\FaqController {
 
     /**
      * Creates a new faq entity.

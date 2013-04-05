@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% block content %}
+{% block theatre %}
 <h1>Faq</h1>
 
 <table class="record_properties">
@@ -35,13 +35,13 @@
         </a>
     </li>
     <li>
-        <form action="{{ path('EvocatioWebBundle_FaqDelete', { 'id': entity.id }) }}" method="post">
+        <form action="{{ path('EvocatioFaqBundle_FaqDelete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>
     </li>
 </ul>
-{% endblock content %}
+{% endblock theatre %}
 {% block aside %}
     {% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %}
 {% endblock aside %}

@@ -4,8 +4,8 @@
         {% for entity in entities %}
         <li>
             <ul class="admin-entities-lines ul-li-left-full-weight">
-                <li><a href="{{ path('EvocatioFaqBundle_FaqShow', { 'id': entity.id }) }}" >Show</a></li>
-                <li><a href="{{ path('EvocatioFaqBundle_FaqEdit', { 'id': entity.id }) }}" >Edit</a></li>
+                <li><a href="{{ path('EvocatioWebBundle_FaqShow', { 'id': entity.id }) }}" >Show</a></li>
+                <li><a href="{{ path('EvocatioWebBundle_FaqEdit', { 'id': entity.id }) }}" >Edit</a></li>
                 <li> _{{ entity.status }}_ </li>
                 <li><strong> {{ entity.question }} </strong></li>
             </ul>
@@ -17,7 +17,7 @@
 
 <ul>
     <li>
-        <a href="{{ path('EvocatioFaqBundle_FaqNew') }}">
+        <a href="{{ path('EvocatioWebBundle_FaqNew') }}">
             Create a new entry
         </a>
     </li>
