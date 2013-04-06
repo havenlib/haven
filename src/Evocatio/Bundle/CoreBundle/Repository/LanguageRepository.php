@@ -31,12 +31,29 @@ class LanguageRepository extends EntityRepository {
         return $this->getResult();
     }
 
+    public function findPublishedOrderedByRank($order = 'ASC') {
+        $this->query_builder = $this->filterByStatus(Language::STATUS_PUBLISHED)
+                ->orderByRank($order)
+                ->getQueryBuilder();
+
+        return $this->getResult();
+    }
+
     private function filterByStatus($status) {
         if (is_null($this->query_builder))
             $this->query_builder = $this->createQueryBuilder("e");
 
         $this->query_builder->andWhere("e.status = :status");
         $this->query_builder->setParameter("status", $status);
+
+        return $this;
+    }
+
+    private function orderByRank($order = 'ASC') {
+        if (is_null($this->query_builder))
+            $this->query_builder = $this->createQueryBuilder("e");
+
+        $this->query_builder->orderBy("e.rank", $order);
 
         return $this;
     }

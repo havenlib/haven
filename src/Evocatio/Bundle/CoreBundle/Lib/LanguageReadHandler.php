@@ -34,6 +34,11 @@ class LanguageReadHandler {
         return $this->em->getRepository("EvocatioCoreBundle:Language")->findPublished();
     }
 
+    public function getPublishedOrderedByRank($order = 'ASC') {
+        return $this->em->getRepository("EvocatioCoreBundle:Language")->findPublishedOrderedByRank($order);
+    }
+    
+
 }
 
 ?>

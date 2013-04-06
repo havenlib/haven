@@ -75,7 +75,7 @@ class FaqController extends ContainerAware {
      * @Template("EvocatioWebBundle:Faq:new.html.twig")
      */
     public function createAction() {
-        $edit_form = $this->createEditForm(new Entity());
+        $edit_form = $this->container->get("faq.form_handler")->createNewForm();
 
         $edit_form->bindRequest($this->container->get('Request'));
 
