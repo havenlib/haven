@@ -1,6 +1,6 @@
 {%  extends "WebsiteSiteBundle:Template:multilangue_add_template.html.twig" %}
 {% block formhead %}
-    {{ path('EvocatioPostBundle_PostCreate') }}
+    {{ path('EvocatioWebBundle_PostCreate') }}
 {% endblock formhead %}
 
 {% block form %}
@@ -86,7 +86,7 @@
 {% endblock form %}
 
 {% block back %}
-                            <a href="{{ path('EvocatioPostBundle_PostList') }}">
+                            <a href="{{ path('EvocatioWebBundle_PostList') }}">
                                 Back to the list
                             </a>
 {% endblock back %}

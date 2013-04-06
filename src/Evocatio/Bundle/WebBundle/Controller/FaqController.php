@@ -25,7 +25,6 @@ class FaqController extends ContainerAware {
      */
     public function indexAction() {
         $entities = $this->container->get("faq.read_handler")->getAllPublished();
-
         return array("entities" => $entities);
     }
 
@@ -80,7 +79,7 @@ class FaqController extends ContainerAware {
 
         $edit_form->bindRequest($this->container->get('Request'));
 
-        if ($this->processForm($edit_form) === true) {
+        if (!$this->processForm($edit_form) === true) {
             $this->container->get("session")->setFlash("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_FaqList'));

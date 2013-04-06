@@ -37,10 +37,8 @@ class LanguageController extends ContainerAware {
      * @Template("EvocatioCoreBundle:Core:new.html.twig")
      */
     public function createAction() {
-        $request = $this->container->get('Request');
-
         $edit_form = $this->container->get("language.form_handler")->createEditForm();
-        $edit_form->bindRequest($request);
+        $edit_form->bindRequest($this->container->get('Request'));
 
         if ($edit_form->isValid()) {
             $this->container->get("language.persistence_handler")->save($edit_form->get("symboles")->getData());
@@ -49,7 +47,6 @@ class LanguageController extends ContainerAware {
 
         return array('form' => $edit_form->createView());
     }
-
 
     private function getFileForLocale() {
 //        devrait aller chercher tout les informations de traduction pour chaque language, pour chaque bundle
@@ -116,7 +113,6 @@ class LanguageController extends ContainerAware {
 //
 //        return $edit_form;
 //    }
-
 //    public function removeLanguages($selected_languages, $languages, $em) {
 //        foreach ($languages as $language) {
 //            if (!in_array($language->getSymbol(), $selected_languages)) {
@@ -124,5 +120,4 @@ class LanguageController extends ContainerAware {
 //            }
 //        }
 //    }
-
 }

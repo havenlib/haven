@@ -5,7 +5,7 @@
         <section>{% for entity in entities %}
             <h4>{{ entity.title|raw }}</h4>
             <div>{{ entity.excerpt |raw}}</div> 
-            <a href="{{ path('EvocatioPostBundle_PostShowSlug', { 'slug': entity.slug }) }}">show more</a>
+            <a href="{{ path('EvocatioWebBundle_PostShowSlug', { 'slug': entity.slug }) }}">show more</a>
         {% else %}
             Pas d'entité 
         {% endfor %}
