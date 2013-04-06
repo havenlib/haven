@@ -12,7 +12,7 @@ use Evocatio\Bundle\WebBundle\Form\FaqType;
 class FaqFormHandler {
 
     protected $read_handler; // devrait être son listhandler je pense
-    protected $language_read_handler; // devrait être son listhandler je pense
+    protected $language_read_handler;
     protected $form_factory;
     protected $security_context;
 
@@ -41,7 +41,7 @@ class FaqFormHandler {
      */
     public function createNewForm() {
         $entity = new Entity();
-        $entity->addTranslations($this->language_read_handler->getPublished());
+        $entity->addTranslations($this->language_read_handler->getPublishedOrderedByRank());
         $create_form = $this->form_factory->create(new FaqType(), $entity);
         
         return $create_form;
