@@ -28,7 +28,7 @@ class FaqFormHandler {
      * @return Form 
      */
     public function createEditForm($id) {
-        $entity = $this->read_handler->getDossier($id);
+        $entity = $this->read_handler->get($id);
         $edit_form = $this->form_factory->create(new FaqType(), $entity);
 
         return $edit_form;
