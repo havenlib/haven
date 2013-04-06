@@ -6,13 +6,14 @@ namespace Evocatio\Bundle\WebBundle\Controller;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Response;
+
 // Sensio includes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 // Evocatio includes
 use Evocatio\Bundle\WebBundle\Form\FaqType as Form;
-use Evocatio\Bundle\WebBundle\Entity\Faq as Entity;
 
 class FaqController extends ContainerAware {
 
@@ -63,7 +64,6 @@ class FaqController extends ContainerAware {
      */
     public function newAction() {
         $edit_form = $this->container->get("faq.form_handler")->createNewForm();
-
         return array("edit_form" => $edit_form->createView());
     }
 
@@ -72,7 +72,7 @@ class FaqController extends ContainerAware {
      *
      * @Route("/admin/faq/new", name="EvocatioWebBundle_FaqCreate")
      * @Method("POST")
-     * @Template("EvocatioWebBundle:Faq:new.html.twig")
+     * @Template
      */
     public function createAction() {
         $edit_form = $this->container->get("faq.form_handler")->createNewForm();
@@ -86,9 +86,13 @@ class FaqController extends ContainerAware {
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
-        return array(
+        
+        $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
+        $params = array(
             'edit_form' => $edit_form->createView()
         );
+
+        return new Response($this->container->get('templating')->render($template, $params));
     }
 
     /**
@@ -98,13 +102,9 @@ class FaqController extends ContainerAware {
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioWebBundle:Faq")->findOneEditables($id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-        $edit_form = $this->createEditForm($entity);
-        $delete_form = $this->createDeleteForm($id);
+        $entity = $this->container->get('faq.read_handler')->get($id);
+        $edit_form = $this->container->get("faq.form_handler")->createEditForm($entity->getId());
+        $delete_form = $this->container->get("faq.form_handler")->createDeleteForm($entity->getId());
 
         return array(
             'entity' => $entity,
@@ -137,11 +137,14 @@ class FaqController extends ContainerAware {
         }
         $this->container->get("session")->setFlash("error", "update.error");
 
-        return array(
+        $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
+        $params = array(
             'entity' => $entity,
             'edit_form' => $edit_form->createView(),
             'delete_form' => $delete_form->createView(),
         );
+
+        return new Response($this->container->get('templating')->render($template, $params));
     }
 
     /**
