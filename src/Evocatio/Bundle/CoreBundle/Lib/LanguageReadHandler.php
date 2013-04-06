@@ -1,13 +1,12 @@
 <?php
 
-namespace Evocatio\Bundle\WebBundle\Lib;
+namespace Evocatio\Bundle\CoreBundle\Lib;
 
+use Evocatio\Bundle\CoreBundle\Entity\Language;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Evocatio\Bundle\WebBundle\Entity\Faq;
 
-class FaqReadHandler {
+class LanguageReadHandler {
 
     protected $em;
     protected $security_context;
@@ -19,7 +18,7 @@ class FaqReadHandler {
 
     public function get($id) {
 
-        $entity = $this->em->getRepository("EvocatioWebBundle:Faq")->find($id);
+        $entity = $this->em->getRepository("EvocatioCoreBundle:Language")->find($id);
 
         if (!$entity)
             throw new \Exception('entity.not.found');
@@ -28,13 +27,13 @@ class FaqReadHandler {
     }
 
     public function getAll() {
-        return $this->em->getRepository("EvocatioWebBundle:Faq")->findAll();
+        return $this->em->getRepository("EvocatioCoreBundle:Language")->findAll();
     }
 
-    public function getAllPublished() {
-        return $this->em->getRepository("EvocatioWebBundle:Faq")->findAll(Faq::STATUS_PUBLISHED);
+    public function getPublished() {
+        return $this->em->getRepository("EvocatioCoreBundle:Language")->findPublished();
     }
-    
+
 }
 
 ?>

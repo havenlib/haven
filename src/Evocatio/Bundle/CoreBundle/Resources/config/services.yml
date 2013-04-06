@@ -1,0 +1,4 @@
+services:
+  language.read_handler:
+        class:     Evocatio\Bundle\CoreBundle\Lib\LanguageReadHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
