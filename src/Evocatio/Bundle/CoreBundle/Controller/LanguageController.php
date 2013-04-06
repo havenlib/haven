@@ -27,9 +27,8 @@ class LanguageController extends ContainerAware {
         echo "<p>-->" . Locale::getDefault() . "</p>";
         echo "<p>session local-->" . $this->container->get("session")->get("_locale") . "</p>";
 
-        $languages = $this->container->get("language.read_handler")->getAll();
         $edit_form = $this->container->get("language.form_handler")->createEditForm();
-        return array('form' => $edit_form->createView(), 'languages' => $languages);
+        return array('form' => $edit_form->createView());
     }
 
     /**
