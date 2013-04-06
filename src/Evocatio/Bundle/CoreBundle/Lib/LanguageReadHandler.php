@@ -30,12 +30,12 @@ class LanguageReadHandler {
         return $this->em->getRepository("EvocatioCoreBundle:Language")->findAll();
     }
 
-    public function getPublished() {
-        return $this->em->getRepository("EvocatioCoreBundle:Language")->findPublished();
+    public function getAllPublished() {
+        return $this->em->getRepository("EvocatioCoreBundle:Language")->findAllPublished();
     }
 
-    public function getPublishedOrderedByRank($order = 'ASC') {
-        return $this->em->getRepository("EvocatioCoreBundle:Language")->findPublishedOrderedByRank($order);
+    public function getAllPublishedOrderedByRank($order = 'ASC') {
+        return $this->em->getRepository("EvocatioCoreBundle:Language")->findAllPublishedOrderedByRank($order);
     }
     
 

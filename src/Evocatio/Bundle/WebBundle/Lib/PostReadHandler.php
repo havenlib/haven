@@ -32,7 +32,7 @@ class PostReadHandler {
     }
 
     public function getAllPublished() {
-        return $this->em->getRepository("EvocatioWebBundle:Post")->findPublished();
+        return $this->em->getRepository("EvocatioWebBundle:Post")->findAllPublished();
     }
 
 }

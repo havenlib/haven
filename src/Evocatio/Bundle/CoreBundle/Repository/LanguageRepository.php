@@ -26,12 +26,12 @@ class LanguageRepository extends EntityRepository {
         return $this->getResult();
     }
 
-    public function findPublished() {
+    public function findAllPublished() {
         $this->query_builder = $this->filterByStatus(Language::STATUS_PUBLISHED)->getQueryBuilder();
         return $this->getResult();
     }
 
-    public function findPublishedOrderedByRank($order = 'ASC') {
+    public function findAllPublishedOrderedByRank($order = 'ASC') {
         $this->query_builder = $this->filterByStatus(Language::STATUS_PUBLISHED)
                 ->orderByRank($order)
                 ->getQueryBuilder();

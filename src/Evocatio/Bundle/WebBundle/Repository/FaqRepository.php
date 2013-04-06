@@ -29,7 +29,7 @@ class FaqRepository extends StatusRepository {
         return $this->getResult();
     }
 
-    public function findPublished() {
+    public function findAllPublished() {
         $this->query_builder = $this->filterByStatus(Faq::STATUS_PUBLISHED)->getQueryBuilder();
         return $this->getResult();
     }

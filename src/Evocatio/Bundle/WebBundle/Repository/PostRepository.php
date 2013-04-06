@@ -28,7 +28,7 @@ class PostRepository extends StatusRepository {
         return $this->getResult();
     }
 
-    public function findPublished() {
+    public function findAllPublished() {
         $this->query_builder = $this->filterByStatus(Post::STATUS_PUBLISHED)->getQueryBuilder();
         return $this->getResult();
     }

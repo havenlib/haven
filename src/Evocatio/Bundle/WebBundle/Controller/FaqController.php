@@ -7,12 +7,10 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
-
 // Sensio includes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
 // Evocatio includes
 use Evocatio\Bundle\WebBundle\Form\FaqType as Form;
 
@@ -76,17 +74,18 @@ class FaqController extends ContainerAware {
      */
     public function createAction() {
         $edit_form = $this->container->get("faq.form_handler")->createNewForm();
-
         $edit_form->bindRequest($this->container->get('Request'));
 
-        if (!$this->processForm($edit_form) === true) {
+
+        if ($edit_form->isValid()) {
+            $this->container->get("faq.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_FaqList'));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
-        
+
         $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
             'edit_form' => $edit_form->createView()
@@ -120,18 +119,15 @@ class FaqController extends ContainerAware {
      * @Template
      */
     public function updateAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioWebBundle:Faq")->findOneEditables($id);
+        $entity = $this->container->get('faq.read_handler')->get($id);
+        $edit_form = $this->container->get("faq.form_handler")->createEditForm($entity->getId());
+        $delete_form = $this->container->get("faq.form_handler")->createDeleteForm($entity->getId());
 
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-
-        $edit_form = $this->createEditForm($entity);
-        $delete_form = $this->createDeleteForm($id);
 
         $edit_form->bindRequest($this->container->get('Request'));
-        if ($this->processForm($edit_form) === true) {
-            $this->container->get("session")->setFlash("success", "update.success");
+        if (!$edit_form->isValid()) {
+            $this->container->get("faq.persistence_handler")->save($edit_form->getData());
+            $this->container->get("session")->setFlash("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_FaqList'));
         }
