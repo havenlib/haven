@@ -1,2 +1,3 @@
 imports:
+    - { resource: "@EvocatioCoreBundle/Resources/config/services.yml" }
     - { resource: "@EvocatioWebBundle/Resources/config/services.yml" }

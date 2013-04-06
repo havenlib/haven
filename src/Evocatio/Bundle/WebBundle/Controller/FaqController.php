@@ -62,7 +62,7 @@ class FaqController extends ContainerAware {
      * @Template
      */
     public function newAction() {
-        $edit_form = $this->createEditForm(new Entity());
+        $edit_form = $this->container->get("faq.form_handler")->createNewForm();
 
         return array("edit_form" => $edit_form->createView());
     }
