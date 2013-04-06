@@ -2,3 +2,11 @@ services:
   language.read_handler:
         class:     Evocatio\Bundle\CoreBundle\Lib\LanguageReadHandler
         arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+        
+  language.persistence_handler:
+        class:     Evocatio\Bundle\CoreBundle\Lib\LanguagePersistenceHandler
+        arguments: ["@language.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
+
+  language.form_handler:
+      class:     Evocatio\Bundle\CoreBundle\Lib\LanguageFormHandler
+      arguments: ["@language.read_handler", "@security.context", "@form.factory"]

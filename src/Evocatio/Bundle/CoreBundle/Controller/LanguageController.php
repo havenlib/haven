@@ -26,18 +26,9 @@ class LanguageController extends ContainerAware {
     public function newAction() {
         echo "<p>-->" . Locale::getDefault() . "</p>";
         echo "<p>session local-->" . $this->container->get("session")->get("_locale") . "</p>";
-        $languages = $this->container->get("Doctrine")->getRepository("EvocatioCoreBundle:Language")->findAll();
 
-
-        //reduit languages en un array()
-        $existing_languages = $languages;
-        array_walk($existing_languages, function (&$language) {
-                    $language = $language->getSymbol();
-                });
-
-        $edit_form = $this->createEditForm($existing_languages);
-
-        //assure que la language courante existe
+        $languages = $this->container->get("language.read_handler")->getAll();
+        $edit_form = $this->container->get("language.form_handler")->createEditForm();
         return array('form' => $edit_form->createView(), 'languages' => $languages);
     }
 
@@ -49,25 +40,17 @@ class LanguageController extends ContainerAware {
     public function createAction() {
         $request = $this->container->get('Request');
 
-        $edit_form = $this->createEditForm();
+        $edit_form = $this->container->get("language.form_handler")->createEditForm();
         $edit_form->bindRequest($request);
 
-        if ($this->processForm($edit_form) == true) {
+        if ($edit_form->isValid()) {
+            $this->container->get("language.persistence_handler")->save($edit_form->get("symboles")->getData());
             return new RedirectResponse($this->container->get('router')->generate("EvocatioCoreBundle_new_languages"));
         }
 
         return array('form' => $edit_form->createView());
     }
 
-    /**
-     * Creates an edit_form with all the translations objects added for status languages
-     * @param faq $faq
-     * @return Form or RedirectResponse   if validation error
-     */
-    protected function createEditForm($existing_languages = array()) {
-        $edit_form = $this->container->get('form.factory')->create(new ChooseLanguageType(), array('symboles' => $existing_languages));
-        return $edit_form;
-    }
 
     private function getFileForLocale() {
 //        devrait aller chercher tout les informations de traduction pour chaque language, pour chaque bundle
@@ -98,49 +81,49 @@ class LanguageController extends ContainerAware {
         }
     }
 
-    public function processForm($edit_form) {
-        if ($edit_form->isValid()) {
-            $em = $this->container->get("Doctrine")->getEntityManager();
-            $language_repo = $em->getRepository("EvocatioCoreBundle:Language");
+//    public function processForm($edit_form) {
+//        if ($edit_form->isValid()) {
+//            $em = $this->container->get("Doctrine")->getEntityManager();
+//            $language_repo = $em->getRepository("EvocatioCoreBundle:Language");
+//
+//            $languages = $language_repo->findAll();
+//            $selected_languages = $edit_form->get("symboles")->getData();
+//
+//            // Create new language if not exist and store them in the languages array
+//            foreach ($selected_languages as $key => $symbol) {
+//                $language = current(array_filter($languages, function($language) use ($symbol) {
+//                                    return $language->getSymbol() == $symbol;
+//                                }));
+//
+//                if (!$language) {
+//                    $language_form = $this->container->get('form.factory')->create(new LanguageType());
+//                    $language_form->bind(array('symbol' => $symbol, "status" => 1));
+//                    $language = $language_form->getData();
+//                    $languages[] = $language;
+//                }
+//                $em->persist($language);
+//            }
+//
+//            //Translate each language to other languages and persist.
+//            foreach ($languages as $language) {
+//                $language->refreshTranslations($languages);
+//                $language->refreshMyCulturesTranslations($languages);
+//            }
+//            $this->removeLanguages($selected_languages, $languages, $em);
+//            $em->flush();
+//
+//            return true;
+//        }
+//
+//        return $edit_form;
+//    }
 
-            $languages = $language_repo->findAll();
-            $selected_languages = $edit_form->get("symboles")->getData();
-
-            // Create new language if not exist and store them in the languages array
-            foreach ($selected_languages as $key => $symbol) {
-                $language = current(array_filter($languages, function($language) use ($symbol) {
-                                    return $language->getSymbol() == $symbol;
-                                }));
-
-                if (!$language) {
-                    $language_form = $this->container->get('form.factory')->create(new LanguageType());
-                    $language_form->bind(array('symbol' => $symbol, "status" => 1));
-                    $language = $language_form->getData();
-                    $languages[] = $language;
-                }
-                $em->persist($language);
-            }
-
-            //Translate each language to other languages and persist.
-            foreach ($languages as $language) {
-                $language->refreshTranslations($languages);
-                $language->refreshMyCulturesTranslations($languages);
-            }
-            $this->removeLanguages($selected_languages, $languages, $em);
-            $em->flush();
-
-            return true;
-        }
-
-        return $edit_form;
-    }
-    
-    public function removeLanguages($selected_languages, $languages, $em){
-        foreach ($languages as $language){
-            if(!in_array($language->getSymbol(), $selected_languages)){
-                $em->remove($language);
-            }
-        }
-    }
+//    public function removeLanguages($selected_languages, $languages, $em) {
+//        foreach ($languages as $language) {
+//            if (!in_array($language->getSymbol(), $selected_languages)) {
+//                $em->remove($language);
+//            }
+//        }
+//    }
 
 }

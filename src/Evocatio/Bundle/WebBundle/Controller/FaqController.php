@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 // Evocatio includes
 use Evocatio\Bundle\WebBundle\Form\FaqType as Form;
 
@@ -117,7 +118,7 @@ class FaqController extends ContainerAware {
      * @Route("/admin/faq/{id}/edit", name="EvocatioWebBundle_FaqUpdate")
      * @return RedirectResponse
      * @Method("POST")
-     * @Template("EvocatioWebBundle:Faq:edit.html.twig")
+     * @Template
      */
     public function updateAction($id) {
         $entity = $this->container->get("Doctrine")->getRepository("EvocatioWebBundle:Faq")->findOneEditables($id);
