@@ -35,7 +35,7 @@ class FaqController extends ContainerAware {
      * @Template()
      */
     public function showAction($id) {
-        $entity = $this->container->get("faq.read_handler")->getOne($id);
+        $entity = $this->container->get("faq.read_handler")->get($id);
         $delete_form = $this->container->get("faq.form_handler")->createDeleteForm($id);
 
         return array(
