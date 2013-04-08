@@ -18,12 +18,28 @@
             {{ form_errors(edit_form.sex)}}
                         <span>{{ form_widget(edit_form.sex)}}</span>
                     </li>
-                    <li>{{ form_label(edit_form.birthday)}}
-            {{ form_errors(edit_form.birthday)}}
-                            <span>{{ form_widget(edit_form.birthday)}}</span>
-                        </li>
+                    <li>
+                        {{ form_row(edit_form.telephone) }}
+                    <li>
+                        {{ form_row(edit_form.web) }}
+                    </li>
+                    <li>
+                        {{ form_row(edit_form.postal) }}
+                    </li>
+                    <li>
+                        {{ form_row(edit_form.map) }}
+                    </li>
+                    <li>
+                        {{ form_row(edit_form.time) }}
+                    </li>
                         {{ form_rest(edit_form) }}
+                    </ul>
                 </fieldset>
+                <input type=button value="add address" onclick="javascript:addAnItem('evocatio_bundle_personabundle_persontype_postal')" />
+                <input type=button value="add map" onclick="javascript:addAnItem('evocatio_bundle_personabundle_persontype_map')" />
+                <input type=button value="add web" onclick="javascript:addAnItem('evocatio_bundle_personabundle_persontype_web')" />
+                <input type=button value="add telephone" onclick="javascript:addAnItem('evocatio_bundle_personabundle_persontype_telephone')" />
+                <input type=button value="add time" onclick="javascript:addAnItem('evocatio_bundle_personabundle_persontype_time')" />
 {% endblock form %}
 
 {% block back %}

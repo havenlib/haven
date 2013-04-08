@@ -2,7 +2,6 @@
 
 namespace Evocatio\Bundle\CoreBundle\Lib;
 
-use Evocatio\Bundle\CoreBundle\Entity\Language;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
 

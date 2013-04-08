@@ -13,7 +13,7 @@ use \ReflectionClass;
 
 /**
  * Evocatio\Bundle\PersonaBundle\Entity\Persona
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\PersonaBundle\Entity\PersonaRepository")
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\PersonaBundle\Repository\PersonaRepository")
  * @InheritanceType("JOINED")
  * @DiscriminatorColumn(name="discr", type="string")
  * @DiscriminatorMap({
