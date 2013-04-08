@@ -12,35 +12,28 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 // Evocatio includes
 use Evocatio\Bundle\PersonaBundle\Form\PersonType as Form;
-use Evocatio\Bundle\PersonaBundle\Entity\Person as Entity;
 
 class PersonController extends ContainerAware {
 
     /**
-     * @Route("/", name="EvocatioPersonaBundle_PersonIndex")
+     * @Route("/persona/person", name="EvocatioPersonaBundle_PersonIndex")
      * @Method("GET")
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Person")->findAll();
-
+        $entities = $this->container->get('persona.read_handler')->getAll('person');
         return array("entities" => $entities);
     }
 
     /**
      * Finds and displays a persona entity.
      *
-     * @Route("/{id}/show", name="EvocatioPersonaBundle_PersonShow")
+     * @Route("/persona/person/{id}/show", name="EvocatioPersonaBundle_PersonShow")
      * @Method("GET")
      * @Template()
      */
     public function showAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Person")->find($id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-
+        $entity = $this->container->get('persona.read_handler')->get($id, 'person');
         $delete_form = $this->createDeleteForm($id);
 
         return array(
@@ -52,44 +45,41 @@ class PersonController extends ContainerAware {
     /**
      * Finds and displays all personas for admin.
      *
-     * @Route("/list", name="EvocatioPersonaBundle_PersonList")
+     * @Route("/persona/person/list", name="EvocatioPersonaBundle_PersonList")
      * @Method("GET")
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Person")->findAll();
-//        echo "default : " .\Evocatio\Bundle\CoreBundle\Lib\Locale::getDefault();
+        $entities = $this->container->get('persona.read_handler')->getAll('person');
         return array("entities" => $entities);
     }
 
     /**
-     * @Route("/new", name="EvocatioPersonaBundle_PersonNew")
+     * @Route("/admin/persona/person/new", name="EvocatioPersonaBundle_PersonNew")
      * @Method("GET")
      * @Template
      */
     public function newAction() {
-        $edit_form = $this->createEditForm(new Entity());
-
+        $edit_form = $this->container->get('persona.form_handler')->createPersonNewForm();
         return array("edit_form" => $edit_form->createView());
     }
 
     /**
      * Creates a new persona entity.
      *
-     * @Route("/new", name="EvocatioPersonaBundle_PersonCreate")
+     * @Route("/admin/persona/person/new", name="EvocatioPersonaBundle_PersonCreate")
      * @Method("POST")
      * @Template("EvocatioPersonaBundle:Default:new.html.twig")
      */
     public function createAction() {
-        $edit_form = $this->createEditForm(new Entity());
+        $edit_form = $this->container->get('persona.form_handler')->createPersonNewForm();
 
         $edit_form->bindRequest($this->container->get('Request'));
-
-        if ($this->processForm($edit_form) === true) {
-            $this->container->get("session")->setFlash("success", "create.success");
-
+        if ($edit_form->isValid()) {
+            $this->container->get('persona.persistence_handler')->save($edit_form->getData());
             return new RedirectResponse($this->container->get('router')->generate('EvocatioPersonaBundle_PersonList'));
         }
+
 
         $this->container->get("session")->setFlash("error", "create.error");
         return array(
@@ -98,19 +88,16 @@ class PersonController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPersonaBundle_PersonEdit")
+     * @Route("/admin/persona/person/{id}/edit", name="EvocatioPersonaBundle_PersonEdit")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Person")->find($id);
+        $entity = $this->container->get('persona.read_handler')->get($id, 'person');
 
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-        $edit_form = $this->createEditForm($entity);
-        $delete_form = $this->createDeleteForm($id);
+        $edit_form = $this->container->get('persona.form_handler')->createPersonEditForm($id, 'person');
+        $delete_form = $this->container->get('persona.form_handler')->createDeleteForm($id);
 
         return array(
             'entity' => $entity,
@@ -120,27 +107,23 @@ class PersonController extends ContainerAware {
     }
 
     /**
-     * @Route("/{id}/edit", name="EvocatioPersonaBundle_PersonUpdate")
+     * @Route("/admin/persona/person/{id}/edit", name="EvocatioPersonaBundle_PersonUpdate")
      * @return RedirectResponse
      * @Method("POST")
      * @Template("EvocatioPersonaBundle:Default:edit.html.twig")
      */
     public function updateAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioPersonaBundle:Person")->find($id);
+        $entity = $this->container->get('persona.read_handler')->get($id, 'person');
 
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-
-        $edit_form = $this->createEditForm($entity);
-        $delete_form = $this->createDeleteForm($id);
+        $edit_form = $this->container->get('persona.form_handler')->createPersonEditForm($id, 'person');
+        $delete_form = $this->container->get('persona.form_handler')->createDeleteForm($id);
 
         $edit_form->bindRequest($this->container->get('Request'));
-        if ($this->processForm($edit_form) === true) {
-            $this->container->get("session")->setFlash("success", "update.success");
-
+        if ($edit_form->isValid()) {
+            $this->container->get('persona.persistence_handler')->save($edit_form->getData());
             return new RedirectResponse($this->container->get('router')->generate('EvocatioPersonaBundle_PersonList'));
         }
+
         $this->container->get("session")->setFlash("error", "update.error");
 
         return array(
@@ -196,44 +179,42 @@ class PersonController extends ContainerAware {
      * @param persona $entity
      * @return Form or RedirectResponse   if validation error
      */
-    protected function createEditForm($entity) {
-//        the list of language here will decide what languages will appear in the form for new or edit.
-        $languages = $this->container->get('Doctrine')->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(Array("status" => array(1, 2)));
-
-//        $entity->addTranslations($languages);
-
-        $edit_form = $this->container->get('form.factory')->create(new Form(), $entity);
-        return $edit_form;
-    }
+//    protected function createEditForm($entity) {
+////        the list of language here will decide what languages will appear in the form for new or edit.
+//        $languages = $this->container->get('Doctrine')->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(Array("status" => array(1, 2)));
+//
+////        $entity->addTranslations($languages);
+//
+//        $edit_form = $this->container->get('form.factory')->create(new Form(), $entity);
+//        return $edit_form;
+//    }
 
     /**
      *  Create the simple delete form
      * @param integer $id
      * @return form
      */
-    protected function createDeleteForm($id) {
-        return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm()
-        ;
-    }
-
-    /**
-     * Validate and save form, if invalid returns form
-     * @param type $edit_form
-     * @return true or form
-     */
-    protected function processForm($edit_form) {
-        if ($edit_form->isValid()) {
-            $em = $this->container->get('Doctrine')->getEntityManager();
-            $entity = $edit_form->getData();
-            $em->persist($entity);
-            $em->flush();
-
-            return true;
-        }
-
-        return $edit_form;
-    }
-
+//    protected function createDeleteForm($id) {
+//        return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
+//                        ->add('id', 'hidden')
+//                        ->getForm()
+//        ;
+//    }
+//    /**
+//     * Validate and save form, if invalid returns form
+//     * @param type $edit_form
+//     * @return true or form
+//     */
+//    protected function processForm($edit_form) {
+//        if ($edit_form->isValid()) {
+//            $em = $this->container->get('Doctrine')->getEntityManager();
+//            $entity = $edit_form->getData();
+//            $em->persist($entity);
+//            $em->flush();
+//
+//            return true;
+//        }
+//
+//        return $edit_form;
+//    }
 }

@@ -24,20 +24,23 @@ EvocatioPurchase:
     prefix: /{_locale}/purchase/
 
 
-EvocatioPersonaBundle_PersonaAdmin:
-    resource: "@EvocatioPersonaBundle/Controller/PersonaAdminController.php"
-    type:     annotation
-    prefix: /{_locale}/persona/
+EvocatioPersonaBundle:
+    resource: "@EvocatioPersonaBundle/Resources/config/routing.yml"
+    
+#EvocatioPersonaBundle_PersonaAdmin:
+#    resource: "@EvocatioPersonaBundle/Controller/PersonaAdminController.php"
+#    type:     annotation
+#    prefix: /{_locale}/persona/
+#
+#EvocatioPersonaBundle_PersonaView:
+#    resource: "@EvocatioPersonaBundle/Controller/PersonaViewController.php"
+#    type:     annotation
+#    prefix: /{_locale}/persona/
 
-EvocatioPersonaBundle_PersonaView:
-    resource: "@EvocatioPersonaBundle/Controller/PersonaViewController.php"
-    type:     annotation
-    prefix: /{_locale}/persona/
-
-EvocatioPersonaPerson:
-    resource: "@EvocatioPersonaBundle/Controller/PersonController.php"
-    type:     annotation
-    prefix: /{_locale}/person/
+#EvocatioPersonaPerson:
+#    resource: "@EvocatioPersonaBundle/Controller/PersonController.php"
+#    type:     annotation
+#    prefix: /{_locale}/person/
 
 EvocatioPersonaPersonWithCoor:
     resource: "@EvocatioPersonaBundle/Controller/PersonWithCoorController.php"
