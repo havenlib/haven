@@ -1,2 +1,13 @@
-## YAML Template.
----
+EvocatioWebBundle_Faq:
+    resource: "@EvocatioWebBundle/Controller/FaqController.php"
+    type:     annotation
+    prefix: /{_locale}/
+    requirements: 
+      _locale: fr|en
+    
+EvocatioWebBundle_Post:
+    resource: "@EvocatioWebBundle/Controller/PostController.php"
+    type:     annotation
+    prefix: /{_locale}/
+    requirements: 
+      _locale: fr|en

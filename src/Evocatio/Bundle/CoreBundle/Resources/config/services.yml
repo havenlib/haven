@@ -10,3 +10,15 @@ services:
   language.form_handler:
       class:     Evocatio\Bundle\CoreBundle\Lib\LanguageFormHandler
       arguments: ["@language.read_handler", "@security.context", "@form.factory"]
+      
+  culture.read_handler:
+        class:     Evocatio\Bundle\CoreBundle\Lib\CultureReadHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+        
+  culture.persistence_handler:
+        class:     Evocatio\Bundle\CoreBundle\Lib\CulturePersistenceHandler
+        arguments: ["@culture.read_handler", "@language.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
+
+  culture.form_handler:
+      class:     Evocatio\Bundle\CoreBundle\Lib\CultureFormHandler
+      arguments: ["@culture.read_handler", "@language.read_handler", "@security.context", "@form.factory"]

@@ -1,0 +1,11 @@
+{%  extends "::base.html.twig" %}
+{% block content %}
+<article class="record_properties">
+    <section>
+            <h4>{{ entity.getTitle()|raw }}</h4>
+            <div>{{ entity.getContent()|raw }}</div>
+            <div>{{ entity.getPath() }}</div>
+
+    </section>
+</article>
+{% endblock content %}

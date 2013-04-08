@@ -24,7 +24,6 @@ class AppKernel extends Kernel
             new Evocatio\Bundle\SecurityBundle\EvocatioSecurityBundle(),
             new Evocatio\Bundle\PersonaBundle\EvocatioPersonaBundle(),
             new Evocatio\Bundle\PosBundle\EvocatioPosBundle(),
-            new Website\Bundle\SiteBundle\WebsiteSiteBundle(),
             new Evocatio\Bundle\WebBundle\EvocatioWebBundle(),
             new Owner\Bundle\SiteBundle\OwnerSiteBundle(),
         );

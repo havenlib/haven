@@ -1,47 +1,26 @@
-owner_site:
-    resource: "@OwnerSiteBundle/Controller/"
-    type:     annotation
-    prefix:   /
+OwnerSiteBundle:
+    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
 
-#evocatio_web:
-#    resource: "@EvocatioWebBundle/Controller/"
+    
+#WebsiteSiteBundle_User:
+#    resource: "@WebsiteSiteBundle/Controller/UserController.php"
 #    type:     annotation
-#    prefix:   /
-
-website_site:
-    resource: "@WebsiteSiteBundle/Controller/"
-    type:     annotation
-    prefix:   /
-    
-WebsiteSiteBundle_Faq:
-    resource: "@WebsiteSiteBundle/Controller/FaqController.php"
-    type:     annotation
-    prefix: /{_locale}/
-    
-WebsiteSiteBundle_Post:
-    resource: "@WebsiteSiteBundle/Controller/PostController.php"
-    type:     annotation
-    prefix: /{_locale}/
-    
-WebsiteSiteBundle_User:
-    resource: "@WebsiteSiteBundle/Controller/UserController.php"
-    type:     annotation
-    prefix: /{_locale}/
-    
-WebsiteSiteBundle_ProductAdmin:
-    resource: "@WebsiteSiteBundle/Controller/ProductAdminController.php"
-    type:     annotation
-    prefix: /{_locale}/admin/product/
-    
-WebsiteSiteBundle_ProductView:
-    resource: "@WebsiteSiteBundle/Controller/ProductViewController.php"
-    type:     annotation
-    prefix: /{_locale}/product/
-    
-EvocatioLogin:
-    resource: "@WebsiteSiteBundle/Controller/LoginController.php"
-    type:     annotation
-    prefix: /
+#    prefix: /{_locale}/
+#    
+#WebsiteSiteBundle_ProductAdmin:
+#    resource: "@WebsiteSiteBundle/Controller/ProductAdminController.php"
+#    type:     annotation
+#    prefix: /{_locale}/admin/product/
+#    
+#WebsiteSiteBundle_ProductView:
+#    resource: "@WebsiteSiteBundle/Controller/ProductViewController.php"
+#    type:     annotation
+#    prefix: /{_locale}/product/
+#    
+#EvocatioLogin:
+#    resource: "@WebsiteSiteBundle/Controller/LoginController.php"
+#    type:     annotation
+#    prefix: /
     
 #login:
 #    pattern:   /login

@@ -1,3 +1,13 @@
+    
+EvocatioCoreBundle:
+    resource: "@EvocatioCoreBundle/Resources/config/routing.yml"
+    
+EvocatioPersonaBundle:
+    resource: "@EvocatioPersonaBundle/Resources/config/routing.yml"
+    
+EvocatioWebBundle:
+    resource: "@EvocatioWebBundle/Resources/config/routing.yml"
+    
 #EvocatioPosBundle:
 #    resource: "@EvocatioPosBundle/Controller/"
 #    type:     annotation
@@ -13,19 +23,16 @@
 #    type:     annotation
 #    prefix: /{_locale}/user/
 
-EvocatioBasket:
-    resource: "@EvocatioPosBundle/Controller/BasketController.php"
-    type:     annotation
-    prefix: /{_locale}/basket/
+#EvocatioBasket:
+#    resource: "@EvocatioPosBundle/Controller/BasketController.php"
+#    type:     annotation
+#    prefix: /{_locale}/basket/
+#
+#EvocatioPurchase:
+#    resource: "@EvocatioPosBundle/Controller/PurchaseController.php"
+#    type:     annotation
+#    prefix: /{_locale}/purchase/
 
-EvocatioPurchase:
-    resource: "@EvocatioPosBundle/Controller/PurchaseController.php"
-    type:     annotation
-    prefix: /{_locale}/purchase/
-
-
-EvocatioPersonaBundle:
-    resource: "@EvocatioPersonaBundle/Resources/config/routing.yml"
     
 #EvocatioPersonaBundle_PersonaAdmin:
 #    resource: "@EvocatioPersonaBundle/Controller/PersonaAdminController.php"
@@ -42,20 +49,20 @@ EvocatioPersonaBundle:
 #    type:     annotation
 #    prefix: /{_locale}/person/
 
-EvocatioPersonaPersonWithCoor:
-    resource: "@EvocatioPersonaBundle/Controller/PersonWithCoorController.php"
-    type:     annotation
-    prefix: /{_locale}/personWithCoor/
-
-EvocatioCompanyBundle:
-    resource: "@EvocatioPersonaBundle/Controller/CompanyController.php"
-    type:     annotation
-    prefix: /{_locale}/company/
-
-EvocatioPostalBundle:
-    resource: "@EvocatioPersonaBundle/Controller/PostalController.php"
-    type:     annotation
-    prefix: /{_locale}/postal/
+#EvocatioPersonaPersonWithCoor:
+#    resource: "@EvocatioPersonaBundle/Controller/PersonWithCoorController.php"
+#    type:     annotation
+#    prefix: /{_locale}/personWithCoor/
+#
+#EvocatioCompanyBundle:
+#    resource: "@EvocatioPersonaBundle/Controller/CompanyController.php"
+#    type:     annotation
+#    prefix: /{_locale}/company/
+#
+#EvocatioPostalBundle:
+#    resource: "@EvocatioPersonaBundle/Controller/PostalController.php"
+#    type:     annotation
+#    prefix: /{_locale}/postal/
 
 #EvocatioFaqBundle:
 #    resource: "@EvocatioFaqBundle/Controller/FaqController.php"
@@ -71,10 +78,10 @@ EvocatioPostalBundle:
 #    requirements: 
 #      _locale: fr|en
 
-EvocatioCoreBundle:
-    resource: "@EvocatioCoreBundle/Controller/"
-    type:     annotation
-    prefix: /{_locale}/core/
+#EvocatioCoreBundle:
+#    resource: "@EvocatioCoreBundle/Controller/"
+#    type:     annotation
+#    prefix: /{_locale}/core/
 
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"

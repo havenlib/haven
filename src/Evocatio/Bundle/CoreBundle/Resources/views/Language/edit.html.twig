@@ -1,0 +1,29 @@
+{% extends "::base.html.twig" %}
+
+
+{% block title %}Info sur la translation{% endblock %}
+
+{% block content %}
+{{ app.session.flash('notice')|trans }}
+<ul>
+{% for language in languages %}
+<li>
+    <a href="{#{ path('change_language') }}?lang={{ language.symbol }#}" >{{ language.name }} </a>
+    ->
+    <a href="{{ path('EvocatioCoreBundle_CulturesEdit', {'display_language': language.symbol }) }}"> choir la culture</a>
+</li>
+{% endfor %}
+</ul>
+&nbsp;
+{% endblock content %}
+
+{% block aside %}
+
+<form action="{{ path('EvocatioCoreBundle_LanguagesUpdate') }}" method="post" {{ form_enctype(form) }}>
+{{ form_widget(form) }}
+
+<input type="submit" value="go" />
+</form>
+
+{% endblock aside %}
+
