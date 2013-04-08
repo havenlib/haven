@@ -1,5 +1,3 @@
-OwnerSiteBundle:
-    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
 
     
 #WebsiteSiteBundle_User:
