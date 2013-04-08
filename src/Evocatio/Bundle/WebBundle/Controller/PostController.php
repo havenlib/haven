@@ -78,9 +78,8 @@ class PostController extends ContainerAware {
 
         $edit_form->bindRequest($this->container->get('Request'));
 
-        if ($this->processForm($edit_form) === true) {
-            $this->container->get("session")->setFlash("success", "create.success");
-
+        if ($edit_form->isValid()) {
+            $this->container->get("post.persistence_handler")->save($edit_form->getData());
             return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_PostList'));
         }
 
@@ -119,16 +118,10 @@ class PostController extends ContainerAware {
      * @Template("EvocatioWebBundle:Post:edit.html.twig")
      */
     public function updateAction($id) {
-        $entity = $this->container->get("Doctrine")->getRepository("EvocatioWebBundle:Post")->findOneEditables($id);
+        $entity = $this->container->get('post.read_handler')->get($id);
+        $edit_form = $this->container->get("post.form_handler")->createEditForm($entity->getId());
+        $delete_form = $this->container->get("post.form_handler")->createDeleteForm($entity->getId());
 
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-
-
-        $edit_form = $this->createEditForm($entity);
-        $delete_form = $this->createDeleteForm($id);
-//        echo "<pre>";
 
         $files_post = $this->container->get("request")->files->all();
 
@@ -198,10 +191,9 @@ class PostController extends ContainerAware {
     /**
      * @Route("/post/{slug}", name="EvocatioWebBundle_PostShowSlug")
      * @Method("GET")
-     * @Template("EvocatioWebBundle:Post:show.html.twig")
+     * @Template
      */
     public function showFromSlugAction(EntityTranslation $entityTranslation) {
-//        $delete_form = $this->createDeleteForm($id);
         $locale = $this->container->get("request")->get("_locale");
         if ($entityTranslation->getTransLang()->getSymbol() != \Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale) && $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))) {
             $slug = $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))->getSlug();
@@ -213,10 +205,16 @@ class PostController extends ContainerAware {
             throw new NotFoundHttpException('entity.not.found');
         }
 
-        $delete_form = $this->createDeleteForm($entity->getId());
-
-        return array("entity" => $entity, 'delete_form' => $delete_form->createView()
+        $delete_form = $this->container->get("post.form_handler")->createDeleteForm($entity->getId());
+        
+        $template = str_replace(":showFromSlug.html.twig", ":show.html.twig", $this->container->get("request")->get('_template'));
+        
+        $params = array(
+            "entity" => $entity,
+            'delete_form' => $delete_form->createView()
         );
+
+        return new Response($this->container->get('templating')->render($template, $params));
     }
 
     public function listWidgetAction($template = null, $qt = null) {
@@ -225,52 +223,6 @@ class PostController extends ContainerAware {
 
 
         return new Response($this->container->get('templating')->render($template ? $template : 'EvocatioWebBundle:Post:list_widget.html.twig', array('entities' => $entities)));
-    }
-
-//  ------------- Privates -------------------------------------------
-    /**
-     * Creates an edit_form with all the translations objects added for status languages
-     * @param post $entity
-     * @return Form or RedirectResponse   if validation error
-     */
-    protected function createEditForm($entity) {
-//        the list of language here will decide what languages will appear in the form for new or edit.
-        $languages = $this->container->get('Doctrine')->getEntityManager()->getRepository("EvocatioCoreBundle:Language")->findBy(Array("status" => array(1, 2)));
-
-        $entity->addTranslations($languages);
-
-        $edit_form = $this->container->get('form.factory')->create(new Form(), $entity);
-        return $edit_form;
-    }
-
-    /**
-     *  Create the simple delete form
-     * @param integer $id
-     * @return form
-     */
-    protected function createDeleteForm($id) {
-        return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm()
-        ;
-    }
-
-    /**
-     * Validate and save form, if invalid returns form
-     * @param type $edit_form
-     * @return true or form
-     */
-    protected function processForm($edit_form) {
-        if ($edit_form->isValid()) {
-            $em = $this->container->get('Doctrine')->getEntityManager();
-            $entity = $edit_form->getData();
-            $em->persist($entity);
-            $em->flush();
-
-            return true;
-        }
-
-        return $edit_form;
     }
 
 }

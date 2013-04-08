@@ -50,7 +50,7 @@
             {% endif %}
             {% block body %}
                 <header>{% block header %}
-                    <a class="logo" href="{{ path('WebsiteSiteBundle_Home')}}">
+                    <a class="logo" href="{#{ path('WebsiteSiteBundle_Home')}#}">
                         <img src="/bundles/websitesite/images/evocatio_modified.png" alt="evocatio-logo" />
                     </a>
                     <div class="lang pull-right">{#% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale"), "template" : "WebsiteSiteBundle:Core:i18nSwitcher.html.twig"} %#}
@@ -63,7 +63,7 @@
                 </ul>                
                 <div id="navigation" class="navbar">
                     <div class="navbar-inner">
-                        {% include "WebsiteSiteBundle:Home:navigation.html.twig" %}
+                        {% include "OwnerSiteBundle:Home:navigation.html.twig" %}
                     </div>
                 </div>
                 <div id="main">{% block main %}
@@ -80,7 +80,7 @@
                 </div>
                 <footer>{% block footer %}
                     <hr /> 
-                        {% include "WebsiteSiteBundle:Home:navigation.html.twig" %}
+                        {% include "OwnerSiteBundle:Home:navigation.html.twig" %}
                     {% endblock footer %}
                 </footer>{% endblock body %}
             {% block javascripts %}

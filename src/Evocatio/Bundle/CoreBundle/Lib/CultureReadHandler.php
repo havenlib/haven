@@ -5,7 +5,7 @@ namespace Evocatio\Bundle\CoreBundle\Lib;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
 
-class LanguageReadHandler {
+class CultureReadHandler {
 
     protected $em;
     protected $security_context;
@@ -25,16 +25,6 @@ class LanguageReadHandler {
         return $entity;
     }
 
-    public function getBySymbol($symbol) {
-
-        $entity = $this->em->getRepository("EvocatioCoreBundle:Language")->findOneBy(array('symbol' => $symbol));
-
-        if (!$entity)
-            throw new \Exception('entity.not.found');
-
-        return $entity;
-    }
-
     public function getAll() {
         return $this->em->getRepository("EvocatioCoreBundle:Language")->findAll();
     }
@@ -46,6 +36,7 @@ class LanguageReadHandler {
     public function getAllPublishedOrderedByRank($order = 'ASC') {
         return $this->em->getRepository("EvocatioCoreBundle:Language")->findAllPublishedOrderedByRank($order);
     }
+    
 
 }
 

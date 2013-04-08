@@ -19,30 +19,31 @@ use Evocatio\Bundle\CoreBundle\Entity\Language;
 class LanguageController extends ContainerAware {
 
     /**
-     * @Route("/language/new", name="EvocatioCoreBundle_new_languages")
+     * @Route("/languages/edit", name="EvocatioCoreBundle_LanguagesEdit")
      * @Method("GET")
      * @Template
      */
-    public function newAction() {
+    public function editAction() {
         echo "<p>-->" . Locale::getDefault() . "</p>";
         echo "<p>session local-->" . $this->container->get("session")->get("_locale") . "</p>";
 
+        
         $edit_form = $this->container->get("language.form_handler")->createEditForm();
-        return array('form' => $edit_form->createView());
+        return array('form' => $edit_form->createView(), "languages" => $this->container->get("language.read_handler")->getAll());
     }
 
     /**
-     * @Route("/language/create", name="EvocatioCoreBundle_create_languages")
+     * @Route("/languages/update", name="EvocatioCoreBundle_LanguagesUpdate")
      * @Method("POST")
-     * @Template("EvocatioCoreBundle:Core:new.html.twig")
+     * @Template
      */
-    public function createAction() {
+    public function updateAction() {
         $edit_form = $this->container->get("language.form_handler")->createEditForm();
         $edit_form->bindRequest($this->container->get('Request'));
 
         if ($edit_form->isValid()) {
             $this->container->get("language.persistence_handler")->save($edit_form->get("symboles")->getData());
-            return new RedirectResponse($this->container->get('router')->generate("EvocatioCoreBundle_new_languages"));
+            return new RedirectResponse($this->container->get('router')->generate("EvocatioCoreBundle_LanguagesEdit"));
         }
 
         return array('form' => $edit_form->createView());

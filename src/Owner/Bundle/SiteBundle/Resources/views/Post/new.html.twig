@@ -1,0 +1,92 @@
+{%  extends "OwnerSiteBundle:Template:multilangue_add_template.html.twig" %}
+{% block formhead %}
+    {{ path('EvocatioWebBundle_PostCreate') }}
+{% endblock formhead %}
+
+{% block form %}
+<fieldset>
+    <ul>
+        <li>{{ form_label(edit_form.status)}}
+            {{ form_errors(edit_form.status)}}
+                <span>{{ form_widget(edit_form.status)}}</span>
+            </li>
+            <li>{{ form_label(edit_form.postbegin_at)}}
+                <span>{{ form_widget(edit_form.postbegin_at)}}</span>
+            {{ form_errors(edit_form.postbegin_at)}}
+            </li>
+            <li>{{ form_label(edit_form.postend_at)}}
+                <span>{{ form_widget(edit_form.postend_at)}}</span>
+            {{ form_errors(edit_form.postend_at)}}
+            </li>
+                {% for key, translation in edit_form.translations %}
+            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.name) }}
+                        {{ form_label(translation.name) }}
+                        {{ form_widget(translation.name)}}
+                </li>
+                <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.title) }}
+                        {{ form_label(translation.title) }}
+                        {{ form_widget(translation.title)}}
+                    </li>
+                    <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.excerpt) }}
+                        {{ form_label(translation.excerpt) }}
+                        {{ form_widget(translation.excerpt)}}
+                        </li>
+                        <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.subtitle) }}
+                        {{ form_label(translation.subtitle) }}
+                        {{ form_widget(translation.subtitle)}}
+                            </li>
+                            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.file) }}
+                        {{ form_label(translation.file) }}
+                        {{ form_widget(translation.file,{'full_name': translation.file.get('full_name') ~ '[]'})}}
+                                </li>
+                            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.image) }}
+                        {#{ form_label(translation.image) }#}
+                        {{ form_widget(translation.image,{'full_name': translation.image.get('full_name') ~ '[]'})}}
+                                </li>
+                            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.pdf) }}
+                        {#{ form_label(translation.pdf) }#}
+                        {{ form_widget(translation.pdf,{'full_name': translation.pdf.get('full_name') ~ '[]'})}}
+                                </li>
+                            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.other) }}
+                        {#{ form_label(translation.other) }#}
+                        {{ form_widget(translation.other,{'full_name': translation.other.get('full_name') ~ '[]'})}}
+                                </li>
+                            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.text) }}
+                        {#{ form_label(translation.text) }#}
+                        {{ form_widget(translation.text,{'full_name': translation.text.get('full_name') ~ '[]'})}}
+                                </li>
+                                <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+
+                        {{ form_errors(translation.content) }}
+                        {{ form_label(translation.content) }}
+                                    <span class="widget">
+                        {{ form_widget(translation.content, {'attr': {'class': 'ckeditor ckeditor-admin'} }) }}
+                                        </span>
+                                    </li>
+
+              {% endfor %}
+                            <li class="tab-element">
+                        {#{ form_errors(edit_form.file) }}
+                        {{ form_label(edit_form.file) }}
+                        {{ form_widget(edit_form.file,{'full_name': edit_form.file.get('full_name') ~ '[]'})}#}
+                                </li>
+                                </ul>
+                        {{ form_rest(edit_form) }}
+                            </fieldset>
+                <input type=button value="add single_file" onclick="javascript:addAnItem('evocatio_bundle_postbundle_posttype_translations_0_single_file')" />
+{% endblock form %}
+
+{% block back %}
+                            <a href="{{ path('EvocatioWebBundle_PostList') }}">
+                                Back to the list
+                            </a>
+{% endblock back %}

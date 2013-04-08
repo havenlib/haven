@@ -1,0 +1,4 @@
+OwnerSiteBundle_All:
+    resource: "@OwnerSiteBundle/Controller/"
+    type:     annotation
+    prefix: /{_locale}/
