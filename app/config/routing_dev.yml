@@ -1,12 +1,17 @@
-    
 EvocatioCoreBundle:
     resource: "@EvocatioCoreBundle/Resources/config/routing.yml"
     
 EvocatioPersonaBundle:
     resource: "@EvocatioPersonaBundle/Resources/config/routing.yml"
     
+EvocatioSecurityBundle:
+    resource: "@EvocatioSecurityBundle/Resources/config/routing.yml"
+    
 EvocatioWebBundle:
     resource: "@EvocatioWebBundle/Resources/config/routing.yml"
+    
+OwnerSiteBundle:
+    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
     
 #EvocatioPosBundle:
 #    resource: "@EvocatioPosBundle/Controller/"
@@ -64,24 +69,6 @@ EvocatioWebBundle:
 #    type:     annotation
 #    prefix: /{_locale}/postal/
 
-#EvocatioFaqBundle:
-#    resource: "@EvocatioFaqBundle/Controller/FaqController.php"
-#    type:     annotation
-#    prefix: /{_locale}/faq/
-#    requirements: 
-#      _locale: fr|en
-
-#EvocatioPostBundle:
-#    resource: "@EvocatioPostBundle/Controller/PostController.php"
-#    type:     annotation
-#    prefix: /{_locale}/post/
-#    requirements: 
-#      _locale: fr|en
-
-#EvocatioCoreBundle:
-#    resource: "@EvocatioCoreBundle/Controller/"
-#    type:     annotation
-#    prefix: /{_locale}/core/
 
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
