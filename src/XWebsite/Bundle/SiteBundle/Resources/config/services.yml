@@ -1,5 +1,0 @@
-services:
-    faq.read_handler:
-        class:     Evocatio\Bundle\WebBundle\Lib\FaqReadHandler
-        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
-    

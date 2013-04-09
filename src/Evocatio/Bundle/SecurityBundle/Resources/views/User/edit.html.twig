@@ -1,6 +1,6 @@
 {%  extends "EvocatioSecurityBundle:User:new.html.twig" %}
 {% block formhead %}
-    {{ path('EvocatioSecurityBundle_update', { 'id': edit_form.vars.value.id }) }}
+    {{ path('EvocatioSecurityBundle_UserUpdate', { 'id': edit_form.vars.value.id }) }}
 {% endblock formhead %}
 {% block delete %}
 <li>
