@@ -1,4 +1,5 @@
-
+OwnerSiteBundle:
+    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
     
 #WebsiteSiteBundle_User:
 #    resource: "@WebsiteSiteBundle/Controller/UserController.php"
@@ -15,17 +16,8 @@
 #    type:     annotation
 #    prefix: /{_locale}/product/
 #    
-#EvocatioLogin:
-#    resource: "@WebsiteSiteBundle/Controller/LoginController.php"
-#    type:     annotation
-#    prefix: /
+
     
-#login:
-#    pattern:   /login
-#    defaults:  { _controller: AcmeSecurityBundle:Security:login }
-#login_check:
-#    pattern:   /login_check
-#    defaults:  { _controller: WebsiteSiteBundle:Login:loginCheck }
 # Internal routing configuration to handle ESI
 #_internal:
 #    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
