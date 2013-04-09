@@ -9,8 +9,21 @@ EvocatioSecurityBundle:
     
 EvocatioWebBundle:
     resource: "@EvocatioWebBundle/Resources/config/routing.yml"
-    
-    
+       
+_wdt:
+    resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
+    prefix:   /_wdt
+
+_profiler:
+    resource: "@WebProfilerBundle/Resources/config/routing/profiler.xml"
+    prefix:   /_profiler
+
+_configurator:
+    resource: "@SensioDistributionBundle/Resources/config/routing/webconfigurator.xml"
+    prefix:   /_configurator
+
+_main:
+    resource: routing.yml
 #EvocatioPosBundle:
 #    resource: "@EvocatioPosBundle/Controller/"
 #    type:     annotation
@@ -21,10 +34,6 @@ EvocatioWebBundle:
 #    type:     annotation
 #    prefix: /auth/
 
-#EvocatioUser:
-#    resource: "@EvocatioSecurityBundle/Controller/UserController.php"
-#    type:     annotation
-#    prefix: /{_locale}/user/
 
 #EvocatioBasket:
 #    resource: "@EvocatioPosBundle/Controller/BasketController.php"
@@ -66,19 +75,3 @@ EvocatioWebBundle:
 #    resource: "@EvocatioPersonaBundle/Controller/PostalController.php"
 #    type:     annotation
 #    prefix: /{_locale}/postal/
-
-
-_wdt:
-    resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
-    prefix:   /_wdt
-
-_profiler:
-    resource: "@WebProfilerBundle/Resources/config/routing/profiler.xml"
-    prefix:   /_profiler
-
-_configurator:
-    resource: "@SensioDistributionBundle/Resources/config/routing/webconfigurator.xml"
-    prefix:   /_configurator
-
-_main:
-    resource: routing.yml

@@ -1,10 +1,6 @@
 OwnerSiteBundle:
     resource: "@OwnerSiteBundle/Resources/config/routing.yml"
     
-#WebsiteSiteBundle_User:
-#    resource: "@WebsiteSiteBundle/Controller/UserController.php"
-#    type:     annotation
-#    prefix: /{_locale}/
 #    
 #WebsiteSiteBundle_ProductAdmin:
 #    resource: "@WebsiteSiteBundle/Controller/ProductAdminController.php"

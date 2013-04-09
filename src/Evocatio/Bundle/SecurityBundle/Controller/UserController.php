@@ -183,7 +183,7 @@ class UserController extends ContainerAware {
         $em->remove($entity);
         $em->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('EvocatioSecurityBundle_list'));
+        return new RedirectResponse($this->container->get('router')->generate('EvocatioSecurityBundle_UserList'));
     }
 
 //  ------------- Privates -------------------------------------------
