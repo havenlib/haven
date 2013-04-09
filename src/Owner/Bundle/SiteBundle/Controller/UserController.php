@@ -3,13 +3,10 @@
 namespace Website\Bundle\SiteBundle\Controller;
 
 // Sensio includes
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Evocatio\Bundle\SecurityBundle\Controller\UserController as BaseUserController;
 
 
-class UserController extends \Evocatio\Bundle\SecurityBundle\Controller\UserController {
+class UserController extends BaseUserController {
 
     /**
      * Creates a new faq entity.

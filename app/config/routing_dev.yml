@@ -10,8 +10,6 @@ EvocatioSecurityBundle:
 EvocatioWebBundle:
     resource: "@EvocatioWebBundle/Resources/config/routing.yml"
     
-OwnerSiteBundle:
-    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
     
 #EvocatioPosBundle:
 #    resource: "@EvocatioPosBundle/Controller/"

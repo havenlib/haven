@@ -7,5 +7,5 @@ OwnerSiteBundle_All:
 OwnerSiteBundle_Login:
     resource: "@OwnerSiteBundle/Controller/LoginController.php"
     type:     annotation
-    prefix: /{_locale}/
+    prefix: /
     
