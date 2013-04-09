@@ -29,10 +29,6 @@ class UserReadHandler {
     public function getAll() {
         return $this->em->getRepository("EvocatioSecurityBundle:User")->findAll();
     }
-
-    public function getAllPublished() {
-        return $this->em->getRepository("EvocatioSecurityBundle:User")->findAllPublished();
-    }
     
 }
 

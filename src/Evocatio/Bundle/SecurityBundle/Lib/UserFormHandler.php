@@ -6,8 +6,8 @@ use Evocatio\Bundle\SecurityBundle\Lib\UserReadHandler;
 use Evocatio\Bundle\CoreBundle\Lib\LanguageReadHandler;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\FormFactory;
-use Evocatio\Bundle\WebBundle\Entity\Faq as Entity;
-use Evocatio\Bundle\WebBundle\Form\FaqType as Type;
+use Evocatio\Bundle\SecurityBundle\Entity\User as Entity;
+use Evocatio\Bundle\SecurityBundle\Form\UserType as Type;
 
 class UserFormHandler {
 
@@ -39,7 +39,6 @@ class UserFormHandler {
      */
     public function createNewForm() {
         $entity = new Entity();
-        $entity->addTranslations($this->language_read_handler->getAllPublishedOrderedByRank());
         $create_form = $this->form_factory->create(new Type(), $entity);
         
         return $create_form;
