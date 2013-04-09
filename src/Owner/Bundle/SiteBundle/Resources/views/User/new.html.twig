@@ -1,4 +1,4 @@
-{%  extends "WebsiteSiteBundle:Template:add_template.html.twig" %}
+{%  extends "OwnerSiteBundle:Template:add_template.html.twig" %}
 {% block formhead %}
     {{ path('EvocatioSecurityBundle_UserCreate') }}
 {% endblock formhead %}
@@ -43,7 +43,7 @@
 {% endblock form %}
 
 {% block back %}
-<a href="{{ path('EvocatioSecurityBundle_list') }}">
+<a href="{{ path('EvocatioSecurityBundle_UserList') }}">
     Back to the list
 </a>
 {% endblock back %}

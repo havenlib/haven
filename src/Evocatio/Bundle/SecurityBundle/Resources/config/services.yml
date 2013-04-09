@@ -5,7 +5,7 @@ services:
       
   user.persistence_handler:
       class:     Evocatio\Bundle\SecurityBundle\Lib\UserPersistenceHandler
-      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+      arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.encoder_factory"]
 
   user.form_handler:
       class:     Evocatio\Bundle\SecurityBundle\Lib\UserFormHandler
