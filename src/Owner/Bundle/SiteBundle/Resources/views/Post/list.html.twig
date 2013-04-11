@@ -1,0 +1,25 @@
+{%  extends "::admin_base.html.twig" %}
+{% block content %}
+<ul class="no-style-ul">
+        {% for entity in entities %}
+        <li>
+            <ul class="admin-entities-lines ul-li-left-full-weight">
+                <li><a href="{{ path('EvocatioWebBundle_PostShow', { 'id': entity.id }) }}" >Show</a></li>
+                <li><a href="{{ path('EvocatioWebBundle_PostEdit', { 'id': entity.id }) }}" >Edit</a></li>
+                <li> __{{ entity.status }}__ </li>
+                <li> __>{{ entity.excerpt }}__ </li>
+                <li><strong> {{ entity.title }} </strong></li>
+            </ul>
+        </li>
+        {% else %}
+        aucun
+        {% endfor %}
+</ul>
+    <ul>
+        <li>
+            <a href="{{ path('EvocatioWebBundle_PostNew') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+{% endblock content %}

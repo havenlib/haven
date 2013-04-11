@@ -1,0 +1,18 @@
+{%  extends "::base.html.twig" %}
+{% block content %}
+<ul>
+    {% for entity in entities %}
+        <li>
+        {{ entity.status }} - <strong>{{ entity.title }}</strong>
+                <span>
+   {{ entity.excerpt }}
+                    </span> 
+        <a href="{{ path('EvocatioWebBundle_show_slug', { 'slug': entity.slug }) }}">show</a>
+                </li>
+    {% else %}
+                Pas d'entité
+    {% endfor %}
+
+{% endblock content %}
+
+

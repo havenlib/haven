@@ -1,9 +1,25 @@
 services:
-    faq.read_handler:
-        class:     Evocatio\Bundle\WebBundle\Lib\FaqReadHandler
-        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
-        
-    faq.form_handler:
-        class:     Evocatio\Bundle\WebBundle\Lib\FaqFormHandler
-        arguments: ["@faq.read_handler", "@security.context", "@form.factory"]
+  faq.read_handler:
+      class:     Evocatio\Bundle\WebBundle\Lib\FaqReadHandler
+      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+      
+  faq.persistence_handler:
+      class:     Evocatio\Bundle\WebBundle\Lib\FaqPersistenceHandler
+      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
+  faq.form_handler:
+      class:     Evocatio\Bundle\WebBundle\Lib\FaqFormHandler
+      arguments: ["@faq.read_handler", "@language.read_handler", "@security.context", "@form.factory"]
+      
+  post.persistence_handler:
+      class:     Evocatio\Bundle\WebBundle\Lib\PostPersistenceHandler
+      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+      
+  post.read_handler:
+      class:     Evocatio\Bundle\WebBundle\Lib\PostReadHandler
+      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
+  post.form_handler:
+      class:     Evocatio\Bundle\WebBundle\Lib\PostFormHandler
+      arguments: ["@post.read_handler", "@language.read_handler", "@security.context", "@form.factory"]
     

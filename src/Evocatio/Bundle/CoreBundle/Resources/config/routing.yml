@@ -1,0 +1,13 @@
+EvocatioCoreBundle_Language:
+    resource: "@EvocatioCoreBundle/Controller/LanguageController.php"
+    type:     annotation
+    prefix: /{_locale}/core/
+    requirements: 
+      _locale: fr|en
+      
+EvocatioCoreBundle_Culture:
+    resource: "@EvocatioCoreBundle/Controller/CultureController.php"
+    type:     annotation
+    prefix: /{_locale}/core/
+    requirements: 
+      _locale: fr|en

@@ -1,78 +1,15 @@
-#EvocatioPosBundle:
-#    resource: "@EvocatioPosBundle/Controller/"
-#    type:     annotation
-#    prefix:   /product
-
-#EvocatioLogin:
-#    resource: "@EvocatioSecurityBundle/Controller/LoginController.php"
-#    type:     annotation
-#    prefix: /auth/
-
-#EvocatioUser:
-#    resource: "@EvocatioSecurityBundle/Controller/UserController.php"
-#    type:     annotation
-#    prefix: /{_locale}/user/
-
-EvocatioBasket:
-    resource: "@EvocatioPosBundle/Controller/BasketController.php"
-    type:     annotation
-    prefix: /{_locale}/basket/
-
-EvocatioPurchase:
-    resource: "@EvocatioPosBundle/Controller/PurchaseController.php"
-    type:     annotation
-    prefix: /{_locale}/purchase/
-
-
-EvocatioPersonaBundle_PersonaAdmin:
-    resource: "@EvocatioPersonaBundle/Controller/PersonaAdminController.php"
-    type:     annotation
-    prefix: /{_locale}/persona/
-
-EvocatioPersonaBundle_PersonaView:
-    resource: "@EvocatioPersonaBundle/Controller/PersonaViewController.php"
-    type:     annotation
-    prefix: /{_locale}/persona/
-
-EvocatioPersonaPerson:
-    resource: "@EvocatioPersonaBundle/Controller/PersonController.php"
-    type:     annotation
-    prefix: /{_locale}/person/
-
-EvocatioPersonaPersonWithCoor:
-    resource: "@EvocatioPersonaBundle/Controller/PersonWithCoorController.php"
-    type:     annotation
-    prefix: /{_locale}/personWithCoor/
-
-EvocatioCompanyBundle:
-    resource: "@EvocatioPersonaBundle/Controller/CompanyController.php"
-    type:     annotation
-    prefix: /{_locale}/company/
-
-EvocatioPostalBundle:
-    resource: "@EvocatioPersonaBundle/Controller/PostalController.php"
-    type:     annotation
-    prefix: /{_locale}/postal/
-
-#EvocatioFaqBundle:
-#    resource: "@EvocatioFaqBundle/Controller/FaqController.php"
-#    type:     annotation
-#    prefix: /{_locale}/faq/
-#    requirements: 
-#      _locale: fr|en
-
-#EvocatioPostBundle:
-#    resource: "@EvocatioPostBundle/Controller/PostController.php"
-#    type:     annotation
-#    prefix: /{_locale}/post/
-#    requirements: 
-#      _locale: fr|en
-
 EvocatioCoreBundle:
-    resource: "@EvocatioCoreBundle/Controller/"
-    type:     annotation
-    prefix: /{_locale}/core/
-
+    resource: "@EvocatioCoreBundle/Resources/config/routing.yml"
+    
+EvocatioPersonaBundle:
+    resource: "@EvocatioPersonaBundle/Resources/config/routing.yml"
+    
+EvocatioSecurityBundle:
+    resource: "@EvocatioSecurityBundle/Resources/config/routing.yml"
+    
+EvocatioWebBundle:
+    resource: "@EvocatioWebBundle/Resources/config/routing.yml"
+       
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
     prefix:   /_wdt
@@ -87,3 +24,54 @@ _configurator:
 
 _main:
     resource: routing.yml
+#EvocatioPosBundle:
+#    resource: "@EvocatioPosBundle/Controller/"
+#    type:     annotation
+#    prefix:   /product
+
+#EvocatioLogin:
+#    resource: "@EvocatioSecurityBundle/Controller/LoginController.php"
+#    type:     annotation
+#    prefix: /auth/
+
+
+#EvocatioBasket:
+#    resource: "@EvocatioPosBundle/Controller/BasketController.php"
+#    type:     annotation
+#    prefix: /{_locale}/basket/
+#
+#EvocatioPurchase:
+#    resource: "@EvocatioPosBundle/Controller/PurchaseController.php"
+#    type:     annotation
+#    prefix: /{_locale}/purchase/
+
+    
+#EvocatioPersonaBundle_PersonaAdmin:
+#    resource: "@EvocatioPersonaBundle/Controller/PersonaAdminController.php"
+#    type:     annotation
+#    prefix: /{_locale}/persona/
+#
+#EvocatioPersonaBundle_PersonaView:
+#    resource: "@EvocatioPersonaBundle/Controller/PersonaViewController.php"
+#    type:     annotation
+#    prefix: /{_locale}/persona/
+
+#EvocatioPersonaPerson:
+#    resource: "@EvocatioPersonaBundle/Controller/PersonController.php"
+#    type:     annotation
+#    prefix: /{_locale}/person/
+
+#EvocatioPersonaPersonWithCoor:
+#    resource: "@EvocatioPersonaBundle/Controller/PersonWithCoorController.php"
+#    type:     annotation
+#    prefix: /{_locale}/personWithCoor/
+#
+#EvocatioCompanyBundle:
+#    resource: "@EvocatioPersonaBundle/Controller/CompanyController.php"
+#    type:     annotation
+#    prefix: /{_locale}/company/
+#
+#EvocatioPostalBundle:
+#    resource: "@EvocatioPersonaBundle/Controller/PostalController.php"
+#    type:     annotation
+#    prefix: /{_locale}/postal/

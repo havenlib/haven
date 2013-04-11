@@ -4,6 +4,7 @@ namespace Evocatio\Bundle\WebBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Evocatio\Bundle\CoreBundle\Generic\StatusRepository;
+use Evocatio\Bundle\WebBundle\Entity\Faq;
 
 /**
  * Evocatio\Bundle\WebBundle\Entity\FaqRepository
@@ -23,25 +24,24 @@ class FaqRepository extends StatusRepository {
         $this->query_builder = $query_builder;
     }
 
-    public function findAll($status = null, $return_result = true) {
-
-        $this->query_builder = $this->createQueryBuilder("d");
-
-        if (!is_null($status))
-            $this->query_builder = $this->filterByStatus($status, false)->getQueryBuilder();
-
-        return ($return_result) ? $this->getResult() : $this;
+    public function findAll() {
+        $this->query_builder = $this->createQueryBuilder("e");
+        return $this->getResult();
     }
 
-    private function filterByStatus($status, $return_result = true) {
+    public function findAllPublished() {
+        $this->query_builder = $this->filterByStatus(Faq::STATUS_PUBLISHED)->getQueryBuilder();
+        return $this->getResult();
+    }
 
+    private function filterByStatus($status) {
         if (is_null($this->query_builder))
-            $this->query_builder = $this->findAll();
+            $this->query_builder = $this->createQueryBuilder("e");
 
-        $this->query_builder->andWhere("d.status in (:status)");
+        $this->query_builder->andWhere("e.status = :status");
         $this->query_builder->setParameter("status", $status);
 
-        return ($return_result) ? $this->getResult() : $this;
+        return $this;
     }
 
     public function getResult() {

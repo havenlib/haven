@@ -1,0 +1,2 @@
+imports:
+    - { resource: "@EvocatioSecurityBundle/Resources/config/security.yml" }

@@ -1,0 +1,49 @@
+{%  extends "OwnerSiteBundle:Template:add_template.html.twig" %}
+{% block formhead %}
+    {{ path('EvocatioSecurityBundle_UserCreate') }}
+{% endblock formhead %}
+
+{% block form %}
+<fieldset>
+    <ul>
+        <li>
+            {{ form_label(edit_form.status)}}
+            <span class="widget">{{ form_widget(edit_form.status)}}</span>
+            {{ form_errors(edit_form.status)}}
+        </li>
+        <li>
+            {{ form_label(edit_form.username)}}
+            <span class="widget">{{ form_widget(edit_form.username)}}</span>
+            {{ form_errors(edit_form.username)}}
+        </li>
+        <li>
+            {{ form_label(edit_form.email)}}
+            <span class="widget">{{ form_widget(edit_form.email)}}</span>
+            {{ form_errors(edit_form.email)}}
+        </li>
+        <li>
+            {{ form_label(edit_form.plainPassword.password)}}
+            <span class="widget">{{ form_widget(edit_form.plainPassword.password)}}</span>
+            {{ form_errors(edit_form.plainPassword.password)}}
+        </li>
+        <li>
+            {{ form_label(edit_form.plainPassword.confirmation)}}
+            <span class="widget">{{ form_widget(edit_form.plainPassword.confirmation)}}</span>
+            {{ form_errors(edit_form.plainPassword.confirmation)}}
+        </li>
+        <li>
+            {{ form_label(edit_form.locked)}}
+            {{ form_errors(edit_form.locked)}}
+            <span class="widget">{{ form_widget(edit_form.locked)}}</span>
+        </li>
+
+    </ul>
+    {{ form_rest(edit_form) }}
+</fieldset>
+{% endblock form %}
+
+{% block back %}
+<a href="{{ path('EvocatioSecurityBundle_UserList') }}">
+    Back to the list
+</a>
+{% endblock back %}

@@ -1,0 +1,14 @@
+services:
+  persona.read_handler:
+        class:     Evocatio\Bundle\PersonaBundle\Lib\PersonaReadHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+        
+  persona.persistence_handler:
+        class:     Evocatio\Bundle\PersonaBundle\Lib\PersonaPersistenceHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+        
+  persona.form_handler:
+      class:     Evocatio\Bundle\PersonaBundle\Lib\PersonaFormHandler
+      arguments: ["@persona.read_handler", "@security.context", "@form.factory"]
+      
+      

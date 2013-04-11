@@ -20,6 +20,36 @@
             <th>Email</th>
             <td>{{ entity.getLastname() }}</td>
         </tr>
+        {% for coor in entity.getPostal() %}
+        <tr>
+            <th>address</th>
+            <td>{{ coor.getAddress() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getMap() %}
+        <tr>
+            <th>Long</th>
+            <td>{{ coor.getLng() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getWeb() %}
+        <tr>
+            <th>Web</th>
+            <td>{{ coor.getWeb() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getTelephone() %}
+        <tr>
+            <th>Telephone</th>
+            <td>{{ coor.getTelephone() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getTime() %}
+        <tr>
+            <th>Time</th>
+            <td>{{ coor.getMoment().format('d/m/Y') }}</td>
+        </tr>
+        {% endfor %}
     </tbody>
 </table>
 

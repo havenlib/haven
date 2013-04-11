@@ -1,0 +1,8 @@
+EvocatioSecurityBundle_Login:
+    resource: "@EvocatioSecurityBundle/Controller/LoginController.php"
+    type:     annotation
+
+EvocatioSecurityBundle_User:
+    resource: "@EvocatioSecurityBundle/Controller/UserController.php"
+    type:     annotation
+    prefix: /{_locale}/

@@ -2,8 +2,14 @@
 {% block theatre %}
     <dl>
         {% for entity in entities %}
-            <dt><div>{{ entity.firstname }}</div> <strong>{{ entity.lastname }}</strong> <a href="{{ path('EvocatioPersonaBundle_PersonEdit', { 'id': entity.id }) }}">edit</a> <a href="{{ path('EvocatioPersonaBundle_PersonShow', { 'id': entity.id }) }}">show</a> </dt>
-            <dd>{{ entity.sex }}</dd>
+            <div><div>{{ entity.firstname }}</div> <strong>{{ entity.lastname }}</strong> <a href="{{ path('EvocatioPersonaBundle_PersonEdit', { 'id': entity.id }) }}">edit</a> <a href="{{ path('EvocatioPersonaBundle_PersonShow', { 'id': entity.id }) }}">show</a> </div>
+            <div>sex: {{ entity.sex }}</div>
+            {% for coor in entity.getPostal() %}
+            <div>{{ coor.getAddress() }}</div>
+            {% endfor %}
+            {% for coor in entity.getMap() %}
+            <div>{{ coor.getLng() }}</div>
+            {% endfor %}
         {% else %}
             aucune entré
         {% endfor %}

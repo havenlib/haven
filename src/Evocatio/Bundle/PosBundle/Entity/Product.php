@@ -14,7 +14,6 @@ use \ReflectionClass;
  * @ORM\DiscriminatorColumn(name="plane", type="string")
  * @ORM\DiscriminatorMap({
  * "generic"="Evocatio\Bundle\PosBundle\Entity\GenericProduct", 
- * "librarymodule"="Website\Bundle\SiteBundle\Entity\LibraryModule"
  * })
  */
 class Product extends Translatable implements \Serializable {
