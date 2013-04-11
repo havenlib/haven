@@ -11,5 +11,7 @@ web/bundles/*
 # Configuration files
 app/config/parameters.ini
 app/config/parameters.yml
+app/config/parameters_dev.yml
+app/config/apache.conf
 # netbeans
-nbproject/private/
+nbproject/private/*
