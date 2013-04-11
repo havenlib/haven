@@ -23,7 +23,7 @@ if not is_granted("IS_AUTHENTICATED_REMEMBERED")
                 <span>
    {{ entity.locked }}
                     </span> 
-        <a href="{{ path('EvocatioSecurityBundle_show', { 'id': entity.id }) }}">show</a>
+        <a href="{{ path('EvocatioSecurityBundle_UserShow', { 'id': entity.id }) }}">show</a>
                 </li>
     {% else %}
                 Pas d'entité

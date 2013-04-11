@@ -15,7 +15,7 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 class Language extends Translatable {
 
     const STATUS_INACTIVE = 0;
-    const STATUS_PUBLISH = 1;
+    const STATUS_PUBLISHED = 1;
     const STATUS_DRAFT = 2;
 
     /**
@@ -97,7 +97,7 @@ class Language extends Translatable {
      * @param integer $status
      */
     public function setStatus($status) {
-        if (!in_array($status, array(self::STATUS_INACTIVE, self::STATUS_PUBLISH, self::STATUS_DRAFT))) {
+        if (!in_array($status, array(self::STATUS_INACTIVE, self::STATUS_PUBLISHED, self::STATUS_DRAFT))) {
             throw new \InvalidArgumentException("Invalid status");
         }
         $this->status = $status;

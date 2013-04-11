@@ -1,0 +1,48 @@
+{%  extends "::base.html.twig" %}
+{% block theatre %}
+<h1>Post</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.getId() }}</td>
+        </tr>
+        <tr>
+            <th>Actif</th>
+            <td>{{ entity.getStatus() }}</td>
+        </tr>
+        <tr>
+            <th>title</th>
+            <td>{{ entity.getTitle() }}</td>
+        </tr>
+        <tr>
+            <th>excerpt</th>
+            <td>{{ entity.getExcerpt() }}</td>
+        </tr>
+        <tr>
+            <th>image</th>
+            <td>{{ entity.getPath() }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('EvocatioWebBundle_PostIndex') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('EvocatioWebBundle_PostEdit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('EvocatioWebBundle_PostDelete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock theatre %}

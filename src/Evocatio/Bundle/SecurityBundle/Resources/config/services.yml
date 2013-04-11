@@ -1,0 +1,14 @@
+services:
+  user.read_handler:
+      class:     Evocatio\Bundle\SecurityBundle\Lib\UserReadHandler
+      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+      
+  user.persistence_handler:
+      class:     Evocatio\Bundle\SecurityBundle\Lib\UserPersistenceHandler
+      arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.encoder_factory"]
+
+  user.form_handler:
+      class:     Evocatio\Bundle\SecurityBundle\Lib\UserFormHandler
+      arguments: ["@user.read_handler", "@security.context", "@form.factory"]
+
+    

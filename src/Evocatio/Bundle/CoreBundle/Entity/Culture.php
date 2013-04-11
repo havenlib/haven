@@ -173,7 +173,7 @@ class Culture extends Translatable {
     public function refreshTranslations($languages) {
         $this->addTranslations($languages);
         foreach ($this->getTranslations() as $translation) {
-            $translation->setName(Locale::getDisplayRegion($this->getSymbol(), $translation->getTransLang()->getSymbol()));
+            $translation->setName(\Locale::getDisplayRegion($this->getSymbol(), $translation->getTransLang()->getSymbol()));
         }
     }
 

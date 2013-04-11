@@ -68,11 +68,11 @@
             {% block body %}
                 <header>
                     {% block header %}
-                    <a class="logo" href="{{ path('WebsiteSiteBundle_Home')}}">
+                    <a class="logo" href="{#{ path('WebsiteSiteBundle_Home')}#}">
                         <img src="/bundles/websitesite/images/evocatio_modified.png" alt="evocatio-logo" />
                     </a>
                     <div class="lang pull-right">
-                        {% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale"), "template" : "WebsiteSiteBundle:Core:i18nSwitcher.html.twig"} %}
+                        {#% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale"), "template" : "WebsiteSiteBundle:Core:i18nSwitcher.html.twig"} %#}
                     </div>
                     {% endblock header %}
                 </header>

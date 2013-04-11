@@ -19,41 +19,31 @@ use Evocatio\Bundle\CoreBundle\Form\CultureType;
 class CultureController extends ContainerAware {
 
     /**
-     * @Route("/cultures/new/{display_language}", name="EvocatioCoreBundle_new_cultures")
+     * @Route("/cultures/edit/{display_language}", name="EvocatioCoreBundle_CulturesEdit")
      * @Method("GET")
      * @Template
      */
-    public function newAction() {
-        $request = $this->container->get('Request');
-        $doctrine = $this->container->get("Doctrine");
-        $current_language = $doctrine->getRepository("EvocatioCoreBundle:Language")->findOneBy(array('symbol' => $request->get('display_language')));
-
-        $existing_cultures = array();
-        foreach ($current_language->getCultures() as $culture) {
-            $existing_cultures[] = $culture->getSymbol();
-        }
-
-        $edit_form = $this->createEditForm($current_language, $existing_cultures);
-
+    public function editAction() {
+        $current_language = $this->container->get("language.read_handler")->getBySymbol($this->container->get('Request')->get('display_language'));
+        $edit_form = $this->container->get("culture.form_handler")->createEditForm($current_language->getSymbol());
 
         return array('edit_form' => $edit_form->createView(), 'language' => $current_language);
     }
 
     /**
-     * @Route("/cultures/create", name="EvocatioCoreBundle_create_cultures")
+     * @Route("/cultures/update/{display_language}", name="EvocatioCoreBundle_CulturesUpdate")
      * @Method("POST")
-     * @Template("EvocatioCoreBundle:Culture:new.html.twig")
+     * @Template
      */
-    public function createAction() {
-        $request = $this->container->get('Request');
-        $doctrine = $this->container->get("Doctrine");
-        $current_language = $doctrine->getRepository("EvocatioCoreBundle:Language")->findOneBy(array('symbol' => $request->get('display_language')));
+    public function updateAction() {
+        $current_language = $this->container->get("language.read_handler")->getBySymbol($this->container->get('Request')->get('display_language'));
+        $edit_form = $this->container->get("culture.form_handler")->createEditForm($current_language->getSymbol());
+        $edit_form->bindRequest($this->container->get('Request'));
 
-        $edit_form = $this->createEditForm($current_language);
-        $edit_form->bindRequest($request);
-
-        if ($this->processForm($edit_form, $current_language) == true) {
-            return new RedirectResponse($this->container->get('router')->generate("EvocatioCoreBundle_new_cultures", array('display_language' => $current_language->getSymbol())));
+        if ($edit_form->isValid()) {
+            
+            $this->container->get("culture.persistence_handler")->save($edit_form->get("symboles")->getData(), $current_language->getSymbol());
+            return new RedirectResponse($this->container->get('router')->generate("EvocatioCoreBundle_CulturesEdit", array('display_language' => $current_language->getSymbol())));
         }
 
         return array('form' => $edit_form->createView());
@@ -94,7 +84,7 @@ class CultureController extends ContainerAware {
             }
             $em->persist($language);
             $this->removeCultures($selected_cultures, $language->getCultures(), $em);
-            
+
             $em->flush();
 
             return true;
@@ -111,15 +101,6 @@ class CultureController extends ContainerAware {
         }
     }
 
-    /**
-     * Creates an edit_form with all the translations objects added for status languages
-     * @param faq $faq
-     * @return Form or RedirectResponse   if validation error
-     */
-    protected function createEditForm($current_language, $existing_culture = array()) {
-        $edit_form = $this->container->get('form.factory')->create(new ChooseCultureType(), array('symboles' => $existing_culture), array('display_language' => $current_language->getSymbol()));
-        return $edit_form;
-    }
 
 }
 

@@ -1,49 +1,19 @@
-evocatio_web:
-    resource: "@EvocatioWebBundle/Controller/"
-    type:     annotation
-    prefix:   /
+OwnerSiteBundle:
+    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
+    
+#    
+#WebsiteSiteBundle_ProductAdmin:
+#    resource: "@WebsiteSiteBundle/Controller/ProductAdminController.php"
+#    type:     annotation
+#    prefix: /{_locale}/admin/product/
+#    
+#WebsiteSiteBundle_ProductView:
+#    resource: "@WebsiteSiteBundle/Controller/ProductViewController.php"
+#    type:     annotation
+#    prefix: /{_locale}/product/
+#    
 
-website_site:
-    resource: "@WebsiteSiteBundle/Controller/"
-    type:     annotation
-    prefix:   /
     
-WebsiteSiteBundle_Faq:
-    resource: "@WebsiteSiteBundle/Controller/FaqController.php"
-    type:     annotation
-    prefix: /{_locale}/
-    
-WebsiteSiteBundle_Post:
-    resource: "@WebsiteSiteBundle/Controller/PostController.php"
-    type:     annotation
-    prefix: /{_locale}/
-    
-WebsiteSiteBundle_User:
-    resource: "@WebsiteSiteBundle/Controller/UserController.php"
-    type:     annotation
-    prefix: /{_locale}/
-    
-WebsiteSiteBundle_ProductAdmin:
-    resource: "@WebsiteSiteBundle/Controller/ProductAdminController.php"
-    type:     annotation
-    prefix: /{_locale}/admin/product/
-    
-WebsiteSiteBundle_ProductView:
-    resource: "@WebsiteSiteBundle/Controller/ProductViewController.php"
-    type:     annotation
-    prefix: /{_locale}/product/
-    
-EvocatioLogin:
-    resource: "@WebsiteSiteBundle/Controller/LoginController.php"
-    type:     annotation
-    prefix: /
-    
-#login:
-#    pattern:   /login
-#    defaults:  { _controller: AcmeSecurityBundle:Security:login }
-#login_check:
-#    pattern:   /login_check
-#    defaults:  { _controller: WebsiteSiteBundle:Login:loginCheck }
 # Internal routing configuration to handle ESI
 #_internal:
 #    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"

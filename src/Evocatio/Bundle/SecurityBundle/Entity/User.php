@@ -16,7 +16,7 @@ use Evocatio\Bundle\SecurityBundle\Entity\UserMappedBase;
  * Evocatio\Bundle\SecurityBundle\Entity\User
  *
  * @ORM\Table(name="User")
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\SecurityBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\SecurityBundle\Repository\UserRepository")
  */
 class User extends UserMappedBase implements UserInterface {
 

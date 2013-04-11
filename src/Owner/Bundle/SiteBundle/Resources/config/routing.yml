@@ -1,0 +1,11 @@
+
+OwnerSiteBundle_All:
+    resource: "@OwnerSiteBundle/Controller/"
+    type:     annotation
+    prefix: /{_locale}/
+    
+OwnerSiteBundle_Login:
+    resource: "@OwnerSiteBundle/Controller/LoginController.php"
+    type:     annotation
+    prefix: /
+    
