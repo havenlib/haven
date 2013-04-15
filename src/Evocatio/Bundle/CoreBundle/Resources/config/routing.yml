@@ -11,3 +11,10 @@ EvocatioCoreBundle_Culture:
     prefix: /{_locale}/core/
     requirements: 
       _locale: fr|en
+      
+EvocatioCoreBundle_Core:
+    resource: "@EvocatioCoreBundle/Controller/CoreController.php"
+    type:     annotation
+    prefix: /{_locale}/core/
+    requirements: 
+      _locale: fr|en
