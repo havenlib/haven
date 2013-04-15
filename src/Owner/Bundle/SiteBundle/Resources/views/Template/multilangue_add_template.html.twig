@@ -1,8 +1,8 @@
-{%  extends "::admin_base.html.twig" %}
+{%  extends "::base_back.html.twig" %}
 {# Note: to make a multiple upload file in twig add [] to the full_name
                         {{ form_widget(translation.file,{'full_name': translation.file.get('full_name') ~ '[]'})}} 
 #}
-{% block content %}
+{% block middle_content %}
 <h1>Ajouter/Modifier une entite</h1>
 <div class="nav nav-tabs">
     {% for key, translation in edit_form.translations %}
@@ -13,12 +13,12 @@
 <div class="edit-form">
     <form action="{% block formhead %}{% endblock formhead %}" method="post" {{ form_enctype(edit_form) }} >
     {% block form %} {% endblock form %}
-            <div>
-                <div>
-                    <button type="submit" class="btn">Ok</button>
-                </div>
-            </div>
-        </form>
+    <div>
+        <div>
+            <button type="submit" class="btn">Ok</button>
+        </div>
+    </div>
+    </form>
     <ul>
         <li>
         {% block back %}
@@ -28,7 +28,7 @@
     {% endblock delete %}
     </ul>
 </div>
-{% endblock content %}
+{% endblock middle_content %}
 
 {% block javascripts %}
     {{ parent() }}

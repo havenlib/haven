@@ -52,7 +52,7 @@ class PostController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("post.read_handler")->getAllPublished();
+        $entities = $this->container->get("post.read_handler")->getAll();
         return array("entities" => $entities);
     }
 

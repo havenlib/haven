@@ -7,12 +7,11 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
+
 // Sensio includes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-// Evocatio includes
-use Evocatio\Bundle\WebBundle\Form\FaqType as Form;
 
 class FaqController extends ContainerAware {
 
@@ -51,7 +50,7 @@ class FaqController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("faq.read_handler")->getAllPublished();
+        $entities = $this->container->get("faq.read_handler")->getAll();
         return array("entities" => $entities);
     }
 
