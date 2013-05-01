@@ -54,36 +54,35 @@
         {% block header %}
         <header>
             {% block header_inside %}
-            <a class="logo" href="{#{ path('WebsiteSiteBundle_Home')}#}">
+           <!-- <a class="logo" href="{#{ path('WebsiteSiteBundle_Home')}#}">
                 <img src="/bundles/websitesite/images/evocatio_modified.png" alt="evocatio-logo" />
             </a>
             <div class="lang pull-right">{#% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale"), "template" : "WebsiteSiteBundle:Core:i18nSwitcher.html.twig"} %#}
-            </div>
+            </div> -->
             {% endblock header_inside %}
         </header>
         {% endblock header %}              
-            {% block main %}
-            <div id="main">
-                {% block inside_main %}
-                <div id="navigation" class="navbar">
-                    <div class="navbar-inner">
-                        {#% include "OwnerSiteBundle:Home:navigation.html.twig" %#}
-                    </div>
-                </div>
-                <div class="content">
-                    <div>{% block content %}
-                        this is the theater
-                        {% endblock content %}
-                    </div>
-                </div>
-                {% endblock inside_main %}
+        {% block main %}
+        <div id="main">
+            {% block inside_main %}
+            {% block navigation %}
+            <div id="navigation" class="navbar">
+                {% block inside_navigation %}                
+                {% endblock inside_navigation %}
             </div>
-            {% endblock main %}
+            {% endblock navigation %}
+            {% block content %}
+            <div class="content">
+                {% block inside_content %}
+                {% endblock inside_content %}
+            </div>
+            {% endblock content %}
+            {% endblock inside_main %}
+        </div>
+        {% endblock main %}
         {% block footer %}
         <footer>
         {% block footer_inside %}
-            <hr /> 
-                {% include "OwnerSiteBundle:Home:navigation.html.twig" %}
         {% endblock footer_inside %}
         </footer>
         {% endblock footer %}
