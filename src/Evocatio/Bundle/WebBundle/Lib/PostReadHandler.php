@@ -35,6 +35,10 @@ class PostReadHandler {
         return $this->em->getRepository("EvocatioWebBundle:Post")->findAllPublished();
     }
 
+    public function getLastPublished($limit = null) {
+        return $this->em->getRepository("EvocatioWebBundle:Post")->findLastPublished($limit);
+    }
+
 }
 
 ?>

@@ -33,6 +33,11 @@ class PostRepository extends StatusRepository {
         return $this->getResult();
     }
 
+    public function findLastPublished($limit = null) {
+        $this->query_builder = $this->filterByStatus(Post::STATUS_PUBLISHED)->getQueryBuilder();
+        return $this->getResult();
+    }
+
     private function filterByStatus($status) {
         if (is_null($this->query_builder))
             $this->query_builder = $this->createQueryBuilder("e");
