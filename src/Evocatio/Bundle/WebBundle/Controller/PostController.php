@@ -130,14 +130,11 @@ class PostController extends ContainerAware {
         $edit_form->bindRequest($this->container->get('Request'));
 
 
-        if ($this->processForm($edit_form) === true) {
+        if ($edit_form->isValid()) {
+            $this->container->get("post.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "update.success");
-            echo "<pre>";
 
-            print_r(($this->container->get("request")->files->all()));
-            print_r(($this->container->get("request")->request->all()));
-            echo "</pre>";
-//            return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_PostList'));
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_PostList'));
         }
         $this->container->get("session")->setFlash("error", "update.error");
 
