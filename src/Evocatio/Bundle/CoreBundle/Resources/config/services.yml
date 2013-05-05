@@ -22,3 +22,7 @@ services:
   culture.form_handler:
       class:     Evocatio\Bundle\CoreBundle\Lib\CultureFormHandler
       arguments: ["@culture.read_handler", "@language.read_handler", "@security.context", "@form.factory"]
+      
+  notifier:
+      class:     Evocatio\Bundle\CoreBundle\Lib\Notifier
+      arguments: ["@mailer", "@templating", "%notification_from%", "%notification_to%"]
