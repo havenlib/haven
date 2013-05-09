@@ -34,7 +34,7 @@
     </head>
     {% block body %}
     <body>
-        {% block body_inside %}
+        {% block inside_body %}
             
         {% if app.session.hasFlash("notice")%}
             <div class="notice"> {{ app.session.flash("notice") }}</div>
@@ -53,13 +53,13 @@
         {% endif %}
         {% block header %}
         <header>
-            {% block header_inside %}
+            {% block inside_header %}
            <!-- <a class="logo" href="{#{ path('WebsiteSiteBundle_Home')}#}">
                 <img src="/bundles/websitesite/images/evocatio_modified.png" alt="evocatio-logo" />
             </a>
             <div class="lang pull-right">{#% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale"), "template" : "WebsiteSiteBundle:Core:i18nSwitcher.html.twig"} %#}
             </div> -->
-            {% endblock header_inside %}
+            {% endblock inside_header %}
         </header>
         {% endblock header %}              
         {% block main %}
@@ -82,14 +82,14 @@
         {% endblock main %}
         {% block footer %}
         <footer>
-        {% block footer_inside %}
-        {% endblock footer_inside %}
+        {% block inside_footer %}
+        {% endblock inside_footer %}
         </footer>
         {% endblock footer %}
             
         {% block javascripts %}
         {% endblock javascripts %}
-    {% endblock body_inside %}
+    {% endblock inside_body %}
     </body>
     {% endblock body %}
 </html>

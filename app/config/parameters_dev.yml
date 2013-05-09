@@ -14,5 +14,10 @@ parameters:
     locale:            fr
     secret:            75893872b08ab6ab9c3084fb7f05d3a2
     
-    notifications.to: sc@evocatio.com
+    notification_to:
+      default: laurent.breleur@gmail.com
+      
+    notification_from:
+      default: laurent.breleur@gmail.com
+      
     password_reset_mail_from: sc@evocatio.com

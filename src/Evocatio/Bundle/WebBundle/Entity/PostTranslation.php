@@ -4,7 +4,7 @@ namespace Evocatio\Bundle\WebBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use \Evocatio\Bundle\CoreBundle\Entity\SluggableMappedBase;
+use Evocatio\Bundle\CoreBundle\Entity\SluggableMappedBase;
 
 /**
  * Evocatio\Bundle\WebBundle\Entity\PostTranslation

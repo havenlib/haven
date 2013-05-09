@@ -187,7 +187,7 @@ class Post extends Translatable {
      *
      * @param Evocatio\Bundle\WebBundle\Entity\PostTranslation $translations
      */
-    public function addPostTranslation(\Evocatio\Bundle\WebBundle\Entity\PostTranslation $translations) {
+    public function addPostTranslation(PostTranslation $translations) {
         $this->translations[] = $translations;
     }
 
@@ -243,7 +243,7 @@ class Post extends Translatable {
      * @param Evocatio\Bundle\WebBundle\Entity\PostTranslation $translations
      * @return Post
      */
-    public function addTranslation(\Evocatio\Bundle\WebBundle\Entity\PostTranslation $translations)
+    public function addTranslation(PostTranslation $translations)
     {
         $this->translations[] = $translations;
     
@@ -255,7 +255,7 @@ class Post extends Translatable {
      *
      * @param Evocatio\Bundle\WebBundle\Entity\PostTranslation $translations
      */
-    public function removeTranslation(\Evocatio\Bundle\WebBundle\Entity\PostTranslation $translations)
+    public function removeTranslation(PostTranslation $translations)
     {
         $this->translations->removeElement($translations);
     }
