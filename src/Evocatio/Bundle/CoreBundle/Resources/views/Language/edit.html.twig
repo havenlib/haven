@@ -3,7 +3,7 @@
 
 {% block title %}Info sur la translation{% endblock %}
 
-{% block content %}
+{% block inside_content %}
 {{ app.session.flash('notice')|trans }}
 <ul>
 {% for language in languages %}
@@ -15,15 +15,11 @@
 {% endfor %}
 </ul>
 &nbsp;
-{% endblock content %}
-
-{% block aside %}
-
 <form action="{{ path('EvocatioCoreBundle_LanguagesUpdate') }}" method="post" {{ form_enctype(form) }}>
 {{ form_widget(form) }}
 
 <input type="submit" value="go" />
 </form>
+{% endblock inside_content %}
 
-{% endblock aside %}
 

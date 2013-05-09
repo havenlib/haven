@@ -29,8 +29,26 @@ class PostRepository extends StatusRepository {
     }
 
     public function findAllPublished() {
-        $this->query_builder = $this->filterByStatus(Post::STATUS_PUBLISHED)->getQueryBuilder();
+        $this->filterByStatus(Post::STATUS_PUBLISHED)->getQueryBuilder();
         return $this->getResult();
+    }
+
+    public function findLastPublished($limit = null) {
+        $this->filterByStatus(Post::STATUS_PUBLISHED);
+
+        if (!is_null($limit))
+            $this->limit($limit);
+
+        return $this->getResult();
+    }
+
+    public function limit($limit) {
+        if (is_null($this->query_builder))
+            $this->query_builder = $this->createQueryBuilder("e");
+
+        $this->query_builder->setMaxResults($limit);
+
+        return $this;
     }
 
     private function filterByStatus($status) {
