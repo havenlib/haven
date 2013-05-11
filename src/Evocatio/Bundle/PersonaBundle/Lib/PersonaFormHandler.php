@@ -18,21 +18,14 @@ class PersonaFormHandler {
         $this->security_context = $security_context;
     }
 
-    public function createPersonNewForm() {
-        return $this->createNewForm(new \Evocatio\Bundle\PersonaBundle\Entity\Person(), new \Evocatio\Bundle\PersonaBundle\Form\PersonType());
-    }
-
-    public function createPersonEditForm($id, $discriminator) {
-        return $this->createEditForm($id, $discriminator, new \Evocatio\Bundle\PersonaBundle\Form\PersonType());
-    }
-
     /**
      * Creates an edit_form with all the translations objects added for status languages
      * @return Form 
      */
-    private function createEditForm($id, $discriminator, $type) {
-        $entity = $this->read_handler->get($id, $discriminator);
-        $edit_form = $this->form_factory->create($type, $entity);
+    public function createEditForm($id) {
+        $entity = $this->read_handler->get($id);
+        $type = $this->getTypeClass();
+        $edit_form = $this->form_factory->create(new $type(), $entity);
 
         return $edit_form;
     }
@@ -42,8 +35,9 @@ class PersonaFormHandler {
      * @param \Website\Bundle\SiteBundle\Entity\Entreprise $entreprise
      * @return a form for dossier, as dossierType or DossierRequerantType
      */
-    private function createNewForm($entity, $type) {
-        $new_form = $this->form_factory->create($type, $entity);
+    public function createNewForm() {
+        $type = $this->getTypeClass();
+        $new_form = $this->form_factory->create(new $type());
 
         return $new_form;
     }
@@ -59,6 +53,10 @@ class PersonaFormHandler {
                         ->add('id', 'hidden')
                         ->getForm()
         ;
+    }
+
+    protected function getTypeClass() {
+        return "Evocatio\Bundle\PersonaBundle\Form\PersonaType";
     }
 
 }

@@ -1,4 +1,21 @@
+#EvocatioPersonaBundle_Persona:
+#    resource: "@EvocatioPersonaBundle/Controller/PersonaController.php"
+#    type:     annotation
+#    prefix: /{_locale}/
+#    requirements:
+#        discriminator:  "persona"
+   
+    
 EvocatioPersonaBundle_Person:
     resource: "@EvocatioPersonaBundle/Controller/PersonController.php"
     type:     annotation
     prefix: /{_locale}/
+    requirements:
+        discriminator:  "person"
+        
+EvocatioPersonaBundle_Company:
+    resource: "@EvocatioPersonaBundle/Controller/CompanyController.php"
+    type:     annotation
+    prefix: /{_locale}/
+    requirements:
+        discriminator:  "company"

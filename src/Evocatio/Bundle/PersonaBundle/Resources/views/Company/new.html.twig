@@ -1,21 +1,22 @@
 {%  extends "EvocatioCoreBundle:Template:add_template.html.twig" %}
 {% block formhead %}
-    {{ path('EvocatioPersonaBundle_CompanyCreate') }}
+    {{ path('evocatio_persona_company_create', {"discriminator": "company"}) }}
 {% endblock formhead %}
 
 {% block form %}
 <fieldset>
     <ul>
-        <li>{{ form_label(edit_form.name)}}
+        <li>
+            {{ form_label(edit_form.name)}}
             {{ form_errors(edit_form.name)}}
-                <span>{{ form_widget(edit_form.name)}}</span>
-            </li>
-                        {{ form_rest(edit_form) }}
-                </fieldset>
+            <span>{{ form_widget(edit_form.name)}}</span>
+        </li>
+        {{ form_rest(edit_form) }}
+        </ul>
 {% endblock form %}
 
 {% block back %}
-                <a href="{{ path('EvocatioPersonaBundle_CompanyList') }}">
+                <a href="{{ path('evocatio_persona_company_list', {"discriminator": "company"}) }}">
                     Back to the list
                 </a>
 {% endblock back %}

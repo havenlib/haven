@@ -1,16 +1,15 @@
 {%  extends "::base.html.twig" %}
-{% block theatre %}
-    <dl>
+{% block inside_content %}
+    <ul>
         {% for entity in entities %}
-            <dt><div>{{ entity.name }}</div> </dt>
-            <dd></dd>
+            <li><div>{{ entity.name }}</div> </li>
         {% else %}
             &nbsp;
         {% endfor %}
-    </dl>
+    </ul>
 <ul>
 </ul>
-{% endblock theatre %}
+{% endblock inside_content %}
 
 
 
