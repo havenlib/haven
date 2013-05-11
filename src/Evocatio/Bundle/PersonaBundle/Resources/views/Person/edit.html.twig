@@ -1,12 +1,12 @@
-{%  extends "EvocatioPersonaBundle:PersonWithCoor:new.html.twig" %}
+{%  extends "EvocatioPersonaBundle:Person:new.html.twig" %}
 {% block formhead %}
-    {{ path('EvocatioPersonaBundle_PersonUpdate', { 'id': edit_form.vars.value.id }) }}
+    {{ path('evocatio_persona_person_update', { 'id': entity.id, 'discriminator': 'person' }) }}
 {% endblock formhead %}
 {% block delete %}
 <li>
-    <form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
+   {# <form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
         <button type="submit">Delete</button>
-    </form>
+    </form>#}
 </li>
 {% endblock delete %}

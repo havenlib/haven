@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% block theatre %}
+{% block inside_content %}
 <h1>Security</h1>
 
 <table class="record_properties">
@@ -55,20 +55,20 @@
 
 <ul>
     <li>
-        <a href="{{ path('EvocatioPersonaBundle_PersonIndex') }}">
+        <a href="{{ path('evocatio_persona_person_list', {'discriminator': 'person'}) }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('EvocatioPersonaBundle_PersonEdit', { 'id': entity.id }) }}">
+        <a href="{{ path('evocatio_persona_person_edit', { 'id': entity.id, 'discriminator': 'person'}) }}">
             Edit
         </a>
     </li>
     <li>
-        <form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
+        {#<form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
-        </form>
+        </form>#}
     </li>
 </ul>
-{% endblock theatre %}
+{% endblock inside_content %}

@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% block theatre %}
+{% block inside_content %}
 <h1>Security</h1>
 
 <table class="record_properties">
@@ -10,27 +10,65 @@
         </tr>
         <tr>
             <th>Actif</th>
-            <td>{{ entity.getName() }}</td>
+            <td>{{ entity.getSex() }}</td>
         </tr>
+        <tr>
+            <th>Personname</th>
+            <td>{{ entity.getFirstname() }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ entity.getLastname() }}</td>
+        </tr>
+        {% for coor in entity.getPostal() %}
+        <tr>
+            <th>address</th>
+            <td>{{ coor.getAddress() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getMap() %}
+        <tr>
+            <th>Long</th>
+            <td>{{ coor.getLng() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getWeb() %}
+        <tr>
+            <th>Web</th>
+            <td>{{ coor.getWeb() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getTelephone() %}
+        <tr>
+            <th>Telephone</th>
+            <td>{{ coor.getTelephone() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getTime() %}
+        <tr>
+            <th>Time</th>
+            <td>{{ coor.getMoment().format('d/m/Y') }}</td>
+        </tr>
+        {% endfor %}
     </tbody>
 </table>
 
 <ul>
     <li>
-        <a href="{{ path('EvocatioPersonaBundle_CompanyIndex') }}">
+        <a href="{{ path('evocatio_persona_company_list', {'discriminator': 'company'}) }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('EvocatioPersonaBundle_CompanyEdit', { 'id': entity.id }) }}">
+        <a href="{{ path('evocatio_persona_company_edit', { 'id': entity.id, 'discriminator': 'company'}) }}">
             Edit
         </a>
     </li>
     <li>
-        <form action="{{ path('EvocatioPersonaBundle_CompanyDelete', { 'id': entity.id }) }}" method="post">
+        {#<form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
-        </form>
+        </form>#}
     </li>
 </ul>
-{% endblock theatre %}
+{% endblock inside_content %}

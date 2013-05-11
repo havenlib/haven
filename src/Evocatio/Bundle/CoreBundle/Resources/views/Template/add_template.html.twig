@@ -1,5 +1,5 @@
-{%  extends "::admin_base.html.twig" %}
-{% block content %}
+{%  extends "::base.html.twig" %}
+{% block inside_content %}
 <h1>Ajouter/Modifier une entite</h1>
 
     {{ form_errors(edit_form)}}
@@ -22,7 +22,7 @@
     {% block delete %}
     {% endblock delete %}
         </ul>
-{% endblock content %}
+{% endblock inside_content %}
 
 {% block javascripts %}
     {{ parent() }}
