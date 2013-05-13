@@ -13,36 +13,6 @@ class PersonType extends AbstractType {
                 ->add('firstname')
                 ->add('lastname')
                 ->add('sex')
-                ->add('postal', "collection", array(
-                    'type' => new PostalType(),
-                    'allow_add' => true,
-                    'prototype' => true,
-                    'by_reference' => true,
-                    "attr" => array("class" => "coordinate", "data-join-class" => "coordinate")))
-                ->add('map', "collection", array(
-                    'type' => new MapType(),
-                    'allow_add' => true,
-                    'prototype' => true,
-                    'by_reference' => true,
-                    "attr" => array("class" => "coordinate", "data-join-class" => "coordinate")))
-                ->add('web', "collection", array(
-                    'type' => new WebType(),
-                    'allow_add' => true,
-                    'prototype' => true,
-                    'by_reference' => true,
-                    "attr" => array("class" => "coordinate", "data-join-class" => "coordinate")))
-                ->add('telephone', "collection", array(
-                    'type' => new TelephoneType(),
-                    'allow_add' => true,
-                    'prototype' => true,
-                    'by_reference' => true,
-                    "attr" => array("class" => "coordinate", "data-join-class" => "coordinate")))
-                ->add('time', "collection", array(
-                    'type' => new TimeType(),
-                    'allow_add' => true,
-                    'prototype' => true,
-                    'by_reference' => true,
-                    "attr" => array("class" => "coordinate", "data-join-class" => "coordinate")))
         ;
     }
 
