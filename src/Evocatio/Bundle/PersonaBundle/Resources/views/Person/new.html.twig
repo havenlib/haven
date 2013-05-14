@@ -1,6 +1,6 @@
 {%  extends "EvocatioCoreBundle:Template:add_template.html.twig" %}
 {% block formhead %}
-    {{ path('evocatio_persona_person_create', {"discriminator": "person"}) }}
+    {{ path('evocatio_persona_person_create', {"persona": ("person" | trans)}) }}
 {% endblock formhead %}
 
 {% block form %}
@@ -27,7 +27,7 @@
 {% endblock form %}
 
 {% block back %}
-    <a href="{{ path('evocatio_persona_person_list', {"discriminator": "person"}) }}">
+    <a href="{{ path('evocatio_persona_person_list', {"persona": ("person" | trans)}) }}">
         Back to the list
     </a>
 {% endblock back %}
