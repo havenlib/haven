@@ -31,7 +31,7 @@ class PersonaController extends ContainerAware {
     /**
      * Finds and all persona for admin.
      *
-     * @Route("{admin}/list/{persona}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
+     * @Route("{admin}/{list}/{persona}", requirements={"admin" = "admin"})
      * @Method("GET")
      * @Template()
      */
@@ -47,7 +47,7 @@ class PersonaController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{admin}/show/{persona}/{id}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
+     * @Route("/{admin}/{show}/{persona}/{id}", requirements={"admin" = "admin"})
      * 
      * @Method("GET")
      * @Template()
@@ -70,7 +70,7 @@ class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/new/{persona}", requirements={"admin" = "admin"})
+     * @Route("/{admin}/{new}/{persona}")
      * 
      * @Method("GET")
      * @Template
@@ -87,7 +87,7 @@ class PersonaController extends ContainerAware {
     /**
      * Creates a new persona entity.
      *
-     * @Route("/{admin}/new/{persona}", requirements={"admin" = "admin"})
+     * @Route("/{admin}/{new}/{persona}", requirements={"admin" = "admin", "new" = "new"})
      * 
      * @Method("POST")
      * @Template
@@ -122,7 +122,7 @@ class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/edit/{persona}/{id}", requirements={"admin" = "admin"})
+     * @Route("/{admin}/{edit}/{persona}/{id}", requirements={"admin" = "admin"})
      * 
      * @return RedirectResponse
      * @Method("GET")
