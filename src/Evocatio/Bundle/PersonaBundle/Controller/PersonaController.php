@@ -14,14 +14,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class PersonaController extends ContainerAware {
 
     /**
-     * @Route("/{discriminator}")
+     * @Route("/{persona}")
      * 
      * @Method("GET")
      * @Template()
      */
     public function indexAction($discriminator) {
-        $read_handler = $this->container->has($discriminator . ".read_handler") ? ($discriminator . ".read_handler") : "persona.read_handler";
-        $entities = $this->container->get($read_handler)->getAll();
+        if (!$this->container->has($discriminator . ".read_handler"))
+            throw new \Exception($discriminator . ".read_handler doesn't exist or isn't setted in service.yml");
+
+        $entities = $this->container->get($discriminator . ".read_handler")->getAll();
 
         return array("entities" => $entities);
     }
@@ -29,13 +31,15 @@ class PersonaController extends ContainerAware {
     /**
      * Finds and all persona for admin.
      *
-     * @Route("{admin}/list/{discriminator}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
+     * @Route("{admin}/list/{persona}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
      * @Method("GET")
      * @Template()
      */
     public function listAction($discriminator) {
-        $read_handler = $this->container->has($discriminator . ".read_handler") ? ($discriminator . ".read_handler") : "persona.read_handler";
-        $entities = $this->container->get($read_handler)->getAll();
+        if (!$this->container->has($discriminator . ".read_handler"))
+            throw new \Exception($discriminator . ".read_handler doesn't exist or isn't setted in service.yml");
+
+        $entities = $this->container->get($discriminator . ".read_handler")->getAll();
 
         return array("entities" => $entities);
     }
@@ -43,17 +47,21 @@ class PersonaController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{admin}/show/{discriminator}/{id}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
+     * @Route("/{admin}/show/{persona}/{id}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
      * 
      * @Method("GET")
      * @Template()
      */
     public function showAction($id, $discriminator) {
-        $read_handler = $this->container->has($discriminator . ".read_handler") ? ($discriminator . ".read_handler") : "persona.read_handler";
-        $form_handler = $this->container->has($discriminator . ".read_handler") ? ($discriminator . ".form_handler") : "persona.form_handler";
+        if (!$this->container->has($discriminator . ".read_handler"))
+            throw new \Exception($discriminator . ".read_handler doesn't exist or isn't setted in service.yml");
 
-        $entity = $this->container->get($read_handler)->get($id);
-        $delete_form = $this->container->get($form_handler)->createDeleteForm($id);
+        if (!$this->container->has($discriminator . ".form_handler"))
+            throw new \Exception($discriminator . ".form_handler doesn't exist or isn't setted in service.yml");
+
+
+        $entity = $this->container->get($discriminator . ".read_handler")->get($id);
+        $delete_form = $this->container->get($discriminator . ".form_handler")->createDeleteForm($id);
 
         return array(
             'entity' => $entity
@@ -62,14 +70,16 @@ class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/new/{discriminator}", requirements={"admin" = "admin"} , defaults={"admin" = "admin"})
+     * @Route("/{admin}/new/{persona}", requirements={"admin" = "admin"})
      * 
      * @Method("GET")
      * @Template
      */
     public function newAction($discriminator) {
-        $form_handler = $this->container->has($discriminator . ".form_handler") ? ($discriminator . ".form_handler") : "persona.form_handler";
-        $edit_form = $this->container->get($form_handler)->createNewForm();
+        if (!$this->container->has($discriminator . ".form_handler"))
+            throw new \Exception($discriminator . ".form_handler doesn't exist or isn't setted in service.yml");
+
+        $edit_form = $this->container->get($discriminator . ".form_handler")->createNewForm();
 
         return array("edit_form" => $edit_form->createView());
     }
@@ -77,20 +87,24 @@ class PersonaController extends ContainerAware {
     /**
      * Creates a new persona entity.
      *
-     * @Route("/{admin}/new/{discriminator}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
+     * @Route("/{admin}/new/{persona}", requirements={"admin" = "admin"})
      * 
      * @Method("POST")
      * @Template
      */
     public function createAction($discriminator) {
-        $form_handler = $this->container->has($discriminator . ".form_handler") ? ($discriminator . ".form_handler") : "persona.form_handler";
-        $edit_form = $this->container->get($form_handler)->createNewForm();
+        if (!$this->container->has($discriminator . ".form_handler"))
+            throw new \Exception($discriminator . ".form_handler doesn't exist or isn't setted in service.yml");
+
+        $edit_form = $this->container->get($discriminator . ".form_handler")->createNewForm();
         $edit_form->bindRequest($this->container->get('Request'));
 
 
         if ($edit_form->isValid()) {
-            $persistence_handler = $this->container->has($discriminator . ".persistence_handler") ? ($discriminator . ".persistence_handler") : "persona.persistence_handler";
-            $this->container->get($persistence_handler)->save($edit_form->getData());
+            if (!$this->container->has($discriminator . ".persistence_handler"))
+                throw new \Exception($discriminator . ".persistence_handler doesn't exist or isn't setted in service.yml");
+
+            $this->container->get($discriminator . ".persistence_handler")->save($edit_form->getData());
 
             $this->container->get("session")->setFlash("success", "create.success");
 
@@ -108,21 +122,22 @@ class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/edit/{discriminator}/{id}", 
-     * requirements={"admin" = "admin"}, 
-     * defaults={"admin" = "admin"})
+     * @Route("/{admin}/edit/{persona}/{id}", requirements={"admin" = "admin"})
      * 
      * @return RedirectResponse
      * @Method("GET")
      * @Template
      */
     public function editAction($id, $discriminator) {
-        $read_handler = $this->container->has($discriminator . ".read_handler") ? ($discriminator . ".read_handler") : "persona.read_handler";
-        $form_handler = $this->container->has($discriminator . ".read_handler") ? ($discriminator . ".form_handler") : "persona.form_handler";
+        if (!$this->container->has($discriminator . ".read_handler"))
+            throw new \Exception($discriminator . ".read_handler doesn't exist or isn't setted in service.yml");
 
-        $entity = $this->container->get($read_handler)->get($id);
-        $delete_form = $this->container->get($form_handler)->createDeleteForm($id);
-        $edit_form = $this->container->get($form_handler)->createEditForm($id);
+        if (!$this->container->has($discriminator . ".form_handler"))
+            throw new \Exception($discriminator . ".form_handler doesn't exist or isn't setted in service.yml");
+
+        $entity = $this->container->get($discriminator . ".read_handler")->get($id);
+        $delete_form = $this->container->get($discriminator . ".form_handler")->createDeleteForm($id);
+        $edit_form = $this->container->get($discriminator . ".form_handler")->createEditForm($id);
 
         return array(
             'edit_form' => $edit_form->createView()
@@ -132,27 +147,30 @@ class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/edit/{discriminator}/{id}", 
-     * requirements={"admin" = "admin"}, 
-     * defaults={"admin" = "admin"})
+     * @Route("/{admin}/edit/{persona}/{id}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
      * 
      * @return RedirectResponse
      * @Method("POST")
      * @Template
      */
     public function updateAction($id, $discriminator) {
-        $read_handler = $this->container->has($discriminator . ".read_handler") ? ($discriminator . ".read_handler") : "persona.read_handler";
-        $form_handler = $this->container->has($discriminator . ".read_handler") ? ($discriminator . ".form_handler") : "persona.form_handler";
+        if (!$this->container->has($discriminator . ".read_handler"))
+            throw new \Exception($discriminator . ".read_handler doesn't exist or isn't setted in service.yml");
 
-        $entity = $this->container->get($read_handler)->get($id);
-        $delete_form = $this->container->get($form_handler)->createDeleteForm($id);
-        $edit_form = $this->container->get($form_handler)->createEditForm($id);
+        if (!$this->container->has($discriminator . ".form_handler"))
+            throw new \Exception($discriminator . ".form_handler doesn't exist or isn't setted in service.yml");
+
+        $entity = $this->container->get($discriminator . ".read_handler")->get($id);
+        $delete_form = $this->container->get($discriminator . ".form_handler")->createDeleteForm($id);
+        $edit_form = $this->container->get($discriminator . ".form_handler")->createEditForm($id);
 
 
         $edit_form->bindRequest($this->container->get('Request'));
         if ($edit_form->isValid()) {
-            $persistence_handler = $this->container->has($discriminator . ".persistence_handler") ? ($discriminator . ".persistence_handler") : "persona.persistence_handler";
-            $this->container->get($persistence_handler)->save($edit_form->getData());
+            if (!$this->container->has($discriminator . ".persistence_handler"))
+                throw new \Exception($discriminator . ".persistence_handler doesn't exist or isn't setted in service.yml");
+
+            $this->container->get($discriminator . ".persistence_handler")->save($edit_form->getData());
 
             $this->container->get("session")->setFlash("success", "update.success");
 
