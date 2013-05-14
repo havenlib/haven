@@ -5,7 +5,7 @@ namespace Evocatio\Bundle\PersonaBundle\Lib;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
 
-class PersonaReadHandler {
+abstract class PersonaReadHandler {
 
     protected $em;
     protected $security_context;

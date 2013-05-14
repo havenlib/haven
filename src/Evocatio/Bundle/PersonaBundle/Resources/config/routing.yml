@@ -10,12 +10,14 @@ EvocatioPersonaBundle_Person:
     resource: "@EvocatioPersonaBundle/Controller/PersonController.php"
     type:     annotation
     prefix: /{_locale}/
+    defaults:  { discriminator: person, admin: admin }
     requirements:
-        discriminator:  "person"
+        persona:  "person|personne"
         
 EvocatioPersonaBundle_Company:
     resource: "@EvocatioPersonaBundle/Controller/CompanyController.php"
     type:     annotation
     prefix: /{_locale}/
+    defaults:  { discriminator: company, admin: admin }
     requirements:
-        discriminator:  "company"
+        persona:  "company|entreprise"

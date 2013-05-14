@@ -1,6 +1,6 @@
 {%  extends "EvocatioPersonaBundle:Person:new.html.twig" %}
 {% block formhead %}
-    {{ path('evocatio_persona_person_update', { 'id': entity.id, 'discriminator': 'person' }) }}
+    {{ path('evocatio_persona_person_update', { 'id': entity.id, "persona": ("person" | trans) }) }}
 {% endblock formhead %}
 {% block delete %}
 <li>

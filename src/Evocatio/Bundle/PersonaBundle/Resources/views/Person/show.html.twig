@@ -55,12 +55,12 @@
 
 <ul>
     <li>
-        <a href="{{ path('evocatio_persona_person_list', {'discriminator': 'person'}) }}">
+        <a href="{{ path('evocatio_persona_person_list', {"persona": ("person" | trans)}) }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('evocatio_persona_person_edit', { 'id': entity.id, 'discriminator': 'person'}) }}">
+        <a href="{{ path('evocatio_persona_person_edit', { 'id': entity.id, "persona": ("person" | trans)}) }}">
             Edit
         </a>
     </li>

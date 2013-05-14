@@ -2,7 +2,7 @@
 {% block inside_content %}
     <dl>
         {% for entity in entities %}
-            <div><div>{{ entity.firstname }}</div> <strong>{{ entity.lastname }}</strong> <a href="{{ path('evocatio_persona_person_edit', { 'id': entity.id, 'discriminator': 'person'}) }}">edit</a> <a href="{{ path('evocatio_persona_person_show', { 'id': entity.id, 'discriminator': 'person'}) }}">show</a> </div>
+            <div><div>{{ entity.firstname }}</div> <strong>{{ entity.lastname }}</strong> <a href="{{ path('evocatio_persona_person_edit', { 'id': entity.id, 'persona': ('person' | trans)}) }}">edit</a> <a href="{{ path('evocatio_persona_person_show', { 'id': entity.id, 'persona': ('person' | trans)}) }}">show</a> </div>
             <div>sex: {{ entity.sex }}</div>
             {% for coor in entity.getPostal() %}
             <div>{{ coor.getAddress() }}</div>
@@ -16,7 +16,7 @@
     </dl>
 <ul>
     <li>
-        <a href="{{ path('evocatio_persona_person_new', {'discriminator': 'person'}) }}">
+        <a href="{{ path('evocatio_persona_person_new', {'persona': ('person' | trans)}) }}">
             Create a new entry
         </a>
     </li>
