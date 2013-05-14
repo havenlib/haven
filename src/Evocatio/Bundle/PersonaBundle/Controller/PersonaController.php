@@ -11,10 +11,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-abstract class PersonaController extends ContainerAware {
+class PersonaController extends ContainerAware {
 
     /**
-     * @Route("/{discriminator}")
+     * @Route("/{persona}")
      * 
      * @Method("GET")
      * @Template()
@@ -31,7 +31,7 @@ abstract class PersonaController extends ContainerAware {
     /**
      * Finds and all persona for admin.
      *
-     * @Route("{admin}/list/{discriminator}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
+     * @Route("{admin}/list/{persona}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
      * @Method("GET")
      * @Template()
      */
@@ -47,7 +47,7 @@ abstract class PersonaController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{admin}/show/{discriminator}/{id}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
+     * @Route("/{admin}/show/{persona}/{id}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
      * 
      * @Method("GET")
      * @Template()
@@ -70,7 +70,7 @@ abstract class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/new/{discriminator}", requirements={"admin" = "admin"} , defaults={"admin" = "admin"})
+     * @Route("/{admin}/new/{persona}", requirements={"admin" = "admin"})
      * 
      * @Method("GET")
      * @Template
@@ -87,7 +87,7 @@ abstract class PersonaController extends ContainerAware {
     /**
      * Creates a new persona entity.
      *
-     * @Route("/{admin}/new/{discriminator}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
+     * @Route("/{admin}/new/{persona}", requirements={"admin" = "admin"})
      * 
      * @Method("POST")
      * @Template
@@ -122,7 +122,7 @@ abstract class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/edit/{discriminator}/{id}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
+     * @Route("/{admin}/edit/{persona}/{id}", requirements={"admin" = "admin"})
      * 
      * @return RedirectResponse
      * @Method("GET")
@@ -147,7 +147,7 @@ abstract class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/edit/{discriminator}/{id}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
+     * @Route("/{admin}/edit/{persona}/{id}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
      * 
      * @return RedirectResponse
      * @Method("POST")
