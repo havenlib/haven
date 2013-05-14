@@ -6,7 +6,7 @@ use Evocatio\Bundle\PersonaBundle\Lib\PersonaReadHandler;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\FormFactory;
 
-class PersonaFormHandler {
+abstract class PersonaFormHandler {
 
     protected $read_handler; // devrait être son listhandler je pense
     protected $form_factory;
