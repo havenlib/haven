@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class PersonaPersistenceHandler {
+abstract class PersonaPersistenceHandler {
 
     protected $em;
     protected $security_context;
