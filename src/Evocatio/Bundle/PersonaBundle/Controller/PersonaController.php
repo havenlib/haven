@@ -122,9 +122,7 @@ abstract class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/edit/{discriminator}/{id}", 
-     * requirements={"admin" = "admin"}, 
-     * defaults={"admin" = "admin"})
+     * @Route("/{admin}/edit/{discriminator}/{id}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
      * 
      * @return RedirectResponse
      * @Method("GET")
@@ -149,9 +147,7 @@ abstract class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/edit/{discriminator}/{id}", 
-     * requirements={"admin" = "admin"}, 
-     * defaults={"admin" = "admin"})
+     * @Route("/{admin}/edit/{discriminator}/{id}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
      * 
      * @return RedirectResponse
      * @Method("POST")
