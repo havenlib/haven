@@ -1,11 +1,48 @@
 {%  extends "::base.html.twig" %}
-{% block content %}
-<article class="record_properties">
-    <section>
-            <h4>{{ entity.getTitle()|raw }}</h4>
-            <div>{{ entity.getContent()|raw }}</div>
-            <div>{{ entity.getPath() }}</div>
+{% block inside_content %}
+<h1>Post</h1>
 
-    </section>
-</article>
-{% endblock content %}
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.getId() }}</td>
+        </tr>
+        <tr>
+            <th>Actif</th>
+            <td>{{ entity.getStatus() }}</td>
+        </tr>
+        <tr>
+            <th>title</th>
+            <td>{{ entity.getTitle() }}</td>
+        </tr>
+        <tr>
+            <th>excerpt</th>
+            <td>{{ entity.getExcerpt() }}</td>
+        </tr>
+        <tr>
+            <th>image</th>
+            <td>{{ entity.getPath() }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('evocatio_web_post_list', {'list': ('list' | trans({}, 'routes'))}) }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('evocatio_web_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">
+            Edit
+        </a>
+    </li>
+    {#<li>
+        <form action="{{ path('EvocatioWebBundle_PostDelete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>#}
+</ul>
+{% endblock inside_content %}

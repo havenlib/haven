@@ -18,7 +18,7 @@ use Evocatio\Bundle\WebBundle\Entity\PostTranslation as EntityTranslation;
 class PostController extends ContainerAware {
 
     /**
-     * @Route("/post/", name="EvocatioWebBundle_PostIndex")
+     * @Route("/post")
      * @Method("GET")
      * @Template()
      */
@@ -30,7 +30,7 @@ class PostController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/admin/post/{id}/show", name="EvocatioWebBundle_PostShow")
+     * @Route("/admin/{show}/post/{id}")
      * @Method("GET")
      * @Template()
      */
@@ -47,7 +47,7 @@ class PostController extends ContainerAware {
     /**
      * Finds and displays all posts for admin.
      *
-     * @Route("/admin/post/list", name="EvocatioWebBundle_PostList")
+     * @Route("/admin/{list}/post")
      * @Method("GET")
      * @Template()
      */
@@ -57,11 +57,11 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/post/new", name="EvocatioWebBundle_PostNew")
+     * @Route("/admin/{create}/post")
      * @Method("GET")
      * @Template
      */
-    public function newAction() {
+    public function createAction() {
         $edit_form = $this->container->get("post.form_handler")->createNewForm();
         return array("edit_form" => $edit_form->createView());
     }
@@ -69,18 +69,18 @@ class PostController extends ContainerAware {
     /**
      * Creates a new post entity.
      *
-     * @Route("/admin/post/new", name="EvocatioWebBundle_PostCreate")
+     * @Route("/admin/{create}/post")
      * @Method("POST")
      * @Template
      */
-    public function createAction() {
+    public function addAction() {
         $edit_form = $this->container->get("post.form_handler")->createNewForm();
 
         $edit_form->bindRequest($this->container->get('Request'));
 
         if ($edit_form->isValid()) {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_PostList'));
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_web_faq_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -94,7 +94,7 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/post/{id}/edit", name="EvocatioWebBundle_PostEdit")
+     * @Route("/admin/{edit}/post/{id}")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -112,7 +112,7 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/post/{id}/edit", name="EvocatioWebBundle_PostUpdate")
+     * @Route("/admin/{edit}/post/{id}")
      * @return RedirectResponse
      * @Method("POST")
      * @Template("EvocatioWebBundle:Post:edit.html.twig")
@@ -134,7 +134,7 @@ class PostController extends ContainerAware {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "update.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_PostList'));
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_web_post_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
         $this->container->get("session")->setFlash("error", "update.error");
 

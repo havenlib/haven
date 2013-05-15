@@ -16,5 +16,12 @@ EvocatioWebBundle_Post:
     resource: "@EvocatioWebBundle/Controller/PostController.php"
     type:     annotation
     prefix: /{_locale}/
-    requirements: 
+    defaults:
+      admin: admin
+    requirements:
+      admin:    "admin"
+      edit:     "edit|editer"
+      list:     "list|lister"
+      show:     "show|afficher"
+      create:   "create|creer"
       _locale: fr|en
