@@ -1,5 +1,5 @@
-_main:
-    resource: routing.yml
+OwnerSiteBundle:
+    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
     
 EvocatioCoreBundle:
     resource: "@EvocatioCoreBundle/Resources/config/routing.yml"
