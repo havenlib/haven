@@ -39,9 +39,9 @@ class CmsContent
     
     /**
      *
-     * @var type CmsPage $cms_page
+     * @var type Page $cms_page
      * 
-     * @ORM\ManyToOne(targetEntity="CmsPage", inversedBy="cms_contents")
+     * @ORM\ManyToOne(targetEntity="Page", inversedBy="cms_contents")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
      */
     protected $cms_page;
@@ -156,9 +156,9 @@ class CmsContent
     /**
      * Set cms_page
      *
-     * @param tahua\SiteBundle\Entity\CmsPage $cmsPage
+     * @param tahua\SiteBundle\Entity\Page $cmsPage
      */
-    public function setCmsPage(\tahua\SiteBundle\Entity\CmsPage $cmsPage)
+    public function setCmsPage(\tahua\SiteBundle\Entity\Page $cmsPage)
     {
         $this->cms_page = $cmsPage;
     }
@@ -196,10 +196,33 @@ class CmsContent
     /**
      * Get cms_page
      *
-     * @return tahua\SiteBundle\Entity\CmsPage 
+     * @return tahua\SiteBundle\Entity\Page 
      */
     public function getCmsPage()
     {
         return $this->cms_page;
+    }
+
+    /**
+     * Add translations
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\CmsContentTranslation $translations
+     * @return CmsContent
+     */
+    public function addTranslation(\Evocatio\Bundle\CmsBundle\Entity\CmsContentTranslation $translations)
+    {
+        $this->translations[] = $translations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove translations
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\CmsContentTranslation $translations
+     */
+    public function removeTranslation(\Evocatio\Bundle\CmsBundle\Entity\CmsContentTranslation $translations)
+    {
+        $this->translations->removeElement($translations);
     }
 }

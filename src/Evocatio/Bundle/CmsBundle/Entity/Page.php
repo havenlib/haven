@@ -3,14 +3,12 @@
 namespace Evocatio\Bundle\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 
 /**
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\CmsBundle\Repository\CmsPageRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="nom", type="string")
- * @ORM\DiscriminatorMap({"accueil" = "CmsPageAccueil", "page" = "CmsPage"})
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\CmsBundle\Repository\PageRepository")
  */
-class CmsPage {
+class Page extends Translatable {
 
     /**
      * @var integer $id
@@ -30,8 +28,14 @@ class CmsPage {
      */
     private $cms_contents;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PageTranslation", mappedBy="parent", cascade={"persist"})
+     */
+    protected $translations;
+
     public function __construct() {
         $this->cms_contents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -41,6 +45,10 @@ class CmsPage {
      */
     public function getId() {
         return $this->id;
+    }
+
+    public function getName($lang = null) {
+        return $this->getTranslated('Name', $lang);
     }
 
     /**
@@ -104,6 +112,49 @@ class CmsPage {
             $cms_content->createMissingLanguages();
             $cms_content->indexContentTranslationsByLang();
         }
+    }
+
+    /**
+     * Remove cms_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\CmsContent $cmsContents
+     */
+    public function removeCmsContent(\Evocatio\Bundle\CmsBundle\Entity\CmsContent $cmsContents) {
+        $this->cms_contents->removeElement($cmsContents);
+    }
+
+    /**
+     * Add translations
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageTranslation $translations
+     * @return Page
+     */
+    public function addTranslation(\Evocatio\Bundle\CmsBundle\Entity\PageTranslation $translations) {
+        $this->translations[] = $translations;
+
+        return $this;
+    }
+
+    protected function getTranslationClass() {
+        return "Evocatio\Bundle\CmsBundle\Entity\PageTranslation";
+    }
+
+    /**
+     * Remove translations
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageTranslation $translations
+     */
+    public function removeTranslation(\Evocatio\Bundle\CmsBundle\Entity\PageTranslation $translations) {
+        $this->translations->removeElement($translations);
+    }
+
+    /**
+     * Get translations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTranslations() {
+        return $this->translations;
     }
 
 }

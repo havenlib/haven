@@ -9,6 +9,9 @@ EvocatioSecurityBundle:
     
 EvocatioWebBundle:
     resource: "@EvocatioWebBundle/Resources/config/routing.yml"
+    
+EvocatioCmsBundle:
+    resource: "@EvocatioCmsBundle/Resources/config/routing.yml"
        
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"

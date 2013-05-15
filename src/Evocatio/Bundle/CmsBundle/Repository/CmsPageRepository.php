@@ -25,7 +25,7 @@ class CmsPageRepository extends EntityRepository
 //                      ->setParameter("page_name", $page_name)
                       ;
         $page = $query_builder->getQuery()->getOneOrNullResult();
-        $page = (!is_null($page))? $page: new CmsPage();
+        $page = (!is_null($page))? $page: new Page();
         
         return $page;
     }
