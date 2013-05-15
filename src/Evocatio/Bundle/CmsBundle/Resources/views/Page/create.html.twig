@@ -6,21 +6,20 @@
 {% block form %}
 <fieldset>
     <ul>
-                {% for key, translation in edit_form.translations %}
-            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
-                        {{ form_errors(translation.name) }}
-                        {{ form_label(translation.name) }}
-                        {{ form_widget(translation.name)}}
-                </li>
-               
-              {% endfor %}
-                <li>
-                    {{ form_row(edit_form.htmlcontents) }}
-                </li>
+        {% for key, translation in edit_form.translations %}
+        <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+            {{ form_errors(translation.name) }}
+            {{ form_label(translation.name) }}
+            {{ form_widget(translation.name)}}
+        </li>
+        {% endfor %}
+        <li>
+            {{ form_row(edit_form.htmlcontents) }}
+        </li>
         {{ form_rest(edit_form) }}
     </ul>
 </fieldset>
-<input type=button value="add html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_htmlcontenttype')" />
+<input type=button value="add html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_htmlcontents')" />
 {% endblock form %}
 
 {% block back %}
