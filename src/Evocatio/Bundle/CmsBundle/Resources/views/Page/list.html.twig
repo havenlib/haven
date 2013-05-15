@@ -1,0 +1,22 @@
+{%  extends "::base.html.twig" %}
+{% block inside_content %}
+<h2>Liste des pages</h2>
+    <dl>
+        {% for entity in entities %}
+            <div>
+                <div> {{ entity.name }}</div> 
+                <a href="{{ path('evocatio_cms_page_edit', { 'id': entity.id, 'edit': ('edit' | trans({}, 'routes'))}) }}">edit</a> 
+                <a href="{{ path('evocatio_cms_page_show', { 'id': entity.id, 'show': ('show' | trans({}, 'routes'))}) }}">show</a> 
+            </div>
+        {% else %}
+            aucune entré
+        {% endfor %}
+    </dl>
+<ul>
+    <li>
+        <a href="{{ path('evocatio_cms_page_create', {'create': ('create' | trans({}, 'routes'))}) }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{% endblock inside_content %}

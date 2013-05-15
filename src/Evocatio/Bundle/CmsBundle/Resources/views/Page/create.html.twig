@@ -1,0 +1,26 @@
+{%  extends "EvocatioCoreBundle:Template:multilangue_add_template.html.twig" %}
+{% block formhead %}
+    {{ path('evocatio_cms_page_create', {'create': ('create' | trans({}, 'routes'))}) }}
+{% endblock formhead %}
+
+{% block form %}
+<fieldset>
+    <ul>
+                {% for key, translation in edit_form.translations %}
+            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                        {{ form_errors(translation.name) }}
+                        {{ form_label(translation.name) }}
+                        {{ form_widget(translation.name)}}
+                </li>
+               
+              {% endfor %}
+        {{ form_rest(edit_form) }}
+    </ul>
+</fieldset>
+{% endblock form %}
+
+{% block back %}
+    <a href="{{ path('evocatio_cms_page_list', {'list': ('list' | trans({}, 'routes'))}) }}">
+        Back to the list
+    </a>
+{% endblock back %}
