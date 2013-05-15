@@ -7,7 +7,6 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
-
 // Sensio includes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -16,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class FaqController extends ContainerAware {
 
     /**
-     * @Route("/faq/", name="EvocatioWebBundle_FaqIndex")
+     * @Route("/faq/")
      * @Method("GET")
      * @Template()
      */
@@ -181,4 +180,5 @@ class FaqController extends ContainerAware {
 
         return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_FaqList'));
     }
+
 }

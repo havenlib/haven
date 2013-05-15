@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% block content %}
+{% block inside_content %}
     <dl>
         {% for entity in entities %}
             <dt><div>{{ entity.firstname }}</div> <strong>{{ entity.lastname }}</strong></dt>
@@ -10,7 +10,7 @@
     </dl>
 <ul>
 </ul>
-{% endblock content %}
+{% endblock inside_content %}
 
 
 
