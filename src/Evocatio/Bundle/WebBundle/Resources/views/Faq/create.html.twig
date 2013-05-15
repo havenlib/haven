@@ -1,6 +1,6 @@
 {%  extends "EvocatioCoreBundle:Template:multilangue_add_template.html.twig" %}
 {% block formhead %}
-    {{ path('EvocatioFaqBundle_FaqCreate') }}
+    {{ path('evocatio_web_faq_create', {'create': ('create' | trans({}, 'routes'))}) }}
 {% endblock formhead %}
 
 {% block form %}
@@ -38,7 +38,7 @@
 {% endblock form %}
 
 {% block back %}
-                <a href="{{ path('EvocatioWebBundle_FaqList') }}">
+                <a href="{{ path('evocatio_web_faq_list', {'list': ('list' | trans({}, 'routes'))}) }}">
                     Back to the list
                 </a>
 {% endblock back %}
