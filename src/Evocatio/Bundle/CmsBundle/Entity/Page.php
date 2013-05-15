@@ -22,11 +22,11 @@ class Page extends Translatable {
 
     /**
      *
-     * @return ArrayCollection<CmsContent> $cms_content
+     * @return ArrayCollection<CmsContent> $content
      * 
-     * @ORM\OneToMany(targetEntity="CmsContent", mappedBy="cms_page", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Content", mappedBy="page", cascade={"persist"})
      */
-    private $cms_contents;
+    private $contents;
 
     /**
      * @ORM\OneToMany(targetEntity="PageTranslation", mappedBy="parent", cascade={"persist"})
@@ -34,7 +34,7 @@ class Page extends Translatable {
     protected $translations;
 
     public function __construct() {
-        $this->cms_contents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->contents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -155,6 +155,47 @@ class Page extends Translatable {
      */
     public function getTranslations() {
         return $this->translations;
+    }
+
+    /**
+     * Get coordinate
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getHtmlContents() {
+        return $this->getContents()->filter(function ($coordinate) {
+                            return get_class($coordinate) == "Evocatio\Bundle\CmsBundle\Entity\HtmlContent";
+                        });
+    }
+
+    /**
+     * Add contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\Content $contents
+     * @return Page
+     */
+    public function addContent(\Evocatio\Bundle\CmsBundle\Entity\Content $contents) {
+        $this->contents[] = $contents;
+
+        return $this;
+    }
+
+    /**
+     * Remove contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\Content $contents
+     */
+    public function removeContent(\Evocatio\Bundle\CmsBundle\Entity\Content $contents) {
+        $this->contents->removeElement($contents);
+    }
+
+    /**
+     * Get contents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getContents() {
+        return $this->contents;
     }
 
 }
