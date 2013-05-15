@@ -3,6 +3,15 @@ OwnerSiteBundle_All:
     resource: "@OwnerSiteBundle/Controller/"
     type:     annotation
     prefix: /{_locale}/
+    defaults:
+      admin: admin
+    requirements:
+      admin:    "admin"
+      edit:     "edit|editer"
+      list:     "list|lister"
+      show:     "show|afficher"
+      create:   "create|creer"
+      _locale: fr|en
     
 OwnerSiteBundle_Login:
     resource: "@OwnerSiteBundle/Controller/LoginController.php"
