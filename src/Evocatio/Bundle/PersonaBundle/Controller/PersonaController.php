@@ -70,12 +70,12 @@ class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/{new}/{persona}")
+     * @Route("/{admin}/{create}/{persona}")
      * 
      * @Method("GET")
      * @Template
      */
-    public function newAction($discriminator) {
+    public function createAction($discriminator) {
         if (!$this->container->has($discriminator . ".form_handler"))
             throw new \Exception($discriminator . ".form_handler doesn't exist or isn't setted in service.yml");
 
@@ -87,12 +87,12 @@ class PersonaController extends ContainerAware {
     /**
      * Creates a new persona entity.
      *
-     * @Route("/{admin}/{new}/{persona}", requirements={"admin" = "admin", "new" = "new"})
+     * @Route("/{admin}/{create}/{persona}", requirements={"admin" = "admin", "new" = "new"})
      * 
      * @Method("POST")
      * @Template
      */
-    public function createAction($discriminator) {
+    public function addAction($discriminator) {
         if (!$this->container->has($discriminator . ".form_handler"))
             throw new \Exception($discriminator . ".form_handler doesn't exist or isn't setted in service.yml");
 
