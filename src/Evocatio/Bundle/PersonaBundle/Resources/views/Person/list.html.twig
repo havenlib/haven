@@ -5,8 +5,8 @@
             <div>
                 <div> {{ entity.firstname }}</div> 
                 <strong>{{ entity.lastname }}</strong> 
-                <a href="{{ path('evocatio_persona_person_edit', { 'id': entity.id, "persona": ("person" | trans({}, "routes")), "edit": ("edit" | trans({}, "routes"))}) }}">edit</a> 
-                <a href="{{ path('evocatio_persona_person_show', { 'id': entity.id, "persona": ("person" | trans({}, "routes")), "show": ("show" | trans({}, "routes"))}) }}">show</a> 
+                <a href="{{ path('evocatio_persona_person_edit', { 'id': entity.id, 'persona': ('person' | trans({}, 'routes')), 'edit': ('edit' | trans({}, 'routes'))}) }}">edit</a> 
+                <a href="{{ path('evocatio_persona_person_show', { 'id': entity.id, 'persona': ('person' | trans({}, 'routes')), 'show': ('show' | trans({}, 'routes'))}) }}">show</a> 
             </div>
             <div>sex: {{ entity.sex }}</div>
             {% for coor in entity.getPostal() %}
@@ -21,7 +21,7 @@
     </dl>
 <ul>
     <li>
-        <a href="{{ path('evocatio_persona_person_create', {"persona": ("person" | trans({}, "routes")), "new": ("new" | trans({}, "routes"))}) }}">
+        <a href="{{ path('evocatio_persona_person_create', {'persona': ('person' | trans({}, 'routes')), 'new': ('new' | trans({}, 'routes'))}) }}">
             Create a new entry
         </a>
     </li>
