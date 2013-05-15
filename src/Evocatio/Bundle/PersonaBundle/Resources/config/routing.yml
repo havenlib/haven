@@ -18,8 +18,8 @@ EvocatioPersonaBundle_Person:
         admin:    "admin"
         edit:     "edit|editer"
         list:     "list|lister"
-        show:     "show|montrer"
-        new:      "new|nouvel|nouveau"
+        show:     "show|afficher"
+        create:   "create|creer"
         
 #EvocatioPersonaBundle_Company:
 #    resource: "@EvocatioPersonaBundle/Controller/CompanyController.php"
