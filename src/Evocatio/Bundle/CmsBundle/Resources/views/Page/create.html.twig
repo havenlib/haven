@@ -14,9 +14,13 @@
                 </li>
                
               {% endfor %}
+                <li>
+                    {{ form_row(edit_form.htmlcontents) }}
+                </li>
         {{ form_rest(edit_form) }}
     </ul>
 </fieldset>
+<input type=button value="add html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_htmlcontenttype')" />
 {% endblock form %}
 
 {% block back %}
