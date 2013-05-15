@@ -1,0 +1,12 @@
+{%  extends "EvocatioCmsBundle:Page:create.html.twig" %}
+{% block formhead %}
+    {{ path('evocatio_cms_page_edit', { 'id': entity.id, 'edit': ('edit' | trans({}, 'routes'))}) }}
+{% endblock formhead %}
+{% block delete %}
+<li>
+   {# <form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <button type="submit">Delete</button>
+    </form>#}
+</li>
+{% endblock delete %}

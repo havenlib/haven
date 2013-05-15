@@ -2,6 +2,9 @@
 
 namespace Evocatio\Bundle\CmsBundle\Lib;
 
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Security\Core\SecurityContext;
+
 class PagePersistenceHandler {
 
     protected $em;
