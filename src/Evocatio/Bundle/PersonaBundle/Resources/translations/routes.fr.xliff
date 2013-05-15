@@ -20,7 +20,11 @@
             </trans-unit>
             <trans-unit id="5">
                 <source>show</source>
-                <target>montrer</target>
+                <target>afficher</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>create</source>
+                <target>creer</target>
             </trans-unit>
         </body>
     </file>

@@ -22,6 +22,10 @@
                 <source>show</source>
                 <target>show</target>
             </trans-unit>
+            <trans-unit id="6">
+                <source>create</source>
+                <target>create</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
