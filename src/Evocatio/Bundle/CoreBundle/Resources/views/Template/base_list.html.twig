@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% block theatre %}
+{% block inside_content %}
     <dl>
         {% for entity in entities %}
             <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.question }}</strong> <a href="{{ path('_edit', { 'id': entity.id }) }}">edit</a> <a href="{{ path('_show', { 'id': entity.id }) }}">show</a> </dt>
@@ -15,4 +15,4 @@
         </a>
     </li>
 </ul>
-{% endblock theatre %}
+{% endblock inside_content %}
