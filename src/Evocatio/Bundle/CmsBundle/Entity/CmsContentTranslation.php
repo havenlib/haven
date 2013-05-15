@@ -104,9 +104,9 @@ class CmsContentTranslation
     /**
      * Set cms_page
      *
-     * @param tahua\SiteBundle\Entity\CmsPage $cmsPage
+     * @param tahua\SiteBundle\Entity\Page $cmsPage
      */
-    public function setCmsPage(\tahua\SiteBundle\Entity\CmsPage $cmsPage)
+    public function setCmsPage(\tahua\SiteBundle\Entity\Page $cmsPage)
     {
         $this->cms_page = $cmsPage;
     }
@@ -114,7 +114,7 @@ class CmsContentTranslation
     /**
      * Get cms_page
      *
-     * @return tahua\SiteBundle\Entity\CmsPage 
+     * @return tahua\SiteBundle\Entity\Page 
      */
     public function getCmsPage()
     {

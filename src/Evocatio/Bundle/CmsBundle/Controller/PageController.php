@@ -2,22 +2,30 @@
 
 namespace Evocatio\Bundle\CmsBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use tahua\SiteBundle\Form\CmsPageType;
-use tahua\SiteBundle\Entity\CmsPage;
+use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Request;
-/**
- * Entities
- */
-use tahua\SiteBundle\Entity\CmsContent;
-use tahua\SiteBundle\Entity\CmsContentTranslation;
+// Sensio includes
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class CmsPageController extends Controller {
+class PageController extends ContainerAware {
+
+    /**
+     * @Route("/admin/{new}/page")
+     * @Method("GET")
+     * @Template
+     */
+    public function newAction() {
+        $edit_form = $this->container->get("page.form_handler")->createNewForm();
+        return array("edit_form" => $edit_form->createView());
+    }
 
     public function editAccueilAction() {
 
-        $em = $this->getDoctrine()->getEntityManager();
-        $page = current($em->getRepository('tahuaSiteBundle:CmsPageAccueil')->findAll());
+//        $em = $this->getDoctrine()->getEntityManager();
+//        $page = $this->container->get("cmspage.read_handler")->get($id);
+//        current($em->getRepository('tahuaSiteBundle:CmsPageAccueil')->findAll());
 
         if (is_null($page))
             $page = new \tahua\SiteBundle\Entity\CmsPageAccueil();
@@ -25,7 +33,7 @@ class CmsPageController extends Controller {
         $page->createMissingAndIndexContents();
         $form = $this->createForm(new CmsPageType(), $page);
 
-        return $this->render("tahuaSiteBundle:CmsPage:new.html.twig", array("form" => $form->createView()));
+        return $this->render("tahuaSiteBundle:Page:new.html.twig", array("form" => $form->createView()));
     }
 
     public function updateAccueilAction(Request $request) {
@@ -46,7 +54,7 @@ class CmsPageController extends Controller {
             $em->flush();
         }
 
-        return $this->render("tahuaSiteBundle:CmsPage:new.html.twig", array("form" => $form->createView()));
+        return $this->render("tahuaSiteBundle:Page:new.html.twig", array("form" => $form->createView()));
     }
 
     public function editTherapeutesAction() {
@@ -60,7 +68,7 @@ class CmsPageController extends Controller {
         $page->createMissingAndIndexContents();
         $form = $this->createForm(new CmsPageType(), $page);
 
-        return $this->render("tahuaSiteBundle:CmsPage:new.html.twig", array("form" => $form->createView()));
+        return $this->render("tahuaSiteBundle:Page:new.html.twig", array("form" => $form->createView()));
     }
 
 }
