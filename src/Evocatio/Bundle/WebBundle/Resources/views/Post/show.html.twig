@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% block theatre %}
+{% block inside_content %}
 <h1>Post</h1>
 
 <table class="record_properties">
@@ -29,20 +29,20 @@
 
 <ul>
     <li>
-        <a href="{{ path('EvocatioWebBundle_PostIndex') }}">
+        <a href="{{ path('evocatio_web_post_list', {'list': ('list' | trans({}, 'routes'))}) }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('EvocatioWebBundle_PostEdit', { 'id': entity.id }) }}">
+        <a href="{{ path('evocatio_web_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">
             Edit
         </a>
     </li>
-    <li>
+    {#<li>
         <form action="{{ path('EvocatioWebBundle_PostDelete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>
-    </li>
+    </li>#}
 </ul>
-{% endblock theatre %}
+{% endblock inside_content %}
