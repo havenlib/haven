@@ -55,12 +55,12 @@
 
 <ul>
     <li>
-        <a href="{{ path('evocatio_persona_person_list', {"persona": ("person" | trans), "list": ("list" | trans({}, "routes"))}) }}">
+        <a href="{{ path('evocatio_persona_person_list', {'persona': ('person' | trans), 'list': ('list' | trans({}, 'routes'))}) }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('evocatio_persona_person_edit', { 'id': entity.id, "persona": ("person" | trans({}, "routes")), "edit": ("edit" | trans({}, "routes"))}) }}">
+        <a href="{{ path('evocatio_persona_person_edit', { 'id': entity.id, 'persona': ('person' | trans({}, 'routes')), 'edit': ('edit' | trans({}, 'routes'))}) }}">
             Edit
         </a>
     </li>

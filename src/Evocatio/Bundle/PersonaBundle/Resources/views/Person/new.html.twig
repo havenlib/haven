@@ -1,10 +1,9 @@
 {%  extends "EvocatioCoreBundle:Template:add_template.html.twig" %}
 {% block formhead %}
-    {{ path('evocatio_persona_person_create', {"persona": ("person" | trans({}, "routes")), "new": ("new" | trans({}, "routes"))}) }}
+    {{ path('evocatio_persona_person_create', {'persona': ('person' | trans({}, 'routes')), 'new': ('new' | trans({}, 'routes'))}) }}
 {% endblock formhead %}
 
 {% block form %}
-{{ "person" | trans({}, "routes") }}
 <fieldset>
     <ul>
         <li>
@@ -28,7 +27,7 @@
 {% endblock form %}
 
 {% block back %}
-    <a href="{{ path('evocatio_persona_person_list', {"persona": ("person" | trans({}, "routes")), "list": ("list" | trans({}, "routes"))}) }}">
+    <a href="{{ path('evocatio_persona_person_list', {'persona': ('person' | trans({}, 'routes')), 'list': ('list' | trans({}, 'routes'))}) }}">
         Back to the list
     </a>
 {% endblock back %}

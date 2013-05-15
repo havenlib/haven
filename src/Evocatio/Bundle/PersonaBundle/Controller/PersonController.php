@@ -37,7 +37,7 @@ class PersonController extends PersonaController {
 
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_person_list', array("discriminator" => 'person')));
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_person_list', array("persona" => 'person', 'list', 'list')));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");

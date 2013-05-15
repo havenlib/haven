@@ -108,7 +108,8 @@ class PersonaController extends ContainerAware {
 
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_' . $discriminator . '_list', array("discriminator" => $discriminator)));
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_' . $discriminator . '_list', array('persona' => $this->container->get('translator')->trans($discriminator, array(), "routes")
+                        , 'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -122,7 +123,7 @@ class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/{edit}/{persona}/{id}", requirements={"admin" = "admin"})
+     * @Route("/{admin}/{edit}/{persona}/{id}")
      * 
      * @return RedirectResponse
      * @Method("GET")
@@ -147,7 +148,7 @@ class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/edit/{persona}/{id}", requirements={"admin" = "admin"}, defaults={"admin" = "admin"})
+     * @Route("/{admin}/{edit}/{persona}/{id}")
      * 
      * @return RedirectResponse
      * @Method("POST")
@@ -173,8 +174,8 @@ class PersonaController extends ContainerAware {
             $this->container->get($discriminator . ".persistence_handler")->save($edit_form->getData());
 
             $this->container->get("session")->setFlash("success", "update.success");
-
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_' . $discriminator . '_list', array("discriminator" => $discriminator)));
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_' . $discriminator . '_list', array('persona' => $this->container->get('translator')->trans($discriminator, array(), "routes")
+                        , 'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
 
         $this->container->get("session")->setFlash("error", "update.error");
