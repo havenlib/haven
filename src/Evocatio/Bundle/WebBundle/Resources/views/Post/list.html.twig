@@ -1,8 +1,10 @@
 {%  extends "::base.html.twig" %}
-{% block theatre %}
+{% block inside_content %}
     <dl>
         {% for entity in entities %}
-            <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.title }}</strong> <a href="{{ path('EvocatioWebBundle_PostEdit', { 'id': entity.id }) }}">edit</a> <a href="{{ path('EvocatioWebBundle_PostShow', { 'id': entity.id }) }}">show</a> </dt>
+            <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.title }}</strong> 
+            <a href="{{ path('evocatio_web_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">edit</a> 
+            <a href="{{ path('evocatio_web_post_show', {'show': ('show' | trans({}, 'routes')), 'id': entity.id}) }}">show</a> </dt>
             <dd>{{ entity.excerpt }}</dd>
         {{ entity.name }}
         {% else %}
@@ -11,9 +13,9 @@
     </dl>
 <ul>
     <li>
-        <a href="{{ path('EvocatioWebBundle_PostNew') }}">
+        <a href="{{ path('evocatio_web_post_create', {'create': ('create' | trans({}, 'routes'))}) }}">
             Create a new entry
         </a>
     </li>
 </ul>
-{% endblock theatre %}
+{% endblock inside_content %}

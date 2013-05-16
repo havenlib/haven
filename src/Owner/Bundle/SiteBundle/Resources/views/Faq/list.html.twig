@@ -1,27 +1,27 @@
-{%  extends "::base_back.html.twig" %}
-{% block middle_content %}
-<ul class="no-style-ul">
+{%  extends "::base.html.twig" %}
+{% block inside_content %}
+    <dl>
         {% for entity in entities %}
-        <li>
-            <ul class="admin-entities-lines ul-li-left-full-weight">
-                <li><a href="{{ path('EvocatioWebBundle_FaqShow', { 'id': entity.id }) }}" >Show</a></li>
-                <li><a href="{{ path('EvocatioWebBundle_FaqEdit', { 'id': entity.id }) }}" >Edit</a></li>
-                <li> _{{ entity.status }}_ </li>
-                <li><strong> {{ entity.question }} </strong></li>
-            </ul>
-        </li>
+            <dt>
+            <div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.question }}</strong> 
+            <a href="{{ path('evocatio_web_faq_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">edit</a> 
+            <a href="{{ path('evocatio_web_faq_show', {'show': ('show' | trans({}, 'routes')), 'id': entity.id}) }}">show</a> 
+            </dt>
+            <dd>{{ entity.reponse }}</dd>
         {% else %}
-        aucun
+            aucun
         {% endfor %}
-</ul>
-
+    </dl>
 <ul>
     <li>
-        <a href="{{ path('EvocatioWebBundle_FaqNew') }}">
+        <a href="{{ path('evocatio_web_faq_create', {'create': ('create' | trans({}, 'routes'))}) }}">
             Create a new entry
         </a>
     </li>
 </ul>
-{% endblock middle_content %}
+{% endblock inside_content %}
+{% block aside %}
+    {#% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %#}
+{% endblock aside %}
 
 

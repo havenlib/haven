@@ -1,8 +1,12 @@
 {%  extends "::base.html.twig" %}
-{% block theatre %}
+{% block inside_content %}
     <dl>
         {% for entity in entities %}
-            <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.question }}</strong> <a href="{{ path('EvocatioWebBundle_FaqEdit', { 'id': entity.id }) }}">edit</a> <a href="{{ path('EvocatioWebBundle_FaqShow', { 'id': entity.id }) }}">show</a> </dt>
+            <dt>
+            <div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.question }}</strong> 
+            <a href="{{ path('evocatio_web_faq_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">edit</a> 
+            <a href="{{ path('evocatio_web_faq_show', {'show': ('show' | trans({}, 'routes')), 'id': entity.id}) }}">show</a> 
+            </dt>
             <dd>{{ entity.reponse }}</dd>
         {% else %}
             aucun
@@ -10,12 +14,12 @@
     </dl>
 <ul>
     <li>
-        <a href="{{ path('EvocatioWebBundle_FaqNew') }}">
+        <a href="{{ path('evocatio_web_faq_create', {'create': ('create' | trans({}, 'routes'))}) }}">
             Create a new entry
         </a>
     </li>
 </ul>
-{% endblock theatre %}
+{% endblock inside_content %}
 {% block aside %}
     {#% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %#}
 {% endblock aside %}
