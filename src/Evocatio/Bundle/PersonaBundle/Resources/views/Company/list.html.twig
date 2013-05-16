@@ -1,15 +1,20 @@
 {%  extends "::base.html.twig" %}
+{% import "::macro/route/suffix.html.twig" as route_suffix %}
 {% block inside_content %}
     <dl>
         {% for entity in entities %}
-            <div><div>{{ entity.name }}</div> <a href="{{ path('evocatio_persona_company_edit', { 'id': entity.id, 'discriminator': 'company'}) }}">edit</a> <a href="{{ path('evocatio_persona_company_show', { 'id': entity.id, 'discriminator': 'company'}) }}">show</a> </div>
+            <div>
+                <div> {{ entity.name }}</div> 
+                <a href="{{ route_suffix.edit('evocatio_persona_company_edit', 'company', entity.id) }}">edit</a> 
+                <a href="{{ route_suffix.show('evocatio_persona_company_show', 'company', entity.id) }}">show</a> 
+            </div>
         {% else %}
             aucune entré
         {% endfor %}
     </dl>
 <ul>
     <li>
-        <a href="{{ path('evocatio_persona_company_new', {'discriminator': 'company'}) }}">
+        <a href="{{ route_suffix.create('evocatio_persona_company_create', 'company') }}">
             Create a new entry
         </a>
     </li>

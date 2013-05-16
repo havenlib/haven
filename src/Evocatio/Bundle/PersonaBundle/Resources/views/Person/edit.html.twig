@@ -1,6 +1,7 @@
-{%  extends "EvocatioPersonaBundle:Person:new.html.twig" %}
+{%  extends "EvocatioPersonaBundle:Person:create.html.twig" %}
+{% import "::macro/route/suffix.html.twig" as route_suffix %}
 {% block formhead %}
-    {{ path('evocatio_persona_person_edit', { 'id': entity.id, 'persona': ('person' | trans({}, 'routes')), 'edit': ('edit' | trans({}, 'routes'))}) }}
+    {{ route_suffix.edit('evocatio_persona_person_edit', 'person', entity.id) }}
 {% endblock formhead %}
 {% block delete %}
 <li>

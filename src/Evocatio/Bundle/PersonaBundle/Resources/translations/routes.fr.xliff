@@ -26,6 +26,10 @@
                 <source>create</source>
                 <target>creer</target>
             </trans-unit>
+            <trans-unit id="7">
+                <source>company</source>
+                <target>entreprise</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

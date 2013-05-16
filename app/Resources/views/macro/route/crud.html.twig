@@ -1,15 +1,24 @@
 {% macro create(route) %}
-    {{ path(route, {'create': ('create' | trans({}, 'routes'))})}}
+    {% import _self as crud %}
+    {{ crud.path(route, 'create') }}
 {% endmacro %}
 
 {% macro edit(route, id) %}
-    {{ path(route, {'edit': ('edit' | trans({}, 'routes')), 'id': id})}}
+    {% import _self as crud %}
+    {{ crud.path(route, 'edit', id) }}
 {% endmacro %}
 
 {% macro show(route, id) %}
-    {{ path(route, {'show': ('show' | trans({}, 'routes')), 'id': id})}}
+    {% import _self as crud %}
+    {{ crud.path(route, 'show', id) }}
 {% endmacro %}
 
 {% macro list(route, id) %}
-    {{ path(route, {'list': ('list' | trans({}, 'routes')), 'id': id})}}
+    {% import _self as crud %}
+    {{ crud.path(route, 'list', id) }}
+{% endmacro %}
+
+{% macro path(route, keyword, id = null) %}
+    {% set parameters = {(keyword): (keyword | trans({}, 'routes')), 'id': id} %}
+    {{ path(route, parameters)}}
 {% endmacro %}
