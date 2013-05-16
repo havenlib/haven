@@ -1,17 +1,32 @@
 EvocatioCoreBundle_Language:
     resource: "@EvocatioCoreBundle/Controller/LanguageController.php"
     type:     annotation
-    prefix: /{_locale}/core/
+    prefix: /{_locale}/
     requirements: 
       _locale: fr|en
       
 EvocatioCoreBundle_Culture:
     resource: "@EvocatioCoreBundle/Controller/CultureController.php"
     type:     annotation
-    prefix: /{_locale}/core/
+    prefix: /{_locale}/
     requirements: 
       _locale: fr|en
       
+      
+EvocatioCoreBundle_All:
+    resource: "@EvocatioCoreBundle/Controller/"
+    type:     annotation
+    prefix: /{_locale}/
+    defaults:
+      admin: admin
+    requirements:
+      admin:    "admin"
+      edit:     "edit|editer"
+      list:     "list|lister"
+      show:     "show|afficher"
+      create:   "create|creer"
+      _locale: fr|en
+
 EvocatioCoreBundle_Core:
     resource: "@EvocatioCoreBundle/Controller/CoreController.php"
     type:     annotation

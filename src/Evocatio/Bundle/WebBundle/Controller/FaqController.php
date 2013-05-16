@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class FaqController extends ContainerAware {
 
     /**
-     * @Route("/faq/")
+     * @Route("/faq")
      * @Method("GET")
      * @Template()
      */
@@ -27,7 +27,7 @@ class FaqController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/admin/faq/{id}/show", name="EvocatioWebBundle_FaqShow")
+     * @Route("/admin/{show}/faq/{id}")
      * @Method("GET")
      * @Template()
      */
@@ -44,7 +44,7 @@ class FaqController extends ContainerAware {
     /**
      * Finds and displays all faqs for admin.
      *
-     * @Route("/admin/faq/list", name="EvocatioWebBundle_FaqList")
+     * @Route("/admin/{list}/faq")
      * @Method("GET")
      * @Template()
      */
@@ -54,11 +54,11 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/faq/new", name="EvocatioWebBundle_FaqNew")
+     * @Route("/admin/{create}/faq")
      * @Method("GET")
      * @Template
      */
-    public function newAction() {
+    public function createAction() {
         $edit_form = $this->container->get("faq.form_handler")->createNewForm();
         return array("edit_form" => $edit_form->createView());
     }
@@ -66,11 +66,11 @@ class FaqController extends ContainerAware {
     /**
      * Creates a new faq entity.
      *
-     * @Route("/admin/faq/new", name="EvocatioWebBundle_FaqCreate")
+     * @Route("/admin/{create}/faq")
      * @Method("POST")
      * @Template
      */
-    public function createAction() {
+    public function addAction() {
         $edit_form = $this->container->get("faq.form_handler")->createNewForm();
         $edit_form->bindRequest($this->container->get('Request'));
 
@@ -79,7 +79,7 @@ class FaqController extends ContainerAware {
             $this->container->get("faq.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_FaqList'));
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_web_faq_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -93,7 +93,7 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/faq/{id}/edit", name="EvocatioWebBundle_FaqEdit")
+     * @Route("/admin/{edit}/faq/{id}")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -111,7 +111,7 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/faq/{id}/edit", name="EvocatioWebBundle_FaqUpdate")
+     * @Route("/admin/{edit}/faq/{id}")
      * @return RedirectResponse
      * @Method("POST")
      * @Template
@@ -123,11 +123,11 @@ class FaqController extends ContainerAware {
 
 
         $edit_form->bindRequest($this->container->get('Request'));
-        if (!$edit_form->isValid()) {
+        if ($edit_form->isValid()) {
             $this->container->get("faq.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_FaqList'));
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_web_faq_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
         $this->container->get("session")->setFlash("error", "update.error");
 

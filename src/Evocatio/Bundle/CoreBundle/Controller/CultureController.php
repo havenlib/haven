@@ -19,7 +19,7 @@ use Evocatio\Bundle\CoreBundle\Form\CultureType;
 class CultureController extends ContainerAware {
 
     /**
-     * @Route("/cultures/edit/{display_language}", name="EvocatioCoreBundle_CulturesEdit")
+     * @Route("/core/{edit}/culture/{display_language}")
      * @Method("GET")
      * @Template
      */
@@ -31,7 +31,7 @@ class CultureController extends ContainerAware {
     }
 
     /**
-     * @Route("/cultures/update/{display_language}", name="EvocatioCoreBundle_CulturesUpdate")
+     * @Route("/core/{update}/culture/{display_language}")
      * @Method("POST")
      * @Template
      */
@@ -43,7 +43,8 @@ class CultureController extends ContainerAware {
         if ($edit_form->isValid()) {
             
             $this->container->get("culture.persistence_handler")->save($edit_form->get("symboles")->getData(), $current_language->getSymbol());
-            return new RedirectResponse($this->container->get('router')->generate("EvocatioCoreBundle_CulturesEdit", array('display_language' => $current_language->getSymbol())));
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_core_culture_edit', array('edit' => $this->container->get('translator')->trans("edit", array(), "routes"),
+                'display_language' => $current_language->getSymbol())));
         }
 
         return array('form' => $edit_form->createView());

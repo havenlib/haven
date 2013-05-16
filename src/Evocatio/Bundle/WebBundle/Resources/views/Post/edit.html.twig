@@ -1,12 +1,12 @@
-{%  extends "EvocatioPostBundle:Post:new.html.twig" %}
+{%  extends "EvocatioWebBundle:Post:create.html.twig" %}
 {% block formhead %}
-    {{ path('EvocatioWebBundle_PostUpdate', { 'id': edit_form.vars.value.id }) }}
+    {{ path('evocatio_web_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}
 {% endblock formhead %}
 {% block delete %}
-<li>
+{#<li>
     <form action="{{ path('EvocatioWebBundle_PostDelete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
         <button type="submit">Delete</button>
     </form>
-</li>
+</li>#}
 {% endblock delete %}

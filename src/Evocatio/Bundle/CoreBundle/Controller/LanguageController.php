@@ -19,7 +19,7 @@ use Evocatio\Bundle\CoreBundle\Entity\Language;
 class LanguageController extends ContainerAware {
 
     /**
-     * @Route("/languages/edit", name="EvocatioCoreBundle_LanguagesEdit")
+     * @Route("/core/{edit}/language")
      * @Method("GET")
      * @Template
      */
@@ -27,13 +27,13 @@ class LanguageController extends ContainerAware {
         echo "<p>-->" . Locale::getDefault() . "</p>";
         echo "<p>session local-->" . $this->container->get("session")->get("_locale") . "</p>";
 
-        
+
         $edit_form = $this->container->get("language.form_handler")->createEditForm();
         return array('form' => $edit_form->createView(), "languages" => $this->container->get("language.read_handler")->getAll());
     }
 
     /**
-     * @Route("/languages/update", name="EvocatioCoreBundle_LanguagesUpdate")
+     * @Route("/core/{update}/language")
      * @Method("POST")
      * @Template
      */
@@ -43,7 +43,8 @@ class LanguageController extends ContainerAware {
 
         if ($edit_form->isValid()) {
             $this->container->get("language.persistence_handler")->save($edit_form->get("symboles")->getData());
-            return new RedirectResponse($this->container->get('router')->generate("EvocatioCoreBundle_LanguagesEdit"));
+            
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_core_language_edit', array('edit' => $this->container->get('translator')->trans("edit", array(), "routes"))));
         }
 
         return array('form' => $edit_form->createView());

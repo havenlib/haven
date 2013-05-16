@@ -1,25 +1,21 @@
-{%  extends "::base_back.html.twig" %}
-{% block middle_content %}
-<ul class="no-style-ul">
+{%  extends "::base.html.twig" %}
+{% block inside_content %}
+    <dl>
         {% for entity in entities %}
-        <li>
-            <ul class="admin-entities-lines ul-li-left-full-weight">
-                <li><a href="{{ path('EvocatioWebBundle_PostShow', { 'id': entity.id }) }}" >Show</a></li>
-                <li><a href="{{ path('EvocatioWebBundle_PostEdit', { 'id': entity.id }) }}" >Edit</a></li>
-                <li> __{{ entity.status }}__ </li>
-                <li> __>{{ entity.excerpt }}__ </li>
-                <li><strong> {{ entity.title }} </strong></li>
-            </ul>
-        </li>
+            <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.title }}</strong> 
+            <a href="{{ path('evocatio_web_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">edit</a> 
+            <a href="{{ path('evocatio_web_post_show', {'show': ('show' | trans({}, 'routes')), 'id': entity.id}) }}">show</a> </dt>
+            <dd>{{ entity.excerpt }}</dd>
+        {{ entity.name }}
         {% else %}
-        aucun
+            aucune entré
         {% endfor %}
+    </dl>
+<ul>
+    <li>
+        <a href="{{ path('evocatio_web_post_create', {'create': ('create' | trans({}, 'routes'))}) }}">
+            Create a new entry
+        </a>
+    </li>
 </ul>
-    <ul>
-        <li>
-            <a href="{{ path('EvocatioWebBundle_PostNew') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-{% endblock middle_content %}
+{% endblock inside_content %}
