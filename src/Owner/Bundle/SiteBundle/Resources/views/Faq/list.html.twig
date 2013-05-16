@@ -1,20 +1,22 @@
-{%  extends "::base.html.twig" %}
+{% extends "::base.html.twig" %}
+{% import "::macro/route/crud.html.twig" as _r_crud %}
 {% block inside_content %}
-    <dl>
-        {% for entity in entities %}
-            <dt>
-            <div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.question }}</strong> 
-            <a href="{{ path('evocatio_web_faq_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">edit</a> 
-            <a href="{{ path('evocatio_web_faq_show', {'show': ('show' | trans({}, 'routes')), 'id': entity.id}) }}">show</a> 
-            </dt>
-            <dd>{{ entity.reponse }}</dd>
-        {% else %}
-            aucun
-        {% endfor %}
-    </dl>
+<dl>
+    {% for entity in entities %}
+        <dt>
+            <div>{{ entity.status?'Published':'Inactive' }}</div> 
+            <strong>{{ entity.question }}</strong> 
+            <a href="{{ _r_crud.path('evocatio_web_faq_edit', 'edit', entity.id) }}">edit</a> 
+            <a href="{{ _r_crud.path('evocatio_web_faq_show', 'show',entity.id) }}">show</a> 
+        </dt>
+        <dd>{{ entity.reponse }}</dd>
+    {% else %}
+        aucun
+    {% endfor %}
+</dl>
 <ul>
     <li>
-        <a href="{{ path('evocatio_web_faq_create', {'create': ('create' | trans({}, 'routes'))}) }}">
+        <a href="{{ _r_crud.path('evocatio_web_faq_create', 'create') }}">
             Create a new entry
         </a>
     </li>
