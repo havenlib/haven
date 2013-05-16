@@ -1,6 +1,8 @@
 {%  extends "EvocatioCoreBundle:Template:multilangue_add_template.html.twig" %}
+{% import "::macro/route/crud.html.twig" as route_crud %}
+{% import "::macro/form/translated_row.html.twig" as form %}
 {% block formhead %}
-    {{ path('evocatio_cms_page_create', {'create': ('create' | trans({}, 'routes'))}) }}
+    {{ route_crud.create('evocatio_cms_page_create') }}
 {% endblock formhead %}
 
 {% block form %}
@@ -14,7 +16,31 @@
         </li>
         {% endfor %}
         <li>
-            {{ form_row(edit_form.htmlcontents) }}
+            {% if edit_form.htmlcontents.vars.prototype is defined %}  
+                <div>
+                    {# sets the tes#}
+                    {% if edit_form.htmlcontents is not empty %}
+                        {% set target = edit_form.htmlcontents %}
+                    {% else %}
+                        {% set target = edit_form.htmlcontents.vars.prototype %}
+                    {% endif %}
+                        {{ form_row(target.name) }}
+                        
+                     
+                    {#{ form.translated_row(target, "name") }#}
+                    {#{ form_row(target.name) }#}
+         
+                
+                --------
+                {#<ul class="nav nav-tabs">
+                {% for key, translation in form.translations.vars.prototype.trans_lang.get("choices") %}
+                <li class="{% if loop.index == 1 %} active{% endif%}" rel="{{ id ~"_translations_"~ loop.index0 }}" onclick="showFormElementClass(this);return false"><a href="#" onclick="return false" data-toggle="tab">{{ translation.label }}</a></li>
+                {% endfor %} 
+                </ul>#}
+            {% else %}
+                {#{ form_row(edit_form.htmlcontents) }#}
+            {% endif %}
+        {#% endfor %#}
         </li>
         {{ form_rest(edit_form) }}
     </ul>
@@ -23,7 +49,7 @@
 {% endblock form %}
 
 {% block back %}
-    <a href="{{ path('evocatio_cms_page_list', {'list': ('list' | trans({}, 'routes'))}) }}">
+    <a href="{{ route_crud.list('evocatio_cms_page_list') }}">
         Back to the list
     </a>
 {% endblock back %}
