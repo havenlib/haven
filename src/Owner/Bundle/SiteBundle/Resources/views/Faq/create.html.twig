@@ -1,6 +1,7 @@
-{%  extends "EvocatioCoreBundle:Template:multilangue_add_template.html.twig" %}
+{% extends "EvocatioCoreBundle:Template:multilangue_add_template.html.twig" %}
+{% import "::macro/route/crud.html.twig" as route_crud %}
 {% block formhead %}
-    {{ path('evocatio_web_faq_create', {'create': ('create' | trans({}, 'routes'))}) }}
+    {{ route_crud.create('evocatio_web_faq_create') }}
 {% endblock formhead %}
 
 {% block form %}
@@ -27,8 +28,8 @@
                                 </span>
                             </span>
                         </div>
-                        <div>
-                        {{ form_widget(translation.reponse, {'attr': {'class': 'ckeditor ckeditor-admin'} }) }}
+                        <div >
+                        {{ form_widget(translation.reponse, {'attr': {'class': 'ckeditor'} }) }}
                             </div>
                         </li>
               {% endfor %}
