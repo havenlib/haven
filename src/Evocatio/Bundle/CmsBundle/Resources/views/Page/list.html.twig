@@ -1,12 +1,13 @@
 {%  extends "::base.html.twig" %}
+{% import "::macro/route/crud.html.twig" as route_crud %}
 {% block inside_content %}
 <h2>Liste des pages</h2>
     <dl>
         {% for entity in entities %}
             <div>
                 <div> {{ entity.name }}</div> 
-                <a href="{{ path('evocatio_cms_page_edit', { 'id': entity.id, 'edit': ('edit' | trans({}, 'routes'))}) }}">edit</a> 
-                <a href="{{ path('evocatio_cms_page_show', { 'id': entity.id, 'show': ('show' | trans({}, 'routes'))}) }}">show</a> 
+                <a href="{{ route_crud.edit('evocatio_cms_page_edit', entity.id) }}">edit</a> 
+                <a href="{{ route_crud.show('evocatio_cms_page_show', entity.id) }}">show</a> 
             </div>
         {% else %}
             aucune entré
@@ -14,7 +15,7 @@
     </dl>
 <ul>
     <li>
-        <a href="{{ path('evocatio_cms_page_create', {'create': ('create' | trans({}, 'routes'))}) }}">
+        <a href="{{ route_crud.create('evocatio_cms_page_create') }}">
             Create a new entry
         </a>
     </li>
