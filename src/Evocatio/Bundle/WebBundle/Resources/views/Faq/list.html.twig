@@ -1,20 +1,21 @@
 {%  extends "::base.html.twig" %}
 {% block inside_content %}
-    <dl>
-        {% for entity in entities %}
-            <dt>
-            <div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.question }}</strong> 
-            <a href="{{ path('evocatio_web_faq_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">edit</a> 
-            <a href="{{ path('evocatio_web_faq_show', {'show': ('show' | trans({}, 'routes')), 'id': entity.id}) }}">show</a> 
-            </dt>
-            <dd>{{ entity.reponse }}</dd>
-        {% else %}
-            aucun
-        {% endfor %}
-    </dl>
+<dl>
+    {% for entity in entities %}
+        <dt>
+            <div>{{ entity.status?'Published':'Inactive' }}</div> 
+            <strong>{{ entity.question }}</strong> 
+            <a href="{% include "::route/edit.html.twig" with {'route': 'evocatio_web_faq_edit', 'id': entity.id} %}">edit</a> 
+            <a href="{% include "::route/show.html.twig" with {'route': 'evocatio_web_faq_show', 'id': entity.id} %}">show</a> 
+        </dt>
+        <dd>{{ entity.reponse }}</dd>
+    {% else %}
+        aucun
+    {% endfor %}
+</dl>
 <ul>
     <li>
-        <a href="{{ path('evocatio_web_faq_create', {'create': ('create' | trans({}, 'routes'))}) }}">
+        <a href="{% include "::route/create.html.twig" with {'route': 'evocatio_web_faq_create'} %}">
             Create a new entry
         </a>
     </li>
