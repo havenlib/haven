@@ -1,8 +1,11 @@
 {%  extends "::base.html.twig" %}
-{% block theatre %}
+{% import "::macro/route/suffix.html.twig" as route_suffix %}
+{% block inside_content %}
     <dl>
         {% for entity in entities %}
-            <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.username }}</strong> <a href="{{ path('EvocatioSecurityBundle_UserEdit', { 'id': entity.id }) }}">edit</a> <a href="{{ path('EvocatioSecurityBundle_UserShow', { 'id': entity.id }) }}">show</a> </dt>
+            <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.username }}</strong> 
+            <a href="{{ route_suffix.path('evocatio_security_user_edit', 'edit','user', entity.id) }}">edit</a> 
+            <a href="{{ route_suffix.path('evocatio_security_user_show', 'show','user', entity.id) }}">show</a> </dt>
             <dd>{{ entity.email }}</dd>
         {{ entity.locked }}
         {% else %}
@@ -11,9 +14,9 @@
     </dl>
 <ul>
     <li>
-        <a href="{{ path('EvocatioSecurityBundle_UserNew') }}">
+        <a href="{{ route_suffix.path('evocatio_security_user_create', 'create','user') }}">
             Create a new entry
         </a>
     </li>
 </ul>
-{% endblock theatre %}
+{% endblock inside_content %}

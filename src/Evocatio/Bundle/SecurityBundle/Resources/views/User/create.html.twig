@@ -1,6 +1,7 @@
 {%  extends "EvocatioCoreBundle:Template:add_template.html.twig" %}
+{% import "::macro/route/suffix.html.twig" as route_suffix %}
 {% block formhead %}
-    {{ path('EvocatioSecurityBundle_create') }}
+    {{ route_suffix.path('evocatio_security_user_create', 'create','user') }}
 {% endblock formhead %}
 
 {% block form %}
@@ -33,7 +34,7 @@
 {% endblock form %}
 
 {% block back %}
-                <a href="{{ path('EvocatioSecurityBundle_UserList') }}">
+                <a href="{{ route_suffix.path('evocatio_security_user_list', 'list','user') }}">
                     Back to the list
                 </a>
 {% endblock back %}
