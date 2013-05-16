@@ -1,6 +1,7 @@
 {%  extends "EvocatioCoreBundle:Template:multilangue_add_template.html.twig" %}
 {% block formhead %}
-    {{ path('evocatio_web_post_create', {'create': ('create' | trans({}, 'routes'))}) }}
+{% include "::route/create.html.twig" with {'route': 'evocatio_web_post_create'}  %}
+    {#{ path('evocatio_web_post_create', {'create': ('create' | trans({}, 'routes'))}) }#}
 {% endblock formhead %}
 
 {% block form %}
