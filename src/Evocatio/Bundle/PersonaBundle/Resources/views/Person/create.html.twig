@@ -1,7 +1,7 @@
 {% extends "EvocatioCoreBundle:Template:add_template.html.twig" %}
-{% import "::macro/route/suffix.html.twig" as route_suffix %}
+{% import "::macro/route/suffix.html.twig" as _route_suffix %}
 {% block formhead %}
-    {{ route_suffix.create('evocatio_persona_person_create', 'person') }}
+    {{ _route_suffix.path('evocatio_persona_person_create', 'create', 'person') }}
 {% endblock formhead %}
 
 {% block form %}
@@ -43,7 +43,7 @@
 {% endblock form %}
 
 {% block back %}
-    <a href="{{ route_suffix.list('evocatio_persona_person_list', 'person') }}">
+    <a href="{{ _route_suffix.path('evocatio_persona_person_list', 'list','person') }}">
         Back to the list
     </a>
 {% endblock back %}

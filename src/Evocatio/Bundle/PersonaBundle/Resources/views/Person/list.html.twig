@@ -1,13 +1,13 @@
 {%  extends "::base.html.twig" %}
-{% import "::macro/route/suffix.html.twig" as route_suffix %}
+{% import "::macro/route/suffix.html.twig" as _route_suffix %}
 {% block inside_content %}
     <dl>
         {% for entity in entities %}
             <div>
                 <div> {{ entity.firstname }}</div> 
                 <strong>{{ entity.lastname }}</strong> 
-                <a href="{{ route_suffix.edit('evocatio_persona_person_edit', 'person', entity.id) }}">edit</a> 
-                <a href="{{ route_suffix.show('evocatio_persona_person_show', 'person', entity.id) }}">show</a> 
+                <a href="{{ _route_suffix.path('evocatio_persona_person_edit', 'edit', 'person', entity.id) }}">edit</a> 
+                <a href="{{ _route_suffix.path('evocatio_persona_person_show', 'show', 'person', entity.id) }}">show</a> 
             </div>
             <div>sex: {{ entity.sex }}</div>
             {% for coor in entity.getPostal() %}
@@ -22,7 +22,7 @@
     </dl>
 <ul>
     <li>
-        <a href="{{ route_suffix.create('evocatio_persona_person_create', 'person') }}">
+        <a href="{{ _route_suffix.path('evocatio_persona_person_create', 'create', 'person') }}">
             Create a new entry
         </a>
     </li>
