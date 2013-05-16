@@ -1,6 +1,7 @@
-{%  extends "EvocatioCoreBundle:Template:add_template.html.twig" %}
+{% extends "EvocatioCoreBundle:Template:add_template.html.twig" %}
+{% import "::macro/route/suffix.html.twig" as route_suffix %}
 {% block formhead %}
-    {{ path('evocatio_persona_person_create', {'persona': ('person' | trans({}, 'routes')), 'create': ('create' | trans({}, 'routes'))}) }}
+    {{ route_suffix.create('evocatio_persona_person_create', 'person') }}
 {% endblock formhead %}
 
 {% block form %}
@@ -39,15 +40,10 @@
         {{ form_rest(edit_form) }}
     </ul>
 </fieldset>
-                <input type=button value="add address" onclick="javascript:addAnItem('evocatio_bundle_personabundle_persontype_postal')" />
-                <input type=button value="add map" onclick="javascript:addAnItem('evocatio_bundle_personabundle_persontype_map')" />
-                <input type=button value="add web" onclick="javascript:addAnItem('evocatio_bundle_personabundle_persontype_web')" />
-                <input type=button value="add telephone" onclick="javascript:addAnItem('evocatio_bundle_personabundle_persontype_telephone')" />
-                <input type=button value="add time" onclick="javascript:addAnItem('evocatio_bundle_personabundle_persontype_time')" />
 {% endblock form %}
 
 {% block back %}
-    <a href="{{ path('evocatio_persona_person_list', {'persona': ('person' | trans({}, 'routes')), 'list': ('list' | trans({}, 'routes'))}) }}">
+    <a href="{{ route_suffix.list('evocatio_persona_person_list', 'person') }}">
         Back to the list
     </a>
 {% endblock back %}

@@ -1,12 +1,13 @@
 {%  extends "::base.html.twig" %}
+{% import "::macro/route/suffix.html.twig" as route_suffix %}
 {% block inside_content %}
     <dl>
         {% for entity in entities %}
             <div>
                 <div> {{ entity.firstname }}</div> 
                 <strong>{{ entity.lastname }}</strong> 
-                <a href="{{ path('evocatio_persona_person_edit', { 'id': entity.id, 'persona': ('person' | trans({}, 'routes')), 'edit': ('edit' | trans({}, 'routes'))}) }}">edit</a> 
-                <a href="{{ path('evocatio_persona_person_show', { 'id': entity.id, 'persona': ('person' | trans({}, 'routes')), 'show': ('show' | trans({}, 'routes'))}) }}">show</a> 
+                <a href="{{ route_suffix.edit('evocatio_persona_person_edit', 'person', entity.id) }}">edit</a> 
+                <a href="{{ route_suffix.show('evocatio_persona_person_show', 'person', entity.id) }}">show</a> 
             </div>
             <div>sex: {{ entity.sex }}</div>
             {% for coor in entity.getPostal() %}
@@ -21,7 +22,7 @@
     </dl>
 <ul>
     <li>
-        <a href="{{ path('evocatio_persona_person_create', {'persona': ('person' | trans({}, 'routes')), 'create': ('create' | trans({}, 'routes'))}) }}">
+        <a href="{{ route_suffix.create('evocatio_persona_person_create', 'person') }}">
             Create a new entry
         </a>
     </li>

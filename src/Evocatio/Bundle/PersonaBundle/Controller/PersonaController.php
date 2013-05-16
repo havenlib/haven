@@ -14,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class PersonaController extends ContainerAware {
 
     /**
-     * @Route("/{persona}")
+     * @Route("/{suffix}")
      * 
      * @Method("GET")
      * @Template()
@@ -31,7 +31,7 @@ class PersonaController extends ContainerAware {
     /**
      * Finds and all persona for admin.
      *
-     * @Route("{admin}/{list}/{persona}", requirements={"admin" = "admin"})
+     * @Route("{admin}/{list}/{suffix}", requirements={"admin" = "admin"})
      * @Method("GET")
      * @Template()
      */
@@ -47,7 +47,7 @@ class PersonaController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{admin}/{show}/{persona}/{id}", requirements={"admin" = "admin"})
+     * @Route("/{admin}/{show}/{suffix}/{id}", requirements={"admin" = "admin"})
      * 
      * @Method("GET")
      * @Template()
@@ -70,7 +70,7 @@ class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/{create}/{persona}")
+     * @Route("/{admin}/{create}/{suffix}")
      * 
      * @Method("GET")
      * @Template
@@ -87,7 +87,7 @@ class PersonaController extends ContainerAware {
     /**
      * Creates a new persona entity.
      *
-     * @Route("/{admin}/{create}/{persona}", requirements={"admin" = "admin", "new" = "new"})
+     * @Route("/{admin}/{create}/{suffix}", requirements={"admin" = "admin", "new" = "new"})
      * 
      * @Method("POST")
      * @Template
@@ -108,7 +108,7 @@ class PersonaController extends ContainerAware {
 
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_' . $discriminator . '_list', array('persona' => $this->container->get('translator')->trans($discriminator, array(), "routes")
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_' . $discriminator . '_list', array('suffix' => $this->container->get('translator')->trans($discriminator, array(), "routes")
                         , 'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
 
@@ -123,7 +123,7 @@ class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/{edit}/{persona}/{id}")
+     * @Route("/{admin}/{edit}/{suffix}/{id}")
      * 
      * @return RedirectResponse
      * @Method("GET")
@@ -148,7 +148,7 @@ class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/{edit}/{persona}/{id}")
+     * @Route("/{admin}/{edit}/{suffix}/{id}")
      * 
      * @return RedirectResponse
      * @Method("POST")
@@ -174,7 +174,7 @@ class PersonaController extends ContainerAware {
             $this->container->get($discriminator . ".persistence_handler")->save($edit_form->getData());
 
             $this->container->get("session")->setFlash("success", "update.success");
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_' . $discriminator . '_list', array('persona' => $this->container->get('translator')->trans($discriminator, array(), "routes")
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_' . $discriminator . '_list', array('suffix' => $this->container->get('translator')->trans($discriminator, array(), "routes")
                         , 'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
 
