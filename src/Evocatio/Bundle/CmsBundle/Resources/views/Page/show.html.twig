@@ -1,4 +1,5 @@
 {%  extends "::base.html.twig" %}
+{% import "::macro/route/crud.html.twig" as _route_crud %}
 {% block inside_content %}
 <h2>Afficher la page</h2>
 
@@ -17,12 +18,12 @@
 
 <ul>
     <li>
-        <a href="{{ path('evocatio_cms_page_list', {'list': ('list' | trans({}, 'routes'))}) }}">
+        <a href="{{ _route_crud.path('evocatio_cms_page_list', 'list') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('evocatio_cms_page_edit', { 'id': entity.id, 'edit': ('edit' | trans({}, 'routes'))}) }}">
+        <a href="{{ _route_crud.path('evocatio_cms_page_edit', 'edit',entity.id) }}">
             Edit
         </a>
     </li>

@@ -1,8 +1,8 @@
 {%  extends "EvocatioCoreBundle:Template:multilangue_add_template.html.twig" %}
-{% import "::macro/route/crud.html.twig" as _r_crud %}
+{% import "::macro/route/crud.html.twig" as _route_crud %}
 {% import "::macro/form/translated_row.html.twig" as form %}
 {% block formhead %}
-    {{ _r_crud.path('evocatio_cms_page_create', 'create') }}
+    {{ _route_crud.path('evocatio_cms_page_create', 'create') }}
 {% endblock formhead %}
 
 {% block form %}
@@ -49,7 +49,7 @@
 {% endblock form %}
 
 {% block back %}
-    <a href="{{ _r_crud.path('evocatio_cms_page_list', 'list') }}">
+    <a href="{{ _route_crud.path('evocatio_cms_page_list', 'list') }}">
         Back to the list
     </a>
 {% endblock back %}

@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% import "::macro/route/suffix.html.twig" as route_suffix %}
+{% import "::macro/route/suffix.html.twig" as _route_suffix %}
 {% block inside_content %}
 <h1>Person</h1>
 
@@ -56,12 +56,12 @@
 
 <ul>
     <li>
-        <a href="{{ route_suffix.list('evocatio_persona_person_list', 'person') }}">
+        <a href="{{ _route_suffix.path('evocatio_persona_person_list', 'list','person') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ route_suffix.edit('evocatio_persona_person_edit', 'person', entity.id) }}">
+        <a href="{{ _route_suffix.path('evocatio_persona_person_edit', 'edit', 'person', entity.id) }}">
             Edit
         </a>
     </li>

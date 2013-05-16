@@ -1,6 +1,7 @@
 {%  extends "EvocatioCmsBundle:Page:create.html.twig" %}
+{% import "::macro/route/crud.html.twig" as _route_crud %}
 {% block formhead %}
-    {{ path('evocatio_cms_page_edit', { 'id': entity.id, 'edit': ('edit' | trans({}, 'routes'))}) }}
+    {{ _route_crud.path('evocatio_cms_page_edit', 'edit',entity.id) }}
 {% endblock formhead %}
 {% block delete %}
 <li>
