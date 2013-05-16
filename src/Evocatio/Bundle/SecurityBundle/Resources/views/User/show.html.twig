@@ -1,5 +1,6 @@
 {%  extends "::base.html.twig" %}
-{% block theatre %}
+{% import "::macro/route/suffix.html.twig" as route_suffix %}
+{% block inside_content %}
 <h1>Security</h1>
 
 <table class="record_properties">
@@ -29,20 +30,20 @@
 
 <ul>
     <li>
-        <a href="{{ path('EvocatioSecurityBundle_index') }}">
+        <a href="{{ route_suffix.path('evocatio_security_user_list', 'list','user') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('EvocatioSecurityBundle_UserEdit', { 'id': entity.id }) }}">
+        <a href="{{ route_suffix.path('evocatio_security_user_edit', 'edit','user', entity.id) }}">
             Edit
         </a>
     </li>
-    <li>
+    {#<li>
         <form action="{{ path('EvocatioSecurityBundle_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>
-    </li>
+    </li>#}
 </ul>
-{% endblock theatre %}
+{% endblock inside_content %}

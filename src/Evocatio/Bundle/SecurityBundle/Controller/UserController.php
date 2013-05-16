@@ -20,7 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class UserController extends ContainerAware {
 
     /**
-     * @Route("/user/", name="EvocatioSecurityBundle_UserIndex")
+     * @Route("/{suffix}")
      * @Method("GET")
      * @Template()
      */
@@ -32,7 +32,7 @@ class UserController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/user/{id}/show", name="EvocatioSecurityBundle_UserShow")
+     * @Route("/{show}/{suffix}/{id}")
      * @Method("GET")
      * @Template()
      */
@@ -49,7 +49,7 @@ class UserController extends ContainerAware {
     /**
      * Finds and displays all users for admin.
      *
-     * @Route("/admin/user/list", name="EvocatioSecurityBundle_UserList")
+     * @Route("/admin/{list}/{suffix}")
      * @Method("GET")
      * @Template()
      */
@@ -59,11 +59,11 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/user/new", name="EvocatioSecurityBundle_UserNew")
+     * @Route("/admin/{create}/{suffix}")
      * @Method("GET")
      * @Template
      */
-    public function newAction() {
+    public function createAction() {
         $edit_form = $this->container->get("user.form_handler")->createNewForm();
         return array("edit_form" => $edit_form->createView());
     }
@@ -71,11 +71,11 @@ class UserController extends ContainerAware {
     /**
      * Creates a new user entity.
      *
-     * @Route("/admin/user/new", name="EvocatioSecurityBundle_UserCreate")
+     * @Route("/admin/{create}/{suffix}")
      * @Method("POST")
      * @Template
      */
-    public function createAction() {
+    public function addAction() {
         $edit_form = $this->container->get("user.form_handler")->createNewForm();
         $edit_form->bindRequest($this->container->get('Request'));
 
@@ -84,7 +84,7 @@ class UserController extends ContainerAware {
             $this->container->get("user.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioSecurityBundle_UserList'));
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_security_user_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -98,7 +98,7 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/user/{id}/edit", name="EvocatioSecurityBundle_UserEdit")
+     * @Route("/admin/{edit}/{suffix}/{id}")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -116,7 +116,7 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/user/{id}/edit", name="EvocatioSecurityBundle_UserUpdate")
+     * @Route("/admin/{edit}/{suffix}/{id}")
      * @return RedirectResponse
      * @Method("POST")
      * @Template
@@ -128,11 +128,11 @@ class UserController extends ContainerAware {
 
 
         $edit_form->bindRequest($this->container->get('Request'));
-        if (!$edit_form->isValid()) {
+        if ($edit_form->isValid()) {
             $this->container->get("user.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioSecurityBundle_FaqList'));
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_security_user_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
         $this->container->get("session")->setFlash("error", "update.error");
 
