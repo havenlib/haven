@@ -23,11 +23,13 @@ class LanguageRepository extends EntityRepository {
 
     public function findAll() {
         $this->query_builder = $this->createQueryBuilder("e");
+        
         return $this->getResult();
     }
 
     public function findAllPublished() {
         $this->query_builder = $this->filterByStatus(Language::STATUS_PUBLISHED)->getQueryBuilder();
+        
         return $this->getResult();
     }
 
@@ -39,7 +41,7 @@ class LanguageRepository extends EntityRepository {
         return $this->getResult();
     }
 
-    private function filterByStatus($status) {
+    public function filterByStatus($status) {
         if (is_null($this->query_builder))
             $this->query_builder = $this->createQueryBuilder("e");
 
@@ -49,7 +51,7 @@ class LanguageRepository extends EntityRepository {
         return $this;
     }
 
-    private function orderByRank($order = 'ASC') {
+    public function orderByRank($order = 'ASC') {
         if (is_null($this->query_builder))
             $this->query_builder = $this->createQueryBuilder("e");
 
