@@ -65,10 +65,12 @@ function showFormElementClass(tab) {
 }
 
 function showFormElement(tab) {
-    $("#" + $(tab).attr("rel")).siblings("div").hide();
-    $(tab).siblings("li").removeClass("active");
+//    $("#" + $(tab).attr("rel")).siblings().hide();
+//    $(tab).siblings("li").removeClass("active");
+    $(".trans").hide();
+    $("." + $(tab).attr("rel")).show();
     $("#" + $(tab).attr("rel")).show();
-    $(tab).addClass("active");
+//    $(tab).addClass("active");
 }
 
 function ajaxLogin(form, data) {
