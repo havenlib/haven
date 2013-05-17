@@ -1,8 +1,10 @@
-{%  extends "::base.html.twig" %}
-{% block content %}
+{% extends "OwnerSiteBundle::base_admin.html.twig" %}
+{% block inside_content %}
     <dl>
         {% for entity in entities %}
-            <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.username }}</strong> <a href="{{ path('EvocatioSecurityBundle_UserEdit', { 'id': entity.id }) }}">edit</a> <a href="{{ path('EvocatioSecurityBundle_UserShow', { 'id': entity.id }) }}">show</a> </dt>
+            <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.username }}</strong> 
+            <a href="{{ _route_suffix.path('owner_site_user_edit', 'edit','user', entity.id) }}">edit</a> 
+            <a href="{{ _route_suffix.path('owner_site_user_show', 'show','user', entity.id) }}">show</a> </dt>
             <dd>{{ entity.email }}</dd>
         {{ entity.locked }}
         {% else %}
@@ -11,9 +13,9 @@
     </dl>
 <ul>
     <li>
-        <a href="{{ path('EvocatioSecurityBundle_UserNew') }}">
+        <a href="{{ _route_suffix.path('owner_site_user_create', 'create','user') }}">
             Create a new entry
         </a>
     </li>
 </ul>
-{% endblock content %}
+{% endblock inside_content %}

@@ -1,9 +1,8 @@
 {% extends "::base.html.twig" %}
 
-
 {% block title %}Info sur l'authorisation{% endblock %}
 
-{% block content %}
+{% block inside_content %}
 &nbsp;
 {%
 if not is_granted("IS_AUTHENTICATED_REMEMBERED")
@@ -23,7 +22,7 @@ if not is_granted("IS_AUTHENTICATED_REMEMBERED")
                 <span>
    {{ entity.locked }}
                     </span> 
-        <a href="{{ path('EvocatioSecurityBundle_UserShow', { 'id': entity.id }) }}">show</a>
+        <a href="{{ _route_crud.path('owner_site_user_show', 'show', entity.id) }}">show</a>
                 </li>
     {% else %}
                 Pas d'entité
@@ -121,5 +120,5 @@ Of course, this feature needs to be made available to a small group of users. By
 <a href="http://api.symfony.com/2.0/Symfony/Bundle/FrameworkBundle/Templating/GlobalVariables.html#getUser()">Access User info in twig</a>
 </li>
 </ul>
-{% endblock content %}
+{% endblock inside_content %}
 

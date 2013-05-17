@@ -1,5 +1,5 @@
-{%  extends "::base.html.twig" %}
-{% block content %}
+{% extends "OwnerSiteBundle::base_admin.html.twig" %}
+{% block inside_content %}
 <h1>Security</h1>
 
 <table class="record_properties">
@@ -29,20 +29,20 @@
 
 <ul>
     <li>
-        <a href="{{ path('EvocatioSecurityBundle_UserIndex') }}">
+        <a href="{{ _route_suffix.path('owner_site_user_list', 'list','user') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('EvocatioSecurityBundle_UserEdit', { 'id': entity.id }) }}">
+        <a href="{{ _route_suffix.path('owner_site_user_edit', 'edit','user', entity.id) }}">
             Edit
         </a>
     </li>
-    <li>
+    {#<li>
         <form action="{{ path('EvocatioSecurityBundle_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>
-    </li>
+    </li>#}
 </ul>
-{% endblock content %}
+{% endblock inside_content %}

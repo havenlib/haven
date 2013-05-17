@@ -1,8 +1,8 @@
-{%  extends "::base_back.html.twig" %}
+{%  extends "OwnerSiteBundle::base_admin.html.twig" %}
 {# Note: to make a multiple upload file in twig add [] to the full_name
                         {{ form_widget(translation.file,{'full_name': translation.file.get('full_name') ~ '[]'})}} 
 #}
-{% block middle_content %}
+{% block inside_content %}
 <h1>Ajouter/Modifier une entite</h1>
 <div class="nav nav-tabs">
     {% for key, translation in edit_form.translations %}
@@ -19,16 +19,16 @@
         </div>
     </div>
     </form>
+        {% block back %}
     <ul>
         <li>
-        {% block back %}
-        {% endblock back %}
         </li>
     {% block delete %}
     {% endblock delete %}
     </ul>
+        {% endblock back %}
 </div>
-{% endblock middle_content %}
+{% endblock inside_content %}
 
 {% block javascripts %}
     {{ parent() }}
