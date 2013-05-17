@@ -10,7 +10,13 @@ class PageType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('translations', 'collection', array('type' => new PageTranslationType()))
+                ->add('translations', 'collection', array(
+                    'type' => new PageTranslationType()
+                    , 'allow_add' => true
+                    , 'prototype' => true
+                    , 'prototype_name' => '__name_trans__'
+                    , 'by_reference' => false
+                    ))
                 ->add('htmlcontents', "collection", array(
                     'type' => new HtmlContentType()
                     , 'allow_add' => true

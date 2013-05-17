@@ -2,46 +2,11 @@
 {% block formhead %}
     {{ _route_crud.path('owner_site_page_create', 'create') }}
 {% endblock formhead %}
-
+{#% form_theme edit_form "OwnerSiteBundle:Form:page_form.html.twig" %#}
+{% form_theme edit_form.translations "::Form/translations.html.twig" %}
 {% block form %}
 <fieldset>
-    <ul>
-        {% for key, translation in edit_form.translations %}
-        <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
-            {{ form_errors(translation.name) }}
-            {{ form_label(translation.name) }}
-            {{ form_widget(translation.name)}}
-        </li>
-        {% endfor %}
-        <li>
-            {% if edit_form.htmlcontents.vars.prototype is defined %} 
-                <div>
-                    {# sets the tes#}
-                    {% if edit_form.htmlcontents is not empty %}
-                        {% set target = edit_form.htmlcontents %}
-                    {% else %}
-                        {% set target = edit_form.htmlcontents.vars.prototype %}
-                    {% endif %}
-                        {{ form_row(target.name) }}
-                        
-                     
-                    {#{ form.translated_row(target, "name") }#}
-                    {#{ form_row(target.name) }#}
-         
-                
-                --------
-                {#<ul class="nav nav-tabs">
-                {% for key, translation in form.translations.vars.prototype.trans_lang.get("choices") %}
-                <li class="{% if loop.index == 1 %} active{% endif%}" rel="{{ id ~"_translations_"~ loop.index0 }}" onclick="showFormElementClass(this);return false"><a href="#" onclick="return false" data-toggle="tab">{{ translation.label }}</a></li>
-                {% endfor %} 
-                </ul>#}
-            {% else %}
-                {#{ form_row(edit_form.htmlcontents) }#}
-            {% endif %}
-        {#% endfor %#}
-        </li>
         {{ form_rest(edit_form) }}
-    </ul>
 </fieldset>
 <input type=button value="add html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_htmlcontents')" />
 {% endblock form %}
@@ -51,3 +16,12 @@
         Back to the list
     </a>
 {% endblock back %}
+
+{% block stylesheets %}
+{{ parent() }}
+            {% if app.environment != 'prod' %}
+                <!-- link href="{{ asset("less/formulator.less") }}" rel="stylesheet/less" type="text/css" / -->
+            {% else %}
+                <link rel="stylesheet" type="text/css" href="/css/base.css" />
+            {% endif %}
+{% endblock stylesheets %}

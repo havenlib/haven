@@ -1,0 +1,42 @@
+{% block collection_widget %}
+{% spaceless %}
+    <ul class="nav nav-tabs">
+        {{ block("nav_lang") }}
+    </ul>
+        <div class="inside">
+        {% if form is not empty %}    
+            {{ block('form_widget') }}
+        {% elseif prototype is defined %}  
+            {% set protoform = form_row(prototype, {"attr":{"class":"trans hidden"}}) %}
+            {% for key, translation in prototype.trans_lang.get("choices") %}
+                {# here create one for each language , adding remove  hidden from the first line, the reason is it had to be done with javascript, making it a little complicated to keep the same js for all translations 
+                note that the hidden has an extra space to make sur no to remove other hiddens #}
+                {{ protoform | replace({"__name_trans__": loop.index0, "hidden " : loop.index0!=0?" hidden":""})|raw }}
+            {% endfor %} 
+        {% endif %}
+        </div>
+{% endspaceless %}
+{% endblock collection_widget %}
+
+{% block form_widget %}
+{% spaceless %}
+    {% if compound %}
+    {# set class to hidden if name not 0, so basically hide all but first for translation list #}
+        {% if 0 != name %}
+            {% set attr = attr|merge({'class' : 'hidden'}) %}
+        {% endif %}
+        {{ block('form_widget_compound') }}
+    {% else %}
+        {{ block('form_widget_simple') }}
+    {% endif %}
+{% endspaceless %}
+{% endblock form_widget %}
+
+{% block nav_lang %}
+        {% if prototype is defined %}  
+        {% for key, translation in prototype.trans_lang.get("choices") %}
+    <li class="{% if loop.index == 1 %} active{% endif%}" rel="{{ id ~"_"~ loop.index0 }}" onclick="showFormElement(this);return false"><a href="#" onclick="return false" data-toggle="tab">{{ translation.label }}</a></li>
+        {% endfor %} 
+            {% else %}
+        {% endif %}
+{% endblock nav_lang %}
