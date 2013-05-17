@@ -127,9 +127,6 @@ class Culture extends Translatable {
         return $this->translations;
     }
 
-    protected function getTranslationClass() {
-        return "Evocatio\Bundle\CoreBundle\Entity\CultureTranslation";
-    }
 
     /**
      * Set language
