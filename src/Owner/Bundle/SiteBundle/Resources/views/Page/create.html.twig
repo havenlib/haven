@@ -6,7 +6,15 @@
 {% form_theme edit_form.translations "::Form/translations.html.twig" %}
 {% block form %}
 <fieldset>
+    {{ _form.translated_row(edit_form, 'name') }}
+        {#{ form_widget(edit_form.htmlcontents.vars().prototype.name) }#}
+    {{ _form.translated_row(edit_form.htmlcontents.vars().prototype, 'html') }}
+        {#{ dump(edit_form.htmlcontents.vars().prototype.name) }#}
+        {#{ collection_widget(edit_form.htmlcontents.vars())}#}
+    {#{ _form.translated_row(edit_form.htmlcontents.vars().prototype.translations.vars().prototype, 'html') }#}
         {{ form_rest(edit_form) }}
+        <div class="hidden">
+        </div>
 </fieldset>
 <input type=button value="add html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_htmlcontents')" />
 {% endblock form %}
