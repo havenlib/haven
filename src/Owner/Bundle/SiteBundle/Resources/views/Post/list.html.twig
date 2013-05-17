@@ -1,10 +1,10 @@
-{%  extends "::base.html.twig" %}
+{%  extends "OwnerSiteBundle::base_admin.html.twig" %}
 {% block inside_content %}
     <dl>
         {% for entity in entities %}
             <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.title }}</strong> 
-            <a href="{{ path('evocatio_web_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">edit</a> 
-            <a href="{{ path('evocatio_web_post_show', {'show': ('show' | trans({}, 'routes')), 'id': entity.id}) }}">show</a> </dt>
+            <a href="{{ path('owner_site_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">edit</a> 
+            <a href="{{ path('owner_site_post_show', {'show': ('show' | trans({}, 'routes')), 'id': entity.id}) }}">show</a> </dt>
             <dd>{{ entity.excerpt }}</dd>
         {{ entity.name }}
         {% else %}
@@ -13,7 +13,7 @@
     </dl>
 <ul>
     <li>
-        <a href="{{ path('evocatio_web_post_create', {'create': ('create' | trans({}, 'routes'))}) }}">
+        <a href="{{ path('owner_site_post_create', {'create': ('create' | trans({}, 'routes'))}) }}">
             Create a new entry
         </a>
     </li>

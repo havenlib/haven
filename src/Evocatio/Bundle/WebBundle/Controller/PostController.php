@@ -80,7 +80,7 @@ class PostController extends ContainerAware {
 
         if ($edit_form->isValid()) {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_web_faq_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+            return $this->redirectListAction();
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -134,7 +134,7 @@ class PostController extends ContainerAware {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "update.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_web_post_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+            return $this->redirectListAction();
         }
         $this->container->get("session")->setFlash("error", "update.error");
 
@@ -203,9 +203,9 @@ class PostController extends ContainerAware {
         }
 
         $delete_form = $this->container->get("post.form_handler")->createDeleteForm($entity->getId());
-        
+
         $template = str_replace(":showFromSlug.html.twig", ":show.html.twig", $this->container->get("request")->get('_template'));
-        
+
         $params = array(
             "entity" => $entity,
             'delete_form' => $delete_form->createView()
@@ -220,6 +220,10 @@ class PostController extends ContainerAware {
 
 
         return new Response($this->container->get('templating')->render($template ? $template : 'EvocatioWebBundle:Post:list_widget.html.twig', array('entities' => $entities)));
+    }
+
+    protected function redirectListAction() {
+        return new RedirectResponse($this->container->get('router')->generate('evocatio_web_post_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }
 
 }

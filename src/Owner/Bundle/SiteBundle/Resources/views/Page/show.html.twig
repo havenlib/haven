@@ -1,0 +1,36 @@
+{% extends "OwnerSiteBundle::base_admin.html.twig" %}
+{% block inside_content %}
+<h2>Afficher la page</h2>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.getId() }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ entity.getName() }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ _route_crud.path('owner_site_page_list', 'list') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ _route_crud.path('owner_site_page_edit', 'edit',entity.id) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        {#<form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>#}
+    </li>
+</ul>
+{% endblock inside_content %}
