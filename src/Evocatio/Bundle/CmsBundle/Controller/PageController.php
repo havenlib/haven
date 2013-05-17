@@ -68,7 +68,7 @@ class PageController extends ContainerAware {
             $this->container->get("page.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_page_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+            return $this->redirectListAction();
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -116,7 +116,7 @@ class PageController extends ContainerAware {
             $this->container->get("page.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_page_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+            return $this->redirectListAction();
         }
 
         $this->container->get("session")->setFlash("error", "update.error");
@@ -131,55 +131,10 @@ class PageController extends ContainerAware {
         return new Response($this->container->get('templating')->render($template, $params));
     }
 
-//    public function editAccueilAction() {
-//
-////        $em = $this->getDoctrine()->getEntityManager();
-////        $page = $this->container->get("cmspage.read_handler")->get($id);
-////        current($em->getRepository('tahuaSiteBundle:CmsPageAccueil')->findAll());
-//
-//        if (is_null($page))
-//            $page = new \tahua\SiteBundle\Entity\CmsPageAccueil();
-//
-//        $page->createMissingAndIndexContents();
-//        $form = $this->createForm(new CmsPageType(), $page);
-//
-//        return $this->render("tahuaSiteBundle:Page:new.html.twig", array("form" => $form->createView()));
-//    }
-//
-//    public function updateAccueilAction(Request $request) {
-//        $em = $this->getDoctrine()->getEntityManager();
-//        $page = current($em->getRepository('tahuaSiteBundle:CmsPageAccueil')->findAll());
-//
-//        if (is_null($page))
-//            $page = new \tahua\SiteBundle\Entity\CmsPageAccueil();
-//
-//        $page->createMissingAndIndexContents();
-//
-//        $form = $this->createForm(new CmsPageType(), $page);
-//        $form->bindRequest($request);
-//
-//        if ($form->isValid()) {
-//            $em = $this->getDoctrine()->getEntityManager();
-//            $em->persist($page);
-//            $em->flush();
-//        }
-//
-//        return $this->render("tahuaSiteBundle:Page:new.html.twig", array("form" => $form->createView()));
-//    }
-//
-//    public function editTherapeutesAction() {
-//
-//        $em = $this->getDoctrine()->getEntityManager();
-//        $page = current($em->getRepository('tahuaSiteBundle:CmsPageAccueil')->findAll());
-//
-//        if (is_null($page)) {
-//            $page = new \tahua\SiteBundle\Entity\CmsPageAccueil();
-//        }
-//        $page->createMissingAndIndexContents();
-//        $form = $this->createForm(new CmsPageType(), $page);
-//
-//        return $this->render("tahuaSiteBundle:Page:new.html.twig", array("form" => $form->createView()));
-//    }
+    protected function redirectListAction() {
+        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_page_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+    }
+
 }
 
 ?>
