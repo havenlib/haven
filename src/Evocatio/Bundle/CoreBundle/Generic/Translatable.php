@@ -77,7 +77,7 @@ abstract class Translatable {
     }
 
     protected function getTranslationClass() {
-        throw new \Exception("Vous devez définir la fonction getTranslationClass dans " . get_called_class());
+        return get_called_class() . "Translation";
     }
 
 }
