@@ -69,6 +69,7 @@ class Page extends Translatable {
      * @return Page
      */
     public function addContent(\Evocatio\Bundle\CmsBundle\Entity\Content $contents) {
+        $contents->setPage($this);
         $this->contents[] = $contents;
 
         return $this;
@@ -129,7 +130,7 @@ class Page extends Translatable {
      * @return Page
      */
     public function addHtmlContent(\Evocatio\Bundle\CmsBundle\Entity\HtmlContent $contents) {
-        $this->contents[] = $contents;
+        $this->addContent($contents);
 
         return $this;
     }
@@ -140,7 +141,7 @@ class Page extends Translatable {
      * @param \Evocatio\Bundle\CmsBundle\Entity\Content $contents
      */
     public function removeHtmlContent(\Evocatio\Bundle\CmsBundle\Entity\HtmlContent $contents) {
-        $this->contents->removeElement($contents);
+        $this->removeContent($contents);
     }
 
 }
