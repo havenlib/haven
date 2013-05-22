@@ -5,7 +5,7 @@ namespace Evocatio\Bundle\CmsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Evocatio\Bundle\CoreBundle\Repository\LanguageRepository ;
+use Evocatio\Bundle\CoreBundle\Repository\LanguageRepository;
 
 class PageTranslationType extends AbstractType {
 
@@ -14,14 +14,16 @@ class PageTranslationType extends AbstractType {
                 ->add('name')
                 ->add('trans_lang', null, array(
                     "property" => "name"
+                    , "label" => false
                     , 'query_builder' => function(LanguageRepository $er) {
                         return $er->filterByStatus(\Evocatio\Bundle\CoreBundle\Entity\Language::STATUS_PUBLISHED)
-                            ->orderByRank()
-                            ->getQueryBuilder();}
-                        ,"attr" => array(
-                            "class" => "hidden"
-                        )
-                    ))
+                                ->orderByRank()
+                                ->getQueryBuilder();
+                    }
+                    , "attr" => array(
+                        "class" => "hidden"
+                    )
+                ))
         ;
     }
 

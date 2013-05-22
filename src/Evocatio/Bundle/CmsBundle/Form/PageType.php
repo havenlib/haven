@@ -13,6 +13,7 @@ class PageType extends AbstractType {
                 ->add('translations', 'collection', array(
                     'type' => new PageTranslationType()
                     , 'allow_add' => true
+                    , "label" => false
                     , 'prototype' => true
                     , 'prototype_name' => '__name_trans__'
                     , 'by_reference' => false

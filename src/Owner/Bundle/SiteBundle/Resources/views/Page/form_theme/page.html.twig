@@ -1,0 +1,60 @@
+{% extends "OwnerSiteBundle:Form:form_div_layout.html.twig" %}
+{% block collection_widget %}
+    {% spaceless %}
+        <ul class="nav nav-tabs">
+            {#{ block("nav_lang") }#}
+        </ul>
+        {% if name == 'translations' %}
+            {% form_theme form "::Form/translations.html.twig" %}
+            {{ block('translation') }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock collection_widget %}
+
+{% block translation %}
+{% spaceless %}
+    <div class="inside">
+    {% if form is not empty %}   
+        {{ block('form_widget') }}
+    {% elseif prototype is defined %}  
+        {% set protoform = form_row(prototype) %}
+        {% for key, translation in prototype.trans_lang.get("choices") %}
+            {# here create one for each language , adding remove  hidden from the first line, the reason is it had to be done with javascript, making it a little complicated to keep the same js for all translations 
+            note that the hidden has an extra space to make sur no to remove other hiddens #}
+            {{ protoform | replace({"__name_trans__": loop.index0, "hidden " : loop.index0!=0?"hidden":""})|raw }}
+        {% endfor %} 
+    {% endif %}
+    </div>
+{% endspaceless %}
+{% endblock translation %}
+
+{% block form_row %}
+{% spaceless %}
+    <div>
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+{% block form_rows %}
+{% spaceless %}
+    {% for key, child in form %}
+        {{ form_row(child) }}
+    {% endfor %}
+{% endspaceless %}
+{% endblock form_rows %}
+
+{% block form_widget_compound %}
+{% spaceless %}
+    <div {{ block('widget_container_attributes') }}>
+        {% if form.parent is empty %}
+            {{ form_errors(form) }}
+        {% endif %}
+        {{ block('form_rows') }}
+        {{ form_rest(form) }}
+    </div>
+{% endspaceless %}
+{% endblock form_widget_compound %}
+
+
