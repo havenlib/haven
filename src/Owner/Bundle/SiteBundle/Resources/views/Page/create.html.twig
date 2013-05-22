@@ -2,13 +2,15 @@
 {% block formhead %}
     {{ _route_crud.path('owner_site_page_create', 'create') }}
 {% endblock formhead %}
-{#% form_theme edit_form "OwnerSiteBundle:Form:page_form.html.twig" %#}
-{% form_theme edit_form.translations "::Form/translations.html.twig" %}
+
+{% form_theme edit_form "OwnerSiteBundle:Form:formulator.html.twig" %}
+{% form_theme edit_form "OwnerSiteBundle:Page:form_theme/page.html.twig" %}
+{#% form_theme edit_form.translations "::Form/translations.html.twig" %#}
 {% block form %}
 <fieldset>
-    {{ _form.translated_row(edit_form, 'name') }}
+    {#{ _form.translated_row(edit_form, 'name') }#}
         {#{ form_widget(edit_form.htmlcontents.vars().prototype.name) }#}
-    {{ _form.translated_row(edit_form.htmlcontents.vars().prototype, 'html') }}
+    {#{ _form.translated_row(edit_form.htmlcontents.vars().prototype, 'html') }#}
         {#{ dump(edit_form.htmlcontents.vars().prototype.name) }#}
         {#{ collection_widget(edit_form.htmlcontents.vars())}#}
     {#{ _form.translated_row(edit_form.htmlcontents.vars().prototype.translations.vars().prototype, 'html') }#}
@@ -28,7 +30,7 @@
 {% block stylesheets %}
 {{ parent() }}
             {% if app.environment != 'prod' %}
-                <!-- link href="{{ asset("less/formulator.less") }}" rel="stylesheet/less" type="text/css" / -->
+                <link href="{{ asset("less/formulator.less") }}" rel="stylesheet/less" type="text/css" />
             {% else %}
                 <link rel="stylesheet" type="text/css" href="/css/base.css" />
             {% endif %}

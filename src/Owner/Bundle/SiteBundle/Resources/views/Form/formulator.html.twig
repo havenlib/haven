@@ -37,7 +37,7 @@
 
 {% block collection_widget %}
 {% spaceless %}
-<div class="formulator_collection_widget"><span>form_widget_collection</span>
+<div class="formulator_collection_widget"><span>form_widget_collection: {{ name }}</span>
     {% if prototype is defined %}
         {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
     {% endif %}
