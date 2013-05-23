@@ -32,3 +32,8 @@ OwnerSiteBundle_Login:
     type:     annotation
     prefix: /
     
+OwnerSiteBundle_Home:
+    resource: "@OwnerSiteBundle/Controller/DefaultController.php"
+    type:     annotation
+    prefix: /
+    
