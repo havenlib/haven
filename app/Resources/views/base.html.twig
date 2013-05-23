@@ -66,6 +66,7 @@
         {% endblock header %}              
         {% block main %}
         <div id="main">
+            {% spaceless %}
             {% block inside_main %}
             {% block navigation %}
             <div id="navigation" class="navbar">
@@ -80,6 +81,8 @@
             </div>
             {% endblock content %}
             {% endblock inside_main %}
+                <div class="line-left">&nbsp; test</div>
+            {% endspaceless %}
         </div>
         {% endblock main %}
         {% block footer %}
