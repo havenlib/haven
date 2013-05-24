@@ -4,7 +4,7 @@
 #}
 {% block inside_content %}
 <h1>Ajouter/Modifier une entite</h1>
-    {{ form_errors(edit_form)}}
+{{ form_errors(edit_form)}}
 <div class="edit-form">
     <form action="{% block formhead %}{% endblock formhead %}" method="post" {{ form_enctype(edit_form) }} >
     {% block form %} {% endblock form %}
@@ -14,14 +14,12 @@
         </div>
     </div>
     </form>
-        {% block back %}
+    {% block back %}
     <ul>
-        <li>
-        </li>
-    {% block delete %}
-    {% endblock delete %}
+        {% block delete %}
+        {% endblock delete %}
     </ul>
-        {% endblock back %}
+    {% endblock back %}
 </div>
 {% endblock inside_content %}
 
