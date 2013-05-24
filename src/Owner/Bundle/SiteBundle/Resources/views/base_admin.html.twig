@@ -5,6 +5,15 @@
 
 {% block inside_title %} Evocatio Solution Technologie {% endblock inside_title %}
 
-{% block inside_navigation %} 
+{% block navigation %} 
+<div id="navigation" class="admin">
 {% include "OwnerSiteBundle::navigation_admin.html.twig" %} 
-{% endblock inside_navigation %}
+</div>
+{% endblock navigation %}
+
+{% block content %} 
+<div  class="content admin">
+{% block inside_content %} 
+{% endblock inside_content %}
+</div>
+{% endblock content %}
