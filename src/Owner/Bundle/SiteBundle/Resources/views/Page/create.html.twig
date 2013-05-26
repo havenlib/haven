@@ -3,9 +3,9 @@
     {{ _route_crud.path('owner_site_page_create', 'create') }}
 {% endblock formhead %}
 
-{% form_theme edit_form "OwnerSiteBundle:Form:formulator.html.twig" %}
-{% form_theme edit_form "OwnerSiteBundle:Page:form_theme/page.html.twig" %}
-{#% form_theme edit_form.translations "::Form/translations.html.twig" %#}
+{#% form_theme edit_form "OwnerSiteBundle:Form:formulator.html.twig" %#}
+{#% form_theme edit_form "OwnerSiteBundle:Page:form_theme/page.html.twig" %#}
+{% form_theme edit_form.translations "::Form/translations.html.twig" %}
 {% block form %}
 <fieldset>
     {#{ _form.translated_row(edit_form, 'name') }#}

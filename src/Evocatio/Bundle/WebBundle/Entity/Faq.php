@@ -129,6 +129,7 @@ class Faq extends Translatable {
      * @return Faq
      */
     public function addTranslation(\Evocatio\Bundle\WebBundle\Entity\FaqTranslation $translations) {
+        $translations->setParent($this);
         $this->translations[] = $translations;
 
         return $this;

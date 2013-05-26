@@ -1,17 +1,14 @@
 {% block collection_widget %}
 {% spaceless %}
-    <ul class="nav nav-tabs">
-        {{ block("nav_lang") }}
-    </ul>
     <div class="inside">
     {% if form is not empty %}    
         {{ block('form_widget') }}
     {% elseif prototype is defined %}  
-        {% set protoform = form_row(prototype, {"attr":{"class":"trans hidden "}}) %}
-        {% for key, translation in prototype.trans_lang.get("choices") %}
-            {# here create one for each language , adding remove  hidden from the first line, the reason is it had to be done with javascript, making it a little complicated to keep the same js for all translations 
-            note that the hidden has an extra space to make sur no to remove other hiddens #}
-            {{ protoform | replace({"__name_trans__": loop.index0, "hidden " : loop.index0!=0?"hidden":""})|raw }}
+        {% set protoform = form_row(prototype) %}
+        {% for key, translation in prototype.trans_lang.vars.choices %}
+            {# here create one form for each language, removing the hidden from the first line, so you dont have to do it with javascript,  
+            note that the hidden is accompanied by a trans class to make sur not to remove other hiddens in the prototype #}
+            {{ protoform | replace({"__name_trans__label__": loop.index0, "__name_trans__": loop.index0, "trans_div" : loop.index0!=0?"trans_div hidden":"trans_div", ('<option value="'~key~'"') : '<option value="'~key~'" selected="selected"'})|raw }}
         {% endfor %} 
     {% endif %}
     </div>
@@ -23,7 +20,9 @@
     {% if compound %}
     {# set class to hidden if name not 0, so basically hide all but first for translation list #}
         {% if 0 != name %}
-            {% set attr = attr|merge({'class' : 'hidden'}) %}
+            {% set attr = attr|merge({'class' : 'trans_div hidden'}) %}
+        {% elseif "translations" != name %}
+            {% set attr = attr|merge({'class' : 'trans_div'}) %}
         {% endif %}
         {{ block('form_widget_compound') }}
     {% else %}
@@ -32,11 +31,3 @@
 {% endspaceless %}
 {% endblock form_widget %}
 
-{% block nav_lang %}
-    {% if prototype is defined %}  
-        {% for key, translation in prototype.trans_lang.get("choices") %}
-            <li class="{% if loop.index == 1 %} active{% endif%}" rel="{{ id ~"_"~ loop.index0 }}" onclick="showFormElement(this);return false"><a href="#" onclick="return false" data-toggle="tab">{{ translation.label }}</a></li>
-        {% endfor %} 
-    {% else %}
-    {% endif %}
-{% endblock nav_lang %}
