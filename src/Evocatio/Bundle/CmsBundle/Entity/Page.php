@@ -100,6 +100,7 @@ class Page extends Translatable {
      * @return Page
      */
     public function addTranslation(\Evocatio\Bundle\CmsBundle\Entity\PageTranslation $translations) {
+        $translations->setParent($this);
         $this->translations[] = $translations;
 
         return $this;

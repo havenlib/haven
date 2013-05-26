@@ -2,11 +2,12 @@
 {% block inside_content %}
 <div class="edit-form">
 <h1>Ajouter/Modifier une entite</h1>
-<div class="nav nav-tabs">
-    {% for key, translation in edit_form.translations %}
-        <li id="tab{{ translation.vars.value.getTransLang.id }}" class="tab{% if loop.index == 1 %} active{% endif%}" onclick="showFormElement(this)"><a href="#" onclick="return false" data-toggle="tab">{{ translation.vars.value.getTransLang.name }}</a></li>
-    {% endfor %}    
-</div>
+    {% if edit_form.prototype is defined %}  
+        {% for key, translation in edit_form.prototype.trans_lang.vars.choices %}
+            <li class="{% if loop.index == 1 %} active{% endif%}" rel="{{ id ~"_"~ loop.index0 }}" onclick="showFormElement(this);return false"><a href="#" onclick="return false" data-toggle="tab">{{ translation.label }}</a></li>
+        {% endfor %} 
+    {% else %}
+    {% endif %}
     {{ form_errors(edit_form)}}
     <form action="{% block formhead %}{% endblock formhead %}" method="post" {{ form_enctype(edit_form) }} >
     {% block form %} {% endblock form %}

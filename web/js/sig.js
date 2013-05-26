@@ -58,9 +58,11 @@ function addAnItem(source, tag) {
  }
  */
 function showFormElementClass(tab) {
-    $("." + $(tab).attr("rel")).siblings("div.trans").hide();
+//    $("div[id^=" + $(tab).attr("data-formname")+"]").children("div.trans").hide();
+    $("div[id^=" + $(tab).attr("data-formname")+"]").filter("div[id*='translations_']").hide();
+    $("div[id^=" + $(tab).attr("data-formname")+"]").filter("div[id$='translations_"+ $(tab).attr("data-langid") +"']").show();
     $(tab).siblings("li").removeClass("active");
-    $("." + $(tab).attr("rel")).show();
+    //$("." + $(tab).attr("rel")).show();
     $(tab).addClass("active");
 }
 
@@ -578,7 +580,6 @@ function prepareEditor(editor) {
 
     //        lang = $("#" + $(this).attr("id").replace(/text$/, "trans_lang") + " option:selected").html();
     CKEDITOR.replace(editor, {
-        extraPlugins: 'tableprestige',
         toolbar: [toolbar]
     });
 }

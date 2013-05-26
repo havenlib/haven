@@ -16,7 +16,10 @@ class PageType extends AbstractType {
                     , "label" => false
                     , 'prototype' => true
                     , 'prototype_name' => '__name_trans__'
-                    , 'by_reference' => false
+                    , 'by_reference' => false                    
+                    , 'options' => array(
+                        'label' => false
+                    )
                     ))
                 ->add('htmlcontents', "collection", array(
                     'type' => new HtmlContentType()
