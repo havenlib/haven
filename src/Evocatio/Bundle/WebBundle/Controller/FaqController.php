@@ -79,7 +79,7 @@ class FaqController extends ContainerAware {
             $this->container->get("faq.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_web_faq_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+            return $this->redirectListAction();
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -127,7 +127,7 @@ class FaqController extends ContainerAware {
             $this->container->get("faq.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_web_faq_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+            return $this->redirectListAction();
         }
         $this->container->get("session")->setFlash("error", "update.error");
 
@@ -179,6 +179,10 @@ class FaqController extends ContainerAware {
         $em->flush();
 
         return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_FaqList'));
+    }
+
+    protected function redirectListAction() {
+        return new RedirectResponse($this->container->get('router')->generate('evocatio_web_faq_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }
 
 }

@@ -25,7 +25,17 @@ class PostType extends AbstractType {
                     'format' => 'dd-MM-yyyy',
                 ))
 //                ->add('file', "file", array('required' => false, "attr" => array("multiple" => true)))
-                ->add('translations', 'collection', array('type' => new PostTranslationType()))
+                ->add('translations', 'collection', array(
+                    'type' => new PostTranslationType()
+                    , 'allow_add' => true
+                    , "label" => false
+                    , 'prototype' => true
+                    , 'prototype_name' => '__name_trans__'
+                    , 'by_reference' => false
+                    , 'options' => array(
+                        'label' => false
+                    )
+                ))
 
         ;
     }

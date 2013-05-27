@@ -104,10 +104,6 @@ class Faq extends Translatable {
         return $this->getTranslated('Question', $lang);
     }
 
-    protected function getTranslationClass() {
-        return "Evocatio\Bundle\WebBundle\Entity\FaqTranslation";
-    }
-
     /**
      * Set rank
      *
@@ -133,6 +129,7 @@ class Faq extends Translatable {
      * @return Faq
      */
     public function addTranslation(\Evocatio\Bundle\WebBundle\Entity\FaqTranslation $translations) {
+        $translations->setParent($this);
         $this->translations[] = $translations;
 
         return $this;

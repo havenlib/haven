@@ -1,6 +1,7 @@
 {%  extends "::base.html.twig" %}
+{% import "::macro/route/suffix.html.twig" as _route_suffix %}
 {% block inside_content %}
-<h1>Security</h1>
+<h1>Person</h1>
 
 <table class="record_properties">
     <tbody>
@@ -55,12 +56,12 @@
 
 <ul>
     <li>
-        <a href="{{ path('evocatio_persona_person_list', {'persona': ('person' | trans({}, 'routes')), 'list': ('list' | trans({}, 'routes'))}) }}">
+        <a href="{{ _route_suffix.path('evocatio_persona_person_list', 'list','person') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('evocatio_persona_person_edit', { 'id': entity.id, 'persona': ('person' | trans({}, 'routes')), 'edit': ('edit' | trans({}, 'routes'))}) }}">
+        <a href="{{ _route_suffix.path('evocatio_persona_person_edit', 'edit', 'person', entity.id) }}">
             Edit
         </a>
     </li>

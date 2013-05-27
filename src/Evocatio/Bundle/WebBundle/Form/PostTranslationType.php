@@ -5,6 +5,7 @@ namespace Evocatio\Bundle\WebBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Evocatio\Bundle\CoreBundle\Repository\LanguageRepository;
 
 class PostTranslationType extends AbstractType {
 
@@ -44,8 +45,18 @@ class PostTranslationType extends AbstractType {
                     'prototype' => true,
                     'by_reference' => true,
                     "attr" => array("class" => "coordinate", "data-join-class" => "coordinate")))
-//            ->add('slug', "textarea", array('required' => false))
-        ;
+                ->add('trans_lang', null, array(
+                    "property" => "name"
+                    , "label" => false
+                    , 'query_builder' => function(LanguageRepository $er) {
+                        return $er->filterByStatus(\Evocatio\Bundle\CoreBundle\Entity\Language::STATUS_PUBLISHED)
+                                ->orderByRank()
+                                ->getQueryBuilder();
+                    }
+                    , "attr" => array(
+                        "class" => "hidden"
+                    )
+                ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {

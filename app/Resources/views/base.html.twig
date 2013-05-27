@@ -18,9 +18,11 @@
             <link href="{{ asset("less/base.less") }}" rel="stylesheet/less" type="text/css" />
 
             <!-- CSS -->
-            <link rel="stylesheet" type="text/css" href="{{ asset("css/bootstrap-responsive.min.css") }}" />
+        <!--    <link rel="stylesheet" type="text/css" href="{{ asset("css/bootstrap-responsive.min.css") }}" /> -->
             <link rel="stylesheet" type="text/css" href="{{ asset("css/bootstrap.min.css") }}" />
             {% else %}
+            <link rel="stylesheet" type="text/css" href="{{ asset("css/bootstrap-responsive.min.css") }}" />
+            <link rel="stylesheet" type="text/css" href="{{ asset("css/bootstrap.min.css") }}" />
             <link rel="stylesheet" type="text/css" href="/css/base.css" />
             {% endif %}
         {% endblock %}
@@ -64,6 +66,7 @@
         {% endblock header %}              
         {% block main %}
         <div id="main">
+            {% spaceless %}
             {% block inside_main %}
             {% block navigation %}
             <div id="navigation" class="navbar">
@@ -78,6 +81,7 @@
             </div>
             {% endblock content %}
             {% endblock inside_main %}
+            {% endspaceless %}
         </div>
         {% endblock main %}
         {% block footer %}

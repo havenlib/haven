@@ -1,0 +1,39 @@
+{%  extends "OwnerSiteBundle:Template:add_template.html.twig" %}
+{% block formhead %}
+    {{ _route_suffix.path('owner_site_user_create', 'create','user') }}
+{% endblock formhead %}
+
+{% block form %}
+<fieldset>
+    <ul>
+        <li>{{ form_label(edit_form.status)}}
+            {{ form_errors(edit_form.status)}}
+                <span>{{ form_widget(edit_form.status)}}</span>
+            </li>
+            <li>{{ form_label(edit_form.username)}}
+            {{ form_errors(edit_form.username)}}
+                    <span>{{ form_widget(edit_form.username)}}</span>
+                </li>
+                <li>{{ form_label(edit_form.email)}}
+            {{ form_errors(edit_form.email)}}
+                        <span>{{ form_widget(edit_form.email)}}</span>
+                    </li>
+                    <li>{{ form_label(edit_form.plainPassword)}}
+            {{ form_errors(edit_form.plainPassword)}}
+                            <span>{{ form_widget(edit_form.plainPassword)}}</span>
+                        </li>
+                    <li>{{ form_label(edit_form.locked)}}
+            {{ form_errors(edit_form.locked)}}
+                            <span>{{ form_widget(edit_form.locked)}}</span>
+                        </li>
+
+                    </ul>
+                        {{ form_rest(edit_form) }}
+                </fieldset>
+{% endblock form %}
+
+{% block back %}
+                <a href="{{ _route_suffix.path('owner_site_user_list', 'list','user') }}">
+                    Back to the list
+                </a>
+{% endblock back %}

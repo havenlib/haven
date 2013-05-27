@@ -11,11 +11,20 @@ class FaqType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
+                ->add('translations', 'collection', array(
+                    'type' => new FaqTranslationType()
+                    , 'allow_add' => true
+                    , "label" => false
+                    , 'prototype' => true
+                    , 'prototype_name' => '__name_trans__'
+                    , 'by_reference' => false
+                    , 'options' => array(
+                        'label' => false
+                    )
+                ))
                 ->add('status', 'choice', array(
                     'choices' => array(0 => "Inactive", 1 => "Publish")
-                ))
-                ->add('translations', 'collection', array('type' => new FaqTranslationType()))
-        ;
+                ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {

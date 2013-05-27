@@ -1,12 +1,13 @@
-{%  extends "::base.html.twig" %}
+{% extends "::base.html.twig" %}
+{% import "::macro/route/crud.html.twig" as _route_crud %}
 {% block inside_content %}
 <dl>
     {% for entity in entities %}
         <dt>
             <div>{{ entity.status?'Published':'Inactive' }}</div> 
             <strong>{{ entity.question }}</strong> 
-            <a href="{% include "::route/edit.html.twig" with {'route': 'evocatio_web_faq_edit', 'id': entity.id} %}">edit</a> 
-            <a href="{% include "::route/show.html.twig" with {'route': 'evocatio_web_faq_show', 'id': entity.id} %}">show</a> 
+            <a href="{{ _route_crud.path('evocatio_web_faq_edit', 'edit', entity.id) }}">edit</a> 
+            <a href="{{ _route_crud.path('evocatio_web_faq_show', 'show',entity.id) }}">show</a> 
         </dt>
         <dd>{{ entity.reponse }}</dd>
     {% else %}
@@ -15,7 +16,7 @@
 </dl>
 <ul>
     <li>
-        <a href="{% include "::route/create.html.twig" with {'route': 'evocatio_web_faq_create'} %}">
+        <a href="{{ _route_crud.path('evocatio_web_faq_create', 'create') }}">
             Create a new entry
         </a>
     </li>
