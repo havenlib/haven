@@ -5,9 +5,9 @@
 {% block inside_content %}
 <h1>Ajouter</h1>
     {% if edit_form.translations.vars.prototype is defined %}  
-<div class="nav nav-tabs">
+<div class="nav nav-tabs lang">{# ajouter le lang comme class pour que le javascript puisse cliqué dessus lors de l'ajout d'items addAnItem, #}
         {% for key, translation in edit_form.translations.vars.prototype.trans_lang.get("choices") %}
-            <li class="{% if loop.index == 1 %} active{% endif%}" data-formname="{{ edit_form.vars.id }}" data-langid="{{ loop.index0 }}" onclick="showFormElementClass(this);return false"><a href="#" onclick="return false" data-toggle="tab">{{ translation.label }}</a></li>
+            <li class="{% if loop.index == 1 %} active{% endif%}" data-formname="{{ edit_form.vars.id }}" data-langindex="{{ loop.index0 }}" onclick="showFormElementClass(this);return false"><a href="#" onclick="return false" data-toggle="tab">{{ translation.label }}</a></li>
         {% endfor %}
             </div>
     {% else %}

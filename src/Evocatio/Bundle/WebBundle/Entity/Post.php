@@ -241,6 +241,7 @@ class Post extends Translatable {
      */
     public function addTranslation(PostTranslation $translations)
     {
+        $translations->setParent($this);
         $this->translations[] = $translations;
     
         return $this;

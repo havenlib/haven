@@ -10,29 +10,29 @@ function addAnItem(source, tag) {
     // -------------
     // #TODO : will have to redo the numbering, take into considaration that delete will remove some numbers in the so we can end up with 2 ..._2 if ..._1 was deleted <--- FIX PLZ
     newnode = document.createElement("div");
-    //    next_id = $("#"+source).attr('data-join-class')?$("."+$("#"+source).attr('data-join-class')).children().length:$("#"+source).children().length;
-    next_id = ($("#" + source).children("div:last").attr("id") == undefined) ? 0 : parseInt($("#" + source).children("div:last").attr("id").match(/\d+\.?\d*$/g)) + 1;
+    //    fait la liste des id's qui sont identique à la source+_xxx (xxx étant des chiffre) et retourne seulement les chiffres. donc une liste des index existants sans les enfants qui pourrait être source_translation_xxx
+    list_ids = $("div[id^='" + source +"_']").map(function() {
+       sindex = $(this).attr("id").match(/\d+\.?\d*$/g);
+        if(this.id == source + "_" + sindex){
+            return sindex;
+        }
+    });
+//    choisi comme next id le plus gros chiffre de la liste d'id , +1
+    next_id = ($(list_ids).length ==0) ? 0 : Math.max.apply( null,list_ids)+1;
 
     newnode.innerHTML = $("#" + source).attr('data-prototype').replace(regpat, next_id);
-    //     mets le selected sur l'option selon l'index du select pour mettre l' option en anglais
-    $(newnode.firstChild).find("select[id$='trans_lang']").each(function(index, element) {
-        $(element).find("option:eq(" + index + ")").attr("selected", "selected");
-    });
-
-
-    //    hides all the translations but the first one
-    // $(newnode.firstChild).find(".nav div.inside").children().each(function(index , element){ if(index!==0)$(element).addClass("hidden");}); 
+    //     mets le selected sur l'option selon l'index du select pour mettre l' option en anglais plus nescessaire normalement à été corrigé dans translation.html.twig
+//    $(newnode.firstChild).find("select[id$='trans_lang']").each(function(index, element) {
+//        $(element).find("option:eq(" + index + ")").attr("selected", "selected");
+//    });
+    
     var ajouter = document.getElementById(source).appendChild(newnode.firstChild);
-
+    
     // puts the ckeditor where it is needed, really it reloads for all ckeditor class under (ajouter)
     addCkEditorTo(ajouter);
-    // si l'element est entreprise dans les rapports il faut afficher le bon bouton pour ajouter une référence (en fonction du type de rapport choisi
-    if ($(ajouter).parent().prop("id") == "website_bundle_sitebundle_dossiertype_service_reference") {
-        showRapportSelect();
-    }
 
-    changeServiceAndReferencesVisibility();
-
+    // clicker les nav langue pour afficher les bonne traductions, Sinon par défaut lors de l'ajout le nouveau item apparait en français'
+    $(".nav").filter(".lang").find(".active").click();
 }
 /*
  function addAnEntreprise(source){
@@ -60,7 +60,7 @@ function addAnItem(source, tag) {
 function showFormElementClass(tab) {
 //    $("div[id^=" + $(tab).attr("data-formname")+"]").children("div.trans").hide();
     $("div[id^=" + $(tab).attr("data-formname")+"]").filter("div[id*='translations_']").hide();
-    $("div[id^=" + $(tab).attr("data-formname")+"]").filter("div[id$='translations_"+ $(tab).attr("data-langid") +"']").show();
+    $("div[id^=" + $(tab).attr("data-formname")+"]").filter("div[id$='translations_"+ $(tab).attr("data-langindex") +"']").show();
     $(tab).siblings("li").removeClass("active");
     //$("." + $(tab).attr("rel")).show();
     $(tab).addClass("active");
@@ -588,7 +588,7 @@ $(document).ready(function() {
     $('textarea.ckeditor').each(function() {
         prepareEditor(this);
     });
-    changeServiceAndReferencesVisibility();
+
 })
 
 function removeCkEditorFrom(target) {
@@ -668,24 +668,6 @@ function isEnterPress() { // the arguments here are the event (needed to detect 
         return true; // run the resulting function name that was specified as an argument
     } else {
         return false;
-    }
-}
-
-function changeServiceAndReferencesVisibility() {
-    $(".service_visibility").each(
-            function() {
-                changeServiceReferenceVisibility($(this).get(0));
-            }
-    );
-}
-function changeServiceReferenceVisibility(element) {
-    option_value = $(element).find(":selected").val();
-    if (option_value == 1) {
-        $(element).removeClass("service_inactif");
-        $(element).addClass("service_actif");
-    } else {
-        $(element).removeClass("service_actif");
-        $(element).addClass("service_inactif");
     }
 }
 

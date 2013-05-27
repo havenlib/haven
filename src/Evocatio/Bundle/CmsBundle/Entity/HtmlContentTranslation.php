@@ -25,9 +25,9 @@ class HtmlContentTranslation extends TranslationMappedBase {
     /**
      * @var string
      *
-     * @ORM\Column(name="html", type="text")
+     * @ORM\Column(name="content", type="text", nullable=true)
      */
-    private $html;
+    private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity="HtmlContent", inversedBy="translations")
@@ -45,24 +45,24 @@ class HtmlContentTranslation extends TranslationMappedBase {
     }
 
     /**
-     * Set html
+     * Set content
      *
-     * @param string $html
+     * @param string $content
      * @return HtmlContentTranslation
      */
-    public function setHtml($html) {
-        $this->html = $html;
+    public function setContent($content) {
+        $this->content = $content;
 
         return $this;
     }
 
     /**
-     * Get html
+     * Get content
      *
      * @return string 
      */
-    public function getHtml() {
-        return $this->html;
+    public function getContent() {
+        return $this->content;
     }
 
 
