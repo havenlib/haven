@@ -11,9 +11,29 @@ OwnerSiteBundle_All:
       show:     "show|afficher"
       create:   "create|creer"
       _locale: fr|en
+      
+OwnerSiteBundle_User:
+    resource: "@OwnerSiteBundle/Controller/UserController.php"
+    type:     annotation
+    prefix: /{_locale}/
+    defaults:
+      admin: admin
+    requirements: 
+      _locale: fr|en
+      admin: "admin"
+      suffix: "user|utilisateur"
+      create: "create|creer"
+      edit: "edit|editer"
+      list: "list|lister"
+      show: "show|afficher"
     
 OwnerSiteBundle_Login:
     resource: "@OwnerSiteBundle/Controller/LoginController.php"
+    type:     annotation
+    prefix: /
+    
+OwnerSiteBundle_Home:
+    resource: "@OwnerSiteBundle/Controller/DefaultController.php"
     type:     annotation
     prefix: /
     

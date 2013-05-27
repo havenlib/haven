@@ -32,9 +32,6 @@ security:
 #    access_control:
 #        - { path: "^/[a-z_A-Z]{5}/admin", roles: IS_AUTHENTICATED_FULLY}
 #        - { path: "^/[a-z]{2}/admin", roles: IS_AUTHENTICATED_FULLY}
-#        - { path: "^/[a-z]{2}/admin/.*/list$", roles: ROLE_ADMIN }
-#        - { path: "^/[a-z]{2}/admin/.*/new$", roles: ROLE_ADMIN }
-#        - { path: "^/[a-z]{2}/admin/.*/[0-9]+/edit$", roles: ROLE_ADMIN }
 #        - { path: ^/admin/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 #        - { path: ^/admin/login/check$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 #        - { path: ^/mon-espace, roles: DEFAULT }

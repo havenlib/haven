@@ -1,4 +1,4 @@
-{%  extends "::base.html.twig" %}
+{%  extends "OwnerSiteBundle::base_admin.html.twig" %}
 {% block inside_content %}
 <h1>Post</h1>
 
@@ -29,12 +29,12 @@
 
 <ul>
     <li>
-        <a href="{{ path('evocatio_web_post_list', {'list': ('list' | trans({}, 'routes'))}) }}">
+        <a href="{{ path('owner_site_post_list', {'list': ('list' | trans({}, 'routes'))}) }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('evocatio_web_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">
+        <a href="{{ path('owner_site_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">
             Edit
         </a>
     </li>

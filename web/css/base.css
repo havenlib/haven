@@ -1,11 +1,1 @@
-/* 
-    Document   : base
-    Created on : 2012-10-03, 11:26:35
-    Author     : themaster
-    Description:
-        Purpose of the stylesheet follows.
-*/
-
-root { 
-    display: block;
-}
+/** Mixins **/ .ul-li-left-full-weight { list-style-type: none; margin: 0px; padding: 0px; overflow: auto; display: inline-block; } .ul-li-left-full-weight li { float: left; } .no-style-ul { list-style-type: none; margin: 0px; padding: 0px; } root { display: block; } body { margin: 0; } #main > div { display: inline-block; vertical-align: top; } #main > div#navigation ul { width: 150px; }

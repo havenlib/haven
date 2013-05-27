@@ -1,12 +1,12 @@
-{%  extends "OwnerSiteBundle:User:new.html.twig" %}
+{%  extends "OwnerSiteBundle:User:create.html.twig" %}
 {% block formhead %}
-    {{ path('EvocatioSecurityBundle_UserUpdate', { 'id': edit_form.vars.value.id }) }}
+    {{ _route_suffix.path('owner_site_user_edit', 'edit','user', entity.id) }}
 {% endblock formhead %}
 {% block delete %}
-<li>
+{#<li>
     <form action="{{ path('EvocatioSecurityBundle_delete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
         <button type="submit">Delete</button>
     </form>
-</li>
+</li>#}
 {% endblock delete %}

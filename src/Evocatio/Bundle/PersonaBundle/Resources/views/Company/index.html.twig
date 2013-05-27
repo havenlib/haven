@@ -1,12 +1,13 @@
 {%  extends "::base.html.twig" %}
 {% block inside_content %}
-    <ul>
+    <dl>
         {% for entity in entities %}
-            <li><div>{{ entity.name }}</div> </li>
+            <dt><div>{{ entity.name }}</div></dt>
+            <dd>{{ entity.sex }}</dd>
         {% else %}
             &nbsp;
         {% endfor %}
-    </ul>
+    </dl>
 <ul>
 </ul>
 {% endblock inside_content %}

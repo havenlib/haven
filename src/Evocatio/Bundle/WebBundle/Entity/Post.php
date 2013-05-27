@@ -228,10 +228,6 @@ class Post extends Translatable {
         return $this->getTranslated('path', $lang);
     }
 
-    protected function getTranslationClass() {
-        return "Evocatio\Bundle\WebBundle\Entity\PostTranslation";
-    }
-
     private function getFormated($date, $format)
     {
         return $date?strftime($format, $date->getTimestamp()):"";
@@ -245,6 +241,7 @@ class Post extends Translatable {
      */
     public function addTranslation(PostTranslation $translations)
     {
+        $translations->setParent($this);
         $this->translations[] = $translations;
     
         return $this;

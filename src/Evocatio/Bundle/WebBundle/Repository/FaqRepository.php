@@ -25,7 +25,7 @@ class FaqRepository extends StatusRepository {
     }
 
     public function findAll() {
-        $this->query_builder = $this->createQueryBuilder("e");
+        $this->query_builder = $this->createBaseBuilder();
         return $this->getResult();
     }
 
@@ -36,12 +36,18 @@ class FaqRepository extends StatusRepository {
 
     private function filterByStatus($status) {
         if (is_null($this->query_builder))
-            $this->query_builder = $this->createQueryBuilder("e");
+            $this->query_builder = $this->createBaseBuilder();
 
         $this->query_builder->andWhere("e.status = :status");
         $this->query_builder->setParameter("status", $status);
 
         return $this;
+    }
+
+    public function createBaseBuilder() {
+        $this->query_builder = $this->createQueryBuilder("e");
+        return $this->query_builder->select("e, t")
+                        ->leftJoin("e.translations", "t");
     }
 
     public function getResult() {

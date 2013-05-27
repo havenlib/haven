@@ -1,6 +1,5 @@
-{%  extends "::base.html.twig" %}
+{%  extends "OwnerSiteBundle::base_admin.html.twig" %}
 {% block inside_content %}
-Owner
 <h1>Faq</h1>
 
 <table class="record_properties">
@@ -19,21 +18,22 @@ Owner
         </tr>
         <tr>
             <th>Reponse</th>
-            <td>{{ entity.reponse }}</td>
+            <td>{{ entity.reponse | raw}}</td>
         </tr>
     </tbody>
 </table>
 
+        <a href="{{ _route_crud.path('owner_site_faq_edit', 'edit', entity.id) }}">
+            Edit
+        </a>
+   {# 
 <ul class="record_actions">
-    <li>
-        <a href="{{ path('evocatio_web_faq_list', {'list': ('list' | trans({}, 'routes'))}) }}">
+<li>
+        <a href="{{ _route_crud.path('owner_site_faq_list', 'list') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('evocatio_web_faq_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">
-            Edit
-        </a>
     </li>
    {# <li>
         <form action="{{ path('EvocatioFaqBundle_FaqDelete', { 'id': entity.id }) }}" method="post">
@@ -41,7 +41,9 @@ Owner
             <button type="submit">Delete</button>
         </form>
     </li> #}
+   {# 
 </ul>
+#}
 {% endblock inside_content %}
 {% block aside %}
     {#% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %#}

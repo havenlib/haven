@@ -1,6 +1,7 @@
-{%  extends "EvocatioCoreBundle:Template:add_template.html.twig" %}
+{% extends "EvocatioCoreBundle:Template:add_template.html.twig" %}
+{% import "::macro/route/suffix.html.twig" as _route_suffix %}
 {% block formhead %}
-    {{ path('evocatio_persona_person_create', {'persona': ('person' | trans({}, 'routes')), 'create': ('create' | trans({}, 'routes'))}) }}
+    {{ _route_suffix.path('evocatio_persona_person_create', 'create', 'person') }}
 {% endblock formhead %}
 
 {% block form %}
@@ -21,13 +22,28 @@
             {{ form_errors(edit_form.sex)}}
             <span>{{ form_widget(edit_form.sex)}}</span>
         </li>
+        <li>
+            {{ form_row(edit_form.telephone) }}
+        </li>
+        <li>
+            {{ form_row(edit_form.web) }}
+        </li>
+        <li>
+            {{ form_row(edit_form.postal) }}
+        </li>
+        <li>
+            {{ form_row(edit_form.map) }}
+        </li>
+        <li>
+            {{ form_row(edit_form.time) }}
+        </li>
         {{ form_rest(edit_form) }}
     </ul>
 </fieldset>
 {% endblock form %}
 
 {% block back %}
-    <a href="{{ path('evocatio_persona_person_list', {'persona': ('person' | trans({}, 'routes')), 'list': ('list' | trans({}, 'routes'))}) }}">
+    <a href="{{ _route_suffix.path('evocatio_persona_person_list', 'list','person') }}">
         Back to the list
     </a>
 {% endblock back %}

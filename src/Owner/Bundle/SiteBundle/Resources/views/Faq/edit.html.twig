@@ -1,6 +1,6 @@
-{%  extends "EvocatioWebBundle:Faq:create.html.twig" %}
+{%  extends "OwnerSiteBundle:Faq:create.html.twig" %}
 {% block formhead %}
-{{ path('evocatio_web_faq_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}
+{{ _route_crud.path('owner_site_faq_edit', 'edit', entity.id) }}
 {% endblock formhead %}
 {% block delete %}
 <li>

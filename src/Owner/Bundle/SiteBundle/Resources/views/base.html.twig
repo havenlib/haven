@@ -1,1 +1,13 @@
 {%  extends "::base.html.twig" %}
+
+{% block inside_title %} Evocatio Solution Technologie {% endblock inside_title %}
+
+{% block inside_header %}
+<a href="{#{ path('EcoleDeMusiqueSiteBundle_Home')}#}"><img src="/images/logo.white.png" /></a>
+{% endblock inside_header %}
+
+{% block inside_navigation %} 
+    {% include "OwnerSiteBundle::navigation.html.twig" %} 
+{% endblock inside_navigation %}
+    
+    

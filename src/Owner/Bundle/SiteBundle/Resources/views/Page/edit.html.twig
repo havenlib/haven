@@ -1,0 +1,12 @@
+{% extends "OwnerSiteBundle:Page:create.html.twig" %}
+{% block formhead %}
+    {{ _route_crud.path('owner_site_page_edit', 'edit',entity.id) }}
+{% endblock formhead %}
+{% block delete %}
+<li>
+   {# <form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <button type="submit">Delete</button>
+    </form>#}
+</li>
+{% endblock delete %}
