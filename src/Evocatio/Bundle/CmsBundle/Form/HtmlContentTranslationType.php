@@ -11,9 +11,15 @@ class HtmlContentTranslationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('html')
+                ->add('content', null, array(
+                    "attr" => array(
+                        "class" => "ckeditor"
+                    )
+                    ,"required" =>false
+                ))
                 ->add('trans_lang', null, array(
                     "property" => "name"
+                    , "label" => false
                     , 'query_builder' => function(LanguageRepository $er) {
                         return $er->filterByStatus(\Evocatio\Bundle\CoreBundle\Entity\Language::STATUS_PUBLISHED)
                                 ->orderByRank()

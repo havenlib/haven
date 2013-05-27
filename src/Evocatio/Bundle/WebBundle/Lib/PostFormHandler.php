@@ -41,7 +41,7 @@ class PostFormHandler {
      */
     public function createNewForm() {
         $entity = new Entity();
-        $entity->addTranslations($this->language_read_handler->getAllPublishedOrderedByRank());
+//        $entity->addTranslations($this->language_read_handler->getAllPublishedOrderedByRank());
         $create_form = $this->form_factory->create(new Type(), $entity);
 
         return $create_form;

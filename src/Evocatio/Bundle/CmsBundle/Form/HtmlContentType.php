@@ -14,9 +14,14 @@ class HtmlContentType extends AbstractType {
                 ->add('translations', 'collection', array(
                     'type' => new HtmlContentTranslationType()
                     , 'allow_add' => true
+                    , "label" => false
                     , 'prototype' => true
                     , 'prototype_name' => '__name_trans__'
-                    , 'by_reference' => false))
+                    , 'by_reference' => false
+                    , 'options' => array(
+                        'label' => false
+                    )
+                ))
         ;
     }
 

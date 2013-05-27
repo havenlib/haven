@@ -75,8 +75,8 @@ class HtmlContent extends Content {
         return $this->name;
     }
 
-    public function getHtml($lang = null) {
-        return $this->getTranslated('Html', $lang);
+    public function getContent($lang = null) {
+        return $this->getTranslated('Content', $lang);
     }
 
     /**
@@ -107,6 +107,7 @@ class HtmlContent extends Content {
      * @return HtmlContent
      */
     public function addTranslation(\Evocatio\Bundle\CmsBundle\Entity\HtmlContentTranslation $translations) {
+        $translations->setParent($this);
         $this->translations[] = $translations;
 
         return $this;
