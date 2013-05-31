@@ -20,10 +20,11 @@ class Page extends Translatable {
     private $id;
 
     /**
-     *
-     * @return ArrayCollection<CmsContent> $content
-     * 
-     * @ORM\OneToMany(targetEntity="Content", mappedBy="page", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Content", cascade={"persist"})
+     * @ORM\JoinTable(name="PagesContents",
+     *      joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")}
+     *      )
      */
     private $contents;
 
@@ -57,8 +58,8 @@ class Page extends Translatable {
      */
     public function getHtmlContents() {
         $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getContents()->filter(function ($content) {
-                                    return get_class($content) == "Evocatio\Bundle\CmsBundle\Entity\HtmlContent";
-                                })->getValues());
+                            return get_class($content) == "Evocatio\Bundle\CmsBundle\Entity\HtmlContent";
+                        })->getValues());
         return $return_collection;
     }
 
