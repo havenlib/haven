@@ -27,11 +27,12 @@ class Page extends Translatable {
      *      )
      */
     private $contents;
-    
+
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="template", type="string", length=255)
+     * @ORM\OneToOne(targetEntity="Template")
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
      */
     private $template;
 
@@ -153,17 +154,15 @@ class Page extends Translatable {
         $this->removeContent($contents);
     }
 
-
     /**
      * Set template
      *
      * @param string $template
      * @return Page
      */
-    public function setTemplate($template)
-    {
+    public function setTemplate($template) {
         $this->template = $template;
-    
+
         return $this;
     }
 
@@ -172,8 +171,8 @@ class Page extends Translatable {
      *
      * @return string 
      */
-    public function getTemplate()
-    {
+    public function getTemplate() {
         return $this->template;
     }
+
 }

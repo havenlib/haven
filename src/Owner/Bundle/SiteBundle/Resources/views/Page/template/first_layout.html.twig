@@ -11,12 +11,11 @@
             <h6>Available content list</h6>
             <ul class="contents-list">
                 <li>
-                    <input type=button value="Html content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_htmlcontents', null, 'div1');" />
+                    <input type=button value="Html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_htmlcontents', null, 'div1');" />
                 </li>
             </ul>
         </section>
         <div class="display">
-            {{entity.htmlcontents().count()}}
             {% if entity.htmlcontents().count() %}
                 {{ entity.htmlcontents().first().content }}
             {% endif %}
