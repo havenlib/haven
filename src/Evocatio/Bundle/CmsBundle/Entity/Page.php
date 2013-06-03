@@ -29,6 +29,14 @@ class Page extends Translatable {
     private $contents;
 
     /**
+     * @var integer
+     *
+     * @ORM\OneToOne(targetEntity="Template")
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
+     */
+    private $template;
+
+    /**
      * @ORM\OneToMany(targetEntity="PageTranslation", mappedBy="parent", cascade={"persist"})
      */
     protected $translations;
@@ -144,6 +152,27 @@ class Page extends Translatable {
      */
     public function removeHtmlContent(\Evocatio\Bundle\CmsBundle\Entity\HtmlContent $contents) {
         $this->removeContent($contents);
+    }
+
+    /**
+     * Set template
+     *
+     * @param string $template
+     * @return Page
+     */
+    public function setTemplate($template) {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * Get template
+     *
+     * @return string 
+     */
+    public function getTemplate() {
+        return $this->template;
     }
 
 }

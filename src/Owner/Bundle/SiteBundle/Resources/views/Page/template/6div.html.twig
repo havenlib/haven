@@ -3,6 +3,9 @@
     {% block div1 %}
     <div id="div1">
         {% block inside_div1 %}
+            {% if entity.htmlcontents().count() %}
+            {{ entity.htmlcontents().first().content }}
+            {% endif %}
             <p>
                 test gjire gjei
                 geg jeroigj<br />
