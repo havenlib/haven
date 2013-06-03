@@ -151,5 +151,9 @@ class HtmlContent extends Content {
     public function getPage() {
         return $this->page;
     }
+    
+    public function __toString() {
+        return $this->getName();
+    }
 
 }

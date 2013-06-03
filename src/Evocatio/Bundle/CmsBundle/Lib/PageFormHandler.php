@@ -40,8 +40,25 @@ class PageFormHandler {
      */
     public function createNewForm() {
         $entity = new Entity();
+        $template =  new \Evocatio\Bundle\CmsBundle\Entity\Template();
+//        $template->setId(1);
+        $template->setName("first_layout");
+        $template->setPath("OwnerSiteBundle:Page/template:first_layout.html.twig");
+        
+        $area1 = new \Evocatio\Bundle\CmsBundle\Entity\Area();
+        $area1->setName("area1");
+        $area1->setPage($entity);
+        
+        $area2 = new \Evocatio\Bundle\CmsBundle\Entity\Area();
+        $area2->setName("module");
+        $area2->setPage($entity);
+        
+        $template->addArea($area1);
+        $template->addArea($area2);
+        
+//        $entity->setTemplate($template);
 //        $entity->addTranslations($this->language_read_handler->getAllPublishedOrderedByRank());
-        $create_form = $this->form_factory->create(new Type());
+        $create_form = $this->form_factory->create(new Type(), $entity);
 
         return $create_form;
     }
