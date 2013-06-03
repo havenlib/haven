@@ -54,8 +54,8 @@ function addHtmlContent(source, tag, cible){
     newnode.innerHTML = $("#" + source).attr('data-prototype').replace(regpat, next_id);
     var ajouter = document.getElementById(source).appendChild(newnode.firstChild);
     
-//    alert($(cible).html());
-            //.find(".display").attr("contenteditable", "true");
+//    alert(html());
+    $("#"+cible).find(".display").attr("contenteditable", "true");
 }
 /*
  function addAnEntreprise(source){

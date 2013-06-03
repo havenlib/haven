@@ -2,9 +2,14 @@
 {% block formhead %}
     {{ _route_crud.path('owner_site_page_edit', 'edit',entity.id) }}
 {% endblock formhead %}
-{% block template %}
-    {% include 'OwnerSiteBundle:Page/template:' ~ entity.template ~ '.html.twig' ignore missing with {'entity': entity}  %}
-{% endblock template %}
+{% block form %}
+<fieldset>
+        {{ form_widget(edit_form) }}
+        <div class="hidden">
+        </div>
+</fieldset>
+    {% include entity.template.path with {'entity': entity} %}
+{% endblock form %}
 {% block delete %}
 <li>
    {# <form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">

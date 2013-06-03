@@ -1,6 +1,6 @@
 <?php
 
-namespace tahua\SiteBundle\Entity;
+namespace Evocatio\Bundle\CmsBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
