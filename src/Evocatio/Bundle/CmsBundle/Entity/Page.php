@@ -27,6 +27,13 @@ class Page extends Translatable {
      *      )
      */
     private $contents;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="template", type="string", length=255)
+     */
+    private $template;
 
     /**
      * @ORM\OneToMany(targetEntity="PageTranslation", mappedBy="parent", cascade={"persist"})
@@ -146,4 +153,27 @@ class Page extends Translatable {
         $this->removeContent($contents);
     }
 
+
+    /**
+     * Set template
+     *
+     * @param string $template
+     * @return Page
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    
+        return $this;
+    }
+
+    /**
+     * Get template
+     *
+     * @return string 
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
 }
