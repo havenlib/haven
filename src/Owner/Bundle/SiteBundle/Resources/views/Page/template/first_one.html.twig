@@ -1,0 +1,47 @@
+{% extends "OwnerSiteBundle::base.html.twig" %}
+{% block navigation %}
+{% endblock navigation %}
+{% block header %}
+{% endblock header %}
+{% block inside_content %} 
+    {% block div1 %}
+    <div id="div1">
+        {% block inside_div1 %}
+        <section>
+            <h6>Available content list</h6>
+            <ul class="contents-list">
+                <li>
+                    <input type=button value="Html content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_htmlcontents', null, 'div1');" />
+                </li>
+            </ul>
+        </section>
+        <div class="display">
+            {{entity.htmlcontents().count()}}
+            {% if entity.htmlcontents().count() %}
+                {{ entity.htmlcontents().first().content }}
+            {% endif %}
+        </div>
+        {% endblock inside_div1 %}
+    </div>
+    {% endblock div1 %}
+    {% block div2 %}
+    <div id="div2">
+        {% block inside_div2 %}
+        <section>
+            <h6>Available content list</h6>
+            <ul class="contents-list">
+                <li>
+                    <input type=button value="Html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_htmlcontents', null, 'div2');" />
+                </li>
+            </ul>
+        </section>
+        <div class="display">
+            {% if entity.htmlcontents().count() %}
+                {{ entity.htmlcontents().first().content }}
+            {% endif %}
+        </div>
+        {% endblock inside_div2 %}
+    </div>
+    {% endblock div2 %}
+
+{% endblock inside_content %}

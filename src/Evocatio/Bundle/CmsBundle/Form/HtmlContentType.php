@@ -10,7 +10,7 @@ class HtmlContentType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('name')
+//                ->add('name')
                 ->add('translations', 'collection', array(
                     'type' => new HtmlContentTranslationType()
                     , 'allow_add' => true
