@@ -16,32 +16,22 @@ class PageType extends AbstractType {
                     , "label" => false
                     , 'prototype' => true
                     , 'prototype_name' => '__name_trans__'
-                    , 'by_reference' => false                    
-                    , 'options' => array(
-                        'label' => false
-                    )
-                    ))
-                ->add('template')
-                ->add('page_contents', "collection", array(
-                    'type' => new PageContentType()
-                    , 'allow_add' => true
-                    , 'allow_delete' => true
-                    , 'prototype' => true
-                    , 'by_reference' => false                 
+                    , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
                     )
                 ))
-//                ->add('htmlcontents', "collection", array(
-//                    'type' => new HtmlContentType()
-//                    , 'allow_add' => true
-//                    , 'allow_delete' => true
-//                    , 'prototype' => true
-//                    , 'by_reference' => false                 
-//                    , 'options' => array(
-//                        'label' => false
-//                    )
-//                ))
+                ->add('template')
+                ->add('html_contents', "collection", array(
+                    'type' => new HtmlContentType()
+                    , 'allow_add' => true
+                    , 'allow_delete' => true
+                    , 'prototype' => true
+                    , 'by_reference' => false
+                    , 'options' => array(
+                        'label' => false
+                    )
+                ))
         ;
     }
 
