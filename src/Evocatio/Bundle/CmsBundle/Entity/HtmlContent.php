@@ -153,7 +153,7 @@ class HtmlContent extends Content {
     }
     
     public function __toString() {
-        return $this->getName();
+        return "-->".$this->getId();
     }
 
 }

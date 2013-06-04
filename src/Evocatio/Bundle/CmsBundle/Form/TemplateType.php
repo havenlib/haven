@@ -10,9 +10,11 @@ class TemplateType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('areas', 'collection', array(
-                    'type' => new AreaType()
-                ))
+                ->add('name')
+//                ->add('path')
+//                ->add('areas', 'collection', array(
+//                    'type' => new AreaType()
+//                ))
         ;
     }
 

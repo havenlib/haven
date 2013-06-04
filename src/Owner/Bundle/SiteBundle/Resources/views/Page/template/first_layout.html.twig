@@ -4,14 +4,31 @@
 {% block header %}
 {% endblock header %}
 {% block inside_content %} 
-    {% block div1 %}
-    <div id="div1">
+{% for area in entity.template.areas %}
+    <div id="{{ area.name }}" class="area">
+        <section>
+            <h6>Available content list</h6>
+            <ul class="contents-list">
+                <li>
+                    <input type=button value="Add Html content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_html_contents', null, '{{ area.name }}');" />
+                </li>
+            </ul>
+        </section>
+        <div class="display">
+            {% for content in entity.getContentsByArea(area.name)%}
+                {{ content.content }}
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+    {#% block div1 %}
+    <div id="area1" class="area">
         {% block inside_div1 %}
         <section>
             <h6>Available content list</h6>
             <ul class="contents-list">
                 <li>
-                    <input type=button value="Html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_htmlcontents', null, 'div1');" />
+                    <input type=button value="Add Html content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_html_contents', null, 'area1');" />
                 </li>
             </ul>
         </section>
@@ -24,13 +41,13 @@
     </div>
     {% endblock div1 %}
     {% block div2 %}
-    <div id="div2">
+    <div id="area2">
         {% block inside_div2 %}
         <section>
             <h6>Available content list</h6>
             <ul class="contents-list">
                 <li>
-                    <input type=button value="Html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_htmlcontents', null, 'div2');" />
+                    <input type=button value="Add Html content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_html_contents', null, 'area2');" />
                 </li>
             </ul>
         </section>
@@ -41,6 +58,6 @@
         </div>
         {% endblock inside_div2 %}
     </div>
-    {% endblock div2 %}
+    {% endblock div2 %#}
 
 {% endblock inside_content %}
