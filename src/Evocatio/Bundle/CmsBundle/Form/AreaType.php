@@ -11,7 +11,7 @@ class AreaType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('name')
-                ->add('htmlcontents', "collection", array(
+                ->add('contents', "collection", array(
                     'type' => new HtmlContentType()
                     , 'allow_add' => true
                     , 'allow_delete' => true

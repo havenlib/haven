@@ -18,7 +18,7 @@ function addAnItem(source, tag, cible) {
         }
     });
 //    choisi comme next id le plus gros chiffre de la liste d'id , +1
-    next_id = ($(list_ids).length == 0) ? 0 : Math.max.call(null, list_ids) + 1;
+    next_id = ($(list_ids).length == 0) ? 0 : Math.max.apply(null, list_ids) + 1;
 
     newnode.innerHTML = $("#" + source).attr('data-prototype').replace(regpat, next_id);
     //     mets le selected sur l'option selon l'index du select pour mettre l' option en anglais plus nescessaire normalement à été corrigé dans translation.html.twig
@@ -39,7 +39,8 @@ function addAnItem(source, tag, cible) {
     $(".nav").filter(".lang").find(".active").click();
 }
 
-function addHtmlContent(source, tag, cible){
+function addHtmlContent(source, tag, cible) {
+    // si il n'y a pas de tag définie mettre __name__ par default
     tag = tag || "__name__";
     var regpat = new RegExp(tag, "gi")
     newnode = document.createElement("div");
@@ -49,13 +50,20 @@ function addHtmlContent(source, tag, cible){
             return sindex;
         }
     });
-    next_id = ($(list_ids).length == 0) ? 0 : Math.max.call(null, list_ids) + 1;
+    next_id = ($(list_ids).length == 0) ? 0 : Math.max.apply(null, list_ids) + 1;
+    console.log(next_id);
 
     newnode.innerHTML = $("#" + source).attr('data-prototype').replace(regpat, next_id);
-    var ajouter = document.getElementById(source).appendChild(newnode.firstChild);
-    
-//    alert(html());
-    $("#"+cible).find(".display").attr("contenteditable", "true");
+    //     mets le selected sur l'option selon l'index du select pour mettre l' option en anglais plus nescessaire normalement à été corrigé dans translation.html.twig
+
+    var ajouter = document.getElementById(cible).appendChild(newnode.firstChild);
+    $(ajouter).find("input[id$='area']").attr("value", cible);
+
+    // puts the ckeditor where it is needed, really it reloads for all ckeditor class under (ajouter)
+    addCkEditorTo(ajouter);
+
+    // clicker les nav langue pour afficher les bonne traductions, Sinon par défaut lors de l'ajout le nouveau item apparait en français'
+    $(".nav").filter(".lang").find(".active").click();
 }
 /*
  function addAnEntreprise(source){
