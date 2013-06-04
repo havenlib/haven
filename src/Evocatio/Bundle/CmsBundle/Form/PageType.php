@@ -21,9 +21,9 @@ class PageType extends AbstractType {
                         'label' => false
                     )
                     ))
-                ->add('template', new TemplateType())
-                ->add('htmlcontents', "collection", array(
-                    'type' => new HtmlContentType()
+                ->add('template')
+                ->add('page_contents', "collection", array(
+                    'type' => new PageContentType()
                     , 'allow_add' => true
                     , 'allow_delete' => true
                     , 'prototype' => true
@@ -32,6 +32,16 @@ class PageType extends AbstractType {
                         'label' => false
                     )
                 ))
+//                ->add('htmlcontents', "collection", array(
+//                    'type' => new HtmlContentType()
+//                    , 'allow_add' => true
+//                    , 'allow_delete' => true
+//                    , 'prototype' => true
+//                    , 'by_reference' => false                 
+//                    , 'options' => array(
+//                        'label' => false
+//                    )
+//                ))
         ;
     }
 

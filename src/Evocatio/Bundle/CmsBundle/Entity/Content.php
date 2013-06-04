@@ -35,6 +35,11 @@ class Content extends Translatable {
     protected $status;
 
     /**
+     * @ORM\OneToMany(targetEntity="PageContent", mappedBy="content", cascade={"persist"})
+     */
+    private $page_contents;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -62,28 +67,7 @@ class Content extends Translatable {
     }
 
     public function __toString() {
-        return $this->getContent();
-    }
-
-    /**
-     * Set page
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Page $page
-     * @return Content
-     */
-    public function setPage(\Evocatio\Bundle\CmsBundle\Entity\Page $page = null) {
-        $this->page = $page;
-
-        return $this;
-    }
-
-    /**
-     * Get page
-     *
-     * @return \Evocatio\Bundle\CmsBundle\Entity\Page 
-     */
-    public function getPage() {
-        return $this->page;
+        return $this->id;
     }
 
     /**
@@ -105,6 +89,48 @@ class Content extends Translatable {
      */
     public function getStatus() {
         return $this->status;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->page_contents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pages = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     * @return Content
+     */
+    public function addPageContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->page_contents[] = $pageContents;
+
+        return $this;
+    }
+
+    /**
+     * Remove page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     */
+    public function removePageContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->page_contents->removeElement($pageContents);
+    }
+
+    /**
+     * Get page_contents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPageContents() {
+        return $this->page_contents;
+    }
+
+    public function equals($content) {
+        return ($this->getId() === $content->getId());
     }
 
 }

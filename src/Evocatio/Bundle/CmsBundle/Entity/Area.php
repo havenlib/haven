@@ -35,15 +35,6 @@ class Area {
     private $template;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Content", cascade={"persist"})
-     * @ORM\JoinTable(name="AreasContents",
-     *      joinColumns={@ORM\JoinColumn(name="area_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")}
-     *      )
-     */
-    private $contents;
-
-    /**
      * Get id
      *
      * @return integer 
@@ -115,15 +106,13 @@ class Area {
         return $this->template;
     }
 
-
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->contents = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get HtmlContents
      *
@@ -166,4 +155,5 @@ class Area {
     public function getContents() {
         return $this->contents;
     }
+
 }
