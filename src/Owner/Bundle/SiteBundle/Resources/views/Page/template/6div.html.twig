@@ -1,6 +1,27 @@
 {% extends "OwnerSiteBundle::base.html.twig" %}
+{% block navigation %}
+{% endblock navigation %}
+{% block header %}
+{% endblock header %}
 {% block inside_content %} 
-    {% block div1 %}
+{% for area in entity.template.areas %}
+    <div id="{{ area.name }}" class="area">
+        <section>
+            <h6>Available content list</h6>
+            <ul class="contents-list">
+                <li>
+                    <input type=button value="Add Html content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_html_contents', '', '{{ area.name }}');" />
+                </li>
+            </ul>
+        </section>
+        <div class="display">
+            {% for content in entity.getContentsByArea(area.name)%}
+                {{ content.content }}
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+    {#% block div1 %}
     <div id="div1">
         {% block inside_div1 %}
             {% if entity.htmlcontents().count() %}
@@ -68,6 +89,6 @@
             </p>
         {% endblock inside_div6 %}
     </div>
-    {% endblock div6 %}
+    {% endblock div6 %#}
     
 {% endblock inside_content %}
