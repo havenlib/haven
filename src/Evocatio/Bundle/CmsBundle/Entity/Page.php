@@ -101,6 +101,12 @@ class Page extends Translatable {
         return $return_collection;
     }
 
+    public function getContentsByArea($area) {
+        return $this->getContents()->filter(function ($content) use ($area) {
+                            return ($content->getArea() == $area);
+                        });
+    }
+
     /**
      * Add content
      *
@@ -112,7 +118,7 @@ class Page extends Translatable {
         $page_content->setContent($content);
         $page_content->setPage($this);
 
-        $this->page_contents->add($page_content);
+        $this->addPageContent($page_content);
 
         return $this;
     }
@@ -126,8 +132,7 @@ class Page extends Translatable {
         $page_contents = $this->page_contents->filter(function ($page_content) use ($content) {
                             return $page_content->getContent()->equals($content);
                         })->getValues();
-
-        $this->pages_contents->removeElement($page_contents);
+        $this->page_contents->removeElement($page_contents);
     }
 
     /**
@@ -152,6 +157,7 @@ class Page extends Translatable {
      * @return Page
      */
     public function addHtmlContent(\Evocatio\Bundle\CmsBundle\Entity\HtmlContent $content) {
+        echo $content->getContent();
         $this->addContent($content);
 
         return $this;
