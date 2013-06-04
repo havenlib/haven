@@ -27,7 +27,7 @@ class Page extends Translatable {
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="Template")
+     * @ORM\ManyToOne(targetEntity="Template")
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
      */
     private $template;
@@ -53,49 +53,6 @@ class Page extends Translatable {
 
     public function getName($lang = null) {
         return $this->getTranslated('Name', $lang);
-    }
-
-    /**
-     * Get pages_contents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getContents() {
-        $return_collection = new \Doctrine\Common\Collections\ArrayCollection();
-
-        foreach ($this->page_contents as $page_content) {
-            $return_collection->add($page_content->getContent());
-        }
-        return $return_collection;
-    }
-
-    /**
-     * Add content
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Content $contents
-     * @return Content
-     */
-    public function addContent(\Evocatio\Bundle\CmsBundle\Entity\Content $content) {
-        $page_content = new PageContent();
-        $page_content->setContent($content);
-        $page_content->setPage($this);
-
-        $this->page_contents->add($page_content);
-
-        return $this;
-    }
-
-    /**
-     * Remove contents
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Contents $contents
-     */
-    public function removeContent(\Evocatio\Bundle\CmsBundle\Entity\Content $content) {
-        $page_contents = $this->page_contents->filter(function ($page_content) use ($content) {
-                            return $page_content->getContent()->equals($content);
-                        })->getValues();
-
-        $this->pages_contents->removeElement($page_contents);
     }
 
     /**
@@ -130,6 +87,50 @@ class Page extends Translatable {
     }
 
     /**
+     * Get pages_contents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getContents() {
+        $return_collection = new \Doctrine\Common\Collections\ArrayCollection();
+        foreach ($this->page_contents->getValues() as $page_content) {
+            $content = $page_content->getContent();
+            $content->setArea($content->getArea() ? $content->getArea() : $page_content->getArea());
+            $return_collection->add($content);
+        }
+        return $return_collection;
+    }
+
+    /**
+     * Add content
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\Content $contents
+     * @return Content
+     */
+    public function addContent(\Evocatio\Bundle\CmsBundle\Entity\Content $content) {
+        $page_content = new PageContent();
+        $page_content->setContent($content);
+        $page_content->setPage($this);
+
+        $this->page_contents->add($page_content);
+
+        return $this;
+    }
+
+    /**
+     * Remove contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\Contents $contents
+     */
+    public function removeContent(\Evocatio\Bundle\CmsBundle\Entity\Content $content) {
+        $page_contents = $this->page_contents->filter(function ($page_content) use ($content) {
+                            return $page_content->getContent()->equals($content);
+                        })->getValues();
+
+        $this->pages_contents->removeElement($page_contents);
+    }
+
+    /**
      * Get HtmlContents
      *
      * @return Doctrine\Common\Collections\Collection 
@@ -137,9 +138,9 @@ class Page extends Translatable {
     public function getHtmlContents() {
         $return_collection = new \Doctrine\Common\Collections\ArrayCollection();
 
-        foreach ($this->page_contents as $page_content) {
-            if (get_class($page_content->getContent()) == "Evocatio\Bundle\CmsBundle\Entity\HtmlContent")
-                $return_collection->add($page_content->getContent());
+        foreach ($this->getContents() as $content) {
+            if (get_class($content) == "Evocatio\Bundle\CmsBundle\Entity\HtmlContent")
+                $return_collection->add($content);
         }
         return $return_collection;
     }
