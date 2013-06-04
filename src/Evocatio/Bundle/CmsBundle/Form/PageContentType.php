@@ -6,26 +6,23 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class TemplateType extends AbstractType {
+class PageContentType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('name')
-//                ->add('path')
-//                ->add('areas', 'collection', array(
-//                    'type' => new AreaType()
-//                ))
+                ->add("area")
+                ->add('content', new HtmlContentType())
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\CmsBundle\Entity\Template'
+            'data_class' => 'Evocatio\Bundle\CmsBundle\Entity\PageContent'
         ));
     }
 
     public function getName() {
-        return 'evocatio_bundle_cmsbundle_templatetype';
+        return 'evocatio_bundle_cmsbundle_pagecontenttype';
     }
 
 }
