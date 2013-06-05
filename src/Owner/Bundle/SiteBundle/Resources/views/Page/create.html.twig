@@ -12,6 +12,11 @@
         </div>
 </fieldset>
 {% endblock form %}
+{% block available_content %}
+<div id="htmlcontent" class="draggable" ondragstart="console.log('drag')">
+    <img width="120px" style="border: 1px solid black" src="/images/html_content.jpg" />
+</div>
+{% endblock available_content %}
 {% block back %}
     <a href="{{ _route_crud.path('owner_site_page_list', 'list') }}">
         Back to the list
