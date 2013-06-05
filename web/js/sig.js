@@ -44,15 +44,10 @@ function addHtmlContent(source, tag, cible) {
     tag = tag || "__name__";
     var regpat = new RegExp(tag, "gi")
     newnode = document.createElement("div");
-    list_ids = $("div[id^='" + source + "_']").map(function() {
-        sindex = $(this).attr("id").match(/\d+\.?\d*$/g);
-        if (this.id == source + "_" + sindex) {
-            return sindex;
-        }
-    });
-    next_id = ($(list_ids).length == 0) ? 0 : Math.max.apply(null, list_ids) + 1;
-    console.log(next_id);
 
+    next_id = $("div").filter(function() {
+        return this.id.match('^' + source + '[_][0-9]*$');
+    }).length;
     newnode.innerHTML = $("#" + source).attr('data-prototype').replace(regpat, next_id);
     //     mets le selected sur l'option selon l'index du select pour mettre l' option en anglais plus nescessaire normalement à été corrigé dans translation.html.twig
 
@@ -619,7 +614,6 @@ $(document).ready(function() {
     $('textarea.ckeditor').each(function() {
         prepareEditor(this);
     });
-
 })
 
 function removeCkEditorFrom(target) {

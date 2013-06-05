@@ -5,7 +5,7 @@
 {% endblock header %}
 {% block inside_content %} 
 {% for area in entity.template.areas %}
-    <div id="{{ area.name }}" class="area">
+<div id="{{ area.name }}" class="area" ondrop="addContent()">
         <section>
             <h6>Available content list</h6>
             <ul class="contents-list">
