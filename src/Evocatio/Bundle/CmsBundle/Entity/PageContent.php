@@ -113,4 +113,24 @@ class PageContent {
         return $this->area;
     }
 
+    /**
+     * Set content
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\HtmlContent $content
+     * @return PagesContents
+     */
+    public function setHtmlContent(\Evocatio\Bundle\CmsBundle\Entity\HtmlContent $content = null) {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return \Evocatio\Bundle\CmsBundle\Entity\Content 
+     */
+    public function getHtmlContent() {
+        return $this->content;
+    }
 }

@@ -1,9 +1,22 @@
 {% extends "OwnerSiteBundle::base.html.twig" %}
 {% block navigation %}
 {% endblock navigation %}
-{% block header %}
-{% endblock header %}
+{% block inside_header %}
+            {% for content in entity.getContentsByArea("header")%}
+                {{ content.content |raw }}
+            {% endfor %}
+{% endblock inside_header %}
 {% block inside_content %} 
+l'idée d'un template c'est d'avoir un look, donc il y aura le contenu header, aside, main et footer
+
+
+<aside>
+            {% for content in entity.getContentsByArea("aside")%}
+                {{ content.content |raw }}
+            {% endfor %}    
+</aside>
+<div id="theatre">
+
 {% for area in entity.template.areas %}
     <div id="{{ area.name }}" class="area">
         <section>
@@ -21,43 +34,5 @@
         </div>
     </div>
 {% endfor %}
-    {#% block div1 %}
-    <div id="area1" class="area">
-        {% block inside_div1 %}
-        <section>
-            <h6>Available content list</h6>
-            <ul class="contents-list">
-                <li>
-                    <input type=button value="Add Html content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_html_contents', null, 'area1');" />
-                </li>
-            </ul>
-        </section>
-        <div class="display">
-            {% if entity.htmlcontents().count() %}
-                {{ entity.htmlcontents().first().content }}
-            {% endif %}
-        </div>
-        {% endblock inside_div1 %}
-    </div>
-    {% endblock div1 %}
-    {% block div2 %}
-    <div id="area2">
-        {% block inside_div2 %}
-        <section>
-            <h6>Available content list</h6>
-            <ul class="contents-list">
-                <li>
-                    <input type=button value="Add Html content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_html_contents', null, 'area2');" />
-                </li>
-            </ul>
-        </section>
-        <div class="display">
-            {% if entity.htmlcontents().count() %}
-                {{ entity.htmlcontents().first().content }}
-            {% endif %}
-        </div>
-        {% endblock inside_div2 %}
-    </div>
-    {% endblock div2 %#}
-
+</div>
 {% endblock inside_content %}

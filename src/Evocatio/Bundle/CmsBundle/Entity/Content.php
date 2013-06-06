@@ -38,15 +38,6 @@ class Content extends Translatable {
      * @ORM\OneToMany(targetEntity="PageContent", mappedBy="content", cascade={"persist"})
      */
     private $page_contents;
-    private $area;
-
-    public function getArea() {
-        return $this->area;
-    }
-
-    public function setArea($area) {
-        $this->area = $area;
-    }
 
     /**
      * Get id
@@ -137,8 +128,8 @@ class Content extends Translatable {
         return $this->page_contents;
     }
 
-    public function equals($content) {
-        return ($this->getId() === $content->getId());
-    }
+//    public function equals($content) {
+//        return ($this->getId() === $content->getId());
+//    }
 
 }
