@@ -21,7 +21,6 @@ class HtmlContentType extends AbstractType {
                         'label' => false
                     )
                 ))
-                ->add('area')
         ;
     }
 

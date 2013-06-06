@@ -15,11 +15,15 @@
             </ul>
         </section>
         <div class="display">
-            {% for content in entity.getContentsByArea(area.name)%}
-                {{ content.content }}
+            {% for content in entity.getPageContents() %}
+                {{ content.getContent().content |raw }}
             {% endfor %}
         </div>
     </div>
+<div id="editable" contenteditable="true">
+    <h1>Inline Editing in Action!</h1>
+    <p>The div element that contains this text is now editable.
+</div>
 {% endfor %}
     {#% block div1 %}
     <div id="div1">
