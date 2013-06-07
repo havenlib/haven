@@ -23,7 +23,7 @@ class PageType extends AbstractType {
                 ))
                 ->add('template')
                 ->add('page_contents', "collection", array(
-                    'type' => new PageContentType()
+                    'type' => new PageContentType('HtmlContent')
                     , 'allow_add' => true
                     , 'allow_delete' => true
                     , 'prototype' => true
