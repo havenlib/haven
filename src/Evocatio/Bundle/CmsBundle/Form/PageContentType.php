@@ -9,18 +9,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class PageContentType extends AbstractType
 {
     protected $i = 0;
-    protected $test = null;
+    protected $content_type = null;
     
-    public function __construct($test) {
-        $this->test = $test;
+    public function __construct($content_type) {
+        $this->content_type = $content_type;
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('area')
-            ->add('content', new $this->test())
+            ->add('content', new $this->content_type())
         ;
-//        print_r($options);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

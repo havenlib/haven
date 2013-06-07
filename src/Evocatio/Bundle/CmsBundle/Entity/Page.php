@@ -144,6 +144,7 @@ class Page extends Translatable {
      * @return Page
      */
     public function addHtmlContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $pageContents->setPage($this);
         $this->page_contents[] = $pageContents;
 
         return $this;
@@ -165,8 +166,8 @@ class Page extends Translatable {
      */
     public function getHtmlContents() {
         $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getPageContents()->filter(function ($pageContents) {
-                                    return get_class($pageContents->getContent()) == "Evocatio\Bundle\CmsBundle\Entity\HtmlContent";
-                                })->getValues());
+                            return get_class($pageContents->getContent()) == "Evocatio\Bundle\CmsBundle\Entity\HtmlContent";
+                        })->getValues());
 
         return $return_collection;
     }
@@ -178,6 +179,7 @@ class Page extends Translatable {
      * @return Page
      */
     public function addTextContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $pageContents->setPage($this);
         $this->page_contents[] = $pageContents;
 
         return $this;
@@ -199,8 +201,8 @@ class Page extends Translatable {
      */
     public function getTextContents() {
         $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getPageContents()->filter(function ($pageContents) {
-                                    return get_class($pageContents->getContent()) == "Evocatio\Bundle\CmsBundle\Entity\TextContent";
-                                })->getValues());
+                            return get_class($pageContents->getContent()) == "Evocatio\Bundle\CmsBundle\Entity\TextContent";
+                        })->getValues());
 
         return $return_collection;
     }
