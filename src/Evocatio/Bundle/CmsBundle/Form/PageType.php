@@ -22,8 +22,18 @@ class PageType extends AbstractType {
                     )
                 ))
                 ->add('template')
-                ->add('page_contents', "collection", array(
-                    'type' => new PageContentType('HtmlContent')
+                ->add('html_contents', "collection", array(
+                    'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\HtmlContentType')
+                    , 'allow_add' => true
+                    , 'allow_delete' => true
+                    , 'prototype' => true
+                    , 'by_reference' => false
+                    , 'options' => array(
+                        'label' => false
+                    )
+                ))
+                ->add('text_contents', "collection", array(
+                    'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\TextContentType')
                     , 'allow_add' => true
                     , 'allow_delete' => true
                     , 'prototype' => true

@@ -14,6 +14,7 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
  * "html"="Evocatio\Bundle\CmsBundle\Entity\HtmlContent", 
+ * "text"="Evocatio\Bundle\CmsBundle\Entity\TextContent", 
  * })
  */
 class Content extends Translatable {
