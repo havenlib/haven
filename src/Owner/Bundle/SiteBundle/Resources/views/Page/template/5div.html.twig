@@ -11,19 +11,33 @@
             <ul class="contents-list">
                 <li>
                     <input type=button value="Add Html content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_html_contents', '', '{{ area.name }}');" />
+                    <input type=button value="Add Text content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_text_contents', '', '{{ area.name }}');" />
                 </li>
             </ul>
         </section>
         <div class="display">
             {% for content in entity.getPageContents() %}
-                {{ content.getContent().content |raw }}
+                {% if(content.getContent().is("html")) %}
+                
+                
+                    {% for translation in content.content().translations %}
+                        <h1>{{translation.getTransLang().symbol }} => {{translation.getTransLang().name }}</h1>
+                        <div id="editable" contenteditable="true">
+                            {% if(translation.content) %}
+                                {{ translation.content | raw }}
+                            {% else %}
+                                <h4>Inline Editing in Action!</h4>
+                                <p>The div element that contains this text is now editable.
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                
+                {% else %}
+                    {{ content.getContent().content |raw }}
+                {% endif %}
             {% endfor %}
         </div>
     </div>
-<div id="editable" contenteditable="true">
-    <h1>Inline Editing in Action!</h1>
-    <p>The div element that contains this text is now editable.
-</div>
 {% endfor %}
     {#% block div1 %}
     <div id="div1">

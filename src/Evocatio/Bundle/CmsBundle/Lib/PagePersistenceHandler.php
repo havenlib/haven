@@ -16,9 +16,6 @@ class PagePersistenceHandler {
     }
 
     public function save($entity) {
-        foreach ($entity->getPageContents() as $page_content) {
-            $page_content->setArea($page_content->getContent()->getArea());
-        }
 
         $this->em->persist($entity);
         $this->em->flush();

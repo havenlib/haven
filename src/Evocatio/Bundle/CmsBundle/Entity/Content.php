@@ -4,6 +4,8 @@ namespace Evocatio\Bundle\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Evocatio\Bundle\CoreBundle\Generic\Translatable;
+use Doctrine\Common\Annotations\AnnotationReader;
+use \ReflectionClass;
 
 /**
  * Evocatio\Bundle\CmsBundle\Entity\Content
@@ -129,8 +131,21 @@ class Content extends Translatable {
         return $this->page_contents;
     }
 
+    public static function getDiscriminatorMap() {
+        $reader = new AnnotationReader();
+        return $reader->getClassAnnotation(new ReflectionClass(__CLASS__), "\Doctrine\ORM\Mapping\DiscriminatorMap");
+    }
+
+    public function getDiscriminator() {
+        $discriminator_map = self::getDiscriminatorMap();
+        return array_search(get_class($this), $discriminator_map->value);
+    }
+
+    public function is($discriminator) {
+        return $this->getDiscriminator() == $discriminator;
+    }
+
 //    public function equals($content) {
 //        return ($this->getId() === $content->getId());
 //    }
-
 }
