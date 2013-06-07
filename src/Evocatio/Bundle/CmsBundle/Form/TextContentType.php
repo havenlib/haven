@@ -6,32 +6,24 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PageContentType extends AbstractType
+class TextContentType extends AbstractType
 {
-    protected $i = 0;
-    protected $test = null;
-    
-    public function __construct($test) {
-        $this->test = $test;
-    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('area')
-            ->add('html_content', new $this->test())
+            ->add('status')
         ;
-//        print_r($options);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\CmsBundle\Entity\PageContent'
+            'data_class' => 'Evocatio\Bundle\CmsBundle\Entity\TextContent'
         ));
     }
 
     public function getName()
     {
-        return 'evocatio_bundle_cmsbundle_pagecontenttype';
+        return 'evocatio_bundle_cmsbundle_textcontenttype';
     }
 }
