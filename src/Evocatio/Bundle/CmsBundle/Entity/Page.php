@@ -137,4 +137,72 @@ class Page extends Translatable {
         return $this->page_contents;
     }
 
+    /**
+     * Add page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     * @return Page
+     */
+    public function addHtmlContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->page_contents[] = $pageContents;
+
+        return $this;
+    }
+
+    /**
+     * Remove page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     */
+    public function removeHtmlContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->page_contents->removeElement($pageContents);
+    }
+
+    /**
+     * Get page_contents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getHtmlContents() {
+        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getPageContents()->filter(function ($pageContents) {
+                                    return get_class($pageContents->getContent()) == "Evocatio\Bundle\CmsBundle\Entity\HtmlContent";
+                                })->getValues());
+
+        return $return_collection;
+    }
+
+    /**
+     * Add page_contents for textcontent type
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     * @return Page
+     */
+    public function addTextContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->page_contents[] = $pageContents;
+
+        return $this;
+    }
+
+    /**
+     * Remove page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     */
+    public function removeTextContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->page_contents->removeElement($pageContents);
+    }
+
+    /**
+     * Get page_contents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTextContents() {
+        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getPageContents()->filter(function ($pageContents) {
+                                    return get_class($pageContents->getContent()) == "Evocatio\Bundle\CmsBundle\Entity\TextContent";
+                                })->getValues());
+
+        return $return_collection;
+    }
+
 }
