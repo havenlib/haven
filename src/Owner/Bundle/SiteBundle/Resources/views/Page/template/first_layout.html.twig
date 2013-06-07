@@ -2,7 +2,7 @@
 {% block navigation %}
 {% endblock navigation %}
 {% block inside_header %}
-            {% for content in entity.getContentsByArea("header")%}
+            {% for content in entity.getPageContents("header") %}
                 {{ content.content |raw }}
             {% endfor %}
 {% endblock inside_header %}
@@ -11,7 +11,7 @@ l'idée d'un template c'est d'avoir un look, donc il y aura le contenu header, a
 
 
 <aside>
-            {% for content in entity.getContentsByArea("aside")%}
+            {% for content in entity.getPageContents("aside") %}
                 {{ content.content |raw }}
             {% endfor %}    
 </aside>
@@ -28,7 +28,7 @@ l'idée d'un template c'est d'avoir un look, donc il y aura le contenu header, a
             </ul>
         </section>
         <div class="display">
-            {% for content in entity.getContentsByArea(area.name)%}
+            {% for content in entity.getPageContents(area.name)%}
                 {{ content.content }}
             {% endfor %}
         </div>
