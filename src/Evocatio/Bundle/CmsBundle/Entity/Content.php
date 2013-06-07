@@ -141,8 +141,8 @@ class Content extends Translatable {
         return array_search(get_class($this), $discriminator_map->value);
     }
 
-    public function is($discriminator) {
-        return $this->getDiscriminator() == $discriminator;
+    public function is($class) {
+        return get_class($this) === $class;
     }
 
 //    public function equals($content) {
