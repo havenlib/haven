@@ -17,6 +17,7 @@ use \ReflectionClass;
  * @ORM\DiscriminatorMap({
  * "html"="Evocatio\Bundle\CmsBundle\Entity\HtmlContent", 
  * "text"="Evocatio\Bundle\CmsBundle\Entity\TextContent", 
+ * "widget"="Evocatio\Bundle\CmsBundle\Entity\Widget", 
  * })
  */
 class Content extends Translatable {
