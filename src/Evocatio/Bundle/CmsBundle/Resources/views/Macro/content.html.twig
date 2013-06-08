@@ -1,0 +1,7 @@
+{% macro fill_area(entity ,area) %}
+    {% for page_content in entity.getPageContents() if page_content.getArea() == area %}
+<div contenteditable="true">
+ {{ page_content.getContent().getContent() |raw }}
+    </div>
+    {% endfor %}    
+{% endmacro %}
