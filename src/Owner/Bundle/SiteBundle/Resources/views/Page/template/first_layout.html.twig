@@ -20,13 +20,14 @@ header
     </section -->
 {% endblock inside_header %}
 {% block inside_content %} 
+    
     <div id="sidebar">
         sidebar
-{{ CHelp.fill_area(entity, "sidebar") }}
+{{ CHelp.fill_area(entity, "sidebar", edit_form is defined?edit_form:null ) }}
         </div>
         <div id="theatre">
             theatre
-{{ CHelp.fill_area(entity, "theatre") }}
+{{ CHelp.fill_area(entity, "theatre", edit_form is defined?edit_form:null ) }}
 
             </div>
 {% endblock inside_content %}
