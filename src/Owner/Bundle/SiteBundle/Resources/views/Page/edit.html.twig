@@ -9,7 +9,18 @@
             {{ form_widget(edit_form) }}
     </fieldset>
     {% endblock form %}
-{% endembed %}
+{% endembed %}->>
+<menu type="toolbar">
+    <button type="command" label="Save" onclick="goDaddy()" >go</button>>
+</menu>
+<<-
+<script>
+    function goDaddy(){
+    var data = CKEDITOR.instances.editable43.getData();
+    alert(data);
+    }
+    // Your code to save "data", usually through Ajax.
+</script>
 {% endblock inside_body %}
 
 
