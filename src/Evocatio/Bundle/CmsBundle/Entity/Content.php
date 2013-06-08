@@ -17,6 +17,7 @@ use \ReflectionClass;
  * @ORM\DiscriminatorMap({
  * "html"="Evocatio\Bundle\CmsBundle\Entity\HtmlContent", 
  * "text"="Evocatio\Bundle\CmsBundle\Entity\TextContent", 
+ * "widget"="Evocatio\Bundle\CmsBundle\Entity\Widget", 
  * })
  */
 class Content extends Translatable {
@@ -141,9 +142,8 @@ class Content extends Translatable {
         return array_search(get_class($this), $discriminator_map->value);
     }
 
-    public function is($discriminator) {
-        echo get_class($this);
-        return $this->getDiscriminator() == $discriminator;
+    public function is($class) {
+        return get_class($this) === $class;
     }
 
 //    public function equals($content) {
