@@ -1,20 +1,23 @@
-{% extends "OwnerSiteBundle:Page:create.html.twig" %}
-{% block formhead %}
-    {{ _route_crud.path('owner_site_page_edit', 'edit',entity.id) }}
-{% endblock formhead %}
-{% block form %}
-<fieldset>
-        {{ form_widget(edit_form) }}
-        <div class="hidden">
-        </div>-->
-    {% include entity.template.path with {'entity': entity} %}
-</fieldset>
-{% endblock form %}
+{% extends entity.getTemplate() is empty?"OwnerSiteBundle:Page:create.html.twig":entity.getTemplate().getPath() %}
+{% block inside_body %}
+{{ parent() }}
+{% embed ("OwnerSiteBundle:Page:create.html.twig" ) %}
+    {% block formhead %}
+        {{ _route_crud.path('owner_site_page_edit', 'edit',entity.id) }}
+    {% endblock formhead %}
+    {% block form %}<fieldset>
+            {{ form_widget(edit_form) }}
+    </fieldset>
+    {% endblock form %}
+{% endembed %}
+{% endblock inside_body %}
+
+
 {% block delete %}
-<li>
+    <li>
    {# <form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
         <button type="submit">Delete</button>
     </form>#}
-</li>
+        </li>
 {% endblock delete %}

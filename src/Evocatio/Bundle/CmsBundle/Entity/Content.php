@@ -142,6 +142,7 @@ class Content extends Translatable {
     }
 
     public function is($discriminator) {
+        echo get_class($this);
         return $this->getDiscriminator() == $discriminator;
     }
 
