@@ -13,6 +13,7 @@
 <menu type="toolbar">
     <button type="command" label="Save" onclick="goDaddy()" >go</button>>
 </menu>
+{{ app.request.get('_template').get('bundle') }}:{{ app.request.get('_template').get('controller') }}
 <<-
 <script>
     function goDaddy(){
