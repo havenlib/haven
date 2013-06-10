@@ -11,7 +11,7 @@ class WidgetType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('translations', 'collection', array(
-                    'type' =>  new WidgetTranslationType()
+                    'type' => new WidgetTranslationType()
                     , 'allow_add' => true
                     , "label" => false
                     , 'prototype' => true
@@ -21,7 +21,9 @@ class WidgetType extends AbstractType {
                         'label' => false
                     )
                 ))
-        ;
+                ->add('bundle')
+                ->add('controller')
+                ->add('action')
         ;
     }
 

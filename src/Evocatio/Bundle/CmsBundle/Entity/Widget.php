@@ -36,6 +36,27 @@ class Widget extends Content {
      */
     protected $translations;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bundle", type="string", nullable=true)
+     */
+    private $bundle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="controller", type="string", nullable=false)
+     */
+    private $controller;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="action", type="string", nullable=false)
+     */
+    private $action;
+
     public function __construct() {
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -134,4 +155,73 @@ class Widget extends Content {
         return "-->" . $this->getId();
     }
 
+
+    /**
+     * Set bundle
+     *
+     * @param string $bundle
+     * @return Widget
+     */
+    public function setBundle($bundle)
+    {
+        $this->bundle = $bundle;
+    
+        return $this;
+    }
+
+    /**
+     * Get bundle
+     *
+     * @return string 
+     */
+    public function getBundle()
+    {
+        return $this->bundle;
+    }
+
+    /**
+     * Set controller
+     *
+     * @param string $controller
+     * @return Widget
+     */
+    public function setController($controller)
+    {
+        $this->controller = $controller;
+    
+        return $this;
+    }
+
+    /**
+     * Get controller
+     *
+     * @return string 
+     */
+    public function getController()
+    {
+        return $this->controller;
+    }
+
+    /**
+     * Set action
+     *
+     * @param string $action
+     * @return Widget
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+    
+        return $this;
+    }
+
+    /**
+     * Get action
+     *
+     * @return string 
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
 }
