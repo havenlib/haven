@@ -68,7 +68,7 @@ class PageController extends ContainerAware {
             $this->container->get("page.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return $this->redirectListAction();
+            return $this->redirectEditAction($edit_form->getData()->getId());
         }
 
         $this->container->get("session")->setFlash("error", "create.error");
@@ -116,7 +116,7 @@ class PageController extends ContainerAware {
             $this->container->get("page.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->setFlash("success", "create.success");
 
-            return $this->redirectListAction();
+            return $this->redirectEditAction($edit_form->getData()->getId());
         }
 
         $this->container->get("session")->setFlash("error", "update.error");
@@ -133,6 +133,12 @@ class PageController extends ContainerAware {
 
     protected function redirectListAction() {
         return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_page_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+    }
+
+    protected function redirectEditAction($id) {
+        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_page_edit', array(
+                    'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
+                    , 'id' => $id)));
     }
 
 }
