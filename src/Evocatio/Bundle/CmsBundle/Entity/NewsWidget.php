@@ -22,6 +22,11 @@ class NewsWidget extends Widget {
     protected $id;
 
     /**
+     * @ORM\Column(name="maximum", type="integer", nullable=true)
+     */
+    protected $maximum;
+
+    /**
      * @ORM\OneToMany(targetEntity="NewsWidgetTranslation", mappedBy="parent", cascade={"persist"})
      */
     protected $translations;
@@ -80,17 +85,45 @@ class NewsWidget extends Widget {
     public function getTranslations() {
         return $this->translations;
     }
-    
+
     public function getBundle() {
         return null;
     }
-    
+
     public function getController() {
         return "Post";
     }
-    
+
     public function getAction() {
         return "listWidget";
     }
 
+    public function getOptions() {
+        return array("maximum" => $this->getMaximum());
+    }
+
+
+
+    /**
+     * Set maximum
+     *
+     * @param string $maximum
+     * @return NewsWidget
+     */
+    public function setMaximum($maximum)
+    {
+        $this->maximum = $maximum;
+    
+        return $this;
+    }
+
+    /**
+     * Get maximum
+     *
+     * @return string 
+     */
+    public function getMaximum()
+    {
+        return $this->maximum;
+    }
 }

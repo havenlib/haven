@@ -21,6 +21,7 @@ class NewsWidgetType extends AbstractType {
                         'label' => false
                     )
                 ))
+                ->add('maximum')
         ;
     }
 
