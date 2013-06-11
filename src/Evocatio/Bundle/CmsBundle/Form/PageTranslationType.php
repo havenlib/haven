@@ -12,6 +12,7 @@ class PageTranslationType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('name')
+                ->add('slug')
                 ->add('trans_lang', null, array(
                     "property" => "name"
                     , "label" => false

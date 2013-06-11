@@ -3,7 +3,7 @@
 namespace Evocatio\Bundle\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Evocatio\Bundle\CoreBundle\Entity\TranslationMappedBase;
+use \Evocatio\Bundle\CoreBundle\Entity\SluggableMappedBase;
 
 /**
  * NewsWidgetTranslation
@@ -11,7 +11,7 @@ use Evocatio\Bundle\CoreBundle\Entity\TranslationMappedBase;
  * @ORM\Table()
  * @ORM\Entity
  */
-class NewsWidgetTranslation extends TranslationMappedBase {
+class NewsWidgetTranslation extends SluggableMappedBase {
 
     /**
      * @var integer
@@ -42,27 +42,6 @@ class NewsWidgetTranslation extends TranslationMappedBase {
      */
     public function getId() {
         return $this->id;
-    }
-
-    /**
-     * Set content
-     *
-     * @param string $content
-     * @return WidgetTranslation
-     */
-    public function setContent($content) {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get content
-     *
-     * @return string 
-     */
-    public function getContent() {
-        return $this->content;
     }
 
     /**
