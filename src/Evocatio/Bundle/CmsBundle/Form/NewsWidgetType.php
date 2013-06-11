@@ -6,12 +6,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class WidgetType extends AbstractType {
+class NewsWidgetType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('translations', 'collection', array(
-                    'type' => new WidgetTranslationType()
+                    'type' => new NewsWidgetTranslationType()
                     , 'allow_add' => true
                     , "label" => false
                     , 'prototype' => true
@@ -21,20 +21,17 @@ class WidgetType extends AbstractType {
                         'label' => false
                     )
                 ))
-                ->add('bundle')
-                ->add('controller')
-                ->add('action')
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\CmsBundle\Entity\Widget'
+            'data_class' => 'Evocatio\Bundle\CmsBundle\Entity\NewsWidget'
         ));
     }
 
     public function getName() {
-        return 'evocatio_bundle_cmsbundle_widgettype';
+        return 'evocatio_bundle_cmsbundle_newswidgettype';
     }
 
 }

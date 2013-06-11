@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Evocatio\Bundle\CoreBundle\Repository\LanguageRepository;
 
-class WidgetTranslationType extends AbstractType {
+class NewsWidgetTranslationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
@@ -29,7 +29,7 @@ class WidgetTranslationType extends AbstractType {
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\CmsBundle\Entity\WidgetTranslation'
+            'data_class' => 'Evocatio\Bundle\CmsBundle\Entity\NewsWidgetTranslation'
         ));
     }
 

@@ -1,5 +1,5 @@
 
-function addAnItem(source, tag, cible) {
+function addAnItem(source, tag) {
     // si il n'y a pas de tag définie mettre __name__ par default
     tag = tag || "__name__";
     var regpat = new RegExp(tag, "gi")
@@ -9,28 +9,20 @@ function addAnItem(source, tag, cible) {
     // This is to allow use to create many forms for a single type of relationship in a table inheritance situtation
     // -------------
     // #TODO : will have to redo the numbering, take into considaration that delete will remove some numbers in the so we can end up with 2 ..._2 if ..._1 was deleted <--- FIX PLZ
+    tag = tag || "__name__";
+    var regpat = new RegExp(tag, "gi")
     newnode = document.createElement("div");
-    //    fait la liste des id's qui sont identique à la source+_xxx (xxx étant des chiffre) et retourne seulement les chiffres. donc une liste des index existants sans les enfants qui pourrait être source_translation_xxx
-    list_ids = $("div[id^='" + source + "_']").map(function() {
-        sindex = $(this).attr("id").match(/\d+\.?\d*$/g);
-        if (this.id == source + "_" + sindex) {
-            return sindex;
-        }
-    });
-//    choisi comme next id le plus gros chiffre de la liste d'id , +1
-    next_id = ($(list_ids).length == 0) ? 0 : Math.max.apply(null, list_ids) + 1;
 
+    next_id = $("div").filter(function() {
+        return this.id.match('^' + source + '[_][0-9]*$');
+    }).length;
     newnode.innerHTML = $("#" + source).attr('data-prototype').replace(regpat, next_id);
     //     mets le selected sur l'option selon l'index du select pour mettre l' option en anglais plus nescessaire normalement à été corrigé dans translation.html.twig
 //    $(newnode.firstChild).find("select[id$='trans_lang']").each(function(index, element) {
 //        $(element).find("option:eq(" + index + ")").attr("selected", "selected");
 //    });
 
-    if (cible) {
-        var ajouter = document.getElementById(cible).appendChild(newnode.firstChild);
-    } else {
-        var ajouter = document.getElementById(source).appendChild(newnode.firstChild);
-    }
+    var ajouter = document.getElementById(source).appendChild(newnode.firstChild);
 
     // puts the ckeditor where it is needed, really it reloads for all ckeditor class under (ajouter)
     addCkEditorTo(ajouter);

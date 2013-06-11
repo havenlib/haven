@@ -1,4 +1,5 @@
 {% extends "OwnerSiteBundle::base.html.twig" %}
+{% import "EvocatioCmsBundle:Macro:content.html.twig" as CHelp %}
 {% block navigation %}
 {% endblock navigation %}
 {% block header %}
@@ -8,13 +9,6 @@
 <div id="{{ area.name }}" class="area" ondrop="addContent()">
         <section>
             <h6>Available content list</h6>
-            <ul class="contents-list">
-                <li>
-                    <input type=button value="Add Html content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_html_contents', '', '{{ area.name }}');" />
-                    <input type=button value="Add Text content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_text_contents', '', '{{ area.name }}');" />
-                    <input type=button value="Add Widget" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_widgets', '', '{{ area.name }}');" />
-                </li>
-            </ul>
         </section>
         <div class="display">
             {% for content in entity.getPageContents() %}
@@ -33,8 +27,11 @@
                         </div>
                     {% endfor %}
                 
+                {% elseif(content.getContent().is("Evocatio\\Bundle\\CmsBundle\\Entity\\Widget")) %}
+                        {{ CHelp.render_widget(content.getContent()) }}
                 {% else %}
-                    {{ content.getContent().content |raw }}
+                        No informations
+                    {#{ content.getContent().content |raw }#}
                 {% endif %}
             {% endfor %}
         </div>

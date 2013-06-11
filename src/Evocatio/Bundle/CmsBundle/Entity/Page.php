@@ -242,4 +242,33 @@ class Page extends Translatable {
         return $return_collection;
     }
 
+    /**
+     * Add page_contents for textcontent type
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     * @return Page
+     */
+    public function addNewsWidget(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->addWidget($pageContents);
+
+        return $this;
+    }
+
+    /**
+     * Remove page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     */
+    public function removeNewsWidget(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->removeWidget($pageContents);
+    }
+
+    public function getNewsWidgets() {
+        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getPageContents()->filter(function ($pageContents) {
+                            return get_class($pageContents->getContent()) == "Evocatio\Bundle\CmsBundle\Entity\NewsWidget";
+                        })->getValues());
+
+        return $return_collection;
+    }
+
 }
