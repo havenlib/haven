@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Evocatio\Bundle\CoreBundle\Entity\TranslationMappedBase;
 
 /**
- * WidgetTranslation
+ * NewsWidgetTranslation
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class WidgetTranslation extends TranslationMappedBase {
+class NewsWidgetTranslation extends TranslationMappedBase {
 
     /**
      * @var integer
@@ -29,10 +29,9 @@ class WidgetTranslation extends TranslationMappedBase {
      */
     private $name;
 
-
     /**
-     * @ORM\ManyToOne(targetEntity="Widget", inversedBy="translations")
-     * @ORM\JoinColumn(name="content_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="NewsWidget", inversedBy="translations")
+     * @ORM\JoinColumn(name="widget_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $parent;
 
@@ -69,10 +68,10 @@ class WidgetTranslation extends TranslationMappedBase {
     /**
      * Set parent
      *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\HtmlContent $parent
+     * @param \Evocatio\Bundle\CmsBundle\Entity\Widget $parent
      * @return WidgetTranslation
      */
-    public function setParent(\Evocatio\Bundle\CmsBundle\Entity\HtmlContent $parent = null) {
+    public function setParent(\Evocatio\Bundle\CmsBundle\Entity\Widget $parent = null) {
         $this->parent = $parent;
 
         return $this;
@@ -81,12 +80,11 @@ class WidgetTranslation extends TranslationMappedBase {
     /**
      * Get parent
      *
-     * @return \Evocatio\Bundle\CmsBundle\Entity\HtmlContent 
+     * @return \Evocatio\Bundle\CmsBundle\Entity\Widget 
      */
     public function getParent() {
         return $this->parent;
     }
-
 
     /**
      * Set name
@@ -94,10 +92,9 @@ class WidgetTranslation extends TranslationMappedBase {
      * @param string $name
      * @return WidgetTranslation
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -106,8 +103,8 @@ class WidgetTranslation extends TranslationMappedBase {
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
+
 }

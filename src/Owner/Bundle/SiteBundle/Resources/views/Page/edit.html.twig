@@ -5,9 +5,15 @@
     {% block formhead %}
         {{ _route_crud.path('owner_site_page_edit', 'edit',entity.id) }}
     {% endblock formhead %}
-    {% block form %}<fieldset>
-            {{ form_widget(edit_form) }}
-    </fieldset>
+    {% block form %}
+        <fieldset> {{ form_widget(edit_form) }} </fieldset>
+        <ul class="contents-list">
+            <li>
+                <input type=button value="Add Html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_html_contents');" />
+                <input type=button value="Add Text content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_text_contents');" />
+                <input type=button value="Add News Widget" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_news_widgets');" />
+            </li>
+        </ul>
     {% endblock form %}
 {% endembed %}->>
 <menu type="toolbar">

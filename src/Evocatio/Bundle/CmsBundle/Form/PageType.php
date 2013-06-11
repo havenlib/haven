@@ -42,8 +42,8 @@ class PageType extends AbstractType {
                         'label' => false
                     )
                 ))
-                ->add('widgets', "collection", array(
-                    'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\WidgetType')
+                ->add('news_widgets', "collection", array(
+                    'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\NewsWidgetType')
                     , 'allow_add' => true
                     , 'allow_delete' => true
                     , 'prototype' => true

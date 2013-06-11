@@ -18,6 +18,7 @@ use \ReflectionClass;
  * "html"="Evocatio\Bundle\CmsBundle\Entity\HtmlContent", 
  * "text"="Evocatio\Bundle\CmsBundle\Entity\TextContent", 
  * "widget"="Evocatio\Bundle\CmsBundle\Entity\Widget", 
+ * "news_widget"="Evocatio\Bundle\CmsBundle\Entity\NewsWidget", 
  * })
  */
 class Content extends Translatable {
@@ -143,10 +144,6 @@ class Content extends Translatable {
     }
 
     public function is($class) {
-        return get_class($this) === $class;
+        return ($this instanceof $class);
     }
-
-//    public function equals($content) {
-//        return ($this->getId() === $content->getId());
-//    }
 }
