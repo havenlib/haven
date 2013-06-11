@@ -1,6 +1,0 @@
-{% macro render_widget(entity) %}
-    {% set bundle = (entity.bundle)? entity.bundle : app.request.get('_template').get('bundle') %}
-    {% set controller = entity.controller %}
-    {% set action = entity.action %}
-    {{ render(controller((bundle ~ ":" ~ controller ~ ":" ~ action)))}}
-{% endmacro %}

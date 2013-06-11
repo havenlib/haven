@@ -112,4 +112,32 @@ class PageContent {
     public function getArea() {
         return $this->area;
     }
+
+    public function __toString() {
+        return "-->" . $this->getId();
+    }
+
+
+    /**
+     * Set content_options
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\ContentOptions $contentOptions
+     * @return PageContent
+     */
+    public function setContentOptions(\Evocatio\Bundle\CmsBundle\Entity\ContentOptions $contentOptions = null)
+    {
+        $this->content_options = $contentOptions;
+    
+        return $this;
+    }
+
+    /**
+     * Get content_options
+     *
+     * @return \Evocatio\Bundle\CmsBundle\Entity\ContentOptions 
+     */
+    public function getContentOptions()
+    {
+        return $this->content_options;
+    }
 }

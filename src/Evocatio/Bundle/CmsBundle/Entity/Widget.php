@@ -31,32 +31,6 @@ class Widget extends Content {
      */
     protected $page;
 
-    /**
-     * @ORM\OneToMany(targetEntity="WidgetTranslation", mappedBy="parent", cascade={"persist"})
-     */
-    protected $translations;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="bundle", type="string", nullable=true)
-     */
-    private $bundle;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="controller", type="string", nullable=false)
-     */
-    private $controller;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="action", type="string", nullable=false)
-     */
-    private $action;
-
     public function __construct() {
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -68,14 +42,6 @@ class Widget extends Content {
      */
     public function getId() {
         return $this->id;
-    }
-
-    public function getName($lang = null) {
-        return $this->getTranslated('Name', $lang);
-    }
-
-    public function getContent($lang = null) {
-        return $this->getTranslated('Content', $lang);
     }
 
     /**
@@ -100,37 +66,6 @@ class Widget extends Content {
     }
 
     /**
-     * Add translations
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\WidgetTranslation $translations
-     * @return Widget
-     */
-    public function addTranslation(\Evocatio\Bundle\CmsBundle\Entity\WidgetTranslation $translations) {
-        $translations->setParent($this);
-        $this->translations[] = $translations;
-
-        return $this;
-    }
-
-    /**
-     * Remove translations
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\WidgetTranslation $translations
-     */
-    public function removeTranslation(\Evocatio\Bundle\CmsBundle\Entity\WidgetTranslation $translations) {
-        $this->translations->removeElement($translations);
-    }
-
-    /**
-     * Get translations
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTranslations() {
-        return $this->translations;
-    }
-
-    /**
      * Set page
      *
      * @param \Evocatio\Bundle\CmsBundle\Entity\Page $page
@@ -151,45 +86,13 @@ class Widget extends Content {
         return $this->page;
     }
 
-    public function __toString() {
-        return "-->" . $this->getId();
-    }
-
-
-    /**
-     * Set bundle
-     *
-     * @param string $bundle
-     * @return Widget
-     */
-    public function setBundle($bundle)
-    {
-        $this->bundle = $bundle;
-    
-        return $this;
-    }
-
     /**
      * Get bundle
      *
      * @return string 
      */
-    public function getBundle()
-    {
-        return $this->bundle;
-    }
-
-    /**
-     * Set controller
-     *
-     * @param string $controller
-     * @return Widget
-     */
-    public function setController($controller)
-    {
-        $this->controller = $controller;
-    
-        return $this;
+    public function getBundle() {
+        throw new \Exception("You must implement " . __FUNCTION__ . " function in " . get_called_class());
     }
 
     /**
@@ -197,22 +100,8 @@ class Widget extends Content {
      *
      * @return string 
      */
-    public function getController()
-    {
-        return $this->controller;
-    }
-
-    /**
-     * Set action
-     *
-     * @param string $action
-     * @return Widget
-     */
-    public function setAction($action)
-    {
-        $this->action = $action;
-    
-        return $this;
+    public function getController() {
+        throw new \Exception("You must implement " . __FUNCTION__ . " function in " . get_called_class());
     }
 
     /**
@@ -220,8 +109,8 @@ class Widget extends Content {
      *
      * @return string 
      */
-    public function getAction()
-    {
-        return $this->action;
+    public function getAction() {
+        throw new \Exception("You must implement " . __FUNCTION__ . " function in " . get_called_class());
     }
+
 }
