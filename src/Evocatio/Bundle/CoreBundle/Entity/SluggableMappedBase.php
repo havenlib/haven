@@ -4,7 +4,6 @@ namespace Evocatio\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -26,7 +25,8 @@ abstract class SluggableMappedBase extends TranslationMappedBase {
      * @param string $slug
      */
     public function setSlug($slug) {
-        $this->slug = $this->slugifyString($slug);
+        if (is_null($this->getSlug()))
+            $this->slug = $this->slugifyString($slug);
     }
 
     /**
@@ -38,21 +38,15 @@ abstract class SluggableMappedBase extends TranslationMappedBase {
         return $this->slug;
     }
 
-    
-    private function slugifyString($string, $separator = "-"){
+    private function slugifyString($string, $separator = "-") {
         $string = $this->normalizeUtf8String($string);
-        
-        return strtolower(preg_replace('/[^A-Z^a-z^0-9^\/]+/', $separator,
-                           preg_replace('/([a-z\d])([A-Z])/', '\1_\2',
-                           preg_replace('/([A-Z]+)([A-Z][a-z])/', '\1_\2',
-                           preg_replace('/::/', '/', $string)))));
-        
+
+        return strtolower(preg_replace('/[^A-Z^a-z^0-9^\/]+/', $separator, preg_replace('/([a-z\d])([A-Z])/', '\1_\2', preg_replace('/([A-Z]+)([A-Z][a-z])/', '\1_\2', preg_replace('/::/', '/', $string)))));
     }
-    
-    
+
     private function normalizeUtf8String($s) {
         $original_string = $s;
-        
+
         // Normalizer-class missing!
         if (!class_exists("Normalizer", $autoload = false))
             return $original_string;

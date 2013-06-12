@@ -3,6 +3,7 @@
 namespace Evocatio\Bundle\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 
 /**
@@ -34,6 +35,7 @@ class Page extends Translatable {
 
     /**
      * @ORM\OneToMany(targetEntity="PageTranslation", mappedBy="parent", cascade={"persist"})
+     * @Assert\Valid
      */
     protected $translations;
 
