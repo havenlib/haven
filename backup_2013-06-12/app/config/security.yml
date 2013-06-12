@@ -1,7 +1,0 @@
-jms_security_extra:
-    secure_all_services: false
-    expressions: true
-
-imports:
-    - { resource: "@EvocatioSecurityBundle/Resources/config/security.yml" }
-#    - { resource: "@OwnerSiteBundle/Resources/config/security.yml" }
