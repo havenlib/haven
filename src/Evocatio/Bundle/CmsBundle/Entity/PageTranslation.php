@@ -8,7 +8,7 @@ use \Evocatio\Bundle\CoreBundle\Entity\SluggableMappedBase;
 /**
  * PageTranslation
  *
- * @ORM\Table()
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="slug_unique",columns={"trans_lang_id","slug"})})
  * @ORM\Entity(repositoryClass="Evocatio\Bundle\CmsBundle\Repository\PageTranslationRepository")
  */
 class PageTranslation extends SluggableMappedBase {
@@ -25,7 +25,7 @@ class PageTranslation extends SluggableMappedBase {
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
@@ -57,7 +57,6 @@ class PageTranslation extends SluggableMappedBase {
 
         return $this;
     }
-
 
     /**
      * Get name
