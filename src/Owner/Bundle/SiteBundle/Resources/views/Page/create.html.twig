@@ -1,10 +1,11 @@
-{% extends "OwnerSiteBundle:Template:add_template.html.twig" %}
+{#% extends "OwnerSiteBundle:Template:add_template.html.twig" %#}
+{% extends "OwnerSiteBundle:Template:multilangue_page.html.twig" %}
 {% block formhead %}
     {{ _route_crud.path('owner_site_page_create', 'create') }}
 {% endblock formhead %}
 
-{% form_theme edit_form "OwnerSiteBundle:Form:formulator.html.twig" %}
-{#% form_theme edit_form "::Form/generic_with_translations.html.twig" %#}
+{#% form_theme edit_form "OwnerSiteBundle:Form:formulator.html.twig" %#}
+{% form_theme edit_form "::Form/generic_with_translations.html.twig" %}
 {% block form %}
 <fieldset>
         {{ form_widget(edit_form) }}

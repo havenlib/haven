@@ -29,7 +29,8 @@
     {% set bundle = (entity.bundle)? entity.bundle : app.request.get('_template').get('bundle') %}
     {% set controller = entity.controller %}
     {% set action = entity.action %}
-
+ {{ bundle ~':'~ controller ~':'~ action }}
+ {{ dump(entity.options) }}
     <h4>{{ entity.name }}</h4>
     {{ render(controller((bundle ~ ":" ~ controller ~ ":" ~ action), {"_locale" : app.getRequest().get("_locale")}|merge(entity.options)))}}
 {% endmacro %}
