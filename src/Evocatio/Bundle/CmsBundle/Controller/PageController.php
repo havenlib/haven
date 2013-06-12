@@ -70,12 +70,12 @@ class PageController extends ContainerAware {
 
         if ($edit_form->isValid()) {
             $this->container->get("page.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->setFlash("success", "create.success");
+            $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return $this->redirectEditAction($edit_form->getData()->getId());
         }
 
-        $this->container->get("session")->setFlash("error", "create.error");
+        $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
         $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
@@ -120,12 +120,12 @@ class PageController extends ContainerAware {
 
         if ($edit_form->isValid()) {
             $this->container->get("page.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->setFlash("success", "create.success");
+            $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return $this->redirectEditAction($edit_form->getData()->getId());
         }
 
-        $this->container->get("session")->setFlash("error", "update.error");
+        $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
         $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
         $params = array(

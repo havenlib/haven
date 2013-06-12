@@ -91,12 +91,12 @@ class BasketController extends ContainerAware {
 //        $edit_form->bindRequest($this->container->get('Request'));
 //
 //        if ($this->saveToSession($edit_form) === true) {
-//            $this->container->get("session")->setFlash("success", "create.success");
+//            $this->container->get("session")->getFlashBag()->add("success", "create.success");
 //
 //            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_BasketList'));
 //        }
 //
-//        $this->container->get("session")->setFlash("error", "create.error");
+//        $this->container->get("session")->getFlashBag()->add("error", "create.error");
 //        return array(
 //            'edit_form' => $edit_form->createView()
 //        );
@@ -145,11 +145,11 @@ echo "mets en ";
         $edit_form->bind($basket_post);
 
         if ($this->saveToSession($edit_form) === true) {
-            $this->container->get("session")->setFlash("success", "update.success");
+            $this->container->get("session")->getFlashBag()->add("success", "update.success");
 
 //            return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_BasketList'));
         }
-//        $this->container->get("session")->setFlash("error", "update.error");
+//        $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
         return array(
             'entity' => $entity,
@@ -204,10 +204,10 @@ echo "mets en ";
 
         $edit_form->bind($purchase_post);
         if ($this->processPurchaseForm($edit_form) === true) {
-            $this->container->get("session")->setFlash("success", "update.success");
+            $this->container->get("session")->getFlashBag()->add("success", "update.success");
             return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_BasketPayment'));
         }
-        $this->container->get("session")->setFlash("error", "update.error");
+        $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
         return array(
             'entity' => $entity,
