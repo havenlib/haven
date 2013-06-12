@@ -30,7 +30,7 @@ class PostController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/admin/{show}/post/{id}")
+     * @Route("/admin/{show}/post/{id}", defaults={"show" = "afficher"})
      * @Method("GET")
      * @Template()
      */
