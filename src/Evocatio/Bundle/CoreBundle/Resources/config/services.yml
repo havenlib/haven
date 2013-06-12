@@ -26,3 +26,6 @@ services:
   notifier:
       class:     Evocatio\Bundle\CoreBundle\Lib\Notifier
       arguments: ["@mailer", "@templating", "%notification_from%", "%notification_to%"]
+      
+  slugifier:
+      class:     Evocatio\Bundle\CoreBundle\Lib\Slugifier

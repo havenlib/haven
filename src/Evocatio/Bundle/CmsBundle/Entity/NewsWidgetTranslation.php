@@ -11,7 +11,7 @@ use Evocatio\Bundle\CoreBundle\Entity\TranslationMappedBase;
  * @ORM\Table()
  * @ORM\Entity
  */
-class NewsWidgetTranslation extends SluggableMappedBase {
+class NewsWidgetTranslation extends TranslationMappedBase {
 
     /**
      * @var integer
