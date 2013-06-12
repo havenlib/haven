@@ -152,8 +152,17 @@ class HtmlContent extends Content {
         return $this->page;
     }
     
+//    public function getTemplate(){
+//        
+//    }
+    
     public function __toString() {
         return "-->".$this->getId();
+    }
+    
+    public function getTemplate(){
+        
+        return 'EvocatioCmsBundle:Template:html_content.html.twig';
     }
 
 }

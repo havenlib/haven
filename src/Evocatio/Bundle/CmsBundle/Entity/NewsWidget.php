@@ -124,6 +124,16 @@ class NewsWidget extends Widget {
      */
     public function getMaximum()
     {
+        
         return $this->maximum;
+    }
+    
+    public function getMethod() {
+        return "render";
+    }
+    
+    public function getTemplate(){
+        
+        return 'EvocatioCmsBundle:Template:widget.html.twig';
     }
 }

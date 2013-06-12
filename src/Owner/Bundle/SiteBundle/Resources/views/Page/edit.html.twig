@@ -1,6 +1,6 @@
 {% extends entity.getTemplate() is empty?"OwnerSiteBundle:Page:create.html.twig":entity.getTemplate().getPath() %}
 {% block inside_body %}
-{{ parent() }}
+
 {% embed ("OwnerSiteBundle:Page:create.html.twig" ) %}
     {% block formhead %}
         {{ _route_crud.path('owner_site_page_edit', 'edit',entity.id) }}
@@ -20,6 +20,10 @@
     <button type="command" label="Save" onclick="goDaddy()" >go</button>>
 </menu>
 <<-
+<noscript>
+hahahahaha
+</noscript>
+{{ parent() }}
 <script>
     function goDaddy(){
     var data = CKEDITOR.instances.editable43.getData();

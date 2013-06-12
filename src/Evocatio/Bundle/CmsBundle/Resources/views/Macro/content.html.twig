@@ -1,8 +1,13 @@
 {% macro fill_area(entity ,area, edit_form) %}
+
     {% for page_content in entity.getPageContents() if page_content.getArea() == area %}
-<div id="{{ 'editable'~page_content.getContent().getId() }}" contenteditable="true">
- {{ page_content.getContent().getContent() |raw }}
-    </div>
+        {% if (page_content.getContent().getMethod() == "include") %}
+            {% include (page_content.getContent().getTemplate()) with { 'content':page_content.getContent() } %}
+        {% elseif (page_content.getContent().getMethod() == "render") %}
+        {% import _self as macros %}
+            {{ macros.render_widget(page_content.getContent()) }}
+        {% endif %}
+{#
 <p>evocatio_bundle_cmsbundle_pagetype_html_contents_0_content_translations_0_content</p>
 <p>evocatio_bundle_cmsbundle_pagetype_html_contents_{{ loop.index0 }}_content_translations_?_content</p>
 {#{ edit_form.getName() is defined? edit_form.getName():'edit form not defined' }#}
@@ -10,7 +15,6 @@
 {% endmacro %}
 
 {% macro fill_area_with_form(entity ,area, edit_form) %}
-    {{ dump(edit_form|keys) }}
     {#% for page_content in edit_form.vars.getPageContents() if page_content.getArea() == area %}
 <div id="{{ 'editable'~page_content.getContent().getId() }}" contenteditable="true">
  {{ page_content.getContent().getContent() |raw }}
@@ -27,5 +31,5 @@
     {% set action = entity.action %}
 
     <h4>{{ entity.name }}</h4>
-    {{ render(controller((bundle ~ ":" ~ controller ~ ":" ~ action), {}|merge(entity.options)))}}
+    {{ render(controller((bundle ~ ":" ~ controller ~ ":" ~ action), {"_locale" : app.getRequest().get("_locale")}|merge(entity.options)))}}
 {% endmacro %}

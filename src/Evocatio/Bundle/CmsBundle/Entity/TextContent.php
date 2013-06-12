@@ -149,11 +149,17 @@ class TextContent extends Content {
      * @return \Evocatio\Bundle\CmsBundle\Entity\Page 
      */
     public function getPage() {
+        
         return $this->page;
     }
     
     public function __toString() {
+        
         return "-->".$this->getId();
     }
-
+    
+    public function getTemplate(){
+        
+        return 'EvocatioCmsBundle:Template:text_content.html.twig';
+    }
 }

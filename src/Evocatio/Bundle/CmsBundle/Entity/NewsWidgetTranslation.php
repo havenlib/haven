@@ -44,26 +44,6 @@ class NewsWidgetTranslation extends TranslationMappedBase {
         return $this->id;
     }
 
-    /**
-     * Set content
-     *
-     * @param string $content
-     * @return WidgetTranslation
-     */
-    public function setContent($content) {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get content
-     *
-     * @return string 
-     */
-    public function getContent() {
-        return $this->content;
-    }
 
     /**
      * Set parent
