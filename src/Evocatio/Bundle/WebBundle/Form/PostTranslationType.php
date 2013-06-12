@@ -13,6 +13,7 @@ class PostTranslationType extends AbstractType {
         $builder
                 ->add('name', "text", array('required' => false))
                 ->add('title', "text", array('required' => false))
+                ->add('slug', "text", array('required' => false))
                 ->add('excerpt', "text", array('required' => false))
                 ->add('subtitle', "text", array('required' => false))
                 ->add('content', "textarea", array('required' => false))
