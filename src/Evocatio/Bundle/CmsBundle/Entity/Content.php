@@ -130,20 +130,46 @@ class Content extends Translatable {
      * @return \Doctrine\Common\Collections\Collection 
      */
     public function getPageContents() {
+        
         return $this->page_contents;
     }
 
     public static function getDiscriminatorMap() {
         $reader = new AnnotationReader();
+        
         return $reader->getClassAnnotation(new ReflectionClass(__CLASS__), "\Doctrine\ORM\Mapping\DiscriminatorMap");
     }
 
     public function getDiscriminator() {
         $discriminator_map = self::getDiscriminatorMap();
+        
         return array_search(get_class($this), $discriminator_map->value);
     }
 
     public function is($class) {
+        
         return ($this instanceof $class);
     }
+
+    /**
+     * 
+     * @return string
+     */
+    public function getMethod() {
+//        default method set to include, must overide to change, methods are use to define how to display.
+//        @todo, make a renderer object to take care of this ?
+        return "include";
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    public function getTemplate(){
+    
+//        @TODO: the template could be saved in database for each content but even better would be to have it save per areatypes (so in a theatre the template could be something but in the sidebar something else ?)
+//        could probably be done only by having 2 different content created, and use 2 different templates. Thought the important here would be to have a template object that can either load or take from the database, in php or html or twig
+        return false;
+    }
+
 }
