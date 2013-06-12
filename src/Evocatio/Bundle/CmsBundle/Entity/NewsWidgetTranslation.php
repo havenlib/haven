@@ -11,7 +11,7 @@ use Evocatio\Bundle\CoreBundle\Entity\TranslationMappedBase;
  * @ORM\Table()
  * @ORM\Entity
  */
-class NewsWidgetTranslation extends TranslationMappedBase {
+class NewsWidgetTranslation extends SluggableMappedBase {
 
     /**
      * @var integer
@@ -43,7 +43,6 @@ class NewsWidgetTranslation extends TranslationMappedBase {
     public function getId() {
         return $this->id;
     }
-
 
     /**
      * Set parent
