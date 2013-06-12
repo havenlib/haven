@@ -76,7 +76,9 @@ class PostController extends ContainerAware {
     public function addAction() {
         $edit_form = $this->container->get("post.form_handler")->createNewForm();
 
-        $edit_form->bindRequest($this->container->get('Request'));
+        $post_data = $this->container->get("request")->request->all();
+        $result = $this->container->get('slugifier')->slugifiyRequest($post_data, array("name"));
+        $edit_form->bind($result);
 
         if ($edit_form->isValid()) {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
@@ -122,12 +124,13 @@ class PostController extends ContainerAware {
         $edit_form = $this->container->get("post.form_handler")->createEditForm($entity->getId());
         $delete_form = $this->container->get("post.form_handler")->createDeleteForm($entity->getId());
 
-
         $files_post = $this->container->get("request")->files->all();
 
-        $this->container->get("uploader")->moveFiles($files_post, "yeah");
+        $this->container->get("uploader")->moveFiles($files_post, "------");
 
-        $edit_form->bindRequest($this->container->get('Request'));
+        $post_data = $this->container->get("request")->request->all();
+        $result = $this->container->get('slugifier')->slugifiyRequest($post_data, array("name"));
+        $edit_form->bind($result);
 
 
         if ($edit_form->isValid()) {

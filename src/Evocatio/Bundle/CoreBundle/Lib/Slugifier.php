@@ -23,7 +23,9 @@ class Slugifier {
             foreach ($fields as $key => $field) {
                 $preSlugArray[] .= trim($arrayRequest[$field]);
             }
-            $arrayRequest["slug"] = $this->slugifyString(implode("-", $preSlugArray));
+
+            $slug = (substr($slug = $this->slugifyString(implode("-", $preSlugArray)), -1) == "-") ? substr($slug, 0, -1) : $slug;
+            $arrayRequest["slug"] = ($arrayRequest["slug"] == "") ? $slug : $this->slugifyString($arrayRequest["slug"]);
         }
         foreach ($arrayRequest as $key => &$child) {
             if (is_array($child)) {
