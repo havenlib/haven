@@ -39,21 +39,22 @@
     <body>
         {% block inside_body %}
             
-        {% if app.session.hasFlash("notice")%}
-            <div class="notice"> {{ app.session.flash("notice") }}</div>
+        {% if app.session.flashBag.has("notice")%}
+            <div class="notice"> {{ app.session.flashBag.get("notice") }}</div>
+        {% endif %}
+            
+        {% if app.session.flashBag.has("error")%}
+            <div class="notice"> {{ app.session.flashBag.get("error") }}</div>
+        {% endif %}
+            
+        {% if app.session.flashBag.has("success")%}
+            <div class="notice"> {{ app.session.flashBag.get("success") }}</div>
+        {% endif %}
+            
+        {% if app.session.flashBag.has("info")%}
+            <div class="notice"> {{ app.session.flashBag.get("info") }}</div>
         {% endif %}
 
-        {% if app.session.hasFlash("error") %}
-            <div class="error"> {{ app.session.flash("error") }} </div>
-        {% endif %}
-
-        {% if app.session.hasFlash("success") %}
-            <div class="success"> {{ app.session.flash("success") }}</div>
-        {% endif %}
-
-        {% if app.session.hasFlash("info") %}
-            <div class="info"> {{ app.session.flash("info") }} </div>
-        {% endif %}
         {% block header %}
         <header>
             {% block inside_header %}
