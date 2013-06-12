@@ -51,19 +51,13 @@ class PageTranslation extends SluggableMappedBase {
      * @return PageTranslation
      */
     public function setName($name) {
-        if (is_null($this->getSlug()))
-            $this->setSlug($name);
 
         $this->name = $name;
+        $this->setSlug($name);
 
         return $this;
     }
 
-    public function setSlug($slug) {
-        if (is_null($slug)){
-            parent::setSlug($slug);
-        }
-    }
 
     /**
      * Get name

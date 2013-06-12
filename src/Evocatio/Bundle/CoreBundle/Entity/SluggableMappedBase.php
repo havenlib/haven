@@ -25,7 +25,8 @@ abstract class SluggableMappedBase extends TranslationMappedBase {
      * @param string $slug
      */
     public function setSlug($slug) {
-        $this->slug = $this->slugifyString($slug);
+        if (is_null($this->getSlug()))
+            $this->slug = $this->slugifyString($slug);
     }
 
     /**
