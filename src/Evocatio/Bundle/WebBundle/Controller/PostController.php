@@ -85,7 +85,7 @@ class PostController extends ContainerAware {
             return $this->redirectListAction();
         }
 
-        $this->container->get("session")->setFlash("error", "create.error");
+        $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
         $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
@@ -135,11 +135,11 @@ class PostController extends ContainerAware {
 
         if ($edit_form->isValid()) {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->setFlash("success", "update.success");
+            $this->container->get("session")->getFlashBag()->add("success", "update.success");
 
             return $this->redirectListAction();
         }
-        $this->container->get("session")->setFlash("error", "update.error");
+        $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
         return array(
             'entity' => $entity,

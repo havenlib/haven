@@ -1,0 +1,23 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     localhost
+    database_port:     ~
+    database_name:     evocatio_siteweb
+    database_user:     evocatio
+    database_password: evocatio
+    
+    mailer_transport:  smtp
+    mailer_host:       smtp.evocatio.com
+    mailer_user:       relayuser
+    mailer_password:   3v0c4t10
+
+    locale:            fr
+    secret:            75893872b08ab6ab9c3084fb7f05d3a2
+    
+    notification_to:
+      default: support@evocatio.com
+      
+    notification_from:
+      default: support@evocatio.com
+      
+    password_reset_mail_from: support@evocatio.com

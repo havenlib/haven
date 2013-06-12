@@ -38,22 +38,14 @@
     {% block body %}
     <body>
         {% block inside_body %}
-            
-        {% if app.session.flashBag.has("notice")%}
-            <div class="notice"> {{ app.session.flashBag.get("notice") }}</div>
-        {% endif %}
-            
-        {% if app.session.flashBag.has("error")%}
-            <div class="notice"> {{ app.session.flashBag.get("error") }}</div>
-        {% endif %}
-            
-        {% if app.session.flashBag.has("success")%}
-            <div class="notice"> {{ app.session.flashBag.get("success") }}</div>
-        {% endif %}
-            
-        {% if app.session.flashBag.has("info")%}
-            <div class="notice"> {{ app.session.flashBag.get("info") }}</div>
-        {% endif %}
+           
+        {% set flashs = ['notice', 'error', 'success', 'info'] %}
+        {% for  flash in flashs %}
+            {% for  message in app.session.flashBag.get(flash) %}
+                <div class="notice"> {{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+
 
         {% block header %}
         <header>
