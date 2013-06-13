@@ -15,8 +15,8 @@ class Uploader {
     }
 
     public function moveFilesToTempAndMerge($filesT, $requestT) {
-        $filesT = array_pop($filesT);
-        $requestT = array_pop($requestT);
+//        $filesT = array_pop($filesT);
+//        $requestT = array_pop($requestT);
         if (!empty($filesT)) {
 
             $this->changeUploadsToFiles($filesT, $requestT);
