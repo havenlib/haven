@@ -77,7 +77,7 @@ class PostController extends ContainerAware {
         $edit_form = $this->container->get("post.form_handler")->createNewForm();
 
         $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifiyRequest($post_data, array("name"));
+        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
         $edit_form->bind($result);
 
         if ($edit_form->isValid()) {
@@ -129,7 +129,7 @@ class PostController extends ContainerAware {
         $this->container->get("uploader")->moveFiles($files_post, "------");
 
         $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifiyRequest($post_data, array("name"));
+        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
         $edit_form->bind($result);
 
 

@@ -4,7 +4,7 @@ namespace Evocatio\Bundle\CoreBundle\Lib;
 
 class Slugifier {
 
-    public function slugifiyRequest($requestT, $fields) {
+    public function slugifyRequest($requestT, $fields) {
         $requestT = array_pop($requestT);
 
         $sluggify = function (&$array, $fields) use (&$sluggify) {
