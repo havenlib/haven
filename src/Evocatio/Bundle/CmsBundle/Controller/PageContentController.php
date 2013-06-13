@@ -11,17 +11,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class PageController extends ContainerAware {
+class PageContentController extends ContainerAware {
 
     /**
      * Finds and all persona for admin.
      *
-     * @Route("admin/{list}/page")
+     * @Route("admin/{list}/page_content")
      * @Method("GET")
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("page.read_handler")->getAll();
+        $entities = $this->container->get("page_content.read_handler")->getAll();
 
         return array("entities" => $entities);
     }
@@ -29,14 +29,14 @@ class PageController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/admin/{show}/page/{id}")
+     * @Route("/admin/{show}/page_content/{id}")
      * 
      * @Method("GET")
      * @Template()
      */
     public function showAction($id) {
-        $entity = $this->container->get("page.read_handler")->get($id);
-        $delete_form = $this->container->get("page.form_handler")->createDeleteForm($id);
+        $entity = $this->container->get("page_content.read_handler")->get($id);
+        $delete_form = $this->container->get("page_content.form_handler")->createDeleteForm($id);
 
         return array(
             'entity' => $entity
@@ -45,37 +45,37 @@ class PageController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{create}/page")
+     * @Route("/admin/{create}/page_content")
      * @Method("GET")
      * @Template
      */
     public function createAction() {
-        $edit_form = $this->container->get("page.form_handler")->createNewForm();
+        $edit_form = $this->container->get("page_content.form_handler")->createNewForm();
         return array("edit_form" => $edit_form->createView());
     }
 
     /**
-     * @Route("/admin/{create}/page")
+     * @Route("/admin/{create}/page_content")
      * @Method("POST")
      * @Template
      */
     public function addAction() {
-        $edit_form = $this->container->get("page.form_handler")->createNewForm();
+        $edit_form = $this->container->get("page_content.form_handler")->createNewForm();
 
         $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
+        $result = $this->container->get('slugifier')->slugifiyRequest($post_data, array("name"));
         $edit_form->bind($result);
 
 
 
         if ($edit_form->isValid()) {
-            $this->container->get("page.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->getFlashBag()->add("success", "create.success");
+            $this->container->get("page_content.persistence_handler")->save($edit_form->getData());
+            $this->container->get("session")->setFlash("success", "create.success");
 
             return $this->redirectEditAction($edit_form->getData()->getId());
         }
 
-        $this->container->get("session")->getFlashBag()->add("error", "create.error");
+        $this->container->get("session")->setFlash("error", "create.error");
 
         $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
@@ -86,16 +86,15 @@ class PageController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{edit}/page/{id}")
+     * @Route("/admin/{edit}/page_content/{id}")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get('page.read_handler')->get($id);
-        $edit_form = $this->container->get("page.form_handler")->createEditForm($entity->getId());
-        $delete_form = $this->container->get("page.form_handler")->createDeleteForm($entity->getId());
-        $edit_html_content_form = $this->container->get("page_content.form_handler")->createNewFormForPage($entity);
+        $entity = $this->container->get('page_content.read_handler')->get($id);
+        $edit_form = $this->container->get("page_content.form_handler")->createEditForm($entity->getId());
+        $delete_form = $this->container->get("page_content.form_handler")->createDeleteForm($entity->getId());
         
         
         
@@ -103,33 +102,32 @@ class PageController extends ContainerAware {
             'entity' => $entity,
             'edit_form' => $edit_form->createView(),
             'delete_form' => $delete_form->createView(),
-            'edit_html_content_form' => $edit_html_content_form->CreateView()
         );
     }
 
     /**
-     * @Route("/admin/{edit}/page/{id}")
+     * @Route("/admin/{edit}/page_content/{id}")
      * @return RedirectResponse
      * @Method("POST")
      * @Template
      */
     public function updateAction($id) {
-        $entity = $this->container->get('page.read_handler')->get($id);
-        $edit_form = $this->container->get("page.form_handler")->createEditForm($entity->getId());
-        $delete_form = $this->container->get("page.form_handler")->createDeleteForm($entity->getId());
+        $entity = $this->container->get('page_content.read_handler')->get($id);
+        $edit_form = $this->container->get("page_content.form_handler")->createEditForm($entity->getId());
+        $delete_form = $this->container->get("page_content.form_handler")->createDeleteForm($entity->getId());
 
         $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
+        $result = $this->container->get('slugifier')->slugifiyRequest($post_data, array("name"));
         $edit_form->bind($result);
 
         if ($edit_form->isValid()) {
-            $this->container->get("page.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->getFlashBag()->add("success", "create.success");
+            $this->container->get("page_content.persistence_handler")->save($edit_form->getData());
+            $this->container->get("session")->setFlash("success", "create.success");
 
             return $this->redirectEditAction($edit_form->getData()->getId());
         }
 
-        $this->container->get("session")->getFlashBag()->add("error", "update.error");
+        $this->container->get("session")->setFlash("error", "update.error");
 
         $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
@@ -142,11 +140,11 @@ class PageController extends ContainerAware {
     }
 
     protected function redirectListAction() {
-        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_page_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_page_content_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }
 
     protected function redirectEditAction($id) {
-        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_page_edit', array(
+        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_page_content_edit', array(
                     'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
                     , 'id' => $id)));
     }

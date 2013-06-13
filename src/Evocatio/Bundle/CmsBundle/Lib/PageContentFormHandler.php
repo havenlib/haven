@@ -5,17 +5,17 @@ namespace Evocatio\Bundle\CmsBundle\Lib;
 use Evocatio\Bundle\CoreBundle\Lib\LanguageReadHandler;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\FormFactory;
-use Evocatio\Bundle\CmsBundle\Entity\Page as Entity;
-use Evocatio\Bundle\CmsBundle\Form\PageInlineType as Type;
+use Evocatio\Bundle\CmsBundle\Entity\PageContent as Entity;
+use Evocatio\Bundle\CmsBundle\Form\PageContentInlineType as Type;
 
-class PageFormHandler {
+class PageContentFormHandler {
 
     protected $read_handler; // devrait être son listhandler je pense
     protected $language_read_handler;
     protected $form_factory;
     protected $security_context;
 
-    public function __construct(PageReadHandler $read_handler, LanguageReadHandler $language_read_handler, SecurityContext $security_context, FormFactory $form_factory) {
+    public function __construct(PageContentReadHandler $read_handler, LanguageReadHandler $language_read_handler, SecurityContext $security_context, FormFactory $form_factory) {
         $this->read_handler = $read_handler;
         $this->language_read_handler = $language_read_handler;
         $this->form_factory = $form_factory;
@@ -38,8 +38,14 @@ class PageFormHandler {
      * @param \Website\Bundle\SiteBundle\Entity\Entreprise $entreprise
      * @return a form for dossier, as dossierType or DossierRequerantType
      */
-    public function createNewForm() {
+    public function createNewFormForPage($page, $content_type = "Evocatio\Bundle\CmsBundle\Form\HtmlContentType") {
         $entity = new Entity();
+        $temp_translation = new \Evocatio\Bundle\CmsBundle\Entity\HtmlContentTranslation();
+        $temp_content = new \Evocatio\Bundle\CmsBundle\Entity\HtmlContent();
+        $temp_content->addTranslation($temp_translation);
+        $entity->setContent($temp_content);
+        $entity->setPage($page);
+        $entity->setContent($temp_content);
         $create_form = $this->form_factory->create(new Type(), $entity);
 
         return $create_form;

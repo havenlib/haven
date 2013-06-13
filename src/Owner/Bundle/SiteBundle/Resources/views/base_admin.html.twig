@@ -6,14 +6,46 @@
 {% block inside_title %} Evocatio Solution Technologie {% endblock inside_title %}
 
 {% block navigation %} 
-<div id="navigation" class="admin">
-{% include "OwnerSiteBundle::navigation_admin.html.twig" %} 
-</div>
 {% endblock navigation %}
 
-{% block content %} 
-<div  class="content admin">
+{% block inside_body %} 
+            
+        {% if app.session.hasFlash("notice")%}
+            <div class="notice"> {{ app.session.flash("notice") }}</div>
+        {% endif %}
+
+        {% if app.session.hasFlash("error") %}
+            <div class="error"> {{ app.session.flash("error") }} </div>
+        {% endif %}
+
+        {% if app.session.hasFlash("success") %}
+            <div class="success"> {{ app.session.flash("success") }}</div>
+        {% endif %}
+
+        {% if app.session.hasFlash("info") %}
+            <div class="info"> {{ app.session.flash("info") }} </div>
+        {% endif %}
+    {% spaceless %}
+<div  id="admin">
+<div id="navigation">
+{% include "OwnerSiteBundle::navigation_admin.html.twig" %} 
+</div>
+<div id="edition">
 {% block inside_content %} 
 {% endblock inside_content %}
 </div>
-{% endblock content %}
+</div>
+    {% endspaceless %}
+{% block javascripts %}
+    <script src="/js/sig.js" type="text/javascript"></script>
+{% endblock javascripts %}
+{% endblock inside_body %}
+
+{% block stylesheets %}
+{{ parent() }}
+    {% if app.environment != 'prod' %}
+    <link href="{{ asset("less/admin.less") }}" rel="stylesheet/less" type="text/css" />
+    {% else %}
+    <link rel="stylesheet" type="text/css" href="/css/admin.css" />
+    {% endif %}
+{% endblock %}

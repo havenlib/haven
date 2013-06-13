@@ -25,6 +25,7 @@ class PageType extends AbstractType {
                 ->add('html_contents', "collection", array(
                     'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\HtmlContentType')
                     , 'allow_add' => true
+                    , "label" => false
                     , 'allow_delete' => true
                     , 'prototype' => true
                     , 'by_reference' => false
@@ -35,6 +36,7 @@ class PageType extends AbstractType {
                 ->add('text_contents', "collection", array(
                     'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\TextContentType')
                     , 'allow_add' => true
+                    , "label" => false
                     , 'allow_delete' => true
                     , 'prototype' => true
                     , 'by_reference' => false
@@ -45,6 +47,7 @@ class PageType extends AbstractType {
                 ->add('news_widgets', "collection", array(
                     'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\NewsWidgetType')
                     , 'allow_add' => true
+                    , "label" => false
                     , 'allow_delete' => true
                     , 'prototype' => true
                     , 'by_reference' => false
