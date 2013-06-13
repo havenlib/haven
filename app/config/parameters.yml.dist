@@ -14,10 +14,11 @@ parameters:
     locale:            fr
     secret:            75893872b08ab6ab9c3084fb7f05d3a2
     
+    secure_upload_dir: ../secure_content/
+    
     notification_to:
-      default: support@evocatio.com
+      default: laurent.breleur@gmail.com
       
     notification_from:
-      default: support@evocatio.com
-      
-    password_reset_mail_from: support@evocatio.com
+      default: laurent.breleur@gmail.com
+    password_reset_mail_from: sc@evocatio.com
