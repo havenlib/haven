@@ -7,7 +7,24 @@ class Slugifier {
     public function slugifiyRequest($requestT, $fields) {
         $requestT = array_pop($requestT);
 
-        $this->changeSlugs($requestT, $fields);
+        $sluggify = function (&$array, $fields) use (&$sluggify) {
+                    if (array_key_exists("slug", $array)) {
+                        $preSlugArray = null;
+                        foreach ($fields as $field)
+                            $preSlugArray[] .= trim($array[$field]);
+
+                        $slug = (substr($slug = $this->slugifyString(implode("-", $preSlugArray)), -1) == "-") ? substr($slug, 0, -1) : $slug;
+                        $array["slug"] = ($array["slug"] == "") ? $slug : $this->slugifyString($array["slug"]);
+                    }
+
+                    foreach ($array as &$child) {
+                        if (is_array($child))
+                            $sluggify($child, $fields);
+                    }
+                };
+
+        $sluggify($requestT, $fields);
+
         return $requestT;
     }
 
@@ -17,23 +34,23 @@ class Slugifier {
      * @param type $arrayFile
      * @param type $arrayRequest
      */
-    private function changeSlugs(&$arrayRequest, &$fields) {
-        if (array_key_exists("slug", $arrayRequest)) {
-            $preSlugArray = null;
-            foreach ($fields as $key => $field) {
-                $preSlugArray[] .= trim($arrayRequest[$field]);
-            }
-
-            $slug = (substr($slug = $this->slugifyString(implode("-", $preSlugArray)), -1) == "-") ? substr($slug, 0, -1) : $slug;
-            $arrayRequest["slug"] = ($arrayRequest["slug"] == "") ? $slug : $this->slugifyString($arrayRequest["slug"]);
-        }
-        foreach ($arrayRequest as $key => &$child) {
-            if (is_array($child)) {
-                $this->changeSlugs($child, $fields);
-//                unset($child);
-            }
-        }
-    }
+//    private function changeSlugs($arrayRequest, &$fields) {
+//        if (array_key_exists("slug", $arrayRequest)) {
+//            $preSlugArray = null;
+//            foreach ($fields as $key => $field) {
+//                $preSlugArray[] .= trim($arrayRequest[$field]);
+//            }
+//
+//            $slug = (substr($slug = $this->slugifyString(implode("-", $preSlugArray)), -1) == "-") ? substr($slug, 0, -1) : $slug;
+//            $arrayRequest["slug"] = ($arrayRequest["slug"] == "") ? $slug : $this->slugifyString($arrayRequest["slug"]);
+//        }
+//        foreach ($arrayRequest as $key => &$child) {
+//            if (is_array($child)) {
+//                $this->changeSlugs($child, $fields);
+////                unset($child);
+//            }
+//        }
+//    }
 
     public function slugifyString($string, $separator = "-") {
         $string = $this->normalizeUtf8String($string);
