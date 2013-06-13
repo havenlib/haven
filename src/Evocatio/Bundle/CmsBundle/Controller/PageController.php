@@ -63,7 +63,7 @@ class PageController extends ContainerAware {
         $edit_form = $this->container->get("page.form_handler")->createNewForm();
 
         $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifiyRequest($post_data, array("name"));
+        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
         $edit_form->bind($result);
 
 
@@ -115,7 +115,7 @@ class PageController extends ContainerAware {
         $delete_form = $this->container->get("page.form_handler")->createDeleteForm($entity->getId());
 
         $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifiyRequest($post_data, array("name"));
+        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
         $edit_form->bind($result);
 
         if ($edit_form->isValid()) {
