@@ -62,9 +62,12 @@ class PageController extends ContainerAware {
     public function addAction() {
         $edit_form = $this->container->get("page.form_handler")->createNewForm();
 
-        $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
-        $edit_form->bind($result);
+//        $post_data = $this->container->get("request")->request->all();
+        $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
+                ->slug(array("name"))
+                ->getRequest();
+
+        $edit_form->bind($request);
 
 
 
@@ -114,9 +117,11 @@ class PageController extends ContainerAware {
         $edit_form = $this->container->get("page.form_handler")->createEditForm($entity->getId());
         $delete_form = $this->container->get("page.form_handler")->createDeleteForm($entity->getId());
 
-        $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
-        $edit_form->bind($result);
+        $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
+                ->slug(array("name"))
+                ->getRequest();
+
+        $edit_form->bind($request);
 
         if ($edit_form->isValid()) {
             $this->container->get("page.persistence_handler")->save($edit_form->getData());
