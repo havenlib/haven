@@ -29,7 +29,7 @@ class RequestModifier {
         if (empty($this->request))
             throw new \Exception(get_class($this) . " expected a \Symfony\Component\HttpFoundation\Request object. You must pass it through setRequest.");
 
-        $result = $this->uploader->moveFilesToTempAndMerge($this->request->files->all(), $this->request->request->all());
+        $result = $this->uploader->uploadRequestFiles($this->request);
         $this->request->request->replace($result);
 
         return $this;
