@@ -14,9 +14,16 @@ class Uploader {
         $this->upload_dir = $upload_dir;
     }
 
+    public function uploadRequestFiles(\Symfony\Component\HttpFoundation\Request $request) {
+        $files = $request->files->all();
+        $data = $request->request->all();
+
+        return $this->moveFilesToTempAndMerge($files, $data);
+    }
+
     public function moveFilesToTempAndMerge($filesT, $requestT) {
-        $filesT = array_pop($filesT);
-        $requestT = array_pop($requestT);
+//        $filesT = array_pop($filesT);
+//        $requestT = array_pop($requestT);
         if (!empty($filesT)) {
 
             $this->changeUploadsToFiles($filesT, $requestT);
@@ -28,6 +35,7 @@ class Uploader {
 
         return $requestT;
     }
+
     /**
      * recursive look into the ArrayFiles to find all ["uploads"], and transform them to ["files"] and merge them with arrayRequest.
      * It changes the uploadedFiles to array's and moves the files to a new location configured in %secure_upload_dir%
@@ -90,7 +98,6 @@ class Uploader {
 //
 //        return $relative_location . "/" . $file->getClientOriginalName();
 //    }
-
 //    public function moveFiles($data, $location = null) {
 //        if (is_array($data)) {
 //            foreach ($data as $d) {

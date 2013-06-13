@@ -4,8 +4,8 @@ namespace Evocatio\Bundle\CoreBundle\Lib;
 
 class Slugifier {
 
-    public function slugifyRequest($requestT, $fields) {
-//        $requestT = array_pop($requestT);
+    public function slugifyRequest(\Symfony\Component\HttpFoundation\Request $request, $fields) {
+        $data = $request->request->all();
 
         $sluggify = function (&$array, $fields) use (&$sluggify) {
                     if (array_key_exists("slug", $array)) {
@@ -26,9 +26,9 @@ class Slugifier {
                     }
                 };
 
-        $sluggify($requestT, $fields);
+        $sluggify($data, $fields);
 
-        return $requestT;
+        return $data;
     }
 
     /**
