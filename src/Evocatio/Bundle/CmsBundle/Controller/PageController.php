@@ -62,9 +62,9 @@ class PageController extends ContainerAware {
     public function addAction() {
         $edit_form = $this->container->get("page.form_handler")->createNewForm();
 
-//        $post_data = $this->container->get("request")->request->all();
         $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
                 ->slug(array("name"))
+                ->upload()
                 ->getRequest();
 
         $edit_form->bind($request);
@@ -119,6 +119,7 @@ class PageController extends ContainerAware {
 
         $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
                 ->slug(array("name"))
+                ->upload()
                 ->getRequest();
 
         $edit_form->bind($request);

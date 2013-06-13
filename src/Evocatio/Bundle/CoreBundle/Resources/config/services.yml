@@ -27,9 +27,13 @@ services:
       class:     Evocatio\Bundle\CoreBundle\Lib\Notifier
       arguments: ["@mailer", "@templating", "%notification_from%", "%notification_to%"]
       
+  uploader:
+      class:        Evocatio\Bundle\CoreBundle\Lib\Uploader
+      arguments:    [%kernel.root_dir%, %secure_upload_dir%]
+      
   slugifier:
       class:     Evocatio\Bundle\CoreBundle\Lib\Slugifier
       
   request_modifier:
       class:     Evocatio\Bundle\CoreBundle\Lib\RequestModifier
-      arguments: ["@slugifier"]
+      arguments: ["@slugifier", "@uploader"]
