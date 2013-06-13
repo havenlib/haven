@@ -1,44 +1,56 @@
 {% extends entity.getTemplate() is empty?"OwnerSiteBundle:Page:create.html.twig":entity.getTemplate().getPath() %}
-{% block inside_body %}
+{% set language = 'en' %}
+{% block inside_title %} Edition Spéciale{% endblock inside_title %}
 
-{% embed ("OwnerSiteBundle:Page:create.html.twig" ) %}
-    {% block formhead %}
-        {{ _route_crud.path('owner_site_page_edit', 'edit',entity.id) }}
-    {% endblock formhead %}
-    {% block form %}
+{% block inside_body %}
+{% embed "OwnerSiteBundle:Page\\template:embed_add.html.twig" %}
+{% block formhead %}
+    {{ _route_crud.path('owner_site_page_edit', 'edit',entity.id) }}
+{% endblock formhead %}
+
+{% form_theme edit_form "::Form/generic_with_translations.html.twig" %}
+{% block form %}
+<fieldset class="half">
+        {{ form_widget(edit_form) }}
+
         <fieldset> {{ form_widget(edit_form) }} </fieldset>
         <ul class="contents-list">
             <li>
-                <input type=button value="Add Html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_html_contents');" />
-                <input type=button value="Add Text content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_text_contents');" />
-                <input type=button value="Add News Widget" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_news_widgets');" />
+                <input type=button value="Add Html content to theatre" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_html_contents');" />
+                <input type=button value="Add Text content to theatre" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_text_contents');" />
+                <input type=button value="Add News Widget to theatre" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_news_widgets');" />
+                <div class="hiddden">alsdjkfl;asdjf</div>
             </li>
         </ul>
-    {% endblock form %}
-{% endembed %}->>
-<menu type="toolbar">
-    <button type="command" label="Save" onclick="goDaddy();" >go</button>>
-</menu>
-<<-
-<noscript>
-hahahahaha
-</noscript>
-{{ parent() }}
-<script>
-    function goDaddy(){
-    var data = CKEDITOR.instances.editable43.getData();
-    alert(data);
-    }
-    // Your code to save "data", usually through Ajax.
-</script>
+        <ul class="contents-list">
+            <li>
+                <input type=button value="Add Html content to sidebar" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_html_contents');" />
+                <input type=button value="Add Text content to sidebar" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_text_contents');" />
+                <input type=button value="Add News Widget to sidebar" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_news_widgets');" />
+            </li>
+        </ul>
+</fieldset>
+<div class="half">
+        {{ form_widget(edit_html_content_form) }}
+</div>
+{% endblock form %}
+{% endembed %}
+    {{ parent() }}        
 {% endblock inside_body %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {% if app.environment != 'prod' %}
+    <link href="{{ asset("less/admin.less") }}" rel="stylesheet/less" type="text/css" />
+    {% else %}
+    <link rel="stylesheet" type="text/css" href="/css/admin.css" />
+    {% endif %}
+{% endblock %}
 
-{% block delete %}
-    <li>
-   {# <form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
-        {{ form_widget(delete_form) }}
-        <button type="submit">Delete</button>
-    </form>#}
-        </li>
-{% endblock delete %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/sig.js" type="text/javascript"></script>
+{% endblock javascripts %} 
+    
+
+        

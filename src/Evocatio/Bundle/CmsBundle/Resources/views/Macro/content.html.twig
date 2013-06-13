@@ -1,8 +1,8 @@
-{% macro fill_area(entity ,area, edit_form) %}
-
+{% macro fill_area(entity ,area, edit_form, language) %}
+{# les contenus doivent accepter la langue pour permettre de forcer #}
     {% for page_content in entity.getPageContents() if page_content.getArea() == area %}
         {% if (page_content.getContent().getMethod() == "include") %}
-            {% include (page_content.getContent().getTemplate()) with { 'content':page_content.getContent() } %}
+            {% include (page_content.getContent().getTemplate()) with { 'content':page_content.getContent() , 'language' : language} %}
         {% elseif (page_content.getContent().getMethod() == "render") %}
         {% import _self as macros %}
             {{ macros.render_widget(page_content.getContent()) }}

@@ -89,7 +89,7 @@ class UserController extends ContainerAware {
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
-        $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
+        $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
             'edit_form' => $edit_form->createView()
         );

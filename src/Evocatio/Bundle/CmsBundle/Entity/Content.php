@@ -134,22 +134,22 @@ class Content extends Translatable {
         return $this->page_contents;
     }
 
-    public static function getDiscriminatorMap() {
-        $reader = new AnnotationReader();
-        
-        return $reader->getClassAnnotation(new ReflectionClass(__CLASS__), "\Doctrine\ORM\Mapping\DiscriminatorMap");
-    }
+//    public static function getDiscriminatorMap() {
+//        $reader = new AnnotationReader();
+//        
+//        return $reader->getClassAnnotation(new ReflectionClass(__CLASS__), "\Doctrine\ORM\Mapping\DiscriminatorMap");
+//    }
+//
+//    public function getDiscriminator() {
+//        $discriminator_map = self::getDiscriminatorMap();
+//        
+//        return array_search(get_class($this), $discriminator_map->value);
+//    }
 
-    public function getDiscriminator() {
-        $discriminator_map = self::getDiscriminatorMap();
-        
-        return array_search(get_class($this), $discriminator_map->value);
-    }
-
-    public function is($class) {
-        
-        return ($this instanceof $class);
-    }
+//    public function is($class) {
+//        
+//        return ($this instanceof $class);
+//    }
 
     /**
      * 
