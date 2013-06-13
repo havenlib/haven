@@ -6,7 +6,8 @@ use Evocatio\Bundle\CoreBundle\Lib\LanguageReadHandler;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\FormFactory;
 use Evocatio\Bundle\CmsBundle\Entity\PageContent as Entity;
-use Evocatio\Bundle\CmsBundle\Form\PageContentInlineType as Type;
+use Evocatio\Bundle\CmsBundle\Form\PageContentType as Type;
+use Evocatio\Bundle\CmsBundle\Entity\HtmlContent as HtmlContent;
 
 class PageContentFormHandler {
 
@@ -38,15 +39,9 @@ class PageContentFormHandler {
      * @param \Website\Bundle\SiteBundle\Entity\Entreprise $entreprise
      * @return a form for dossier, as dossierType or DossierRequerantType
      */
-    public function createNewFormForPage($page, $content_type = "Evocatio\Bundle\CmsBundle\Form\HtmlContentType") {
-        $entity = new Entity();
-        $temp_translation = new \Evocatio\Bundle\CmsBundle\Entity\HtmlContentTranslation();
-        $temp_content = new \Evocatio\Bundle\CmsBundle\Entity\HtmlContent();
-        $temp_content->addTranslation($temp_translation);
-        $entity->setContent($temp_content);
-        $entity->setPage($page);
-        $entity->setContent($temp_content);
-        $create_form = $this->form_factory->create(new Type(), $entity);
+    public function createNewFormForPage($page, $content_type = "HtmlContent") {
+        
+        $create_form = $this->createHtmlContentForm($page);
 
         return $create_form;
     }
@@ -63,7 +58,17 @@ class PageContentFormHandler {
                         ->getForm()
         ;
     }
-
+    public function createHtmlContentForm($page){
+        $entity = new Entity();
+        $temp_translation = new \Evocatio\Bundle\CmsBundle\Entity\HtmlContentTranslation();
+        $temp_content = new \Evocatio\Bundle\CmsBundle\Entity\HtmlContent();
+        $temp_content->addTranslation($temp_translation);
+        $entity->setContent($temp_content);
+        $entity->setPage($page);
+        $entity->setContent($temp_content);    
+        
+        return $this->form_factory->create(new Type("HtmlContent"), $entity);
+    }
 }
 
 ?>

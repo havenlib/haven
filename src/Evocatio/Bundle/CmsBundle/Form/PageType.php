@@ -21,6 +21,19 @@ class PageType extends AbstractType {
                         'label' => false
                     )
                 ))
+                ->add('files', 'collection', array(
+                    "type" => new FilePageType()
+                    , 'allow_delete' => true
+                    , 'allow_add' => true
+                    , 'by_reference' => false
+                ))
+                ->add('uploads', 'file', array(
+                    "attr" => array(
+                        "multiple" => "multiple"
+                    )
+                    , 'required' => false
+                    , "mapped" => false
+                ))
                 ->add('template')
                 ->add('html_contents', "collection", array(
                     'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\HtmlContentType')
