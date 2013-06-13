@@ -9,3 +9,13 @@
 {% endspaceless %}
 {% endblock form_rows %}
 
+{% block form_widget_simple %}
+    {% spaceless %}
+        {% set type = type|default('text') %}
+    {% if type == "file" and attr.multiple is defined %} 
+        {% set full_name = full_name~"[]" %}
+    {% endif %}
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}  />
+    {% endspaceless %}
+{% endblock form_widget_simple %}
+

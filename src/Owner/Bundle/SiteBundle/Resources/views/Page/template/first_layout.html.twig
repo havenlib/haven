@@ -20,13 +20,13 @@ header
 {% endblock inside_header %}
 {% block inside_content %} 
     
-    <div id="sidebar">
+    <div id="sidebar" class="area">
         sidebar
-{{ CHelp.fill_area(entity, "sidebar", edit_form is defined?edit_form:null , language) }}
+{{ CHelp.fill_area(entity, "sidebar", edit_form is defined?edit_form:null , language is defined?language:"") }}
         </div>
-        <div id="theatre">
+        <div id="theatre" class="area">
             theatre
-{{ CHelp.fill_area(entity, "theatre", edit_form is defined?edit_form:null , language) }}
+{{ CHelp.fill_area(entity, "theatre", edit_form is defined?edit_form:null , language is defined?language:"") }}
 
             </div>
 {% endblock inside_content %}
