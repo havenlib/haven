@@ -29,3 +29,7 @@ services:
       
   slugifier:
       class:     Evocatio\Bundle\CoreBundle\Lib\Slugifier
+      
+  request_modifier:
+      class:     Evocatio\Bundle\CoreBundle\Lib\RequestModifier
+      arguments: ["@slugifier"]
