@@ -16,17 +16,51 @@ class PageType extends AbstractType {
                     , "label" => false
                     , 'prototype' => true
                     , 'prototype_name' => '__name_trans__'
-                    , 'by_reference' => false                    
+                    , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
                     )
-                    ))
-                ->add('htmlcontents', "collection", array(
-                    'type' => new HtmlContentType()
+                ))
+                ->add('files', 'collection', array(
+                    "type" => new FilePageType()
+                    , 'allow_delete' => true
+                    , 'allow_add' => true
+                    , 'by_reference' => false
+                ))
+                ->add('uploads', 'file', array(
+                    "attr" => array(
+                        "multiple" => "multiple"
+                    )
+                    , 'required' => false
+                    , "mapped" => false
+                ))
+                ->add('template')
+                ->add('html_contents', "collection", array(
+                    'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\HtmlContentType')
                     , 'allow_add' => true
                     , 'allow_delete' => true
                     , 'prototype' => true
-                    , 'by_reference' => false                 
+                    , 'by_reference' => false
+                    , 'options' => array(
+                        'label' => false
+                    )
+                ))
+                ->add('text_contents', "collection", array(
+                    'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\TextContentType')
+                    , 'allow_add' => true
+                    , 'allow_delete' => true
+                    , 'prototype' => true
+                    , 'by_reference' => false
+                    , 'options' => array(
+                        'label' => false
+                    )
+                ))
+                ->add('news_widgets', "collection", array(
+                    'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\NewsWidgetType')
+                    , 'allow_add' => true
+                    , 'allow_delete' => true
+                    , 'prototype' => true
+                    , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
                     )

@@ -9,25 +9,43 @@ function addAnItem(source, tag) {
     // This is to allow use to create many forms for a single type of relationship in a table inheritance situtation
     // -------------
     // #TODO : will have to redo the numbering, take into considaration that delete will remove some numbers in the so we can end up with 2 ..._2 if ..._1 was deleted <--- FIX PLZ
+    tag = tag || "__name__";
+    var regpat = new RegExp(tag, "gi")
     newnode = document.createElement("div");
-    //    fait la liste des id's qui sont identique à la source+_xxx (xxx étant des chiffre) et retourne seulement les chiffres. donc une liste des index existants sans les enfants qui pourrait être source_translation_xxx
-    list_ids = $("div[id^='" + source +"_']").map(function() {
-       sindex = $(this).attr("id").match(/\d+\.?\d*$/g);
-        if(this.id == source + "_" + sindex){
-            return sindex;
-        }
-    });
-//    choisi comme next id le plus gros chiffre de la liste d'id , +1
-    next_id = ($(list_ids).length ==0) ? 0 : Math.max.apply( null,list_ids)+1;
 
+    next_id = $("div").filter(function() {
+        return this.id.match('^' + source + '[_][0-9]*$');
+    }).length;
     newnode.innerHTML = $("#" + source).attr('data-prototype').replace(regpat, next_id);
     //     mets le selected sur l'option selon l'index du select pour mettre l' option en anglais plus nescessaire normalement à été corrigé dans translation.html.twig
 //    $(newnode.firstChild).find("select[id$='trans_lang']").each(function(index, element) {
 //        $(element).find("option:eq(" + index + ")").attr("selected", "selected");
 //    });
-    
+
     var ajouter = document.getElementById(source).appendChild(newnode.firstChild);
-    
+
+    // puts the ckeditor where it is needed, really it reloads for all ckeditor class under (ajouter)
+    addCkEditorTo(ajouter);
+
+    // clicker les nav langue pour afficher les bonne traductions, Sinon par défaut lors de l'ajout le nouveau item apparait en français'
+    $(".nav").filter(".lang").find(".active").click();
+}
+
+function addHtmlContent(source, tag, cible) {
+    // si il n'y a pas de tag définie mettre __name__ par default
+    tag = tag || "__name__";
+    var regpat = new RegExp(tag, "gi")
+    newnode = document.createElement("div");
+
+    next_id = $("div").filter(function() {
+        return this.id.match('^' + source + '[_][0-9]*$');
+    }).length;
+    newnode.innerHTML = $("#" + source).attr('data-prototype').replace(regpat, next_id);
+    //     mets le selected sur l'option selon l'index du select pour mettre l' option en anglais plus nescessaire normalement à été corrigé dans translation.html.twig
+
+    var ajouter = document.getElementById(cible).appendChild(newnode.firstChild);
+    $(ajouter).find("input[id$='area']").attr("value", cible);
+
     // puts the ckeditor where it is needed, really it reloads for all ckeditor class under (ajouter)
     addCkEditorTo(ajouter);
 
@@ -59,8 +77,8 @@ function addAnItem(source, tag) {
  */
 function showFormElementClass(tab) {
 //    $("div[id^=" + $(tab).attr("data-formname")+"]").children("div.trans").hide();
-    $("div[id^=" + $(tab).attr("data-formname")+"]").filter("div[id*='translations_']").hide();
-    $("div[id^=" + $(tab).attr("data-formname")+"]").filter("div[id$='translations_"+ $(tab).attr("data-langindex") +"']").show();
+    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("div[id*='translations_']").hide();
+    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("div[id$='translations_" + $(tab).attr("data-langindex") + "']").show();
     $(tab).siblings("li").removeClass("active");
     //$("." + $(tab).attr("rel")).show();
     $(tab).addClass("active");
@@ -588,7 +606,6 @@ $(document).ready(function() {
     $('textarea.ckeditor').each(function() {
         prepareEditor(this);
     });
-
 })
 
 function removeCkEditorFrom(target) {
@@ -671,11 +688,11 @@ function isEnterPress() { // the arguments here are the event (needed to detect 
     }
 }
 
-function uncomplete(target){
-    if($(target+".done").length){
+function uncomplete(target) {
+    if ($(target + ".done").length) {
         confirm('Cette action va enlever le complete de ce service');
     }
-    $(target+".done").triggerHandler("click");
+    $(target + ".done").triggerHandler("click");
 }
 function remove_item_by_id(id) {
     if (confirm("Cette information va être définitivement supprimée lors de la sauvegarde.")) {

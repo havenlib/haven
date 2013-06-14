@@ -35,12 +35,12 @@ class PersonController extends PersonaController {
         if ($edit_form->isValid()) {
             $this->container->get("person.persistence_handler")->save($edit_form->getData());
 
-            $this->container->get("session")->setFlash("success", "create.success");
+            $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_person_list', array("persona" => 'person', 'list', 'list')));
         }
 
-        $this->container->get("session")->setFlash("error", "create.error");
+        $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
         $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
         $params = array(

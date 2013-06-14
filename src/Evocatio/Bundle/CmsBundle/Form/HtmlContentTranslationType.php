@@ -13,7 +13,7 @@ class HtmlContentTranslationType extends AbstractType {
         $builder
                 ->add('content', null, array(
                     "attr" => array(
-                        "class" => "ckeditor"
+                        "class" => "ckedditor"
                     )
                     ,"required" =>false
                 ))
