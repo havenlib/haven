@@ -16,7 +16,7 @@ class DefaultController {
     /**
      * @Route("")
      * @Method("GET")
-     * @Template("OwnerSiteBundle:Page/template:two_columns_template.html.twig")
+     * @Template("OwnerSiteBundle:Page/template:home_template.html.twig")
      */
     public function homeAction() {
         return array("entities" => "test");
