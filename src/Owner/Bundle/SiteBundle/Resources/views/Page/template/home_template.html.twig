@@ -1,0 +1,24 @@
+{% extends "::base.html.twig" %}
+
+{% block inside_theater %}
+<div id="aside-left-area" class="area">
+    ------ aside-left
+</div>
+
+<div id="center-area" class="area">
+    ------ center
+</div>
+
+<div id="aside-right-area" class="area">
+    ------ aside-right
+</div>
+{% endblock inside_theater %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% if app.environment != 'prod' %}
+        <link href="{{ asset("less/home_template.less") }}" rel="stylesheet/less" type="text/css" />
+    {% else %}
+<!-- CSS -->
+    {% endif %}
+{% endblock stylesheets%}
