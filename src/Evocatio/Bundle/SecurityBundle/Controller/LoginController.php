@@ -119,7 +119,7 @@ class LoginController extends ContainerAware {
                 $em->persist($user);
                 $em->remove($user_reset);
                 $em->flush();
-                $this->container->get("session")->setFlash("success", "c'est réussi");
+                $this->container->get("session")->getFlashBag()->add("success", "c'est réussi");
 
                 return new \Symfony\Component\HttpFoundation\RedirectResponse($this->container->get("router")->generate("EvocatioSecurityBundle_homepage"));
             }
