@@ -106,13 +106,13 @@ class PersonaController extends ContainerAware {
 
             $this->container->get($discriminator . ".persistence_handler")->save($edit_form->getData());
 
-            $this->container->get("session")->setFlash("success", "create.success");
+            $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_' . $discriminator . '_list', array('suffix' => $this->container->get('translator')->trans($discriminator, array(), "routes")
                         , 'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
 
-        $this->container->get("session")->setFlash("error", "create.error");
+        $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
         $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
@@ -173,12 +173,12 @@ class PersonaController extends ContainerAware {
 
             $this->container->get($discriminator . ".persistence_handler")->save($edit_form->getData());
 
-            $this->container->get("session")->setFlash("success", "update.success");
+            $this->container->get("session")->getFlashBag()->add("success", "update.success");
             return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_' . $discriminator . '_list', array('suffix' => $this->container->get('translator')->trans($discriminator, array(), "routes")
                         , 'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
 
-        $this->container->get("session")->setFlash("error", "update.error");
+        $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
         $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
         $params = array(

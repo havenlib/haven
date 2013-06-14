@@ -82,12 +82,12 @@ class UserController extends ContainerAware {
 
         if ($edit_form->isValid()) {
             $this->container->get("user.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->setFlash("success", "create.success");
+            $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate('evocatio_security_user_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
 
-        $this->container->get("session")->setFlash("error", "create.error");
+        $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
         $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
@@ -130,11 +130,11 @@ class UserController extends ContainerAware {
         $edit_form->bindRequest($this->container->get('Request'));
         if ($edit_form->isValid()) {
             $this->container->get("user.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->setFlash("success", "create.success");
+            $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate('evocatio_security_user_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
-        $this->container->get("session")->setFlash("error", "update.error");
+        $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
         $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
         $params = array(

@@ -4,6 +4,8 @@ namespace Evocatio\Bundle\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Evocatio\Bundle\CoreBundle\Generic\Translatable;
+use Doctrine\Common\Annotations\AnnotationReader;
+use \ReflectionClass;
 
 /**
  * Evocatio\Bundle\CmsBundle\Entity\Content
@@ -14,6 +16,9 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
  * "html"="Evocatio\Bundle\CmsBundle\Entity\HtmlContent", 
+ * "text"="Evocatio\Bundle\CmsBundle\Entity\TextContent", 
+ * "widget"="Evocatio\Bundle\CmsBundle\Entity\Widget", 
+ * "news_widget"="Evocatio\Bundle\CmsBundle\Entity\NewsWidget", 
  * })
  */
 class Content extends Translatable {
@@ -28,13 +33,6 @@ class Content extends Translatable {
     protected $id;
 
     /**
-     * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=254, unique=true, nullable=false)
-     */
-    protected $name;
-
-    /**
      * @var boolean $status
      *
      * @ORM\Column(name="status", type="boolean", nullable=true)
@@ -42,17 +40,9 @@ class Content extends Translatable {
     protected $status;
 
     /**
-     *
-     * @var type Page $cms_page
-     * 
-     * @ORM\ManyToOne(targetEntity="Page", inversedBy="contents")
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="PageContent", mappedBy="content", cascade={"persist"})
      */
-    protected $page;
-
-    public function __construct() {
-        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    private $page_contents;
 
     /**
      * Get id
@@ -61,15 +51,6 @@ class Content extends Translatable {
      */
     public function getId() {
         return $this->id;
-    }
-
-    /**
-     * Get translations
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getTranslations() {
-        return $this->translations;
     }
 
     /**
@@ -90,136 +71,8 @@ class Content extends Translatable {
         return $this->actif;
     }
 
-    /**
-     * Set nom
-     *
-     * @param string $nom
-     */
-    public function setNom($nom) {
-        $this->nom = $nom;
-    }
-
-    /**
-     * Get nom
-     *
-     * @return string 
-     */
-    public function getNom() {
-        return $this->nom;
-    }
-
-    public function setLanguage() {
-        if ($this->getTranslations()->exists(function ($current) {
-                            return ($current->getLang() == \Locale::getPrimaryLanguage(\Locale::getDefault()));
-                        }))
-            ;
-    }
-
-    public function getContent() {
-        return $this->getTranslations()->current()->getContent();
-    }
-
-    public function setContent() {
-        $this->getTranslations()->next();
-    }
-
     public function __toString() {
-        return $this->getContent();
-    }
-
-    /**
-     * Set cms_page
-     *
-     * @param tahua\SiteBundle\Entity\Page $cmsPage
-     */
-    public function setCmsPage(\tahua\SiteBundle\Entity\Page $cmsPage) {
-        $this->cms_page = $cmsPage;
-    }
-
-    public function getTranslationByLang($lang) {
-        return $this->translations->filter(function ($row) use ($lang) {
-                            return $row->getLang() === $lang;
-                        })->first();
-    }
-
-    public function createMissingLanguages() {
-        foreach ($this->langs as $lang) {
-            if (!($this->getTranslationByLang($lang) instanceof CmsContentTranslation)) {
-                $this->translations[$lang] = $this->createTranslation($lang);
-            }
-        }
-    }
-
-    /**
-     * Change l'index numérique par la langue
-     */
-    public function indexContentTranslationsByLang() {
-        foreach ($this->translations as $key => $translation) {
-            $this->translations[$translation->getLang()] = $this->translations->remove($key);
-        }
-    }
-
-    public function createTranslation($lang) {
-        $translation = new CmsContentTranslation();
-        $translation->setLang($lang);
-        $translation->setCmsContent($this);
-
-        return $translation;
-    }
-
-    /**
-     * Get cms_page
-     *
-     * @return tahua\SiteBundle\Entity\Page 
-     */
-    public function getCmsPage() {
-        return $this->cms_page;
-    }
-
-
-    /**
-     * Set page
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Page $page
-     * @return Content
-     */
-    public function setPage(\Evocatio\Bundle\CmsBundle\Entity\Page $page = null) {
-        $this->page = $page;
-
-        return $this;
-    }
-
-    /**
-     * Get page
-     *
-     * @return \Evocatio\Bundle\CmsBundle\Entity\Page 
-     */
-    public function getPage() {
-        return $this->page;
-    }
-
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Content
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
+        return $this->id;
     }
 
     /**
@@ -228,10 +81,9 @@ class Content extends Translatable {
      * @param boolean $status
      * @return Content
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -240,8 +92,84 @@ class Content extends Translatable {
      *
      * @return boolean 
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->page_contents = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     * @return Content
+     */
+    public function addPageContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->page_contents[] = $pageContents;
+
+        return $this;
+    }
+
+    /**
+     * Remove page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     */
+    public function removePageContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->page_contents->removeElement($pageContents);
+    }
+
+    /**
+     * Get page_contents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPageContents() {
+        
+        return $this->page_contents;
+    }
+
+    public static function getDiscriminatorMap() {
+        $reader = new AnnotationReader();
+        
+        return $reader->getClassAnnotation(new ReflectionClass(__CLASS__), "\Doctrine\ORM\Mapping\DiscriminatorMap");
+    }
+
+    public function getDiscriminator() {
+        $discriminator_map = self::getDiscriminatorMap();
+        
+        return array_search(get_class($this), $discriminator_map->value);
+    }
+
+    public function is($class) {
+        
+        return ($this instanceof $class);
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    public function getMethod() {
+//        default method set to include, must overide to change, methods are use to define how to display.
+//        @todo, make a renderer object to take care of this ?
+        return "include";
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    public function getTemplate(){
+    
+//        @TODO: the template could be saved in database for each content but even better would be to have it save per areatypes (so in a theatre the template could be something but in the sidebar something else ?)
+//        could probably be done only by having 2 different content created, and use 2 different templates. Thought the important here would be to have a template object that can either load or take from the database, in php or html or twig
+        return false;
+    }
+
 }

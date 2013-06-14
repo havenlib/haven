@@ -1,0 +1,59 @@
+{% extends "OwnerSiteBundle::base.html.twig" %}
+
+{% import "EvocatioCmsBundle:Macro:content.html.twig" as CHelp %}
+
+{% block navigation %}
+{% endblock navigation %}
+{% block inside_header %}
+header
+<div id="header" class="area">
+{{ CHelp.fill_area(entity, "header") }}
+    </div>
+    <!-- section>
+        <h6>Available content list</h6>
+        <ul class="contents-list">
+            <li>
+                <input type=button value="Add Html content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_html_contents', '', 'header');" />
+                <input type=button value="Add Text content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_text_contents', '', 'header');" />
+            </li>
+        </ul>
+    </section -->
+{% endblock inside_header %}
+{% block inside_content %} 
+    
+    <div id="sidebar">
+        sidebar
+{{ CHelp.fill_area(entity, "sidebar", edit_form is defined?edit_form:null ) }}
+        </div>
+        <div id="theatre">
+            theatre
+{{ CHelp.fill_area(entity, "theatre", edit_form is defined?edit_form:null ) }}
+
+            </div>
+{% endblock inside_content %}
+    
+    {% block inside_footer%} 
+    footer
+    {% endblock inside_footer %} 
+    
+{% block stylesheets %}
+    {{ parent() }}
+    {% if app.environment != 'prod' %}
+            <!-- Switch environnement développement développement:  -->
+            <script type="text/javascript"> less = { env: 'development' }; </script>
+
+            <!-- JS -->
+            <link href="{{ asset("less/base.less") }}" rel="stylesheet/less" type="text/css" />
+            
+            <link href="{{ asset("less/first-layout.less") }}" rel="stylesheet/less" type="text/css" />
+
+            <!-- CSS -->
+            <!--    <link rel="stylesheet" type="text/css" href="{{ asset("css/bootstrap-responsive.min.css") }}" /> -->
+            <link rel="stylesheet" type="text/css" href="{{ asset("css/bootstrap.min.css") }}" />
+    {% else %}
+            <link rel="stylesheet" type="text/css" href="{{ asset("css/bootstrap-responsive.min.css") }}" />
+            <link rel="stylesheet" type="text/css" href="{{ asset("css/bootstrap.min.css") }}" />
+            <link rel="stylesheet" type="text/css" href="/css/base.css" />
+            <link rel="stylesheet" type="text/css" href="/css/first-layout.css" />
+    {% endif %}
+{% endblock %}
