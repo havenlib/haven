@@ -30,7 +30,7 @@ class PostController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/admin/{show}/post/{id}")
+     * @Route("/admin/{show}/post/{id}", defaults={"show" = "afficher"})
      * @Method("GET")
      * @Template()
      */
@@ -76,14 +76,16 @@ class PostController extends ContainerAware {
     public function addAction() {
         $edit_form = $this->container->get("post.form_handler")->createNewForm();
 
-        $edit_form->bindRequest($this->container->get('Request'));
+        $post_data = $this->container->get("request")->request->all();
+        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
+        $edit_form->bind($result);
 
         if ($edit_form->isValid()) {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
             return $this->redirectListAction();
         }
 
-        $this->container->get("session")->setFlash("error", "create.error");
+        $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
         $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
@@ -122,21 +124,22 @@ class PostController extends ContainerAware {
         $edit_form = $this->container->get("post.form_handler")->createEditForm($entity->getId());
         $delete_form = $this->container->get("post.form_handler")->createDeleteForm($entity->getId());
 
-
         $files_post = $this->container->get("request")->files->all();
 
-        $this->container->get("uploader")->moveFiles($files_post, "yeah");
+        $this->container->get("uploader")->moveFiles($files_post, "------");
 
-        $edit_form->bindRequest($this->container->get('Request'));
+        $post_data = $this->container->get("request")->request->all();
+        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
+        $edit_form->bind($result);
 
 
         if ($edit_form->isValid()) {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->setFlash("success", "update.success");
+            $this->container->get("session")->getFlashBag()->add("success", "update.success");
 
             return $this->redirectListAction();
         }
-        $this->container->get("session")->setFlash("error", "update.error");
+        $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
         return array(
             'entity' => $entity,
@@ -214,9 +217,9 @@ class PostController extends ContainerAware {
         return new Response($this->container->get('templating')->render($template, $params));
     }
 
-    public function listWidgetAction($template = null, $qt = null) {
+    public function listWidgetAction($template = null, $maximum = null) {
         $repo = $this->container->get('doctrine')->getRepository("EvocatioWebBundle:Post");
-        $entities = $repo->findLastCreatedOnline($qt);
+        $entities = $repo->findLastCreatedOnline($maximum);
 
 
         return new Response($this->container->get('templating')->render($template ? $template : 'EvocatioWebBundle:Post:list_widget.html.twig', array('entities' => $entities)));

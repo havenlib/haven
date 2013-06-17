@@ -1,6 +1,6 @@
 <?php
 
-namespace Evocatio\Bundle\CmsBundle\Entity;
+namespace Evocatio\Bundle\CmsBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
