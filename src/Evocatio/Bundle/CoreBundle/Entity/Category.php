@@ -33,6 +33,20 @@ class Category extends Translatable {
     protected $posts;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Category", mappedBy="my_categories")
+     */
+    private $categories;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="categories")
+     * @ORM\JoinTable(name="Categories",
+     *      joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="my_category_id", referencedColumnName="id")}
+     *      )
+     */
+    private $my_categories;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -115,6 +129,66 @@ class Category extends Translatable {
 
     public function __toString() {
         return $this->getName();
+    }
+
+    /**
+     * Add categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
+     * @return Category
+     */
+    public function addCategory(\Evocatio\Bundle\CoreBundle\Entity\Category $category) {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
+     */
+    public function removeCategory(\Evocatio\Bundle\CoreBundle\Entity\Category $categories) {
+        $this->categories->removeElement($categories);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCategories() {
+        return $this->categories;
+    }
+
+    /**
+     * Add my_categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $myCategories
+     * @return Category
+     */
+    public function addMyCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $myCategories) {
+        $this->my_categories[] = $myCategories;
+
+        return $this;
+    }
+
+    /**
+     * Remove my_categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $myCategories
+     */
+    public function removeMyCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $myCategories) {
+        $this->my_categories->removeElement($myCategories);
+    }
+
+    /**
+     * Get my_categories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMyCategories() {
+        return $this->my_categories;
     }
 
 }

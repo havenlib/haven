@@ -9,17 +9,22 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class CategoryType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('translations', 'collection', array(
-            'type' => new CategoryTranslationType()
-            , 'allow_add' => true
-            , "label" => false
-            , 'prototype' => true
-            , 'prototype_name' => '__name_trans__'
-            , 'by_reference' => false
-            , 'options' => array(
-                'label' => false
-            )
-        ));
+        $builder
+                ->add('translations', 'collection', array(
+                    'type' => new CategoryTranslationType()
+                    , 'allow_add' => true
+                    , "label" => false
+                    , 'prototype' => true
+                    , 'prototype_name' => '__name_trans__'
+                    , 'by_reference' => false
+                    , 'options' => array(
+                        'label' => false
+                    )
+                ))
+                ->add('my_categories', null, array(
+                    'required' => false
+                ))
+        ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
