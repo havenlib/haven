@@ -1,7 +1,7 @@
 {%  extends "::base.html.twig" %}
-{% import "::macro/route/crud.html.twig" as _route_crud %}
+{% import "::macro/route/suffix.html.twig" as route_suffix %}
 {% block inside_theater %}
-<h2>Afficher la page</h2>
+<h1>Person</h1>
 
 <table class="record_properties">
     <tbody>
@@ -18,12 +18,12 @@
 
 <ul>
     <li>
-        <a href="{{ _route_crud.path('evocatio_cms_page_list', 'list') }}">
+        <a href="{{ route_suffix.list('evocatio_core_category_list', 'category') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ _route_crud.path('evocatio_cms_page_edit', 'edit',entity.id) }}">
+        <a href="{{ route_suffix.edit('evocatio_core_category_edit', 'category', entity.id) }}">
             Edit
         </a>
     </li>

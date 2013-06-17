@@ -1,5 +1,5 @@
 {%  extends "OwnerSiteBundle::base_admin.html.twig" %}
-{% block inside_content %}
+{% block inside_theater %}
     <dl>
         {% for entity in entities %}
             <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.title }}</strong> 
@@ -18,4 +18,4 @@
         </a>
     </li>
 </ul>
-{% endblock inside_content %}
+{% endblock inside_theater %}

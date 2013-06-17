@@ -3,7 +3,7 @@
 
 {% block title %}Info sur la translation{% endblock %}
 
-{% block inside_content %}
+{% block inside_theater %}
 {{ app.session.flash('notice')|trans }}
 
 &nbsp;
@@ -15,6 +15,6 @@
 </form>
 <br />
 <a href="{{ path('evocatio_core_language_edit', {'edit': ('edit' | trans({}, 'routes'))}) }}">Choisir les langues</a>
-{% endblock inside_content %}
+{% endblock inside_theater %}
 
 

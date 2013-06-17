@@ -1,6 +1,6 @@
 {%  extends "::base.html.twig" %}
 {% import "::macro/route/crud.html.twig" as _route_crud %}
-{% block inside_content %}
+{% block inside_theater %}
     <dl>
         {% for entity in entities %}
             <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.title }}</strong> 
@@ -19,4 +19,4 @@
         </a>
     </li>
 </ul>
-{% endblock inside_content %}
+{% endblock inside_theater %}
