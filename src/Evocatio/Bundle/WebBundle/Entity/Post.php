@@ -293,4 +293,27 @@ class Post extends Translatable {
         return $this->categories;
     }
 
+
+    /**
+     * Add categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
+     * @return Post
+     */
+    public function addCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $categories)
+    {
+        $this->categories[] = $categories;
+    
+        return $this;
+    }
+
+    /**
+     * Remove categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
+     */
+    public function removeCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $categories)
+    {
+        $this->categories->removeElement($categories);
+    }
 }
