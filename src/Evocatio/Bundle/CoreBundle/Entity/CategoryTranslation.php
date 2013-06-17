@@ -1,6 +1,6 @@
 <?php
 
-namespace Evocatio\Bundle\WebBundle\Entity;
+namespace Evocatio\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
