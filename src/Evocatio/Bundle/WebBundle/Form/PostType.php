@@ -12,6 +12,10 @@ class PostType extends AbstractType {
                 ->add('status', 'choice', array(
                     'choices' => array(0 => "Inactive", 1 => "Publish", 2 => "Draft")
                 ))
+                ->add('categories', null, array(
+                    'expanded' => true,
+                    "multiple" => true)
+                )
                 ->add('postbegin_at', "date", array(
                     'required' => false,
 //                    'widget' => 'single_text',
@@ -41,7 +45,7 @@ class PostType extends AbstractType {
     }
 
     public function getName() {
-        return 'evocatio_bundle_WebBundle_posttype';
+        return 'evocatio_bundle_webBundle_posttype';
     }
 
 }
