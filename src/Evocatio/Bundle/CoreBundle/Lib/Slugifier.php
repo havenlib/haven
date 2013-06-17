@@ -7,7 +7,8 @@ class Slugifier {
     public function slugifyRequest(\Symfony\Component\HttpFoundation\Request $request, $fields) {
         $data = $request->request->all();
 
-        $sluggify = function (&$array, $fields) use (&$sluggify) {
+        $myself = $this;
+        $sluggify = function (&$array, $fields) use (&$sluggify, $myself) {
                     if (array_key_exists("slug", $array)) {
                         $preSlugArray = array();
                         foreach ($fields as $field) {
@@ -16,8 +17,8 @@ class Slugifier {
                             $preSlugArray[] .= trim($array[$field]);
                         }
 
-                        $slug = (substr($slug = $this->slugifyString(implode("-", $preSlugArray)), -1) == "-") ? substr($slug, 0, -1) : $slug;
-                        $array["slug"] = ($array["slug"] == "") ? $slug : $this->slugifyString($array["slug"]);
+                        $slug = (substr($slug = $myself->slugifyString(implode("-", $preSlugArray)), -1) == "-") ? substr($slug, 0, -1) : $slug;
+                        $array["slug"] = ($array["slug"] == "") ? $slug : $myself->slugifyString($array["slug"]);
                     }
 
                     foreach ($array as &$child) {

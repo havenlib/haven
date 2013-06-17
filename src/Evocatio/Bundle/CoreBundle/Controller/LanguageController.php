@@ -39,11 +39,11 @@ class LanguageController extends ContainerAware {
      */
     public function updateAction() {
         $edit_form = $this->container->get("language.form_handler")->createEditForm();
-        $edit_form->bindRequest($this->container->get('Request'));
+        $edit_form->bind($this->container->get('Request'));
 
         if ($edit_form->isValid()) {
             $this->container->get("language.persistence_handler")->save($edit_form->get("symboles")->getData());
-            
+
             return new RedirectResponse($this->container->get('router')->generate('evocatio_core_language_edit', array('edit' => $this->container->get('translator')->trans("edit", array(), "routes"))));
         }
 
