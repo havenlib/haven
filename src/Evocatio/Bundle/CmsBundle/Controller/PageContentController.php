@@ -45,37 +45,37 @@ class PageContentController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{create}/page_content")
+     * @Route("/admin/{create}/page_content/{page_id}")
      * @Method("GET")
      * @Template
      */
-    public function createAction() {
-        $edit_form = $this->container->get("page_content.form_handler")->createNewForm();
+    public function createAction($page_id) {
+        $page = $this->container->get("page.read_handler")->get($page_id);
+        $edit_form = $this->container->get("page_content.form_handler")->createNewFormForPage($page);
+        
         return array("edit_form" => $edit_form->createView());
     }
 
     /**
-     * @Route("/admin/{create}/page_content")
+     * @Route("/admin/{create}/page_content/{page_id}")
      * @Method("POST")
      * @Template
      */
-    public function addAction() {
-        $edit_form = $this->container->get("page_content.form_handler")->createNewForm();
+    public function addAction($page_id) {
+        $page = $this->container->get("page.read_handler")->get($page_id);
+        $edit_form = $this->container->get("page_content.form_handler")->createNewFormForPage($page);
 
-        $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifiyRequest($post_data, array("name"));
-        $edit_form->bind($result);
-
+        $edit_form->bind($this->container->get("request")->get("evocatio_bundle_cmsbundle_pagecontenttype"));
 
 
         if ($edit_form->isValid()) {
             $this->container->get("page_content.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->setFlash("success", "create.success");
+            $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return $this->redirectEditAction($edit_form->getData()->getId());
         }
 
-        $this->container->get("session")->setFlash("error", "create.error");
+        $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
         $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
@@ -116,18 +116,16 @@ class PageContentController extends ContainerAware {
         $edit_form = $this->container->get("page_content.form_handler")->createEditForm($entity->getId());
         $delete_form = $this->container->get("page_content.form_handler")->createDeleteForm($entity->getId());
 
-        $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifiyRequest($post_data, array("name"));
-        $edit_form->bind($result);
+        $edit_form->bind($this->container->get("request")->get("evocatio_bundle_cmsbundle_pagecontenttype"));
 
         if ($edit_form->isValid()) {
             $this->container->get("page_content.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->setFlash("success", "create.success");
+            $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return $this->redirectEditAction($edit_form->getData()->getId());
         }
 
-        $this->container->get("session")->setFlash("error", "update.error");
+        $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
         $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
@@ -140,11 +138,11 @@ class PageContentController extends ContainerAware {
     }
 
     protected function redirectListAction() {
-        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_page_content_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_pagecontent_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }
 
     protected function redirectEditAction($id) {
-        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_page_content_edit', array(
+        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_pagecontent_edit', array(
                     'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
                     , 'id' => $id)));
     }

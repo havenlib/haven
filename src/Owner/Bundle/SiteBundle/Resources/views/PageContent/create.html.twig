@@ -1,0 +1,34 @@
+{#% extends "OwnerSiteBundle:Template:add_template.html.twig" %#}
+{% extends "OwnerSiteBundle:Template:multilangue_page.html.twig" %}
+{% block formhead %}
+    {{ _route_crud.path('owner_site_pagecontent_create', 'create', {'page_id' : app.getRequest().get("page_id")?app.getRequest().get("page_id"):"28" } ) }}
+{% endblock formhead %}
+
+{#% form_theme edit_form "OwnerSiteBundle:Form:formulator.html.twig" %#}
+{% form_theme edit_form "::Form/generic_with_translations.html.twig" %}
+{% block form %}
+<fieldset>
+        {{ form_widget(edit_form) }}
+        <div class="hidden">
+        </div>
+</fieldset>
+{% endblock form %}
+{% block available_content %}
+<div id="htmlcontent" class="draggable" ondragstart="console.log('drag')">
+    <img width="120px" style="border: 1px solid black" src="/images/html_content.jpg" />
+</div>
+{% endblock available_content %}
+{% block back %}
+    <a href="{{ _route_crud.path('owner_site_pagecontent_list', 'list') }}">
+        Back to the list
+    </a>
+{% endblock back %}
+
+{% block stylesheets %}
+{{ parent() }}
+            {% if app.environment != 'prod' %}
+                <link href="{{ asset("less/formulator.less") }}" rel="stylesheet/less" type="text/css" />
+            {% else %}
+                <link rel="stylesheet" type="text/css" href="/css/base.css" />
+            {% endif %}
+{% endblock stylesheets %}

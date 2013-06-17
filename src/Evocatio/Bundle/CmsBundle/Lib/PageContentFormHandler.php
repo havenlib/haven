@@ -29,10 +29,12 @@ class PageContentFormHandler {
      */
     public function createEditForm($id) {
         $entity = $this->read_handler->get($id);
-        $edit_form = $this->form_factory->create(new Type(), $entity);
+        $edit_form = $this->form_factory->create(new \Evocatio\Bundle\CmsBundle\Form\PageContentInlineType(), $entity);
 
         return $edit_form;
     }
+
+    
 
     /**
      * 
@@ -60,12 +62,10 @@ class PageContentFormHandler {
     }
     public function createHtmlContentForm($page){
         $entity = new Entity();
-        $temp_translation = new \Evocatio\Bundle\CmsBundle\Entity\HtmlContentTranslation();
         $temp_content = new \Evocatio\Bundle\CmsBundle\Entity\HtmlContent();
-        $temp_content->addTranslation($temp_translation);
+        $temp_content->addTranslations(array($this->language_read_handler->getBySymbol("fr")));
         $entity->setContent($temp_content);
         $entity->setPage($page);
-        $entity->setContent($temp_content);    
         
         return $this->form_factory->create(new Type("HtmlContent"), $entity);
     }
