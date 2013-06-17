@@ -5,6 +5,7 @@ namespace Evocatio\Bundle\WebBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 use Symfony\Component\Validator\Constraints as Assert;
+use Evocatio\Bundle\CoreBundle\Entity\Category;
 
 /**
  * Evocatio\Bundle\WebBundle\Entity\PostCategory
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table()
  * @ORM\Entity
  */
-class PostCategory extends \Evocatio\Bundle\CoreBundle\Entity\Category {
+class PostCategory extends Category {
 
     /**
      * @var integer
@@ -28,14 +29,21 @@ class PostCategory extends \Evocatio\Bundle\CoreBundle\Entity\Category {
      */
     protected $name;
 
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+   
 }

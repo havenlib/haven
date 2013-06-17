@@ -26,14 +26,9 @@ class CategoryTranslation extends TranslationMappedBase {
     /**
      * @var text $name
      * 
-     * @ORM\Column(name="name", type="text", nullable=true)
+     * @ORM\Column(name="name", type="string", nullable=true)
      */
     protected $name;
-
-    /**
-     * @ORM\OneToMany(targetEntity="CategoryTranslation", mappedBy="parent", cascade={"persist"})
-     */
-    protected $translations;
 
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="translations")
@@ -95,41 +90,8 @@ class CategoryTranslation extends TranslationMappedBase {
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
-    /**
-     * Add translations
-     *
-     * @param \Evocatio\Bundle\WebBundle\Entity\CategoryTranslation $translations
-     * @return CategoryTranslation
-     */
-    public function addTranslation(\Evocatio\Bundle\WebBundle\Entity\CategoryTranslation $translations)
-    {
-        $this->translations[] = $translations;
-    
-        return $this;
-    }
 
-    /**
-     * Remove translations
-     *
-     * @param \Evocatio\Bundle\WebBundle\Entity\CategoryTranslation $translations
-     */
-    public function removeTranslation(\Evocatio\Bundle\WebBundle\Entity\CategoryTranslation $translations)
-    {
-        $this->translations->removeElement($translations);
-    }
-
-    /**
-     * Get translations
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTranslations()
-    {
-        return $this->translations;
-    }
 }
