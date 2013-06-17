@@ -1,6 +1,6 @@
 {%  extends "::base.html.twig" %}
 {% import "::macro/route/suffix.html.twig" as route_suffix %}
-{% block inside_content %}
+{% block inside_theater %}
     <dl>
         {% for entity in entities %}
             <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.username }}</strong> 
@@ -19,4 +19,4 @@
         </a>
     </li>
 </ul>
-{% endblock inside_content %}
+{% endblock inside_theater %}

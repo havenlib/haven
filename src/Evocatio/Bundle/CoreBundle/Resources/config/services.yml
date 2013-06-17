@@ -1,4 +1,16 @@
 services:
+  category.read_handler:
+        class:     Evocatio\Bundle\CoreBundle\Lib\Handler\CategoryReadHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+        
+  category.persistence_handler:
+        class:     Evocatio\Bundle\CoreBundle\Lib\Handler\CategoryPersistenceHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
+  category.form_handler:
+      class:     Evocatio\Bundle\CoreBundle\Lib\Handler\CategoryFormHandler
+      arguments: ["@category.read_handler", "@security.context", "@form.factory"]
+      
   language.read_handler:
         class:     Evocatio\Bundle\CoreBundle\Lib\LanguageReadHandler
         arguments: ["@doctrine.orm.entity_manager", "@security.context"]

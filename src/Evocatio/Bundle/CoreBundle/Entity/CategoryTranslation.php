@@ -1,6 +1,6 @@
 <?php
 
-namespace Evocatio\Bundle\WebBundle\Entity;
+namespace Evocatio\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,7 +12,7 @@ use Evocatio\Bundle\CoreBundle\Entity\TranslationMappedBase;
  * @ORM\Table()
  * @ORM\Entity
  */
-class CategoryTranslation extends TranslationMappedBase {
+class CategoryTranslation extends SluggableMappedBase {
 
     /**
      * @var integer $id
@@ -26,14 +26,9 @@ class CategoryTranslation extends TranslationMappedBase {
     /**
      * @var text $name
      * 
-     * @ORM\Column(name="name", type="text", nullable=true)
+     * @ORM\Column(name="name", type="string", nullable=true)
      */
     protected $name;
-
-    /**
-     * @ORM\OneToMany(targetEntity="CategoryTranslation", mappedBy="parent", cascade={"persist"})
-     */
-    protected $translations;
 
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="translations")
@@ -74,10 +69,10 @@ class CategoryTranslation extends TranslationMappedBase {
     /**
      * Set parent
      *
-     * @param \Evocatio\Bundle\WebBundle\Entity\Category $parent
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $parent
      * @return CategoryTranslation
      */
-    public function setParent(\Evocatio\Bundle\WebBundle\Entity\Category $parent = null) {
+    public function setParent(\Evocatio\Bundle\CoreBundle\Entity\Category $parent = null) {
         $this->parent = $parent;
 
         return $this;
@@ -86,7 +81,7 @@ class CategoryTranslation extends TranslationMappedBase {
     /**
      * Get parent
      *
-     * @return \Evocatio\Bundle\WebBundle\Entity\Category 
+     * @return \Evocatio\Bundle\CoreBundle\Entity\Category 
      */
     public function getParent() {
         return $this->parent;
@@ -95,41 +90,8 @@ class CategoryTranslation extends TranslationMappedBase {
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
-    /**
-     * Add translations
-     *
-     * @param \Evocatio\Bundle\WebBundle\Entity\CategoryTranslation $translations
-     * @return CategoryTranslation
-     */
-    public function addTranslation(\Evocatio\Bundle\WebBundle\Entity\CategoryTranslation $translations)
-    {
-        $this->translations[] = $translations;
-    
-        return $this;
-    }
 
-    /**
-     * Remove translations
-     *
-     * @param \Evocatio\Bundle\WebBundle\Entity\CategoryTranslation $translations
-     */
-    public function removeTranslation(\Evocatio\Bundle\WebBundle\Entity\CategoryTranslation $translations)
-    {
-        $this->translations->removeElement($translations);
-    }
-
-    /**
-     * Get translations
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTranslations()
-    {
-        return $this->translations;
-    }
 }

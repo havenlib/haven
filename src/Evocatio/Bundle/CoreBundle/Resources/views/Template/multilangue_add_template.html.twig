@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% block inside_content %}
+{% block inside_theater %}
 <div class="edit-form">
 <h1>Ajouter/Modifier une entite</h1>
     {% if edit_form.translations.vars.prototype is defined %}  
@@ -30,7 +30,7 @@
     {% endblock delete %}
     </ul>
 </div>
-{% endblock inside_content %}
+{% endblock inside_theater %}
 
 {% block javascripts %}
     {{ parent() }}
