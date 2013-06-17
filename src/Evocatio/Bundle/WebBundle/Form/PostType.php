@@ -41,7 +41,7 @@ class PostType extends AbstractType {
     }
 
     public function getName() {
-        return 'evocatio_bundle_WebBundle_posttype';
+        return 'evocatio_bundle_webBundle_posttype';
     }
 
 }

@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Evocatio\Bundle\CoreBundle\Entity\SluggableMappedBase
+ * 
  * @UniqueEntity(fields={"trans_lang", "slug"})
  * @ORM\MappedSuperclass
  */
@@ -36,4 +37,5 @@ abstract class SluggableMappedBase extends TranslationMappedBase {
     public function getSlug() {
         return $this->slug;
     }
+
 }

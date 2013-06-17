@@ -9,9 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * 
  */
 class Category {
 
@@ -25,12 +22,9 @@ class Category {
     private $id;
 
     /**
-     *
-     * @var type 
-     * 
-     * @ORM\Column(name="name", type="string")
+     * @ORM\OneToMany(targetEntity="CategoryTranslation", mappedBy="parent", cascade={"persist"})
      */
-    private $name;
+    protected $translations;
 
     /**
      * Get id
@@ -41,17 +35,15 @@ class Category {
         return $this->id;
     }
 
-
     /**
      * Set name
      *
      * @param string $name
      * @return Category
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -60,8 +52,46 @@ class Category {
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add translations
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\CategoryTranslation $translations
+     * @return Category
+     */
+    public function addTranslation(\Evocatio\Bundle\CoreBundle\Entity\CategoryTranslation $translations) {
+        $translations->setParent($this);
+        $this->translations[] = $translations;
+
+        return $this;
+    }
+
+    /**
+     * Remove translations
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\CategoryTranslation $translations
+     */
+    public function removeTranslation(\Evocatio\Bundle\CoreBundle\Entity\CategoryTranslation $translations) {
+        $this->translations->removeElement($translations);
+    }
+
+    /**
+     * Get translations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTranslations() {
+        return $this->translations;
+    }
+
 }
