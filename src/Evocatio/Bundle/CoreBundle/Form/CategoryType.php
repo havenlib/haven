@@ -22,8 +22,9 @@ class CategoryType extends AbstractType {
                     )
                 ))
                 ->add('my_categories', null, array(
-                    'required' => false
-                ))
+                    'expanded' => true,
+                    "multiple" => true)
+                )
         ;
     }
 
