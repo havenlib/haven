@@ -16,6 +16,7 @@ class PagePersistenceHandler {
     }
 
     public function save($entity) {
+
         $this->em->persist($entity);
         $this->em->flush();
     }

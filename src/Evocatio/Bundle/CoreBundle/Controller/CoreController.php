@@ -37,7 +37,7 @@ class CoreController extends ContainerAware {
 
             $route = $routeArray["_route"];
             unset($routeArray["_route"]);
-//        $this->container->get("session")->setFlash("error", "lang is : " . print_r($routeArray,true) );  //   $router->match($this->getRequest()->server->get('HTTP_REFERER')));
+//        $this->container->get("session")->getFlashBag()->add("error", "lang is : " . print_r($routeArray,true) );  //   $router->match($this->getRequest()->server->get('HTTP_REFERER')));
 
             return new RedirectResponse($this->container->get('router')->generate($route, $routeArray));
         }

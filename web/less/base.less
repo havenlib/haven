@@ -12,13 +12,13 @@ body {
     margin: 0;
 }
 
-#main{
+#theater{
  > div{
         display: inline-block;
         vertical-align: top;
         &#navigation{
-            ul{
-                width: 150px;
+            &.admin{
+              //  min-width: 142px;
             }
           //  background-color: red;
         }
@@ -30,30 +30,44 @@ body {
 
     .content{
         > div{
-              // display: inline-block;
+            //   display: inline-block;
               // height: 20px;
        }
-       > #div1{
-            width: 20%;
+       > .area{
+               display: inline-block;
+            vertical-align: top;
+       }
+       > #area1{
+            display: inline-block;
+            padding: 10px;
+            width: 30%;
+            min-height: 20%;
             background-color: orange;
         }
-       > #div2{
-            width: 60%;
+       > #module{
+        vertical-align: top;
+            display: inline-block;
+            padding: 10px;
+            width: 70%;
             background-color: green;
         }
-       > #div3{
+       > #area2{
+            width: 20%;
+            background-color: red;
+        }
+       > #area3{
             width: 20%;
             background-color: blue;
         }
-       > #div4{
+       > #area4{
             width: 20%;
             background-color: purple;
         }
-       > #div5{
+       > #area5{
             width: 60%;
             background-color: pink;
         }
-       > #div6{
+       > #area6{
             width: 20%;
             background-color: grey;
         }

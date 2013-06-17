@@ -273,6 +273,7 @@
 {% block form_row %}
 {% spaceless %}
     <div class="formulator_form_row"><span>form_row: <em>{{ name }}</em></span>
+           <<<< {{ dump(form.vars.block_prefixes) }} >>>>>>
     <div>
         {{ form_label(form) }}
         {{ form_errors(form) }}
