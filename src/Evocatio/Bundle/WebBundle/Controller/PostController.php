@@ -76,9 +76,11 @@ class PostController extends ContainerAware {
     public function addAction() {
         $edit_form = $this->container->get("post.form_handler")->createNewForm();
 
-        $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
-        $edit_form->bind($result);
+        $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
+                ->slug(array("name"))
+                ->getRequest();
+
+        $edit_form->bind($request);
 
         if ($edit_form->isValid()) {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
@@ -124,13 +126,11 @@ class PostController extends ContainerAware {
         $edit_form = $this->container->get("post.form_handler")->createEditForm($entity->getId());
         $delete_form = $this->container->get("post.form_handler")->createDeleteForm($entity->getId());
 
-        $files_post = $this->container->get("request")->files->all();
+        $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
+                ->slug(array("name"))
+                ->getRequest();
 
-        $this->container->get("uploader")->moveFiles($files_post, "------");
-
-        $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
-        $edit_form->bind($result);
+        $edit_form->bind($request);
 
 
         if ($edit_form->isValid()) {

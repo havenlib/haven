@@ -12,7 +12,7 @@ use Evocatio\Bundle\CoreBundle\Entity\TranslationMappedBase;
  * @ORM\Table()
  * @ORM\Entity
  */
-class CategoryTranslation extends TranslationMappedBase {
+class CategoryTranslation extends SluggableMappedBase {
 
     /**
      * @var integer $id
@@ -69,10 +69,10 @@ class CategoryTranslation extends TranslationMappedBase {
     /**
      * Set parent
      *
-     * @param \Evocatio\Bundle\WebBundle\Entity\Category $parent
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $parent
      * @return CategoryTranslation
      */
-    public function setParent(\Evocatio\Bundle\WebBundle\Entity\Category $parent = null) {
+    public function setParent(\Evocatio\Bundle\CoreBundle\Entity\Category $parent = null) {
         $this->parent = $parent;
 
         return $this;
@@ -81,7 +81,7 @@ class CategoryTranslation extends TranslationMappedBase {
     /**
      * Get parent
      *
-     * @return \Evocatio\Bundle\WebBundle\Entity\Category 
+     * @return \Evocatio\Bundle\CoreBundle\Entity\Category 
      */
     public function getParent() {
         return $this->parent;

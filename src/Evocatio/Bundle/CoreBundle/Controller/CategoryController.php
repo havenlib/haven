@@ -37,9 +37,6 @@ class CategoryController extends ContainerAware {
      * @Template()
      */
     public function listAction($discriminator) {
-        if (!$this->container->has($discriminator . ".read_handler"))
-            throw new \Exception($discriminator . ".read_handler doesn't exist or isn't setted in service.yml");
-
         $entities = $this->container->get($discriminator . ".read_handler")->getAll();
 
         return array("entities" => $entities);
@@ -54,13 +51,6 @@ class CategoryController extends ContainerAware {
      * @Template()
      */
     public function showAction($id, $discriminator) {
-        if (!$this->container->has($discriminator . ".read_handler"))
-            throw new \Exception($discriminator . ".read_handler doesn't exist or isn't setted in service.yml");
-
-        if (!$this->container->has($discriminator . ".form_handler"))
-            throw new \Exception($discriminator . ".form_handler doesn't exist or isn't setted in service.yml");
-
-
         $entity = $this->container->get($discriminator . ".read_handler")->get($id);
         $delete_form = $this->container->get($discriminator . ".form_handler")->createDeleteForm($id);
 
@@ -77,9 +67,6 @@ class CategoryController extends ContainerAware {
      * @Template
      */
     public function createAction($discriminator) {
-        if (!$this->container->has($discriminator . ".form_handler"))
-            throw new \Exception($discriminator . ".form_handler doesn't exist or isn't setted in service.yml");
-
         $edit_form = $this->container->get($discriminator . ".form_handler")->createNewForm();
 
         return array("edit_form" => $edit_form->createView());
@@ -94,18 +81,17 @@ class CategoryController extends ContainerAware {
      * @Template
      */
     public function addAction($discriminator) {
-        if (!$this->container->has($discriminator . ".form_handler"))
-            throw new \Exception($discriminator . ".form_handler doesn't exist or isn't setted in service.yml");
 
         $edit_form = $this->container->get($discriminator . ".form_handler")->createNewForm();
-        $edit_form->bind($this->container->get('Request'));
+
+        $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
+                ->slug(array("name"))
+                ->getRequest();
+
+        $edit_form->bind($request);
 
         if ($edit_form->isValid()) {
-            if (!$this->container->has($discriminator . ".persistence_handler"))
-                throw new \Exception($discriminator . ".persistence_handler doesn't exist or isn't setted in service.yml");
-
             $this->container->get($discriminator . ".persistence_handler")->save($edit_form->getData());
-
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate('evocatio_core_' . $discriminator . '_list', array('suffix' => $this->container->get('translator')->trans($discriminator, array(), "routes")
@@ -130,12 +116,6 @@ class CategoryController extends ContainerAware {
      * @Template
      */
     public function editAction($id, $discriminator) {
-        if (!$this->container->has($discriminator . ".read_handler"))
-            throw new \Exception($discriminator . ".read_handler doesn't exist or isn't setted in service.yml");
-
-        if (!$this->container->has($discriminator . ".form_handler"))
-            throw new \Exception($discriminator . ".form_handler doesn't exist or isn't setted in service.yml");
-
         $entity = $this->container->get($discriminator . ".read_handler")->get($id);
         $delete_form = $this->container->get($discriminator . ".form_handler")->createDeleteForm($id);
         $edit_form = $this->container->get($discriminator . ".form_handler")->createEditForm($id);
@@ -155,26 +135,20 @@ class CategoryController extends ContainerAware {
      * @Template
      */
     public function updateAction($id, $discriminator) {
-        if (!$this->container->has($discriminator . ".read_handler"))
-            throw new \Exception($discriminator . ".read_handler doesn't exist or isn't setted in service.yml");
-
-        if (!$this->container->has($discriminator . ".form_handler"))
-            throw new \Exception($discriminator . ".form_handler doesn't exist or isn't setted in service.yml");
-
         $entity = $this->container->get($discriminator . ".read_handler")->get($id);
         $delete_form = $this->container->get($discriminator . ".form_handler")->createDeleteForm($id);
         $edit_form = $this->container->get($discriminator . ".form_handler")->createEditForm($id);
 
+        $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
+                ->slug(array("name"))
+                ->getRequest();
 
-        $edit_form->bind($this->container->get('Request'));
+        $edit_form->bind($request);
         if ($edit_form->isValid()) {
-            if (!$this->container->has($discriminator . ".persistence_handler"))
-                throw new \Exception($discriminator . ".persistence_handler doesn't exist or isn't setted in service.yml");
-
             $this->container->get($discriminator . ".persistence_handler")->save($edit_form->getData());
 
             $this->container->get("session")->getFlashBag()->add("success", "update.success");
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_persona_' . $discriminator . '_list', array('suffix' => $this->container->get('translator')->trans($discriminator, array(), "routes")
+            return new RedirectResponse($this->container->get('router')->generate('evocatio_core_' . $discriminator . '_list', array('suffix' => $this->container->get('translator')->trans($discriminator, array(), "routes")
                         , 'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
 

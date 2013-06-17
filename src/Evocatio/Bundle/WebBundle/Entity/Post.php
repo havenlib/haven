@@ -68,7 +68,8 @@ class Post extends Translatable {
     protected $translations;
 
     /**
-     * @ORM\OneToMany(targetEntity="PostCategory", mappedBy="parent", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="\Evocatio\Bundle\CoreBundle\Entity\Category", inversedBy="posts", cascade={"persist"})
+     * @ORM\JoinTable(name="PostsCatgories")
      */
     protected $categories;
 
@@ -261,28 +262,26 @@ class Post extends Translatable {
         $this->translations->removeElement($translations);
     }
 
-
     /**
      * Add categories
      *
-     * @param \Evocatio\Bundle\WebBundle\Entity\PostCategory $categories
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
      * @return Post
      */
-    public function addCategorie(\Evocatio\Bundle\WebBundle\Entity\PostCategory $categories)
-    {
-        $this->categories[] = $categories;
-    
+    public function addCategory(\Evocatio\Bundle\CoreBundle\Entity\Category $category) {
+        $category->addPost($this);
+        $this->categories[] = $category;
+
         return $this;
     }
 
     /**
      * Remove categories
      *
-     * @param \Evocatio\Bundle\WebBundle\Entity\PostCategory $categories
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
      */
-    public function removeCategorie(\Evocatio\Bundle\WebBundle\Entity\PostCategory $categories)
-    {
-        $this->categories->removeElement($categories);
+    public function removeCategory(\Evocatio\Bundle\CoreBundle\Entity\Category $category) {
+        $this->categories->removeElement($category);
     }
 
     /**
@@ -290,8 +289,8 @@ class Post extends Translatable {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCategories()
-    {
+    public function getCategories() {
         return $this->categories;
     }
+
 }
