@@ -19,6 +19,6 @@
 {% endmacro %}
 
 {% macro path(route, keyword, options = {} ) %}
-    {% set parameters = {(keyword): (keyword | trans({}, 'routes'))}|merge(options) %}
+    {% set parameters = {(keyword): (keyword | trans({}, 'routes'))}| merge(options is iterable ? options:{}) %}
     {{ path(route, parameters)}}
 {% endmacro %}

@@ -5,7 +5,7 @@
 {% block inside_body %}
 {% embed "OwnerSiteBundle:Page\\template:embed_add.html.twig" %}
 {% block formhead %}
-    {{ _route_crud.path('owner_site_page_edit', 'edit',entity.id) }}
+                <a href="{{ _route_crud.edit('owner_site_page_edit',  entity.id) }}">edit</a>
 {% endblock formhead %}
 
 {% form_theme edit_form "::Form/generic_with_translations.html.twig" %}

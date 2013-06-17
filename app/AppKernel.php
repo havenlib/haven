@@ -18,7 +18,7 @@ class AppKernel extends Kernel {
             #Evocatio bundles(),
             new Evocatio\Bundle\CoreBundle\EvocatioCoreBundle(),
             new Evocatio\Bundle\SecurityBundle\EvocatioSecurityBundle(),
-//            new Evocatio\Bundle\PersonaBundle\EvocatioPersonaBundle(),
+            new Evocatio\Bundle\PersonaBundle\EvocatioPersonaBundle(),
             new Evocatio\Bundle\PosBundle\EvocatioPosBundle(),
             new Evocatio\Bundle\WebBundle\EvocatioWebBundle(),
             new Owner\Bundle\SiteBundle\OwnerSiteBundle(),
