@@ -1,7 +1,7 @@
 {% macro fill_area(entity ,area, edit_form, language) %}
 {# les contenus doivent accepter la langue pour permettre de forcer #}
     {% for page_content in entity.getPageContents() if page_content.getArea() == area %}
-    <div class="editable {{ page_content.getContent() }}" contenteditable="true">
+    <div class="page_content {{ page_content.getArea }}">
         {% if (page_content.getContent().getMethod() == "include") %}
             {% include (page_content.getContent().getTemplate()) with { 'content':page_content.getContent() , 'language' : language} %}
         {% elseif (page_content.getContent().getMethod() == "render") %}
@@ -31,8 +31,8 @@
     {% set bundle = (entity.bundle)? entity.bundle : app.request.get('_template').get('bundle') %}
     {% set controller = entity.controller %}
     {% set action = entity.action %}
- {{ bundle ~':'~ controller ~':'~ action }}
- {{ dump(entity.options) }}
+ {#{ bundle ~':'~ controller ~':'~ action }}
+ {{ dump(entity.options) }#}
     <h4>{{ entity.name }}</h4>
     {{ render(controller((bundle ~ ":" ~ controller ~ ":" ~ action), {"_locale" : app.getRequest().get("_locale")}|merge(entity.options)))}}
 {% endmacro %}

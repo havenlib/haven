@@ -1,1 +1,6 @@
-    {{ content.getContent(language) | raw }}
+<div class="html_content">
+    <img src="{{ asset("images\\pen_draw.jpg") }}" class="edit-icon">
+    <div class="editable {{ content.getId() }}" contenteditable="true">
+        {{ content.getContent(language) | raw }}----
+    </div>
+</div>    
