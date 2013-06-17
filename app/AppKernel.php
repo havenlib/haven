@@ -18,7 +18,7 @@ class AppKernel extends Kernel {
             #Evocatio bundles(),
             new Evocatio\Bundle\CoreBundle\EvocatioCoreBundle(),
             new Evocatio\Bundle\SecurityBundle\EvocatioSecurityBundle(),
-            new Evocatio\Bundle\PersonaBundle\EvocatioPersonaBundle(),
+//            new Evocatio\Bundle\PersonaBundle\EvocatioPersonaBundle(),
             new Evocatio\Bundle\PosBundle\EvocatioPosBundle(),
             new Evocatio\Bundle\WebBundle\EvocatioWebBundle(),
             new Owner\Bundle\SiteBundle\OwnerSiteBundle(),
@@ -26,7 +26,7 @@ class AppKernel extends Kernel {
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-            $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
+//            $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
