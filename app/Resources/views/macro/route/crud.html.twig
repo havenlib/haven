@@ -18,6 +18,7 @@
     {{ crud.path(route, 'list', id) }}
 {% endmacro %}
 
+
 {% macro path(route, keyword, id = null) %}
     {% set parameters = {(keyword): (keyword | trans({}, 'routes')), 'id': id} %}
     {{ path(route, parameters)}}
