@@ -167,8 +167,8 @@ class Category extends Translatable {
      * @param \Evocatio\Bundle\CoreBundle\Entity\Category $myCategories
      * @return Category
      */
-    public function addMyCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $myCategories) {
-        $this->my_categories[] = $myCategories;
+    public function addMyCategory(\Evocatio\Bundle\CoreBundle\Entity\Category $myCategory) {
+        $this->my_categories[] = $myCategory;
 
         return $this;
     }
@@ -178,8 +178,8 @@ class Category extends Translatable {
      *
      * @param \Evocatio\Bundle\CoreBundle\Entity\Category $myCategories
      */
-    public function removeMyCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $myCategories) {
-        $this->my_categories->removeElement($myCategories);
+    public function removeMyCategory(\Evocatio\Bundle\CoreBundle\Entity\Category $myCategory) {
+        $this->my_categories->removeElement($myCategory);
     }
 
     /**
