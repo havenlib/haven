@@ -8,15 +8,15 @@
 {% block inside_theater %} 
     {% block navigation %}
         {% block inside_navigation %}    
-        <div id="navigation" class="admin navbar">
+<div id="navigation" class="admin navbar">
         {% include "OwnerSiteBundle::navigation_admin.html.twig" %} 
-        </div>
+    </div>
         {% endblock inside_navigation %}
     {% endblock navigation %}
     {% block content %} 
     <div  class="content admin">
-    {% block inside_content %} 
-    {% endblock inside_content %}
-    </div>
+        {% block inside_content %} 
+        {% endblock inside_content %}
+        </div>
     {% endblock content %}
 {% endblock inside_theater %}

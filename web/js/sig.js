@@ -623,29 +623,24 @@ function cancelBubble(e) {
         evt.cancelBubble = true;
 }
 
-function moveServiceReference(current_service_id, where) {
-    current_element = $("#" + current_service_id);
-    next_element = (where === 'down') ? current_element.next() : current_element.prev();
+function rank(current_element, where) {
+//    current_element = $("#" + id);
+//    next_element = (where === 'down') ? current_element.next() : current_element.prev();
 
-    if (next_element.hasClass("service_reference")) {
-        current_rank = $("#" + current_element.attr("id") + "_rank").val();
+    $(current_element).each(function() {
+        if (where === 'down') {
+            $(this).insertAfter($(this).next());
+        } else {
+            $(this).insertBefore($(this).prev());
+        }
+    });
 
-
-        $(current_element).each(function() {
-            if (where === 'down') {
-                $(this).insertAfter($(this).next());
-            } else {
-                $(this).insertBefore($(this).prev());
+    $(current_element).parent().children().each(
+            function(key) {
+                $(this).find("input[id$='rank']").val(parseInt(key + 1));
             }
-        })
+    );
 
-        $(current_element).parent().children().each(
-                function(key, value) {
-                    $("#" + $(this).attr("id") + "_rank").val(parseInt(key + 1));
-                }
-        );
-
-    }
 
 }
 

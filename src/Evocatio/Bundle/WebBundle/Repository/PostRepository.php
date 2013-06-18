@@ -28,6 +28,11 @@ class PostRepository extends StatusRepository {
         return $this->getResult();
     }
 
+    public function findAllOrderedByRank() {
+        $this->order('rank');
+        return $this->getResult();
+    }
+
     public function findAllPublished() {
         $this->filterByStatus(Post::STATUS_PUBLISHED)->getQueryBuilder();
         return $this->getResult();
@@ -40,6 +45,15 @@ class PostRepository extends StatusRepository {
             $this->limit($limit);
 
         return $this->getResult();
+    }
+
+    public function order($field, $direction = 'ASC') {
+        if (is_null($this->query_builder))
+            $this->query_builder = $this->createQueryBuilder("e");
+
+        $this->query_builder->orderBy('e.' . $field, $direction);
+
+        return $this;
     }
 
     public function limit($limit) {
