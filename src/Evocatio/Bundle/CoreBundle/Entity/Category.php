@@ -146,10 +146,10 @@ class Category extends Translatable {
     /**
      * Remove categories
      *
-     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $category
      */
-    public function removeCategory(\Evocatio\Bundle\CoreBundle\Entity\Category $categories) {
-        $this->categories->removeElement($categories);
+    public function removeCategory(\Evocatio\Bundle\CoreBundle\Entity\Category $category) {
+        $this->categories->removeElement($category);
     }
 
     /**
