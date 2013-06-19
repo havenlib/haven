@@ -8,11 +8,11 @@
             </trans-unit>
             <trans-unit id="2">
                 <source>save.faq</source>
-                <target>Sauvegarder la FAQ</target>
+                <target>Save FAQ</target>
             </trans-unit>
             <trans-unit id="3">
                 <source>rank</source>
-                <target>Ordonner</target>
+                <target>Rank</target>
             </trans-unit>
         </body>
     </file>

@@ -6,7 +6,6 @@
             <div>Status: {{ entity.status?'Published':'Inactive' }}</div> 
             {{ entity.question }}
             <a href="{{ _route_crud.path('owner_site_faq_edit', 'edit', entity.id) }}">edit</a> 
-            <a href="{{ _route_crud.path('owner_site_faq_show', 'show',entity.id) }}">show</a> 
         </dt>
         <dd>{{ entity.reponse | raw }}</dd>
     {% else %}

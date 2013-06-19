@@ -1,0 +1,19 @@
+{# empty Twig template #}
+{% import "::macro/route/crud.html.twig" as _route_crud %}
+{% block fields %}
+<form class="form" action="{{ _route_crud.path('owner_site_faq_rank', 'rank') }}" method="POST">
+    <fieldset>
+        <ul>
+        {% for form in edit_form.faqs %}
+        <li class="faq">
+            <a class="btn rank up" onclick="rank($(this).parent(), 'up');"><img src="/images/arrow_up.png" /></a>
+            <a class="btn rank down" onclick="rank($(this).parent(), 'down');"><img src="/images/arrow_down.png" /></a>
+            {{ form.vars["data"].question }}
+            {{ form_widget(form) }}
+        </li>    
+        {% endfor %}
+        </ul>
+    {{ form_rest(edit_form) }}
+    </fieldset>
+</form>
+{% endblock fields %}

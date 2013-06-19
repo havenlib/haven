@@ -10,6 +10,7 @@ EvocatioWebBundle_Faq:
       list:     "list|lister"
       show:     "show|afficher"
       create:   "create|creer"
+      rank:     "rank|ordonner"
       _locale: fr|en
     
 EvocatioWebBundle_Post:

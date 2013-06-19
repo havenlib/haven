@@ -3,12 +3,24 @@
     {{ _route_crud.path('owner_site_faq_create', 'create') }}
 {% endblock formhead %}
 {% form_theme edit_form.translations "::Form/translations.html.twig" %}
-{% block form %}
+
+{% block save_button %}
+    {{ form_widget(edit_form.save) }}
+{% endblock save_button %}
+
+{% block fields %}
 <fieldset>
-  
-                        {{ form_rest(edit_form) }}
-                </fieldset>
-{% endblock form %}
+    {{ form_rest(edit_form) }}
+</fieldset>
+{% endblock fields %}
+
+{% block others %}
+<h2>Ordonner</h2>
+{% render(controller("OwnerSiteBundle:Faq:rank")) %}
+<!--button>
+    <img src="/images/refresh.png" width="30" />
+</button-->
+{% endblock others %}
 
 {% block back %}
                {# <a href="{{ _route_crud.path('owner_site_faq_list', 'list') }}">

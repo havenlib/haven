@@ -35,8 +35,9 @@ abstract class FormHandler {
         return $form = $this->doCreate($this->getDefaultTypeClass());
     }
 
-    private function doCreate($type, $entity = null) {
-        return $this->form_factory->create(new $type(), $entity);
+    protected function doCreate($type, $entity = null) {
+        $type = is_object($type) ? $type : new $type();
+        return $this->form_factory->create($type, $entity);
     }
 
     /**
