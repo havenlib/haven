@@ -25,7 +25,7 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/rank/faq")
+     * @Route("/admin/{rank}/faq")
      * @Method("GET")
      * @Template
      */
@@ -35,7 +35,7 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/rank/faq")
+     * @Route("/admin/{rank}/faq")
      * @Method("POST")
      * @Template
      */

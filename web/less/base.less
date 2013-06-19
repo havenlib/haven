@@ -99,4 +99,27 @@ body {
     textarea{
         min-height: 120px;
     }
+    li.faq{
+        .btn.rank{
+            width: 36px;
+            height: 23px;
+            padding: 0;
+        }
+        &:first-child{
+            .btn.rank{
+                width: 72px;
+            }
+            .btn.rank.up{
+              display: none;
+            }
+        }  
+        &:last-child{
+            .btn.rank{
+                width: 72px;
+            }
+            .btn.rank.down{
+              display: none;
+            }
+        }  
+    }
 }

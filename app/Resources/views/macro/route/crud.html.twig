@@ -20,6 +20,9 @@
 
 
 {% macro path(route, keyword, id = null) %}
+{% spaceless %}
     {% set parameters = {(keyword): (keyword | trans({}, 'routes')), 'id': id} %}
+    {#{dump(parameters)}#}
     {{ path(route, parameters)}}
+{% endspaceless %}
 {% endmacro %}
