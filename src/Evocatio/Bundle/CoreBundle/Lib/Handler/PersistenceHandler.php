@@ -16,6 +16,13 @@ abstract class PersistenceHandler {
         $this->security_context = $security_context;
     }
 
+    public function batchSave($entities) {
+        foreach ($entities as $entity) {
+            $this->em->persist($entity);
+        }
+        $this->em->flush();
+    }
+
     public function save($entity) {
         $this->em->persist($entity);
         $this->em->flush();

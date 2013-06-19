@@ -25,20 +25,41 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * Finds and displays a post entity.
-     *
-     * @Route("/admin/{show}/faq/{id}")
+     * @Route("/admin/{rank}/faq")
      * @Method("GET")
-     * @Template()
+     * @Template
      */
-    public function showAction($id) {
-        $entity = $this->container->get("faq.read_handler")->get($id);
-        $delete_form = $this->container->get("faq.form_handler")->createDeleteForm($id);
+    public function rankAction() {
+        $form = $this->container->get("faq.form_handler")->createRankForm();
+        return array("edit_form" => $form->createView());
+    }
 
-        return array(
-            'entity' => $entity,
-            "delete_form" => $delete_form->createView()
+    /**
+     * @Route("/admin/{rank}/faq")
+     * @Method("POST")
+     * @Template
+     */
+    public function performRankingAction() {
+        $form = $this->container->get("faq.form_handler")->createRankForm();
+        $form->bind($this->container->get('Request'));
+
+
+        if ($form->isValid()) {
+            $this->container->get("faq.persistence_handler")->batchSave($form->get("faqs")->getData());
+            $this->container->get("session")->getFlashBag()->add("success", "ranking.success");
+
+            return $this->redirectCreateAction();
+        }
+        die("ranking error");
+
+        $this->container->get("session")->getFlashBag()->add("error", "create.error");
+
+        $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
+        $params = array(
+            'edit_form' => $form->createView()
         );
+
+        return new Response($this->container->get('templating')->render($template, $params));
     }
 
     /**
@@ -72,7 +93,7 @@ class FaqController extends ContainerAware {
      */
     public function addAction() {
         $edit_form = $this->container->get("faq.form_handler")->createNewForm();
-        $edit_form->bindRequest($this->container->get('Request'));
+        $edit_form->bind($this->container->get('Request'));
 
 
         if ($edit_form->isValid()) {
@@ -84,7 +105,7 @@ class FaqController extends ContainerAware {
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
-        $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
+        $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
             'edit_form' => $edit_form->createView()
         );
@@ -122,7 +143,7 @@ class FaqController extends ContainerAware {
         $delete_form = $this->container->get("faq.form_handler")->createDeleteForm($entity->getId());
 
 
-        $edit_form->bindRequest($this->container->get('Request'));
+        $edit_form->bind($this->container->get('Request'));
         if ($edit_form->isValid()) {
             $this->container->get("faq.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
@@ -182,7 +203,15 @@ class FaqController extends ContainerAware {
     }
 
     protected function redirectListAction() {
-        return new RedirectResponse($this->container->get('router')->generate('evocatio_web_faq_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+        return $this->redirectAction('evocatio_web_faq', 'list');
+    }
+
+    protected function redirectCreateAction() {
+        return $this->redirectAction('evocatio_web_faq', 'create');
+    }
+
+    protected function redirectAction($route, $keyword) {
+        return new RedirectResponse($this->container->get('router')->generate($route . "_" . $keyword, array($keyword => $this->container->get('translator')->trans($keyword, array(), "routes"))));
     }
 
 }

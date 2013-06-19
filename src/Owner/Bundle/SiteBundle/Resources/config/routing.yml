@@ -10,6 +10,7 @@ OwnerSiteBundle_All:
       list:     "list|lister"
       show:     "show|afficher"
       create:   "create|creer"
+      rank:   "rank|ordonner"
       _locale: fr|en
       
 OwnerSiteBundle_User:

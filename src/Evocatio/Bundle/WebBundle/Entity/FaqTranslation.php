@@ -3,8 +3,7 @@
 namespace Evocatio\Bundle\WebBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Evocatio\Bundle\CoreBundle\Entity\TranslationMappedBase;
 
 /**
@@ -28,7 +27,8 @@ class FaqTranslation extends TranslationMappedBase
     /**
      * @var text $question
      * 
-     * @ORM\Column(name="question", type="text", nullable=true)
+     * @ORM\Column(name="question", type="text", nullable=false)
+     * @Assert\NotNull
      */
     protected $question;
 
