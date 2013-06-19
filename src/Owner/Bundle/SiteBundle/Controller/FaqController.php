@@ -11,7 +11,7 @@ class FaqController extends BaseFaqController {
     }
 
     protected function redirectListAction() {
-        return $this->redirectAction('evocatio_web_faq', 'list');
+        return $this->redirectAction('owner_site_faq', 'list');
     }
 
 }

@@ -15,7 +15,7 @@ class FaqCollectionType extends AbstractType {
                     'type' => new FaqRankType()
                 ))
                 ->add('submit', 'submit', array(
-                    'attr' => array('class' => 'btn pull-right')
+                    'attr' => array('class' => 'btn pull-right ajax')
                     , 'label' => 'rank'
                 ))
         ;
