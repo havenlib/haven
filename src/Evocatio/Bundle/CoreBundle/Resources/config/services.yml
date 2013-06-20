@@ -36,8 +36,8 @@ services:
       arguments: ["@culture.read_handler", "@language.read_handler", "@security.context", "@form.factory"]
       
   notifier:
-      class:     Evocatio\Bundle\CoreBundle\Lib\Notifier
-      arguments: ["@mailer", "@templating", "%notification_from%", "%notification_to%"]
+      class:     Evocatio\Bundle\CoreBundle\Lib\Mailing\Notifier
+      arguments: ["@mailer", "@templating", "%notification%", "@translator"]
       
   uploader:
       class:        Evocatio\Bundle\CoreBundle\Lib\Uploader
