@@ -11,12 +11,19 @@ class PostTranslationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('name', "text", array('required' => false))
-                ->add('title', "text", array('required' => false))
-                ->add('slug', "text", array('required' => false))
-                ->add('excerpt', "text", array('required' => false))
+                ->add('title', "text", array(
+                    'required' => false,
+                    'attr' => array("inline-editing" => true)
+                ))
                 ->add('subtitle', "text", array('required' => false))
-                ->add('content', "textarea", array('required' => false))
+                ->add('slug', "text", array('required' => false))
+//                ->add('name', "text", array('required' => false))
+                ->add('excerpt', "text", array('required' => false))
+                ->add('content', "textarea", array(
+                    'required' => false
+                    , 'label' => false
+                    , 'attr' => array('class' => 'hiden')
+                ))
                 ->add('file', "file", array('required' => false, "attr" => array("multiple" => true)))
 //                ->add('image', "collection", array(
 //                    'type' => new MediaType(),
@@ -58,7 +65,7 @@ class PostTranslationType extends AbstractType {
                         "class" => "hidden"
                     )
                 ))
-            ;
+        ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {

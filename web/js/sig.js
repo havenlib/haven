@@ -76,9 +76,13 @@ function addHtmlContent(source, tag, cible) {
  }
  */
 function showFormElementClass(tab) {
+//    alert($(tab).attr("data-formname"));
 //    $("div[id^=" + $(tab).attr("data-formname")+"]").children("div.trans").hide();
-    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("div[id*='translations_']").hide();
-    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("div[id$='translations_" + $(tab).attr("data-langindex") + "']").show();
+//    $("div[id^=" + $(tab).attr("data-formname") + "]").each(function() {
+//        alert($(this).html());
+//    });
+    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("[id*='translations_']").hide();
+    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("[id$='translations_" + $(tab).attr("data-langindex") + "']").show();
     $(tab).siblings("li").removeClass("active");
     //$("." + $(tab).attr("rel")).show();
     $(tab).addClass("active");
@@ -166,7 +170,7 @@ function ajaxPostRequest(form, data) {
 //$(document).ready(setCalendar());
 $(document).ready(function() {
     $("button.ajax").each(function() {
-        $(this).click(function(){
+        $(this).click(function() {
             ajaxPostRequest($(this).closest("form"));
 //            return false;
         });
@@ -631,23 +635,6 @@ function cancelBubble(e) {
         evt.cancelBubble = true;
 }
 
-
-function rank(current_element, where) {
-    $(current_element).each(function() {
-        if (where === 'down') {
-            $(this).insertAfter($(this).next());
-        } else {
-            $(this).insertBefore($(this).prev());
-        }
-    });
-
-    $(current_element).parent().children().each(
-            function(key) {
-                $(this).find("input[id$='rank']").val(parseInt(key + 1));
-            }
-    );
-}
-
 //function ajaxSearchEnterKey(element) {
 //    if (isEnterPress()) {
 //        $("#search-button").click();
@@ -706,3 +693,41 @@ function remove_item_by_id(id) {
         return false;
     }
 }
+
+/*
+ * 
+ * @param {type} current_element
+ * @param {type} where
+ * @returns {undefined}
+ */
+function rank(current_element, where) {
+    $(current_element).each(function() {
+        if (where === 'down') {
+            $(this).insertAfter($(this).next());
+        } else {
+            $(this).insertBefore($(this).prev());
+        }
+    });
+
+    $(current_element).parent().children().each(
+            function(key) {
+                $(this).find("input[id$='rank']").val(parseInt(key + 1));
+            }
+    );
+}
+
+/**
+ * 
+ * @param {type} element
+ * @param {type} cible
+ * @returns {undefined}
+ * 
+ * La cible peut être un input ou un textarea dans ce cas la ligne pourra être:
+ * 
+ * $(element).closest("form").find("texterea[id$='_title']").val(CKEDITOR.instances["title"].getData());
+ * $(element).closest("form").find("input[id$='_title']").val(CKEDITOR.instances["title"].getData());
+ */
+function updateContent(element, cible) {    
+    $(element).closest("form").find(cible + "[id$='" + $(element).attr("id").replace("_inline", "") + "']").val($(element).html());
+}
+

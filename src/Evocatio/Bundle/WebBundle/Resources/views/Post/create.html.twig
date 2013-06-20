@@ -25,39 +25,39 @@
                         {{ form_errors(translation.name) }}
                         {{ form_label(translation.name) }}
                         {{ form_widget(translation.name)}}
-            </li>
+        </li>
         <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                         {{ form_errors(translation.title) }}
                         {{ form_label(translation.title) }}
                         {{ form_widget(translation.title)}}
-            </li>
+        </li>
         <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                         {{ form_errors(translation.excerpt) }}
                         {{ form_label(translation.excerpt) }}
                         {{ form_widget(translation.excerpt)}}
-            </li>
+        </li>
         <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                         {{ form_errors(translation.subtitle) }}
                         {{ form_label(translation.subtitle) }}
                         {{ form_widget(translation.subtitle)}}
-            </li>
+        </li>
         <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                         {{ form_errors(translation.file) }}
                         {{ form_label(translation.file) }}
                         {{ form_widget(translation.file)}}
-            </li>
-            <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+        </li>
+        <li class="tab-element tab{{ translation.vars.value.getTransLang.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                 <div>
                         {{ form_errors(translation.content) }}
                         {{ form_label(translation.content) }}
 
                         {{ form_widget(translation.content, {'attr': {'class': 'ckeditor ckeditor-admin'} }) }}
 
-                    </li>
+        </li>
               {% endfor %}
-                </ul>
+    </ul>
                         {{ form_rest(edit_form) }}
-            </fieldset>
+</fieldset>
 {% endblock form %}
 
 {% block back %}

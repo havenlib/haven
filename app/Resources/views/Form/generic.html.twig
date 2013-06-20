@@ -1,7 +1,8 @@
 {% block form_rows %}
 {% spaceless %}
     {% for child in form %}
-        {% if "translations" == child.vars.name %}
+        {#% if "translations" == child.vars.name %#}
+        {% if "translations" == child.parent.vars.name %}
         {% form_theme child "::Form/translations.html.twig" %}
         {% endif %}
         {{ form_row(child) }}
