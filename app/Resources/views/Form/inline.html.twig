@@ -15,7 +15,7 @@
     <div id="{{id}}_inline" contenteditable="true" onblur="updateContent(this, 'input');">
         {% if value is not empty %}{{ value | raw }}{% else %}empty{% endif %}
     </div>
-    <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
 {% endspaceless %}
 {% endblock form_widget_simple %}
 
@@ -24,6 +24,6 @@
         <div id="{{id}}_inline" contenteditable="true" onblur="updateContent(this, 'textarea');" contenteditable="true">
             {% if value is not empty %}{{ value | raw }}{% else %}empty{% endif %}
         </div>
-    <textarea class="hidden" {{ block('widget_attributes') }}>{{ value }}</textarea>
+    <textarea class="" {{ block('widget_attributes') }}>{{ value }}</textarea>
     {% endspaceless %}
 {% endblock textarea_widget %}

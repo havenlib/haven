@@ -64,6 +64,7 @@ class Post extends Translatable {
 
     /**
      * @ORM\OneToMany(targetEntity="PostTranslation", mappedBy="parent", cascade={"persist"})
+     * @Assert\Valid
      */
     protected $translations;
 
