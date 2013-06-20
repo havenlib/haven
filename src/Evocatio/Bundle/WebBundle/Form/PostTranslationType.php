@@ -11,14 +11,14 @@ class PostTranslationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('title', "hidden", array(
+                ->add('title', "text", array(
                     'required' => false,
                     'attr' => array("inline-editing" => true)
                 ))
-                ->add('subtitle', "hidden", array('required' => false))
-                ->add('slug', "hidden", array('required' => false))
+                ->add('subtitle', "text", array('required' => false))
+                ->add('slug', "text", array('required' => false))
 //                ->add('name', "text", array('required' => false))
-                ->add('excerpt', "hidden", array('required' => false))
+                ->add('excerpt', "text", array('required' => false))
                 ->add('content', "textarea", array(
                     'required' => false
                     , 'label' => false

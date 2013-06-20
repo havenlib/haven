@@ -155,7 +155,6 @@ class PostController extends ContainerAware {
                 $this->container->get("session")->getFlashBag()->add("error", "create.error");
             }
         }
-        $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
         $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
