@@ -4,7 +4,9 @@
 {% import "::macro/form/translated_row.html.twig" as _form %}
 
 {% block inside_title %} Evocatio Solution Technologie {% endblock inside_title %}
-
+{% block inside_header %}
+<a href="{#{ path('Evocatio_Home')}#}"><img src="/images/evocatio_modified.png" /></a>
+{% endblock inside_header %}
 {% block inside_theater %} 
     {% block navigation %}
         {% block inside_navigation %}    

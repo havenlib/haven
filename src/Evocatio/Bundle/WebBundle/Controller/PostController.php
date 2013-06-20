@@ -63,7 +63,10 @@ class PostController extends ContainerAware {
      */
     public function createAction() {
         $edit_form = $this->container->get("post.form_handler")->createNewForm();
-        return array("edit_form" => $edit_form->createView());
+        return array(
+            'entity' => $edit_form->getData()
+            , "edit_form" => $edit_form->createView()
+        );
     }
 
     /**
@@ -76,22 +79,29 @@ class PostController extends ContainerAware {
     public function addAction() {
         $edit_form = $this->container->get("post.form_handler")->createNewForm();
 
-        $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
-                ->slug(array("name"))
+        $request = $this->container->get('request_modifier')->setRequest($this->container->get("Request"))
+                ->slug(array("title"))
                 ->getRequest();
 
         $edit_form->bind($request);
 
-        if ($edit_form->isValid()) {
+        if ($edit_form->get('save')->isClicked() && $edit_form->isValid()) {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
+
             return $this->redirectListAction();
+        } else {
+            if ($edit_form->get('template')->isClicked()) {
+                $edit_form = $this->container->get("post.form_handler")->createNewForm($edit_form->getData());
+            } else {
+                $this->container->get("session")->getFlashBag()->add("error", "create.error");
+            }
         }
 
-        $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
-        $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
+        $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
-            'edit_form' => $edit_form->createView()
+            'entity' => $edit_form->getData()
+            , 'edit_form' => $edit_form->createView()
         );
 
         return new Response($this->container->get('templating')->render($template, $params));
@@ -119,7 +129,7 @@ class PostController extends ContainerAware {
      * @Route("/admin/{edit}/post/{id}")
      * @return RedirectResponse
      * @Method("POST")
-     * @Template("EvocatioWebBundle:Post:edit.html.twig")
+     * @Template
      */
     public function updateAction($id) {
         $entity = $this->container->get('post.read_handler')->get($id);
@@ -127,25 +137,34 @@ class PostController extends ContainerAware {
         $delete_form = $this->container->get("post.form_handler")->createDeleteForm($entity->getId());
 
         $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
-                ->slug(array("name"))
+                ->slug(array("title"))
                 ->getRequest();
 
         $edit_form->bind($request);
 
 
-        if ($edit_form->isValid()) {
+        if ($edit_form->get('save')->isClicked() && $edit_form->isValid()) {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "update.success");
 
             return $this->redirectListAction();
+        } else {
+            if ($edit_form->get('template')->isClicked()) {
+                $edit_form = $this->container->get("post.form_handler")->createNewForm($edit_form->getData());
+            } else {
+                $this->container->get("session")->getFlashBag()->add("error", "create.error");
+            }
         }
         $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
-        return array(
+        $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
+        $params = array(
             'entity' => $entity,
             'edit_form' => $edit_form->createView(),
             'delete_form' => $delete_form->createView(),
         );
+
+        return new Response($this->container->get('templating')->render($template, $params));
     }
 
     /**
