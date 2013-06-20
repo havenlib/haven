@@ -12,14 +12,14 @@ services:
       arguments: ["@faq.read_handler", "@security.context", "@form.factory"]
       
   post.persistence_handler:
-      class:     Evocatio\Bundle\WebBundle\Lib\PostPersistenceHandler
+      class:     Evocatio\Bundle\WebBundle\Lib\Handler\PostPersistenceHandler
       arguments: ["@doctrine.orm.entity_manager", "@security.context"]
       
   post.read_handler:
-      class:     Evocatio\Bundle\WebBundle\Lib\PostReadHandler
+      class:     Evocatio\Bundle\WebBundle\Lib\Handler\PostReadHandler
       arguments: ["@doctrine.orm.entity_manager", "@security.context"]
 
   post.form_handler:
-      class:     Evocatio\Bundle\WebBundle\Lib\PostFormHandler
-      arguments: ["@post.read_handler", "@language.read_handler", "@security.context", "@form.factory"]
+      class:     Evocatio\Bundle\WebBundle\Lib\Handler\PostFormHandler
+      arguments: ["@post.read_handler", "@security.context", "@form.factory"]
     

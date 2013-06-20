@@ -5,18 +5,40 @@
 
 {#% form_theme edit_form "OwnerSiteBundle:Form:formulator.html.twig" %#}
 {#% form_theme edit_form "::Form/generic.html.twig" %#}
-{% form_theme edit_form "::Form/generic_with_translations.html.twig" %}
+{% form_theme edit_form.translations "::Form/translations.html.twig" %}
 
-{% block form %}
+{% block save_button %}
+    {{ form_widget(edit_form.save) }}
+{% endblock save_button %}
+
+{% block fields %}
+
+{% set vars = edit_form.translations.vars.prototype.trans_lang.vars %}
+{% for key, choices in vars["choices"] %}
+
+<div id="evocatio_bundle_webBundle_posttype_translations_{{ loop.index0 }}_inline" class="{{loop.index0!=0?"trans_div hidden":"trans_div"}}">
+    <h2 id="evocatio_bundle_webBundle_posttype_translations_{{ loop.index0 }}_title_inline" contenteditable="true" onblur="updateContent($(this), 'input');">
+        {% spaceless %}
+        {{ ((edit_form.vars['data'].title(choices.data.symbol) is defined)? edit_form.vars['data'].title(choices.data.symbol) : "Title") | raw }}
+        {% endspaceless %}
+    </h2>
+    <h4 id="evocatio_bundle_webBundle_posttype_translations_{{ loop.index0 }}_subtitle_inline" contenteditable="true" onblur="updateContent($(this), 'input')">
+        {{ ((edit_form.vars['data'].subtitle(choices.data.symbol) is defined)? edit_form.vars['data'].subtitle(choices.data.symbol) : "Subtitle") | raw }}
+    </h4>
+    <div id="evocatio_bundle_webBundle_posttype_translations_{{ loop.index0 }}_content_inline" contenteditable="true" onblur="updateContent($(this), 'textarea')">
+        <p>
+        {{ ((edit_form.vars['data'].content(choices.data.symbol) is defined)? edit_form.vars['data'].content(choices.data.symbol) : "Content") | raw }}
+        </p>
+    </div>
+</div>
+{% endfor %}
 <fieldset>
-        {{ form_widget(edit_form) }}
-        <div class="hidden">
-        </div>
-</fieldset>
-{% endblock form %}
+{{ form_rest(edit_form) }}
+    </fieldset>
+{% endblock fields %}
 
 {% block back %}
-            <a href="{{ _route_crud.path('owner_site_post_list', 'list') }}">
-                Back to the list
-            </a>
+    <a href="{{ _route_crud.path('owner_site_post_list', 'list') }}">
+        Back to the list
+    </a>
 {% endblock back %}
