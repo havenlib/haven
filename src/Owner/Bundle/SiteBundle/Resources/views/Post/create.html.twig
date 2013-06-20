@@ -4,8 +4,7 @@
 {% endblock formhead %}
 
 {#% form_theme edit_form "OwnerSiteBundle:Form:formulator.html.twig" %#}
-{#% form_theme edit_form "::Form/generic.html.twig" %#}
-{% form_theme edit_form.translations "::Form/translations.html.twig" %}
+{% form_theme edit_form "::Form/inline.html.twig" %}
 
 {% block save_button %}
     {{ form_widget(edit_form.save) }}
@@ -14,7 +13,7 @@
 {% block fields %}
 
 {% set vars = edit_form.translations.vars.prototype.trans_lang.vars %}
-{% for key, choices in vars["choices"] %}
+{#% for key, choices in vars["choices"] %}
 
 <div id="evocatio_bundle_webBundle_posttype_translations_{{ loop.index0 }}_inline" class="{{loop.index0!=0?"trans_div hidden":"trans_div"}}">
     <h2 id="evocatio_bundle_webBundle_posttype_translations_{{ loop.index0 }}_title_inline" contenteditable="true" onblur="updateContent($(this), 'input');">
@@ -31,7 +30,7 @@
         </p>
     </div>
 </div>
-{% endfor %}
+{% endfor %#}
 <fieldset>
 {{ form_rest(edit_form) }}
     </fieldset>

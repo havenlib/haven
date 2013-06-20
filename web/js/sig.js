@@ -83,7 +83,6 @@ function showFormElementClass(tab) {
 //    });
     $("div[id^=" + $(tab).attr("data-formname") + "]").filter("[id*='translations_']").hide();
     $("div[id^=" + $(tab).attr("data-formname") + "]").filter("[id$='translations_" + $(tab).attr("data-langindex") + "']").show();
-    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("[id$='translations_" + $(tab).attr("data-langindex") + "_inline']").show();
     $(tab).siblings("li").removeClass("active");
     //$("." + $(tab).attr("rel")).show();
     $(tab).addClass("active");
