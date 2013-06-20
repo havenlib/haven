@@ -11,7 +11,7 @@ class FaqRankType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('rank', 'hidden')
+                ->add('rank', 'text')
         ;
     }
 

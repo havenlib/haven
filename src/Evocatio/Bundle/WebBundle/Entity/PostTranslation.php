@@ -32,6 +32,7 @@ class PostTranslation extends SluggableMappedBase {
      * @var text $title
      *
      * @ORM\Column(name="title", type="string", length = 1024, nullable = true)
+     * @Assert\NotNull
      */
     private $title;
     /**

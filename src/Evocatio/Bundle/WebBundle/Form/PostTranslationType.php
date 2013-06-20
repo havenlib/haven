@@ -11,10 +11,6 @@ class PostTranslationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('title', "text", array(
-                    'required' => false,
-                    'attr' => array("inline-editing" => true)
-                ))
                 ->add('subtitle', "text", array('required' => false))
                 ->add('slug', "text", array('required' => false))
 //                ->add('name', "text", array('required' => false))
@@ -23,6 +19,10 @@ class PostTranslationType extends AbstractType {
                     'required' => false
                     , 'label' => false
                     , 'attr' => array('class' => 'hiden')
+                ))
+                ->add('title', "text", array(
+                    'required' => false,
+                    'attr' => array("inline-editing" => true)
                 ))
                 ->add('file', "file", array('required' => false, "attr" => array("multiple" => true)))
 //                ->add('image', "collection", array(
