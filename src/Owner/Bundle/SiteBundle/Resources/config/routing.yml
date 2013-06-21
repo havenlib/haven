@@ -38,3 +38,14 @@ OwnerSiteBundle_Home:
     type:     annotation
     prefix: /
     
+    
+OwnerSiteBundle_Help:
+    resource: "@OwnerSiteBundle/Controller/HelpController.php"
+    type:     annotation
+    prefix: /{_locale}/
+    defaults:
+      admin: admin
+    requirements: 
+      _locale: fr|en
+      contact: "contact|contacter"
+    
