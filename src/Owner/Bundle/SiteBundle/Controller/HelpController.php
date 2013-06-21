@@ -59,7 +59,7 @@ class HelpController extends ContainerAware {
         return $this->redirectAction('owner_site_help_contact', array('contact'));
     }
 
-    protected function redirectAction($route, $wordsToTranslate, $parameters = array()) {
+    protected function redirectAction($route, $translate, $parameters = array()) {
         foreach ($translate as $word) {
             $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes");
         }
