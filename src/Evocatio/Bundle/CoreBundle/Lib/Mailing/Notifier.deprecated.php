@@ -9,7 +9,7 @@ use Evocatio\Bundle\CoreBundle\Lib\Mailing\MailMessage;
 /**
  * Evocatio\Bundle\CoreBundle\Lib\Notifier
  */
-class Notifier {
+class NotifierDeprecated {
 
     protected $mailer;
     protected $templating;

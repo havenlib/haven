@@ -12,15 +12,24 @@ class Notifier extends BaseNotifier {
         $mail->setTo(array($this->notification['to_adresses']['default']['email']), $this->notification['to_adresses']['default']['name']);
         $mail->setFrom(array($data['email']), $fullname = $data['firstname'] . " " . $data['lastname']);
 
-        $subject = $this->translator->trans('subject.contact', array(), "mails");
-        $message = $this->translator->trans('message.contact', array(), "mails");
+        /**
+         * Rajoute des %% aux clées du tableau de coordonées pour les utiliser comme des "placeholders" dans le message.
+         * array(firtsname => "John Doe") vers array(%firtsname% => "John Doe")
+         */
+        foreach ($data as $key => $value) {
+            $data["%" . $key . "%"] = $value;
+            unset($data[$key]);
+        }
 
-        $body = $this->templating->render("OwnerSiteBundle:Mailing:template/base.html.twig", array(
+        $subject = $this->translator->trans('subject.contact', array(), "mails");
+        $message = $this->translator->trans('message.contact', $data, "mails");
+
+        $body = $this->templating->render("OwnerSiteBundle:Mail:template/default.html.twig", array(
             "message" => $message
         ));
-
-        $mail->setBody($body);
+        $mail->setBody($body, 'text/html');
         $mail->setSubject($subject);
+        
         $this->addToPool($mail);
     }
 
