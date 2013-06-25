@@ -2,7 +2,6 @@
 
 namespace Evocatio\Bundle\CoreBundle\Lib\Mailing;
 
-
 /**
  * Description of DossierAcceptMailMessage
  *
@@ -34,5 +33,4 @@ class MailMessage extends \Swift_Message {
 //    public function addParam($name, $value) {
 //        $this->_Destinataire[$this->getCurrentTo()]["/%" . $name . "%/"] = $value;
 //    }
-
 }
