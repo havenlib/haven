@@ -14,7 +14,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 // Evocatio includes
-//use Evocatio\Bundle\SecurityBundle\Form\LoginType;
 
 class UserController extends ContainerAware {
 
@@ -80,10 +79,13 @@ class UserController extends ContainerAware {
 
 
         if ($edit_form->isValid()) {
-            $this->container->get("user.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->getFlashBag()->add("success", "create.success");
+            $reset = $this->container->get("user.persistence_handler")->saveWithReset($edit_form->getData());
 
-            return $this->redirectListAction();
+            $notifier = $this->container->get('notifier');
+            $notifier->createNewUserNotification($reset);
+//            $notifier->send();
+//            $this->container->get("session")->getFlashBag()->add("success", "create.success");
+//            return $this->redirectListAction();
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
