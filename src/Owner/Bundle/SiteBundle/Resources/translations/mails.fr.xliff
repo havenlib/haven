@@ -8,7 +8,8 @@
             </trans-unit>
             <trans-unit id="2">
                 <source>message.contact</source>
-                <target><![CDATA[
+                <target>
+                <![CDATA[
                         <table>
                             <tr><th>Prénom</th> <td>%firstname%</td></tr>
                             <tr><th>Nom</th><td>%lastname%</td></tr>
