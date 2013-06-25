@@ -38,11 +38,11 @@ class HelpController extends ContainerAware {
 
             $notifier = $this->container->get('notifier');
             $notifier->createContactMail($edit_form->getData());
-//            $notifier->send();
+            $notifier->send();
 
             $this->container->get("session")->getFlashBag()->add("success", "message.sended");
 
-//            return $this->redirectContactAction();
+            return $this->redirectContactAction();
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "form.error.message.not.sended");
