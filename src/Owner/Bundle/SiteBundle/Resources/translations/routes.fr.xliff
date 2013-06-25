@@ -34,6 +34,10 @@
                 <source>user</source>
                 <target>utilisateur</target>
             </trans-unit>
+            <trans-unit id="9">
+                <source>contact</source>
+                <target>contacter</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
