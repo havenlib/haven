@@ -11,7 +11,7 @@ EvocatioSecurityBundle_User:
     requirements: 
       _locale: fr|en
       admin: "admin"
-      suffix: "user|utilisateur"
+      user: "user|utilisateur"
       create: "create|creer"
       edit: "edit|editer"
       list: "list|lister"

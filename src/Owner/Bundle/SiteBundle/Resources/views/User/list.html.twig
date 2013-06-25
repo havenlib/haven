@@ -1,10 +1,11 @@
 {% extends "OwnerSiteBundle::base_admin.html.twig" %}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block inside_theater %}
     <dl>
         {% for entity in entities %}
             <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.username }}</strong> 
-            <a href="{{ _route_suffix.path('owner_site_user_edit', 'edit','user', entity.id) }}">edit</a> 
-            <a href="{{ _route_suffix.path('owner_site_user_show', 'show','user', entity.id) }}">show</a> </dt>
+            <a href="{{ route_i18n.path('owner_site_user_edit', ['user', 'edit'], {'id': entity.id}) }}">edit</a> 
+            <a href="{{ route_i18n.path('owner_site_user_show', ['user', 'show'], {'id': entity.id}) }}">show</a> </dt>
             <dd>{{ entity.email }}</dd>
         {{ entity.locked }}
         {% else %}
@@ -13,7 +14,7 @@
     </dl>
 <ul>
     <li>
-        <a href="{{ _route_suffix.path('owner_site_user_create', 'create','user') }}">
+        <a href="{{ route_i18n.path('owner_site_user_create', ['user', 'create']) }}">
             Create a new entry
         </a>
     </li>

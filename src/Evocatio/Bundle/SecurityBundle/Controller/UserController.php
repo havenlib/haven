@@ -12,15 +12,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 // Evocatio includes
-
-
 //use Evocatio\Bundle\SecurityBundle\Form\LoginType;
 
 class UserController extends ContainerAware {
 
     /**
-     * @Route("/{suffix}")
+     * @Route("/{user}")
      * @Method("GET")
      * @Template()
      */
@@ -32,7 +31,7 @@ class UserController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{show}/{suffix}/{id}")
+     * @Route("/{show}/{user}/{id}")
      * @Method("GET")
      * @Template()
      */
@@ -49,7 +48,7 @@ class UserController extends ContainerAware {
     /**
      * Finds and displays all users for admin.
      *
-     * @Route("/admin/{list}/{suffix}")
+     * @Route("/admin/{list}/{user}")
      * @Method("GET")
      * @Template()
      */
@@ -59,7 +58,7 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{create}/{suffix}")
+     * @Route("/admin/{create}/{user}")
      * @Method("GET")
      * @Template
      */
@@ -71,25 +70,25 @@ class UserController extends ContainerAware {
     /**
      * Creates a new user entity.
      *
-     * @Route("/admin/{create}/{suffix}")
+     * @Route("/admin/{create}/{user}")
      * @Method("POST")
      * @Template
      */
     public function addAction() {
         $edit_form = $this->container->get("user.form_handler")->createNewForm();
-        $edit_form->bindRequest($this->container->get('Request'));
+        $edit_form->bind($this->container->get('request'));
 
 
         if ($edit_form->isValid()) {
             $this->container->get("user.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_security_user_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+            return $this->redirectListAction();
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
-        $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
+        $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
             'edit_form' => $edit_form->createView()
         );
@@ -98,7 +97,7 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{edit}/{suffix}/{id}")
+     * @Route("/admin/{edit}/{user}/{id}")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -116,7 +115,7 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{edit}/{suffix}/{id}")
+     * @Route("/admin/{edit}/{user}/{id}")
      * @return RedirectResponse
      * @Method("POST")
      * @Template
@@ -127,12 +126,12 @@ class UserController extends ContainerAware {
         $delete_form = $this->container->get("user.form_handler")->createDeleteForm($entity->getId());
 
 
-        $edit_form->bindRequest($this->container->get('Request'));
+        $edit_form->bind($this->container->get('Request'));
         if ($edit_form->isValid()) {
             $this->container->get("user.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate('evocatio_security_user_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+            return $this->redirectListAction();
         }
         $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
@@ -186,51 +185,16 @@ class UserController extends ContainerAware {
         return new RedirectResponse($this->container->get('router')->generate('EvocatioSecurityBundle_UserList'));
     }
 
-//  ------------- Privates -------------------------------------------
-    /**
-     * Creates an edit_form with all the translations objects added for status languages
-     * @param user $entity
-     * @return Form or RedirectResponse   if validation error
-     */
-//    protected function createEditForm($entity) {
-//
-//        $edit_form = $this->container->get('form.factory')->create(new Form(), $entity);
-//        return $edit_form;
-//    }
-//
-//    /**
-//     *  Create the simple delete form
-//     * @param integer $id
-//     * @return form
-//     */
-//    protected function createDeleteForm($id) {
-//        return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
-//                        ->add('id', 'hidden')
-//                        ->getForm()
-//        ;
-//    }
-//
-//    /**
-//     * Validate and save form, if invalid returns form
-//     * @param type $edit_form
-//     * @return true or form
-//     */
-//    protected function processForm($edit_form) {
-//        if ($edit_form->isValid()) {
-//            $em = $this->container->get('Doctrine')->getEntityManager();
-//            $entity = $edit_form->getData();
-//            if (0 !== strlen($password = $entity->getPlainPassword())) {
-//                $factory = $this->container->get('security.encoder_factory');
-//                $encoder = $factory->getEncoder($entity);
-//                $entity->setPassword($encoder->encodePassword($password, $entity->getSalt()));
-//            }
-//            $em->persist($entity);
-//            $em->flush();
-//
-//            return true;
-//        }
-//
-//        return $edit_form;
-//    }
+    protected function redirectListAction() {
+        return $this->redirectAction('evocatio_security_user_list', array(), array('user', 'list'));
+    }
+
+    protected function redirectAction($route, $parameters = array(), $translate = array()) {
+        foreach ($translate as $word) {
+            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes");
+        }
+
+        return new RedirectResponse($this->container->get('router')->generate($route, $parameters));
+    }
 
 }
