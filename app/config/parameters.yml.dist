@@ -16,9 +16,10 @@ parameters:
     
     secure_upload_dir: ../secure_content/
     
-    notification_to:
-      default: laurent.breleur@gmail.com
-      
-    notification_from:
-      default: laurent.breleur@gmail.com
-    password_reset_mail_from: sc@evocatio.com
+    notification:
+      from_adresses:
+        default: {name: "John Doe", email: "jdoe@evocatio.com"}
+        reset_password: {name: "", email: "support@evocatio.com"}
+        
+      to_adresses:
+        default: {name: "John Doe", email: "jdoe@evocatio.com"}
