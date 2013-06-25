@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Evocatio\Bundle\SecurityBundle\Entity\UserReset;
 
 class UserPersistenceHandler {
 
@@ -26,6 +27,36 @@ class UserPersistenceHandler {
             $entity->setPassword($encoder->encodePassword($password, $entity->getSalt()));
         }
         $this->em->persist($entity);
+        $this->em->flush();
+    }
+
+    public function saveWithReset($entity) {
+        if (0 !== strlen($password = $entity->getPlainPassword())) {
+            $encoder = $this->encoder_factory->getEncoder($entity);
+            $entity->setPassword($encoder->encodePassword($password, $entity->getSalt()));
+        }
+
+        $this->removeOldReset($entity);
+
+        $reset = new UserReset();
+        $reset->setUser($entity);
+
+        $this->em->persist($entity);
+        $this->em->persist($reset);
+//        $this->em->flush();
+
+        return $reset;
+    }
+
+    public function removeOldReset($entity) {
+        $resets = $this->em->createQuery("SELECT ur FROM EvocatioSecurityBundle:UserReset ur WHERE ur.user = :id")
+                ->setParameter("id", $entity->getId())
+                ->getResult();
+
+        foreach ($resets as $reset) {
+            $this->em->remove($reset);
+        }
+
         $this->em->flush();
     }
 
