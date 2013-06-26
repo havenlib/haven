@@ -12,7 +12,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class HelpController extends ContainerAware {
+/**
+ * @Route("", requirements={
+ *        "contact" = "contactez-nous|contact-us"
+ * })
+ */
+class StaticController extends ContainerAware {
+
+    protected $ROUTE_PREFIX = "owner_site";
+
+    /**
+     * @Route("")
+     * @Method("GET")
+     * @Template
+     */
+    public function homeAction() {
+        return array("entities" => "test");
+    }
 
     /**
      * @Route("/{contact}")
@@ -42,7 +58,7 @@ class HelpController extends ContainerAware {
 
             $this->container->get("session")->getFlashBag()->add("success", "message.sended");
 
-            return $this->redirectContactAction();
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_static_contact', array(), array('contact')));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "form.error.message.not.sended");
@@ -55,16 +71,11 @@ class HelpController extends ContainerAware {
         return new Response($this->container->get('templating')->render($template, $params));
     }
 
-    protected function redirectContactAction() {
-        return $this->redirectAction('owner_site_help_contact', array('contact'));
-    }
-
-    protected function redirectAction($route, $translate, $parameters = array()) {
+    protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
         foreach ($translate as $word) {
-            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes");
+            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes", $lang);
         }
-
-        return new RedirectResponse($this->container->get('router')->generate($route, $parameters));
+        return $this->container->get('router')->generate($route, $parameters, $absolute);
     }
 
 }

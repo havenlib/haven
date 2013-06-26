@@ -13,15 +13,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-// Evocatio includes
-
+/**
+ * @Route("", requirements={
+ *        "user" = "user"
+ *      , "password" = "password"
+ *      , "initialize" = "initialize"
+ *      , "reset" = "reset"
+ * })
+ */
 class UserController extends ContainerAware {
 
     protected $ROUTE_PREFIX = "evocatio_security";
 
     /**
      * @Route("/{user}")
-     * @Route("/user")
      * @Method("GET")
      * @Template()
      */
@@ -34,7 +39,6 @@ class UserController extends ContainerAware {
      * Finds and displays a post entity.
      *
      * @Route("/{show}/{user}/{id}")
-     * @Route("/show/user/{id}")
      * @Method("GET")
      * @Template()
      */
@@ -52,7 +56,6 @@ class UserController extends ContainerAware {
      * Finds and displays all users for admin.
      *
      * @Route("/admin/{list}/{user}")
-     * @Route("/admin/list/user")
      * @Method("GET")
      * @Template()
      */
@@ -63,7 +66,6 @@ class UserController extends ContainerAware {
 
     /**
      * @Route("/admin/{create}/{user}")
-     * @Route("/admin/create/user")
      * @Method("GET")
      * @Template
      */
@@ -76,7 +78,6 @@ class UserController extends ContainerAware {
      * Creates a new user entity.
      *
      * @Route("/admin/{create}/{user}")
-     * @Route("/admin/create/user")
      * @Method("POST")
      * @Template
      */
@@ -114,7 +115,6 @@ class UserController extends ContainerAware {
 
     /**
      * @Route("/admin/{edit}/{user}/{id}")
-     * @Route("/admin/edit/user/{id}")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -133,7 +133,6 @@ class UserController extends ContainerAware {
 
     /**
      * @Route("/admin/{edit}/{user}/{id}")
-     * @Route("/admin/edit/user/{id}")
      * @return RedirectResponse
      * @Method("POST")
      * @Template
@@ -149,7 +148,7 @@ class UserController extends ContainerAware {
             $this->container->get("user.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return $this->redirectListAction();
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_list', array(), array('user', 'list')));
         }
         $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
@@ -207,8 +206,6 @@ class UserController extends ContainerAware {
      * reset confirmation by the user
      * @Route("/{initialize}/{password}/{uuid}") 
      * @Route("/{reset}/{password}/{uuid}") 
-     * @Route("/initialize/password/{uuid}") 
-     * @Route("/reset/password/{uuid}") 
      * @Method("GET")
      * @Template()
      */
@@ -226,8 +223,6 @@ class UserController extends ContainerAware {
      * reset confirmation by the user
      * @Route("/{initialize}/{password}/{uuid}") 
      * @Route("/{reset}/{password}/{uuid}") 
-     * @Route("/initialize/password/{uuid}") 
-     * @Route("/reset/password/{uuid}") 
      * @Method("POST")
      * @Template()
      */

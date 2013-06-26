@@ -1,3 +1,5 @@
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
+
 <ul class="menu">
     <li class="menu-item">
         Evocatio
@@ -16,5 +18,10 @@
     </li>
     <li class="menu-item">
         Aide
+        <ul>
+            <li><a href="{{ route_i18n.path('owner_site_static_contact', {}, ['contact']) }}">Contact</a></li>
+            <li>Demande de soumissions</li>
+            <li>Demande de soumissions</li>
+        </ul>
     </li>
 </ul>

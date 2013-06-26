@@ -1,4 +1,4 @@
-{% macro path(route, translate, parameters = {}) %}
+{% macro path(route, parameters = {}, translate = []) %}
     {% for key, word in translate %}
         {% set parameters = parameters | merge({(word): (word | trans({}, 'routes'))}) %}
     {% endfor %}
