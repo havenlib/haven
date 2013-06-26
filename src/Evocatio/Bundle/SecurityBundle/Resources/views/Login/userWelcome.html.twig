@@ -1,11 +1,11 @@
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 {% spaceless %}
 <div>
-    {% if app.user.contact is not empty %}
+    {#% if app.user.contact is not empty %}
     {{ "bienvenue"|trans|capitalize }} {{ app.user.contact.firstname }} {{ app.user.contact.lastname }} -
     {% else %}
     {{ "no.name.set"| trans }}
-    {% endif %}
+    {% endif %#}
     <a href="{{ path('EvocatioSecurityBundle_logout') }}">
         {{ 'Fermer la session'|trans }}
     </a>
