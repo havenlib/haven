@@ -13,8 +13,6 @@ class Notifier {
 
     protected $mailer;
     protected $templating;
-//    protected $notification_from;
-//    protected $notification_to;
     protected $notification;
     protected $pool;
     protected $translator;
@@ -23,8 +21,6 @@ class Notifier {
     public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, $notification, Translator $translator) {
         $this->mailer = $mailer;
         $this->templating = $templating;
-//        $this->notification_from = $notification_from;
-//        $this->notification_to = $notification_to;
         $this->notification = $notification;
         $this->pool = array();
         $this->translator = $translator;

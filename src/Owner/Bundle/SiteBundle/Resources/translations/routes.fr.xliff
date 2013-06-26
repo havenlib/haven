@@ -38,6 +38,14 @@
                 <source>contact</source>
                 <target>contacter</target>
             </trans-unit>
+            <trans-unit id="10">
+                <source>initialize</source>
+                <target>initialiser</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>password</source>
+                <target>mot-de-passe</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
