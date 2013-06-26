@@ -6,7 +6,6 @@ use Evocatio\Bundle\SecurityBundle\Controller\UserController as BaseUserControll
 
 class UserController extends BaseUserController {
 
-    protected function redirectListAction() {
-        return $this->redirectAction('owner_site_user_list', array(), array('user', 'list'));
-    }
+    protected $ROUTE_PREFIX = "owner_site";
+
 }

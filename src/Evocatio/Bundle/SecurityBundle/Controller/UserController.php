@@ -17,6 +17,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class UserController extends ContainerAware {
 
+    protected $ROUTE_PREFIX = "evocatio_security";
+
     /**
      * @Route("/{user}")
      * @Method("GET")
@@ -80,12 +82,13 @@ class UserController extends ContainerAware {
 
         if ($edit_form->isValid()) {
             $reset = $this->container->get("user.persistence_handler")->saveWithReset($edit_form->getData());
+            $reset_url = $this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_activate', array("uuid" => $reset->getUuid()), array('activate', 'user'), null, true);
 
             $notifier = $this->container->get('notifier');
-            $notifier->createNewUserNotification($reset);
-//            $notifier->send();
+            $notifier->createNewUserNotification($reset, $reset_url);
+            $notifier->send();
 //            $this->container->get("session")->getFlashBag()->add("success", "create.success");
-//            return $this->redirectListAction();
+//            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_list', array(), array('user', 'list')));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
@@ -187,16 +190,55 @@ class UserController extends ContainerAware {
         return new RedirectResponse($this->container->get('router')->generate('EvocatioSecurityBundle_UserList'));
     }
 
-    protected function redirectListAction() {
-        return $this->redirectAction('evocatio_security_user_list', array(), array('user', 'list'));
-    }
-
-    protected function redirectAction($route, $parameters = array(), $translate = array()) {
-        foreach ($translate as $word) {
-            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes");
+    /**
+     * reset confirmation by the user
+     * @Route("/{activate}/{user}/{uuid}") 
+     * @Template()
+     */
+    public function activateAction($uuid) {
+        $em = $this->container->get("doctrine")->getEntityManager();
+        $request = $this->container->get("request");
+        $confirm_data = $request->get("evocatio_bundle_securitybundle_confirmtype");
+        $user_reset = $em->getRepository("EvocatioSecurityBundle:UserReset")->findOneBy(array("uuid" => $uuid));
+        if (null == $user_reset) {
+            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException("page.pas.trouve");
         }
 
-        return new RedirectResponse($this->container->get('router')->generate($route, $parameters));
+        $confirm_form = $this->container->get("form.factory")->create(new \Evocatio\Bundle\SecurityBundle\Form\ConfirmType());
+
+        $templating = $this->container->get("templating");
+        $render = null;
+        if ($request->getMethod() == "POST") {
+            $confirm_form->bind($confirm_data);
+            if ($confirm_form->isValid()) {
+                if ($user_reset->getConfirmation() == $confirm_data["confirmation"] && !null == $user_reset->getUser()) {
+                    $factory = $this->container->get('security.encoder_factory');
+                    $user = $user_reset->getUser();
+                    $encoder = $factory->getEncoder($user);
+                    $user->setPassword($encoder->encodePassword($confirm_data["plainPassword"]["first"], $user->getSalt()));
+                } else {
+                    throw new \Exception("L'utilisateur n'existe pas ou n'a pas fait de demande de réinitialisation");
+                }
+                $em->persist($user);
+                $em->remove($user_reset);
+                $em->flush();
+                $this->container->get("session")->setFlash("success", "c'est réussi");
+
+                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->container->get("router")->generate("EvocatioSecurityBundle_login"));
+            }
+        }
+        return array("confirm_form" => $confirm_form->createView(), "uuid" => $uuid);
+    }
+
+    public function performActivationAction() {
+        
+    }
+
+    protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
+        foreach ($translate as $word) {
+            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes", $lang);
+        }
+        return $this->container->get('router')->generate($route, $parameters, $absolute);
     }
 
 }

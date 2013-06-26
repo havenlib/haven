@@ -38,7 +38,7 @@
                             Nous vous confirmons la création de votre compte.
                             <br />
                             Nous vous invitons à copier le code de confirmation suivant %confirmation_code% et de cliquer sur le lien ci-dessous: <br />
-                            <a href="#">%confirmation_url%</a> 
+                            <a href="%confirmation_url%">Initialiser mot de passe</a> 
                             <br />
                             Il vous amènera à une page ou vous devrez créer votre nouveau mot de passe. 
                             Vous devez coller le code de confirmation dans le champ prévu à cette effet 
