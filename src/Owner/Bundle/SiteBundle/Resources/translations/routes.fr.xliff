@@ -39,8 +39,12 @@
                 <target>contacter</target>
             </trans-unit>
             <trans-unit id="10">
-                <source>activate</source>
-                <target>activer</target>
+                <source>initialize</source>
+                <target>initialiser</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>password</source>
+                <target>mot-de-passe</target>
             </trans-unit>
         </body>
     </file>

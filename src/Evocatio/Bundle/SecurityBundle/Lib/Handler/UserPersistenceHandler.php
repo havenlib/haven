@@ -26,6 +26,7 @@ class UserPersistenceHandler {
             $encoder = $this->encoder_factory->getEncoder($entity);
             $entity->setPassword($encoder->encodePassword($password, $entity->getSalt()));
         }
+
         $this->em->persist($entity);
         $this->em->flush();
     }
@@ -36,14 +37,20 @@ class UserPersistenceHandler {
             $entity->setPassword($encoder->encodePassword($password, $entity->getSalt()));
         }
 
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        return $reset = $this->createReset($entity);
+    }
+
+    public function createReset($entity) {
         $this->removeOldReset($entity);
 
         $reset = new UserReset();
         $reset->setUser($entity);
 
-        $this->em->persist($entity);
         $this->em->persist($reset);
-//        $this->em->flush();
+        $this->em->flush();
 
         return $reset;
     }

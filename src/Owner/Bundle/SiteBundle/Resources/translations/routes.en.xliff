@@ -39,8 +39,12 @@
                 <target>contact</target>
             </trans-unit>
             <trans-unit id="10">
-                <source>activate</source>
-                <target>active</target>
+                <source>initialize</source>
+                <target>initialize</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>password</source>
+                <target>password</target>
             </trans-unit>
         </body>
     </file>
