@@ -1,6 +1,7 @@
 {%  extends "OwnerSiteBundle:Faq:create.html.twig" %}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block formhead %}
-{{ _route_crud.path('owner_site_faq_edit', 'edit', entity.id) }}
+    {{ route_i18n.path('owner_site_faq_edit', {'id': entity.id} , ['edit']) }}
 {% endblock formhead %}
 {% block delete %}
 <li>
