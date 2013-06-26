@@ -12,7 +12,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+/**
+ * @Route("", requirements={
+ *      "rank" = "rank"
+ * })
+ */
 class FaqController extends ContainerAware {
+
+    protected $ROUTE_PREFIX = "evocatio_security";
 
     /**
      * @Route("/faq")
@@ -48,7 +55,7 @@ class FaqController extends ContainerAware {
             $this->container->get("faq.persistence_handler")->batchSave($form->get("faqs")->getData());
             $this->container->get("session")->getFlashBag()->add("success", "ranking.success");
 
-            return $this->redirectCreateAction();
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_faq_create', array(), array('create')));
         }
         die("ranking error");
 
@@ -100,7 +107,7 @@ class FaqController extends ContainerAware {
             $this->container->get("faq.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return $this->redirectListAction();
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_faq_list', array(), array('list')));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
@@ -148,7 +155,7 @@ class FaqController extends ContainerAware {
             $this->container->get("faq.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return $this->redirectListAction();
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_faq_list', array(), array('list')));
         }
         $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
@@ -202,16 +209,22 @@ class FaqController extends ContainerAware {
         return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_FaqList'));
     }
 
-    protected function redirectListAction() {
-        return $this->redirectAction('evocatio_web_faq', 'list');
-    }
-
-    protected function redirectCreateAction() {
-        return $this->redirectAction('evocatio_web_faq', 'create');
-    }
-
-    protected function redirectAction($route, $keyword) {
-        return new RedirectResponse($this->container->get('router')->generate($route . "_" . $keyword, array($keyword => $this->container->get('translator')->trans($keyword, array(), "routes"))));
+//    protected function redirectListAction() {
+//        return $this->redirectAction('evocatio_web_faq', 'list');
+//    }
+//
+//    protected function redirectCreateAction() {
+//        return $this->redirectAction('evocatio_web_faq', 'create');
+//    }
+//
+//    protected function redirectAction($route, $keyword) {
+//        return new RedirectResponse($this->container->get('router')->generate($route . "_" . $keyword, array($keyword => $this->container->get('translator')->trans($keyword, array(), "routes"))));
+//    }
+    protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
+        foreach ($translate as $word) {
+            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes", $lang);
+        }
+        return $this->container->get('router')->generate($route, $parameters, $absolute);
     }
 
 }

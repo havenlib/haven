@@ -1,7 +1,7 @@
 {# empty Twig template #}
-{% import "::macro/route/crud.html.twig" as _route_crud %}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block fields %}
-<form class="form" action="{{ _route_crud.path('owner_site_faq_rank', 'rank') }}" method="POST">
+<form class="form" action="{{ route_i18n.path('owner_site_faq_rank', {}, ['rank']) }}" method="POST">
     <fieldset>
         <ul>
         {% for form in edit_form.faqs %}
