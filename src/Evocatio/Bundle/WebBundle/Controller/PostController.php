@@ -242,6 +242,17 @@ class PostController extends ContainerAware {
 
         return new Response($this->container->get('templating')->render($template ? $template : 'EvocatioWebBundle:Post:list_widget.html.twig', array('entities' => $entities)));
     }
+    
+    /**
+     * Creates a new post entity.
+     *
+     * @Route("/random/post")
+     * @Method("GET")
+     * @Template
+     */
+    public function showRandomAction(){
+       $entity = $this->container->get('post.read_handler')->getOneRandomly(); 
+    }
 
     protected function redirectListAction() {
         return new RedirectResponse($this->container->get('router')->generate('evocatio_web_post_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));

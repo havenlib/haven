@@ -47,6 +47,16 @@ class PostRepository extends StatusRepository {
         return $this->getResult();
     }
 
+    public function findOneRandomly() {
+        $this->filterByStatus(Post::STATUS_PUBLISHED);
+        $this->query_builder
+                ->join();
+        createQuery("SELECT p FROM Evocatio\Bundle\WebBundle\Entity\Post p JOIN (SELECT ROUND(MAX(ID)*RAND()) AS ID FROM Evocatio\Bundle\WebBundle\Entity\Post) AS x ON p.ID >= x.ID LIMIT 1");
+//        ->createQueryBuilder("e")->join('u', 'u2', Expr\Join::WITH, 'p.is_primary = 1'); ;
+//        echo $this->query_builder->join();
+//                ->getQueryBuilder(); SELECT * FROM Post T JOIN (SELECT ROUND(MAX(ID)*RAND()) AS ID FROM Post) AS x ON T.ID >= x.ID LIMIT 1;
+    }
+
     public function order($field, $direction = 'ASC') {
         if (is_null($this->query_builder))
             $this->query_builder = $this->createQueryBuilder("e");
