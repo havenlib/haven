@@ -13,6 +13,10 @@ class PostReadHandler extends ReadHandler {
     public function getLastPublished($limit = null) {
         return $this->em->getRepository("EvocatioWebBundle:Post")->findLastPublished($limit);
     }
+    
+    public function getOneRandomly(){
+        return $this->em->getRepository("EvocatioWebBundle:Post")->findOneRandomly();
+    }
 
     protected function getDefaultEntityClass() {
         return "Evocatio\Bundle\WebBundle\Entity\Post";
