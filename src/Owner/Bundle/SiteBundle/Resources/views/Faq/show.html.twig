@@ -23,7 +23,7 @@
     </tbody>
 </table>
 
-        <a href="{{ _route_crud.path('owner_site_faq_edit', 'edit', entity.id) }}">
+        <a href="{{ route_i18n.path('owner_site_faq_edit', {'id': entity.id} , ['edit']) }}">
             Edit
         </a>
    {# 
