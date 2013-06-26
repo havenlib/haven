@@ -21,6 +21,7 @@ class UserController extends ContainerAware {
 
     /**
      * @Route("/{user}")
+     * @Route("/user")
      * @Method("GET")
      * @Template()
      */
@@ -33,6 +34,7 @@ class UserController extends ContainerAware {
      * Finds and displays a post entity.
      *
      * @Route("/{show}/{user}/{id}")
+     * @Route("/show/user/{id}")
      * @Method("GET")
      * @Template()
      */
@@ -50,6 +52,7 @@ class UserController extends ContainerAware {
      * Finds and displays all users for admin.
      *
      * @Route("/admin/{list}/{user}")
+     * @Route("/admin/list/user")
      * @Method("GET")
      * @Template()
      */
@@ -60,6 +63,7 @@ class UserController extends ContainerAware {
 
     /**
      * @Route("/admin/{create}/{user}")
+     * @Route("/admin/create/user")
      * @Method("GET")
      * @Template
      */
@@ -72,6 +76,7 @@ class UserController extends ContainerAware {
      * Creates a new user entity.
      *
      * @Route("/admin/{create}/{user}")
+     * @Route("/admin/create/user")
      * @Method("POST")
      * @Template
      */
@@ -81,14 +86,20 @@ class UserController extends ContainerAware {
 
 
         if ($edit_form->isValid()) {
-            $reset = $this->container->get("user.persistence_handler")->saveWithReset($edit_form->getData());
-            $reset_url = $this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_activate', array("uuid" => $reset->getUuid()), array('activate', 'user'), null, true);
+            $this->container->get("user.persistence_handler")->save($user = $edit_form->getData());
+
+            /**
+             * Permet de créer le reset et l'url de reset puis d'envoyer le mail à l'utilisateur
+             */
+            $reset = $this->container->get("user.persistence_handler")->createReset($user);
+            $reset_url = $this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_reset', array("uuid" => $reset->getUuid()), array('password', 'initialize'), null, true);
 
             $notifier = $this->container->get('notifier');
             $notifier->createNewUserNotification($reset, $reset_url);
             $notifier->send();
-//            $this->container->get("session")->getFlashBag()->add("success", "create.success");
-//            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_list', array(), array('user', 'list')));
+
+            $this->container->get("session")->getFlashBag()->add("success", "create.success");
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_list', array(), array('user', 'list')));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
@@ -103,6 +114,7 @@ class UserController extends ContainerAware {
 
     /**
      * @Route("/admin/{edit}/{user}/{id}")
+     * @Route("/admin/edit/user/{id}")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -121,6 +133,7 @@ class UserController extends ContainerAware {
 
     /**
      * @Route("/admin/{edit}/{user}/{id}")
+     * @Route("/admin/edit/user/{id}")
      * @return RedirectResponse
      * @Method("POST")
      * @Template
@@ -192,46 +205,63 @@ class UserController extends ContainerAware {
 
     /**
      * reset confirmation by the user
-     * @Route("/{activate}/{user}/{uuid}") 
+     * @Route("/{initialize}/{password}/{uuid}") 
+     * @Route("/{reset}/{password}/{uuid}") 
+     * @Route("/initialize/password/{uuid}") 
+     * @Route("/reset/password/{uuid}") 
+     * @Method("GET")
      * @Template()
      */
-    public function activateAction($uuid) {
-        $em = $this->container->get("doctrine")->getEntityManager();
-        $request = $this->container->get("request");
-        $confirm_data = $request->get("evocatio_bundle_securitybundle_confirmtype");
-        $user_reset = $em->getRepository("EvocatioSecurityBundle:UserReset")->findOneBy(array("uuid" => $uuid));
-        if (null == $user_reset) {
-            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException("page.pas.trouve");
-        }
+    public function resetAction($uuid) {
+        $reset = $this->container->get("user.read_handler")->getResetByUuid($uuid);
 
-        $confirm_form = $this->container->get("form.factory")->create(new \Evocatio\Bundle\SecurityBundle\Form\ConfirmType());
+        if (is_null($reset))
+            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
 
-        $templating = $this->container->get("templating");
-        $render = null;
-        if ($request->getMethod() == "POST") {
-            $confirm_form->bind($confirm_data);
-            if ($confirm_form->isValid()) {
-                if ($user_reset->getConfirmation() == $confirm_data["confirmation"] && !null == $user_reset->getUser()) {
-                    $factory = $this->container->get('security.encoder_factory');
-                    $user = $user_reset->getUser();
-                    $encoder = $factory->getEncoder($user);
-                    $user->setPassword($encoder->encodePassword($confirm_data["plainPassword"]["first"], $user->getSalt()));
-                } else {
-                    throw new \Exception("L'utilisateur n'existe pas ou n'a pas fait de demande de réinitialisation");
-                }
-                $em->persist($user);
-                $em->remove($user_reset);
-                $em->flush();
-                $this->container->get("session")->setFlash("success", "c'est réussi");
-
-                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->container->get("router")->generate("EvocatioSecurityBundle_login"));
-            }
-        }
-        return array("confirm_form" => $confirm_form->createView(), "uuid" => $uuid);
+        $form = $this->container->get("form.factory")->create(new \Evocatio\Bundle\SecurityBundle\Form\ConfirmType());
+        return array("edit_form" => $form->createView(), "uuid" => $uuid);
     }
 
-    public function performActivationAction() {
-        
+    /**
+     * reset confirmation by the user
+     * @Route("/{initialize}/{password}/{uuid}") 
+     * @Route("/{reset}/{password}/{uuid}") 
+     * @Route("/initialize/password/{uuid}") 
+     * @Route("/reset/password/{uuid}") 
+     * @Method("POST")
+     * @Template()
+     */
+    public function performResetAction($uuid) {
+        $reset = $this->container->get("user.read_handler")->getResetByUuid($uuid);
+
+        if (is_null($reset))
+            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+
+        $form = $this->container->get("form.factory")->create(new \Evocatio\Bundle\SecurityBundle\Form\ConfirmType());
+        $form->bind($this->container->get('request'));
+
+        if ($form->isValid()) {
+
+            if (is_null($user = $reset->getUser()) || $reset->getConfirmation() != $form->get('confirmation')->getData())
+                throw new \Exception("user.doesnt.exist.or.initialization.request.not.found");
+
+            $factory = $this->container->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($user = $reset->getUser());
+
+            $user->setPassword($encoder->encodePassword($form->get('plainPassword')->get('first')->getData(), $user->getSalt()));
+
+            $this->container->get("user.persistence_handler")->save($user);
+            $this->container->get("user.persistence_handler")->removeOldReset($user);
+
+            $this->container->get("session")->getFlashBag()->add("success", "congratulation.password.changed.now.connect");
+
+            return new RedirectResponse($this->container->get("router")->generate($this->ROUTE_PREFIX . "_login_login"));
+        }
+
+        $template = str_replace(":performReset.html.twig", ":reset.html.twig", $this->container->get("request")->get('_template'));
+        $params = array("edit_form" => $form->createView(), "uuid" => $uuid);
+
+        return new Response($this->container->get('templating')->render($template, $params));
     }
 
     protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
