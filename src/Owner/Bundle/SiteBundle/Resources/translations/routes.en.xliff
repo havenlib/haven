@@ -38,6 +38,10 @@
                 <source>contact</source>
                 <target>contact</target>
             </trans-unit>
+            <trans-unit id="10">
+                <source>activate</source>
+                <target>active</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
