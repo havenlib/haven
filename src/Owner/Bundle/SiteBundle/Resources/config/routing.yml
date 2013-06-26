@@ -5,47 +5,23 @@ OwnerSiteBundle_All:
     defaults:
       admin: admin
     requirements:
+      _locale: fr|en
       admin:    "admin"
       edit:     "edit|editer"
       list:     "list|lister"
       show:     "show|afficher"
       create:   "create|creer"
-      rank:   "rank|ordonner"
-      _locale: fr|en
+#      rank:   "rank|ordonner"
       
-OwnerSiteBundle_User:
-    resource: "@OwnerSiteBundle/Controller/UserController.php"
-    type:     annotation
-    prefix: /{_locale}/
-    defaults:
-      admin: admin
-    requirements: 
-      _locale: fr|en
-      admin: "admin"
-      suffix: "user|utilisateur"
-      create: "create|creer"
-      edit: "edit|editer"
-      list: "list|lister"
-      show: "show|afficher"
-    
 OwnerSiteBundle_Login:
     resource: "@OwnerSiteBundle/Controller/LoginController.php"
     type:     annotation
     prefix: /
-    
-OwnerSiteBundle_Home:
-    resource: "@OwnerSiteBundle/Controller/DefaultController.php"
-    type:     annotation
-    prefix: /
-    
-    
-OwnerSiteBundle_Help:
-    resource: "@OwnerSiteBundle/Controller/HelpController.php"
-    type:     annotation
-    prefix: /{_locale}/
-    defaults:
-      admin: admin
-    requirements: 
-      _locale: fr|en
-      contact: "contact|contacter"
+#    
+#OwnerSiteBundle_Static:
+#    resource: "@OwnerSiteBundle/Controller/StaticController.php"
+#    type:     annotation
+#    prefix: /{_locale}/
+#    requirements: 
+#      _locale: fr|en
     

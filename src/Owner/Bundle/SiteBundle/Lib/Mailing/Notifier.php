@@ -21,14 +21,14 @@ class Notifier extends BaseNotifier {
             unset($data[$key]);
         }
 
-        $subject = $this->translator->trans('subject.contact', array(), "mails");
         $message = $this->translator->trans('message.contact', $data, "mails");
 
         $body = $this->templating->render("OwnerSiteBundle:Mail:template/default.html.twig", array(
             "message" => $message
         ));
+
+        $mail->setSubject($subject = $this->translator->trans('subject.contact', array(), "mails"));
         $mail->setBody($body, 'text/html');
-        $mail->setSubject($subject);
 
         $this->addToPool($mail);
     }
@@ -41,15 +41,14 @@ class Notifier extends BaseNotifier {
         $data['%confirmation_code%'] = $reset->getConfirmation();
         $data['%confirmation_url%'] = $reset_url;
 
-        $subject = $this->translator->trans('subject.new_user_account', array(), "mails");
         $message = $this->translator->trans('message.new_user_account', $data, "mails");
 
-        echo $body = $this->templating->render("OwnerSiteBundle:Mail:template/default.html.twig", array(
-    "message" => $message
+        $body = $this->templating->render("OwnerSiteBundle:Mail:template/default.html.twig", array(
+            "message" => $message
         ));
 
+        $mail->setSubject($subject = $this->translator->trans('subject.new_user_account', array(), "mails"));
         $mail->setBody($body, 'text/html');
-        $mail->setSubject($subject);
 
         $this->addToPool($mail);
     }

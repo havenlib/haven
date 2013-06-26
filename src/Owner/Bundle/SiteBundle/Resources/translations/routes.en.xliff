@@ -36,7 +36,7 @@
             </trans-unit>
             <trans-unit id="9">
                 <source>contact</source>
-                <target>contact</target>
+                <target>contact-us</target>
             </trans-unit>
             <trans-unit id="10">
                 <source>initialize</source>

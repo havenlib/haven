@@ -30,12 +30,12 @@
 
 <ul>
     <li>
-        <a href="{{ route_i18n.path('owner_site_user_list', ['user', 'list']) }}">
+        <a href="{{ route_i18n.path('owner_site_user_list', {}, ['user', 'list']) }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ route_i18n.path('owner_site_user_edit', ['user', 'edit'], {'id': entity.id}) }}">
+        <a href="{{ route_i18n.path('owner_site_user_edit', {'id': entity.id}, ['user', 'edit']) }}">
             Edit
         </a>
     </li>
