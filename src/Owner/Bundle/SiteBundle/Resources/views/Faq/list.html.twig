@@ -1,11 +1,12 @@
 {%  extends "OwnerSiteBundle::base_admin.html.twig" %}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block inside_theater %}
 <dl>
     {% for entity in entities %}
         <dt>
             <div>Status: {{ entity.status?'Published':'Inactive' }}</div> 
             {{ entity.question }}
-            <a href="{{ _route_crud.path('owner_site_faq_edit', 'edit', entity.id) }}">edit</a> 
+            <a href="{{ route_i18n.path('owner_site_faq_edit', {'id': entity.id} , ['edit']) }}">edit</a> 
         </dt>
         <dd>{{ entity.reponse | raw }}</dd>
     {% else %}
