@@ -6,3 +6,15 @@ services:
   post.read_handler:
       class:     Owner\Bundle\SiteBundle\Lib\Handler\PostReadHandler
       arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+      
+  employee.read_handler:
+        class:     Owner\Bundle\SiteBundle\Lib\Handler\EmployeeReadHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+        
+  employee.form_handler:
+      class:     Owner\Bundle\SiteBundle\Lib\Handler\EmployeeFormHandler
+      arguments: ["@employee.read_handler", "@security.context", "@form.factory"]
+      
+  employee.persistence_handler:
+        class:     Owner\Bundle\SiteBundle\Lib\Handler\EmployeePersistenceHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]

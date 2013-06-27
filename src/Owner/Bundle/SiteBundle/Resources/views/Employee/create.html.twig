@@ -1,0 +1,17 @@
+{%  extends "OwnerSiteBundle:Template:add_template.html.twig" %}
+{% import "EvocatioPersonaBundle::macro/route/i18n.html.twig" as route_i18n_persona %}
+{% block formhead %}
+    {{ route_i18n_persona.path('owner_site_employee_create', {}, ['create'], 'employee') }}
+{% endblock formhead %}
+
+{% block form %}
+<fieldset>
+        {{ form_rest(edit_form) }}
+</fieldset>
+{% endblock form %}
+
+{% block back %}
+    <a href="{{ route_i18n_persona.path('owner_site_employee_list', {}, ['list'], 'employee') }}">
+        Back to the list
+    </a>
+{% endblock back %}

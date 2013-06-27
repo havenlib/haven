@@ -1,15 +1,15 @@
 <?php
 
-namespace Evocatio\Bundle\PersonaBundle\Entity;
+namespace Owner\Bundle\SiteBundle\Entity;
 
+use Evocatio\Bundle\PersonaBundle\Entity\Persona;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Evocatio\Bundle\SecurityBundle\Entity\Person
+ * @ORM\Table()
  * @ORM\Entity()
- * 
  */
-class Person extends Persona {
+class Employee extends Persona {
 
     /**
      * @var string $firstname
@@ -32,27 +32,17 @@ class Person extends Persona {
      */
     private $sex;
 
-//    /**
-//     * @var datetime $birthday
-//     *
-//     * @ORM\Column(name="birthday", type="datetime", nullable=true)
-//     */
-//    private $birthday;
-
-    /**
-     * @var integer $id
-     */
-    private $id;
 
     /**
      * Set firstname
      *
      * @param string $firstname
-     * @return Person
+     * @return Employee
      */
-    public function setFirstname($firstname) {
+    public function setFirstname($firstname)
+    {
         $this->firstname = $firstname;
-
+    
         return $this;
     }
 
@@ -61,7 +51,8 @@ class Person extends Persona {
      *
      * @return string 
      */
-    public function getFirstname() {
+    public function getFirstname()
+    {
         return $this->firstname;
     }
 
@@ -69,11 +60,12 @@ class Person extends Persona {
      * Set lastname
      *
      * @param string $lastname
-     * @return Person
+     * @return Employee
      */
-    public function setLastname($lastname) {
+    public function setLastname($lastname)
+    {
         $this->lastname = $lastname;
-
+    
         return $this;
     }
 
@@ -82,7 +74,8 @@ class Person extends Persona {
      *
      * @return string 
      */
-    public function getLastname() {
+    public function getLastname()
+    {
         return $this->lastname;
     }
 
@@ -90,11 +83,12 @@ class Person extends Persona {
      * Set sex
      *
      * @param integer $sex
-     * @return Person
+     * @return Employee
      */
-    public function setSex($sex) {
+    public function setSex($sex)
+    {
         $this->sex = $sex;
-
+    
         return $this;
     }
 
@@ -103,34 +97,8 @@ class Person extends Persona {
      *
      * @return integer 
      */
-    public function getSex() {
+    public function getSex()
+    {
         return $this->sex;
     }
-
-    /**
-     * Set birthday
-     *
-     * @param \DateTime $birthday
-     * @return Person
-     */
-    public function setBirthday($birthday) {
-        $this->birthday = $birthday;
-
-        return $this;
-    }
-
-    /**
-     * Get birthday
-     *
-     * @return \DateTime 
-     */
-    public function getBirthday() {
-        return $this->birthday;
-    }
-
-    public function getDiscriminator() {
-        $discriminator_map = Company::getDiscriminatorMap();
-        return array_search(get_class($this), $discriminator_map->value);
-    }
-
 }
