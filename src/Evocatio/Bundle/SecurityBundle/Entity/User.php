@@ -28,10 +28,7 @@ class User extends UserMappedBase implements UserInterface {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-//    /**
-//     * @ORM\OneToOne(targetEntity="Evocatio\Bundle\PersonaBundle\Entity\Contact", cascade={"persist"})
-//     */
-//    private $contact;
+    
     /**
      * Plain password. Used for model validation. Must not be persisted.
      *
@@ -71,6 +68,7 @@ class User extends UserMappedBase implements UserInterface {
     public function __toString() {
         return $this->getUsername();
     }
+
 //
 //    public function __call($function, $options) {
 //        if (\method_exists($this->getContact(), $name = 'get' . \ucfirst($function))) {
@@ -78,5 +76,26 @@ class User extends UserMappedBase implements UserInterface {
 //        }
 //    }
 
+    /**
+     * Set persona
+     *
+     * @param \Evocatio\Bundle\PersonaBundle\Entity\Persona $persona
+     * @return User
+     */
+    public function setPersona(\Evocatio\Bundle\PersonaBundle\Entity\Persona $persona = null)
+    {
+        $this->persona = $persona;
+    
+        return $this;
+    }
 
+    /**
+     * Get persona
+     *
+     * @return \Evocatio\Bundle\PersonaBundle\Entity\Persona 
+     */
+    public function getPersona()
+    {
+        return $this->persona;
+    }
 }

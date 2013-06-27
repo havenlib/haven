@@ -32,6 +32,10 @@ class Employee extends Persona {
      */
     private $sex;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Evocatio\Bundle\SecurityBundle\Entity\User", mappedBy="persona",cascade={"all"})
+     */
+    private $user;
 
     /**
      * Set firstname
@@ -39,10 +43,9 @@ class Employee extends Persona {
      * @param string $firstname
      * @return Employee
      */
-    public function setFirstname($firstname)
-    {
+    public function setFirstname($firstname) {
         $this->firstname = $firstname;
-    
+
         return $this;
     }
 
@@ -51,8 +54,7 @@ class Employee extends Persona {
      *
      * @return string 
      */
-    public function getFirstname()
-    {
+    public function getFirstname() {
         return $this->firstname;
     }
 
@@ -62,10 +64,9 @@ class Employee extends Persona {
      * @param string $lastname
      * @return Employee
      */
-    public function setLastname($lastname)
-    {
+    public function setLastname($lastname) {
         $this->lastname = $lastname;
-    
+
         return $this;
     }
 
@@ -74,8 +75,7 @@ class Employee extends Persona {
      *
      * @return string 
      */
-    public function getLastname()
-    {
+    public function getLastname() {
         return $this->lastname;
     }
 
@@ -85,10 +85,9 @@ class Employee extends Persona {
      * @param integer $sex
      * @return Employee
      */
-    public function setSex($sex)
-    {
+    public function setSex($sex) {
         $this->sex = $sex;
-    
+
         return $this;
     }
 
@@ -97,8 +96,31 @@ class Employee extends Persona {
      *
      * @return integer 
      */
-    public function getSex()
-    {
+    public function getSex() {
         return $this->sex;
+    }
+
+
+    /**
+     * Set user
+     *
+     * @param \Evocatio\Bundle\SecurityBundle\Entity\User $user
+     * @return Employee
+     */
+    public function setUser(\Evocatio\Bundle\SecurityBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Evocatio\Bundle\SecurityBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
