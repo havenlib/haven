@@ -46,9 +46,13 @@
                 <source>password</source>
                 <target>password</target>
             </trans-unit>
-            <trans-unit id="13">
+            <trans-unit id="12">
                 <source>displayrandom</source>
-                <target>afficher-aleatoire</target>
+                <target>display-random</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>employee</source>
+                <target>employee</target>
             </trans-unit>
         </body>
     </file>
