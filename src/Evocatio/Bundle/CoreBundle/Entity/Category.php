@@ -191,4 +191,50 @@ class Category extends Translatable {
         return $this->my_categories;
     }
 
+
+    /**
+     * Add categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
+     * @return Category
+     */
+    public function addCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $categories)
+    {
+        $this->categories[] = $categories;
+    
+        return $this;
+    }
+
+    /**
+     * Remove categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
+     */
+    public function removeCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $categories)
+    {
+        $this->categories->removeElement($categories);
+    }
+
+    /**
+     * Add my_categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $myCategories
+     * @return Category
+     */
+    public function addMyCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $myCategories)
+    {
+        $this->my_categories[] = $myCategories;
+    
+        return $this;
+    }
+
+    /**
+     * Remove my_categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $myCategories
+     */
+    public function removeMyCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $myCategories)
+    {
+        $this->my_categories->removeElement($myCategories);
+    }
 }
