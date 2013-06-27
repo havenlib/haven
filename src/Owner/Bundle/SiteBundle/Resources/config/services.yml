@@ -2,3 +2,7 @@ services:
   notifier:
       class:     Owner\Bundle\SiteBundle\Lib\Mailing\Notifier
       arguments: ["@mailer", "@templating", "%notification%", "@translator"]
+      
+  post.read_handler:
+      class:     Owner\Bundle\SiteBundle\Lib\Handler\PostReadHandler
+      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
