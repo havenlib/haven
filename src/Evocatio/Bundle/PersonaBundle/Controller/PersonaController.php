@@ -21,11 +21,8 @@ class PersonaController extends ContainerAware {
      * @Method("GET")
      * @Template()
      */
-    public function indexAction($persona) {
-        if (!$this->container->has($persona . ".read_handler"))
-            throw new \Exception($persona . ".read_handler doesn't exist or isn't setted in service.yml");
-
-        $entities = $this->container->get($persona . ".read_handler")->getAll();
+    public function indexAction() {
+        $entities = $this->container->get($this->PERSONA . ".read_handler")->getAll();
 
         return array("entities" => $entities);
     }
@@ -37,11 +34,8 @@ class PersonaController extends ContainerAware {
      * @Method("GET")
      * @Template()
      */
-    public function listAction($persona) {
-        if (!$this->container->has($persona . ".read_handler"))
-            throw new \Exception($persona . ".read_handler doesn't exist or isn't setted in service.yml");
-
-        $entities = $this->container->get($persona . ".read_handler")->getAll();
+    public function listAction() {
+        $entities = $this->container->get($this->PERSONA . ".read_handler")->getAll();
 
         return array("entities" => $entities);
     }
@@ -49,21 +43,14 @@ class PersonaController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{admin}/{show}/{persona}/{id}", requirements={"admin" = "admin"})
+     * @Route("/admin/{show}/{persona}/{id}", requirements={"admin" = "admin"})
      * 
      * @Method("GET")
      * @Template()
      */
-    public function showAction($id, $persona) {
-        if (!$this->container->has($persona . ".read_handler"))
-            throw new \Exception($persona . ".read_handler doesn't exist or isn't setted in service.yml");
-
-        if (!$this->container->has($persona . ".form_handler"))
-            throw new \Exception($persona . ".form_handler doesn't exist or isn't setted in service.yml");
-
-
-        $entity = $this->container->get($persona . ".read_handler")->get($id);
-        $delete_form = $this->container->get($persona . ".form_handler")->createDeleteForm($id);
+    public function showAction($id) {
+        $entity = $this->container->get($this->PERSONA . ".read_handler")->get($id);
+        $delete_form = $this->container->get($this->PERSONA . ".form_handler")->createDeleteForm($id);
 
         return array(
             'entity' => $entity
