@@ -15,14 +15,6 @@ class PostRepository extends StatusRepository {
 
     private $query_builder;
 
-    public function getQueryBuilder() {
-        return $this->query_builder;
-    }
-
-    public function setQueryBuilder(\Doctrine\ORM\QueryBuilder $query_builder) {
-        $this->query_builder = $query_builder;
-    }
-
     public function findAll() {
         $this->query_builder = $this->createQueryBuilder("e");
         return $this->getResult();
@@ -35,7 +27,7 @@ class PostRepository extends StatusRepository {
     }
 
     public function findAllPublished() {
-        $this->filterByStatus(Post::STATUS_PUBLISHED)->getQueryBuilder();
+        $this->filterByStatus(Post::STATUS_PUBLISHED);
         return $this->getResult();
     }
 
@@ -80,9 +72,8 @@ class PostRepository extends StatusRepository {
 //        return $this;
 //    }
 
-    private function filterByStatus($status) {
-        if (is_null($this->query_builder))
-            $this->query_builder = $this->createQueryBuilder("e");
+    private function filterByStatus($status, $qb = null) {
+        $this->query_builder = ($qb) ? $qb : $this->createQueryBuilder("e");
 
         $this->query_builder->andWhere("e.status = :status");
         $this->query_builder->setParameter("status", $status);
@@ -102,15 +93,15 @@ class PostRepository extends StatusRepository {
      * @param \Doctrine\ORM\QueryBuilder $query_builder
      * @return type
      */
-    public function findLastCreatedOnline($qt = null) {
-        $query_builder = $this->createQueryBuilder("e");
-        $query_builder->orderBy("e.created_at", "ASC")
-                ->setMaxResults($qt);
-        $query_builder = $this->filterOnlines($query_builder);
-
-
-        return $query_builder->getQuery()->getResult();
-    }
+//    public function findLastCreatedOnline($qt = null) {
+//        $query_builder = $this->createQueryBuilder("e");
+//        $query_builder->orderBy("e.created_at", "ASC")
+//                ->setMaxResults($qt);
+//        $query_builder = $this->filterOnlines($query_builder);
+//
+//
+//        return $query_builder->getQuery()->getResult();
+//    }
 
 }
 
