@@ -46,6 +46,10 @@
                 <source>password</source>
                 <target>password</target>
             </trans-unit>
+            <trans-unit id="13">
+                <source>displayrandom</source>
+                <target>afficher-aleatoire</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -9,7 +9,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Evocatio\Bundle\WebBundle\Controller\PostController as BasePostController;
 
 /**
- * @Route("")
+ * @Route("", requirements={
+ *        "displayrandom" = "display-random|afficher-aleatoire"
+ * })
  */
 class PostController extends BasePostController {
 
@@ -18,17 +20,27 @@ class PostController extends BasePostController {
     }
 
     /**
-     * Creates a new post entity.
-     *
-     * @Route("/random/post")
+     * 
+     * @Route("/{displayrandom}/post")
      * @Method("GET")
      * @Template
      */
-    public function showRandomAction() {
+    public function displayRandomAction() {
         $entity = $this->container->get('post.read_handler')->getOneRandomPublished();
-        
    
         return array("entity" => $entity);
+    }
+
+    /**
+     * 
+     * @Route("/{displaylastpublished}/post")
+     * @Method("GET")
+     * @Template
+     */
+    public function displayLastPublishedAction($limit = null) {
+        $entities = $this->container->get('post.read_handler')->getLastPublished($limit);
+   
+        return array("entities" => $entities);
     }
 
 }
