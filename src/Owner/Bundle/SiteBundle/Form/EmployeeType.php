@@ -13,6 +13,7 @@ class EmployeeType extends AbstractType {
                 ->add('firstname')
                 ->add('lastname')
                 ->add('sex')
+                ->add('user', new \Evocatio\Bundle\SecurityBundle\Form\UserType())
 //                ->add('postal', "collection", array(
 //                    'type' => new PostalType(),
 //                    'allow_add' => true,

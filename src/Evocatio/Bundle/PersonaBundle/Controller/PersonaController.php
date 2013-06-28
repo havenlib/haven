@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class PersonaController extends ContainerAware {
+abstract class PersonaController extends ContainerAware {
 
     protected $PERSONA = null;
 

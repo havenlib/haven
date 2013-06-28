@@ -28,13 +28,19 @@ class User extends UserMappedBase implements UserInterface {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * Plain password. Used for model validation. Must not be persisted.
      *
      * @var string
      */
     protected $plainPassword;
+
+    /**
+     * @ORM\OneToOne(targetEntity="\Evocatio\Bundle\PersonaBundle\Entity\Persona", cascade="all")
+     * @ORM\JoinColumn(name="persona_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $persona;
 
     /**
      * Sets the plain password.
@@ -82,10 +88,9 @@ class User extends UserMappedBase implements UserInterface {
      * @param \Evocatio\Bundle\PersonaBundle\Entity\Persona $persona
      * @return User
      */
-    public function setPersona(\Evocatio\Bundle\PersonaBundle\Entity\Persona $persona = null)
-    {
+    public function setPersona(\Evocatio\Bundle\PersonaBundle\Entity\Persona $persona = null) {
         $this->persona = $persona;
-    
+
         return $this;
     }
 
@@ -94,8 +99,8 @@ class User extends UserMappedBase implements UserInterface {
      *
      * @return \Evocatio\Bundle\PersonaBundle\Entity\Persona 
      */
-    public function getPersona()
-    {
+    public function getPersona() {
         return $this->persona;
     }
+
 }
