@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Evocatio\Bundle\PersonaBundle\Controller\PersonaController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * @Route("", requirements={
@@ -33,7 +32,7 @@ class EmployeeController extends PersonaController {
         if ($edit_form->isValid()) {
             $this->container->get($this->PERSONA . ".persistence_handler")->save($persona = $edit_form->getData());
 
-            $this->forward('OwnerSiteBundle:User:createReset', array('user' => $persona->getUser()));
+//            $this->forward('OwnerSiteBundle:User:createReset', array('user' => $persona->getUser()));
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_list', $this->PERSONA, array(), array('list')));

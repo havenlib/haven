@@ -12,8 +12,16 @@ class EmployeeType extends AbstractType {
         $builder
                 ->add('firstname')
                 ->add('lastname')
-                ->add('sex')
-                ->add('user', new \Evocatio\Bundle\SecurityBundle\Form\UserType())
+                ->add('sex', 'choice', array(
+                    'choices' => array(
+                        1 => 'M'
+                        , 2 => 'F'
+                    )
+                    , 'multiple' => false
+                ))
+//                ->add('user', new \Evocatio\Bundle\SecurityBundle\Form\UserType())
+                ->add('user')
+                ->add('profile', new ProfileType())
 //                ->add('postal', "collection", array(
 //                    'type' => new PostalType(),
 //                    'allow_add' => true,
