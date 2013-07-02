@@ -38,6 +38,11 @@ class Employee extends Persona {
     private $user;
 
     /**
+     * @ORM\OneToOne(targetEntity="Profile", mappedBy="employee", cascade={"all"})
+     */
+    private $profile;
+
+    /**
      * Set firstname
      *
      * @param string $firstname
@@ -100,17 +105,15 @@ class Employee extends Persona {
         return $this->sex;
     }
 
-
     /**
      * Set user
      *
      * @param \Evocatio\Bundle\SecurityBundle\Entity\User $user
      * @return Employee
      */
-    public function setUser(\Evocatio\Bundle\SecurityBundle\Entity\User $user = null)
-    {
+    public function setUser(\Evocatio\Bundle\SecurityBundle\Entity\User $user = null) {
         $this->user = $user;
-    
+
         return $this;
     }
 
@@ -119,8 +122,72 @@ class Employee extends Persona {
      *
      * @return \Evocatio\Bundle\SecurityBundle\Entity\User 
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add translations
+     *
+     * @param \Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations
+     * @return Employee
+     */
+    public function addTranslation(\Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations)
+    {
+        $this->translations[] = $translations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove translations
+     *
+     * @param \Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations
+     */
+    public function removeTranslation(\Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations)
+    {
+        $this->translations->removeElement($translations);
+    }
+
+    /**
+     * Get translations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * Set profile
+     *
+     * @param \Owner\Bundle\SiteBundle\Entity\Profile $profile
+     * @return Employee
+     */
+    public function setProfile(\Owner\Bundle\SiteBundle\Entity\Profile $profile = null)
+    {
+        $profile->setEmployee($this);
+        $this->profile = $profile;
+    
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @return \Owner\Bundle\SiteBundle\Entity\Profile 
+     */
+    public function getProfile()
+    {
+        return $this->profile;
     }
 }

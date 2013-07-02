@@ -17,7 +17,7 @@ use \ReflectionClass;
  * @InheritanceType("JOINED")
  * @DiscriminatorColumn(name="discr", type="string")
  */
-class Persona {
+class Persona  {
 
     /**
      * @ORM\Id

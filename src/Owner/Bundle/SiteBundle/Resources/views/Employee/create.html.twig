@@ -4,6 +4,7 @@
     {{ route_i18n_persona.path('owner_site_employee_create', {}, ['create'], 'employee') }}
 {% endblock formhead %}
 
+{% form_theme edit_form.profile.translations "::Form/translations.html.twig" %}
 {% block form %}
 <fieldset>
         {{ form_rest(edit_form) }}
