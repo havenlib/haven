@@ -18,6 +18,14 @@
                 <source>the.team</source>
                 <target>The Team</target>
             </trans-unit>
+            <trans-unit id="5">
+                <source>male</source>
+                <target>M</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>female</source>
+                <target>F</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

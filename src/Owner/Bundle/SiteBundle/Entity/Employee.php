@@ -28,7 +28,7 @@ class Employee extends Persona {
     /**
      * @var string $sex
      *
-     * @ORM\Column(name="sex", type="integer")
+     * @ORM\Column(name="sex", type="string", columnDefinition="ENUM('m', 'f')")
      */
     private $sex;
 
@@ -41,6 +41,12 @@ class Employee extends Persona {
      * @ORM\OneToOne(targetEntity="Profile", mappedBy="employee", cascade={"all"})
      */
     private $profile;
+
+    /**
+     * @var string $slug
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
+     */
+    private $slug;
 
     /**
      * Set firstname
@@ -129,21 +135,21 @@ class Employee extends Persona {
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
+        parent::__construct();
+
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add translations
      *
      * @param \Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations
      * @return Employee
      */
-    public function addTranslation(\Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations)
-    {
+    public function addTranslation(\Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations) {
         $this->translations[] = $translations;
-    
+
         return $this;
     }
 
@@ -152,8 +158,7 @@ class Employee extends Persona {
      *
      * @param \Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations
      */
-    public function removeTranslation(\Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations)
-    {
+    public function removeTranslation(\Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations) {
         $this->translations->removeElement($translations);
     }
 
@@ -162,8 +167,7 @@ class Employee extends Persona {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getTranslations()
-    {
+    public function getTranslations() {
         return $this->translations;
     }
 
@@ -173,11 +177,10 @@ class Employee extends Persona {
      * @param \Owner\Bundle\SiteBundle\Entity\Profile $profile
      * @return Employee
      */
-    public function setProfile(\Owner\Bundle\SiteBundle\Entity\Profile $profile = null)
-    {
+    public function setProfile(\Owner\Bundle\SiteBundle\Entity\Profile $profile = null) {
         $profile->setEmployee($this);
         $this->profile = $profile;
-    
+
         return $this;
     }
 
@@ -186,8 +189,33 @@ class Employee extends Persona {
      *
      * @return \Owner\Bundle\SiteBundle\Entity\Profile 
      */
-    public function getProfile()
-    {
+    public function getProfile() {
         return $this->profile;
     }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Employee
+     */
+    public function setSlug($slug) {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug() {
+        return $this->slug;
+    }
+
+    public function getFullname() {
+        return $this->getFirstname() . " " . $this->getLastname();
+    }
+
 }

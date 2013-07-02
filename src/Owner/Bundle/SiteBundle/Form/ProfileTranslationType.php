@@ -11,7 +11,10 @@ class ProfileTranslationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('description')
+                ->add('description', 'textarea', array(
+                    'required' => false
+                    , 'attr' => array('class' => 'ckeditor')
+                ))
                 ->add('trans_lang', null, array(
                     "property" => "name"
                     , "label" => false

@@ -120,4 +120,8 @@ class Profile extends Translatable {
         return $this->employee;
     }
 
+    public function getDescription($lang = null) {
+        return $this->getTranslated('description', $lang);
+    }
+
 }

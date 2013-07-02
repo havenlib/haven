@@ -33,13 +33,31 @@ class EmployeeController extends PersonaController {
     }
 
     /**
+     * @Route("/{theteam}/{slug}")
+     * 
+     * @Method("GET")
+     * @Template()
+     */
+    public function displayAction($slug) {
+        $entity = $this->container->get($this->PERSONA . ".read_handler")->getOneBySlug($slug);
+
+        return array("entity" => $entity);
+    }
+
+    /**
      * @Route("/admin/{create}/persona/{persona}")
      * @Method("POST")
      * @Template
      */
     public function addAction() {
         $edit_form = $this->container->get($this->PERSONA . ".form_handler")->createNewForm();
-        $edit_form->bind($this->container->get('Request'));
+        echo $edit_form->getName();
+
+        $request = $this->container->get('request_modifier')->setRequest($this->container->get("Request"))
+                ->slug(array("firstname", "lastname"))
+                ->getRequest();
+
+        $edit_form->bind($request);
 
 
         if ($edit_form->isValid()) {

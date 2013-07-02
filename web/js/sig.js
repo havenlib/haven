@@ -614,11 +614,11 @@ function prepareEditor(editor) {
     });
 }
 
-$(document).ready(function() {
-    $('textarea.ckeditor').each(function() {
-        prepareEditor(this);
-    });
-})
+//$(document).ready(function() {
+//    $('textarea.ckeditor').each(function() {
+//        prepareEditor(this);
+//    });
+//})
 
 function removeCkEditorFrom(target) {
     $(target).find("textarea.ckeditor").each(function() {
