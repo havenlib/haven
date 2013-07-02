@@ -58,6 +58,18 @@
                 <source>theteam</source>
                 <target>the-team</target>
             </trans-unit>
+            <trans-unit id="15">
+                <source>historic</source>
+                <target>historic</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>realisationprocess</source>
+                <target>realisation-process</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>portfolio</source>
+                <target>portfolio</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
