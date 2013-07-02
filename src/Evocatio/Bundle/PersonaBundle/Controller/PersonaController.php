@@ -80,8 +80,11 @@ abstract class PersonaController extends ContainerAware {
      */
     public function addAction() {
         $edit_form = $this->container->get($this->PERSONA . ".form_handler")->createNewForm();
-        $edit_form->bind($this->container->get('Request'));
+        $request = $this->container->get('request_modifier')->setRequest($this->container->get("Request"))
+                ->slug(array("firstname", "lastname"))
+                ->getRequest();
 
+        $edit_form->bind($request);
 
         if ($edit_form->isValid()) {
             $this->container->get($this->PERSONA . ".persistence_handler")->save($edit_form->getData());
@@ -102,7 +105,7 @@ abstract class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{edit}/{persona}/{id}")
+     * @Route("/admin/{edit}/persona/{persona}/{id}")
      * 
      * @return RedirectResponse
      * @Method("GET")
@@ -121,7 +124,7 @@ abstract class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{edit}/{persona}/{id}")
+     * @Route("/admin/{edit}/persona/{persona}/{id}")
      * 
      * @return RedirectResponse
      * @Method("POST")
@@ -132,8 +135,11 @@ abstract class PersonaController extends ContainerAware {
         $delete_form = $this->container->get($this->PERSONA . ".form_handler")->createDeleteForm($id);
         $edit_form = $this->container->get($this->PERSONA . ".form_handler")->createEditForm($id);
 
+        $request = $this->container->get('request_modifier')->setRequest($this->container->get("Request"))
+                ->slug(array("firstname", "lastname"))
+                ->getRequest();
 
-        $edit_form->bind($this->container->get('Request'));
+        $edit_form->bind($request);
         if ($edit_form->isValid()) {
             $this->container->get($this->PERSONA . ".persistence_handler")->save($edit_form->getData());
 

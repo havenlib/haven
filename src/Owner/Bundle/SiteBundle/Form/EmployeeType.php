@@ -14,14 +14,19 @@ class EmployeeType extends AbstractType {
                 ->add('lastname')
                 ->add('sex', 'choice', array(
                     'choices' => array(
-                        1 => 'M'
-                        , 2 => 'F'
+                        'm' => 'male'
+                        , 'f' => 'female'
                     )
                     , 'multiple' => false
                 ))
 //                ->add('user', new \Evocatio\Bundle\SecurityBundle\Form\UserType())
                 ->add('user')
                 ->add('profile', new ProfileType())
+                ->add('slug')
+                ->add('save', 'submit', array(
+                    'attr' => array('class' => 'btn save-btn'),
+                    'label' => 'save'
+                ))
 //                ->add('postal', "collection", array(
 //                    'type' => new PostalType(),
 //                    'allow_add' => true,
