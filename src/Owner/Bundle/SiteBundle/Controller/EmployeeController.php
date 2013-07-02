@@ -12,12 +12,25 @@ use Evocatio\Bundle\PersonaBundle\Controller\PersonaController;
  * @Route("", requirements={
  *      "rank" = "rank|ordonner"
  *    , "persona" = "employee|employe"
+ *    , "theteam" = "the-team|l-equipe"
  * })
  */
 class EmployeeController extends PersonaController {
 
     protected $ROUTE_PREFIX = "owner_site_employee";
     protected $PERSONA = "employee";
+
+    /**
+     * @Route("/{theteam}")
+     * 
+     * @Method("GET")
+     * @Template()
+     */
+    public function indexAction() {
+        $entities = $this->container->get($this->PERSONA . ".read_handler")->getAll();
+
+        return array("entities" => $entities);
+    }
 
     /**
      * @Route("/admin/{create}/persona/{persona}")

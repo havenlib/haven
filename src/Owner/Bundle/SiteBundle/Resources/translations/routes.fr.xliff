@@ -48,11 +48,15 @@
             </trans-unit>
             <trans-unit id="12">
                 <source>displayrandom</source>
-                <target>display-random</target>
+                <target>afficher-aleatoire</target>
             </trans-unit>
             <trans-unit id="13">
                 <source>employee</source>
                 <target>employe</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>theteam</source>
+                <target>l-equipe</target>
             </trans-unit>
         </body>
     </file>

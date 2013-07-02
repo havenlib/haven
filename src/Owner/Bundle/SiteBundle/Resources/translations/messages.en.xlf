@@ -14,6 +14,10 @@
                 <source>rank</source>
                 <target>Rank</target>
             </trans-unit>
+            <trans-unit id="4">
+                <source>the.team</source>
+                <target>The Team</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
