@@ -15,6 +15,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * @Route("", requirements={
  *        "contact" = "contactez-nous|contact-us"
+ *        , "historic" = "historique|historic"
+ *        , "realisationprocess" = "realisation-process|processus-de-realisation"
+ *        , "portfolio" = "portfolio|realisation"
  * })
  */
 class StaticController extends ContainerAware {
@@ -69,6 +72,33 @@ class StaticController extends ContainerAware {
         );
 
         return new Response($this->container->get('templating')->render($template, $params));
+    }
+
+    /**
+     * @Route("/{historic}")
+     * @Method("GET")
+     * @Template
+     */
+    public function historicAction() {
+        return array();
+    }
+
+    /**
+     * @Route("/{realisationprocess}")
+     * @Method("GET")
+     * @Template
+     */
+    public function realisationAction() {
+        return array();
+    }
+
+    /**
+     * @Route("/{portfolio}")
+     * @Method("GET")
+     * @Template
+     */
+    public function portfolioAction() {
+        return array();
     }
 
     protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
