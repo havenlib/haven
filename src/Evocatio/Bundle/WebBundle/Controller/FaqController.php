@@ -19,7 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
  */
 class FaqController extends ContainerAware {
 
-    protected $ROUTE_PREFIX = "evocatio_security";
+    protected $ROUTE_PREFIX = "evocatio_faq";
 
     /**
      * @Route("/faq")

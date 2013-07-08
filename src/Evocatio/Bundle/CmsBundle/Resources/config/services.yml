@@ -10,3 +10,15 @@ services:
   page.form_handler:
       class:     Evocatio\Bundle\CmsBundle\Lib\PageFormHandler
       arguments: ["@page.read_handler", "@language.read_handler", "@security.context", "@form.factory"]
+      
+  page_content.read_handler:
+        class:     Evocatio\Bundle\CmsBundle\Lib\PageContentReadHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+        
+  page_content.persistence_handler:
+        class:     Evocatio\Bundle\CmsBundle\Lib\PageContentPersistenceHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
+  page_content.form_handler:
+      class:     Evocatio\Bundle\CmsBundle\Lib\PageContentFormHandler
+      arguments: ["@page_content.read_handler", "@language.read_handler", "@security.context", "@form.factory"]

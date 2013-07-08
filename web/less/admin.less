@@ -1,0 +1,46 @@
+@import "mixin.less";
+@import "color.less";
+
+/* apply a natural box layout model to all elements */
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+root { 
+    display: block;
+}
+
+body {  
+    margin: 0;
+}
+#admin{
+    #navigation{
+        width: 12%;
+        vertical-align: top;
+        display: inline-block;
+    // background-color: #123455;
+    }
+    #edition{
+        width: 88%;
+        margin: 0 auto;
+        display: inline-block;
+    // background-color: #554321;
+    }
+}
+
+.half{
+    width: 50%;
+    display: inline-block;
+}
+
+.post-inline-editor{
+    border: 1px solid #B3B3B3;
+}
+
+.html_content{
+}
+
+.edit-icon{
+    width: 20px;
+    // display: none;
+    position: absolute;
+    top: 10px;
+}

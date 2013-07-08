@@ -1,7 +1,7 @@
 {% extends "OwnerSiteBundle::base_admin.html.twig" %}
 {% import "EvocatioPersonaBundle::macro/route/i18n.html.twig" as route_i18n_persona %}
     
-{% block inside_theater %}
+{% block inside_content %}
     <dl>
         {% for entity in entities %}
             <div>
@@ -28,5 +28,5 @@
         </a>
     </li>
 </ul>
-{% endblock inside_theater %}
+{% endblock inside_content %}
 
