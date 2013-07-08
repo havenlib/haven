@@ -157,7 +157,7 @@ class HtmlContent extends Content {
 //    }
     
     public function __toString() {
-        return "-->".$this->getId();
+        return (string)$this->getId();
     }
     
     public function getTemplate(){

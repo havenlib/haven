@@ -1,6 +1,6 @@
 {%  extends "OwnerSiteBundle::base_admin.html.twig" %}
 {% import "::macro/route/i18n.html.twig" as route_i18n %}
-{% block inside_theater %}
+{% block inside_content %}
 <dl>
     {% for entity in entities %}
         <dt>
@@ -20,7 +20,7 @@
         </a>
     </li>
 </ul>#}
-{% endblock inside_theater %}
+{% endblock inside_content %}
 {% block aside %}
     {#% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %#}
 {% endblock aside %}
