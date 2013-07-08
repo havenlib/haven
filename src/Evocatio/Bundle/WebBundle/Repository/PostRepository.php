@@ -93,15 +93,15 @@ class PostRepository extends StatusRepository {
      * @param \Doctrine\ORM\QueryBuilder $query_builder
      * @return type
      */
-//    public function findLastCreatedOnline($qt = null) {
-//        $query_builder = $this->createQueryBuilder("e");
-//        $query_builder->orderBy("e.created_at", "ASC")
-//                ->setMaxResults($qt);
-//        $query_builder = $this->filterOnlines($query_builder);
-//
-//
-//        return $query_builder->getQuery()->getResult();
-//    }
+    public function findLastCreatedOnline($qt = null) {
+        $query_builder = $this->createQueryBuilder("e");
+        $query_builder->orderBy("e.created_at", "ASC")
+                ->setMaxResults($qt);
+        $query_builder = $this->filterOnlines($query_builder);
+
+
+        return $query_builder->getQuery()->getResult();
+    }
 
 }
 
