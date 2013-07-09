@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class PageController extends ContainerAware {
 
     /**
-     * Finds and all persona for admin.
+     * Finds and all pages for admin.
      *
      * @Route("admin/{list}/page")
      * @Method("GET")
@@ -27,7 +27,7 @@ class PageController extends ContainerAware {
     }
 
     /**
-     * Finds and displays a post entity.
+     * Finds and displays a page entity.
      *
      * @Route("/admin/{show}/page/{id}")
      * 
@@ -95,18 +95,18 @@ class PageController extends ContainerAware {
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get('page.read_handler')->get($id);
-        $edit_form = $this->container->get("page.form_handler")->createEditForm($entity->getId());
-        $delete_form = $this->container->get("page.form_handler")->createDeleteForm($entity->getId());
-        $edit_html_content_form = $this->container->get("page_content.form_handler")->createNewFormForPage($entity);
+//        $entity = $this->container->get('page.read_handler')->get($id);
+        $edit_form = $this->container->get("page.form_handler")->createEditForm($id);
+        $delete_form = $this->container->get("page.form_handler")->createDeleteForm($id);
+//        $edit_html_content_form = $this->container->get("page_content.form_handler")->createNewFormForPage($edit_form->getData());
         
         
         
         return array(
-            'entity' => $entity,
+            'entity' => $edit_form->getData(),
             'edit_form' => $edit_form->createView(),
             'delete_form' => $delete_form->createView(),
-            'edit_html_content_form' => $edit_html_content_form->CreateView()
+//            'edit_html_content_form' => $edit_html_content_form->CreateView()
         );
     }
 
@@ -117,9 +117,9 @@ class PageController extends ContainerAware {
      * @Template
      */
     public function updateAction($id) {
-        $entity = $this->container->get('page.read_handler')->get($id);
-        $edit_form = $this->container->get("page.form_handler")->createEditForm($entity->getId());
-        $delete_form = $this->container->get("page.form_handler")->createDeleteForm($entity->getId());
+        $edit_form = $this->container->get("page.form_handler")->createEditForm($id);
+        $delete_form = $this->container->get("page.form_handler")->createDeleteForm($id);
+//        $edit_html_content_form = $this->container->get("page_content.form_handler")->createNewFormForPage($edit_form->getData());
 
         $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
                 ->slug(array("name"))
@@ -139,7 +139,7 @@ class PageController extends ContainerAware {
 
         $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
-            'entity' => $entity,
+            'entity' => $edit_form->getData(),
             'edit_form' => $edit_form->createView(),
             'delete_form' => $delete_form->createView(),
         );
