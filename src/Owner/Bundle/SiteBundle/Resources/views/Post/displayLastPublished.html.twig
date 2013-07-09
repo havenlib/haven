@@ -1,0 +1,10 @@
+<ul>
+    {% for entity in entities %}
+    <li>
+            <h4>{{entity.title}}</h4>
+            <p>
+                {{entity.content | raw}}
+            </p>
+    </li>
+    {% endfor %}
+</ul>

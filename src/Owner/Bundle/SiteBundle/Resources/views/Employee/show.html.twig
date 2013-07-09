@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% import "::macro/route/suffix.html.twig" as _route_suffix %}
+{% import "EvocatioPersonaBundle::macro/route/i18n.html.twig" as route_i18n_persona %}
 {% block inside_theater %}
 <h1>Person</h1>
 
@@ -56,12 +56,12 @@
 
 <ul>
     <li>
-        <a href="{{ _route_suffix.path('evocatio_persona_person_list', 'list','person') }}">
+        <a href="{{ route_i18n_persona.path('owner_site_employee_list', {}, ['list'], 'employee') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ _route_suffix.path('evocatio_persona_person_edit', 'edit', 'person', entity.id) }}">
+        <a href="{{ route_i18n_persona.path('owner_site_employee_edit', {"id": entity.id}, ['edit'], 'employee') }}">
             Edit
         </a>
     </li>
