@@ -1,0 +1,13 @@
+services:
+  portfolio.read_handler:
+      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\PortfolioReadHandler
+      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+      
+  portfolio.persistence_handler:
+      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\PortfolioPersistenceHandler
+      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
+  portfolio.form_handler:
+      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\PortfolioFormHandler
+      arguments: ["@portfolio.read_handler", "@security.context", "@form.factory"]
+    
