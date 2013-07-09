@@ -4,6 +4,7 @@ namespace Owner\Bundle\SiteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Evocatio\Bundle\WebBundle\Controller\FaqController as BaseFaqController;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("", requirements={
