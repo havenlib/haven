@@ -1,0 +1,16 @@
+{% extends "OwnerSiteBundle:Template:form_template.html.twig" %}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
+{% block formaction %}
+    {{ route_i18n.path('owner_site_user_reset', {'uuid': uuid}, ['initialize', 'password']) }}
+{% endblock formaction %}
+
+{#% block save_button %}
+    {{ form_widget(edit_form.save) }}
+{% endblock save_button %#}
+
+{% block fields %}
+<fieldset>
+    {{ form_rest(edit_form) }}
+    </fieldset>
+{% endblock fields %}
+

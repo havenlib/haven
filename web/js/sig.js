@@ -76,9 +76,13 @@ function addHtmlContent(source, tag, cible) {
  }
  */
 function showFormElementClass(tab) {
+//    alert($(tab).attr("data-formname"));
 //    $("div[id^=" + $(tab).attr("data-formname")+"]").children("div.trans").hide();
-    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("div[id*='translations_']").hide();
-    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("div[id$='translations_" + $(tab).attr("data-langindex") + "']").show();
+//    $("div[id^=" + $(tab).attr("data-formname") + "]").each(function() {
+//        alert($(this).html());
+//    });
+    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("[id*='translations_']").hide();
+    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("[id$='translations_" + $(tab).attr("data-langindex") + "']").show();
     $(tab).siblings("li").removeClass("active");
     //$("." + $(tab).attr("rel")).show();
     $(tab).addClass("active");
@@ -143,7 +147,7 @@ function ajaxRegister(form, data) {
     });
     return false;
 }
-function ajaxResetRequest(form, data) {
+function ajaxPostRequest(form, data) {
     var reset_infos = $(form).serialize();
     $.ajax({
         url: form.action,
@@ -163,7 +167,15 @@ function ajaxResetRequest(form, data) {
     return false;
 }
 
-$(document).ready(setCalendar());
+//$(document).ready(setCalendar());
+$(document).ready(function() {
+    $("button.ajax").each(function() {
+        $(this).click(function() {
+            ajaxPostRequest($(this).closest("form"));
+//            return false;
+        });
+    })
+});
 
 function getHiddenDateElement(picker_date) {
     return $("#" + $(picker_date).attr("id").replace("_picker", ""))
@@ -602,11 +614,11 @@ function prepareEditor(editor) {
     });
 }
 
-$(document).ready(function() {
-    $('textarea.ckeditor').each(function() {
-        prepareEditor(this);
-    });
-})
+//$(document).ready(function() {
+//    $('textarea.ckeditor').each(function() {
+//        prepareEditor(this);
+//    });
+//})
 
 function removeCkEditorFrom(target) {
     $(target).find("textarea.ckeditor").each(function() {
@@ -623,77 +635,51 @@ function cancelBubble(e) {
         evt.cancelBubble = true;
 }
 
-function moveServiceReference(current_service_id, where) {
-    current_element = $("#" + current_service_id);
-    next_element = (where === 'down') ? current_element.next() : current_element.prev();
+//function ajaxSearchEnterKey(element) {
+//    if (isEnterPress()) {
+//        $("#search-button").click();
+//        cancelKeypressEvent();
+//    }
+//}
 
-    if (next_element.hasClass("service_reference")) {
-        current_rank = $("#" + current_element.attr("id") + "_rank").val();
+//function cancelKeypressEvent() {
+//    window.event.cancelBubble = true;
+//    window.event.returnValue = false;
+//
+//    if (window.event.stopPropagation) {
+//        window.event.stopPropagation();
+//        window.event.preventDefault();
+//    }
+//}
 
+//function isEnterPress() { // the arguments here are the event (needed to detect which key is pressed), and the name of the resulting function to run if Enter has been pressed.
+//
+//    var keynum; // establish variable to contain the value of the key that was pressed
+//
+//    // now, set that variable equal to the key that was pressed
+//
+//    if (window.event) // ID
+//    {
+//        keynum = window.event.keyCode;
+//    }
+//    else if (e.which) // other browsers
+//    {
+//        keynum = window.event.which;
+//    }
+//
+//    if (keynum == 13) {  // if the key that was pressed was Enter (ascii code 13)
+//        return true; // run the resulting function name that was specified as an argument
+//    } else {
+//        return false;
+//    }
+//}
 
-        $(current_element).each(function() {
-            if (where === 'down') {
-                $(this).insertAfter($(this).next());
-            } else {
-                $(this).insertBefore($(this).prev());
-            }
-        })
-
-        $(current_element).parent().children().each(
-                function(key, value) {
-                    $("#" + $(this).attr("id") + "_rank").val(parseInt(key + 1));
-                }
-        );
-
-    }
-
-}
-
-function ajaxSearchEnterKey(element) {
-    if (isEnterPress()) {
-        $("#search-button").click();
-        cancelKeypressEvent();
-    }
-}
-
-function cancelKeypressEvent() {
-    window.event.cancelBubble = true;
-    window.event.returnValue = false;
-
-    if (window.event.stopPropagation) {
-        window.event.stopPropagation();
-        window.event.preventDefault();
-    }
-}
-
-function isEnterPress() { // the arguments here are the event (needed to detect which key is pressed), and the name of the resulting function to run if Enter has been pressed.
-
-    var keynum; // establish variable to contain the value of the key that was pressed
-
-    // now, set that variable equal to the key that was pressed
-
-    if (window.event) // ID
-    {
-        keynum = window.event.keyCode;
-    }
-    else if (e.which) // other browsers
-    {
-        keynum = window.event.which;
-    }
-
-    if (keynum == 13) {  // if the key that was pressed was Enter (ascii code 13)
-        return true; // run the resulting function name that was specified as an argument
-    } else {
-        return false;
-    }
-}
-
-function uncomplete(target) {
-    if ($(target + ".done").length) {
-        confirm('Cette action va enlever le complete de ce service');
-    }
-    $(target + ".done").triggerHandler("click");
-}
+//function uncomplete(target) {
+//    if ($(target + ".done").length) {
+//        confirm('Cette action va enlever le complete de ce service');
+//    }
+//    $(target + ".done").triggerHandler("click");
+//}
 function remove_item_by_id(id) {
     if (confirm("Cette information va être définitivement supprimée lors de la sauvegarde.")) {
         $("#" + id).find("div.ckeditor").find("textarea").each(
@@ -707,3 +693,41 @@ function remove_item_by_id(id) {
         return false;
     }
 }
+
+/*
+ * 
+ * @param {type} current_element
+ * @param {type} where
+ * @returns {undefined}
+ */
+function rank(current_element, where) {
+    $(current_element).each(function() {
+        if (where === 'down') {
+            $(this).insertAfter($(this).next());
+        } else {
+            $(this).insertBefore($(this).prev());
+        }
+    });
+
+    $(current_element).parent().children().each(
+            function(key) {
+                $(this).find("input[id$='rank']").val(parseInt(key + 1));
+            }
+    );
+}
+
+/**
+ * 
+ * @param {type} element
+ * @param {type} cible
+ * @returns {undefined}
+ * 
+ * La cible peut être un input ou un textarea dans ce cas la ligne pourra être:
+ * 
+ * $(element).closest("form").find("texterea[id$='_title']").val(CKEDITOR.instances["title"].getData());
+ * $(element).closest("form").find("input[id$='_title']").val(CKEDITOR.instances["title"].getData());
+ */
+function updateContent(element, cible) {    
+    $(element).closest("form").find(cible + "[id$='" + $(element).attr("id").replace("_inline", "") + "']").val($(element).html());
+}
+

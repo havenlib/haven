@@ -4,6 +4,7 @@ namespace Evocatio\Bundle\WebBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Evocatio\Bundle\CoreBundle\Generic\Translatable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Evocatio\Bundle\WebBundle\Entity\Faq
@@ -40,7 +41,9 @@ class Faq extends Translatable {
     private $rank;
 
     /**
+     * 
      * @ORM\OneToMany(targetEntity="FaqTranslation", mappedBy="parent", cascade={"persist"})
+     * @Assert\Valid
      */
     protected $translations;
 

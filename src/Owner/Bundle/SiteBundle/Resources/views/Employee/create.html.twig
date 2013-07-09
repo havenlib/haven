@@ -1,0 +1,24 @@
+{%  extends "OwnerSiteBundle:Template:multilangue_add_template.html.twig" %}
+{% import "EvocatioPersonaBundle::macro/route/i18n.html.twig" as route_i18n_persona %}
+{% block formhead %}
+    {{ route_i18n_persona.path('owner_site_employee_create', {}, ['create'], 'employee') }}
+{% endblock formhead %}
+
+{% form_theme edit_form.profile.translations "::Form/translations.html.twig" %}
+
+{% block save_button %}
+    {{ form_widget(edit_form.save) }}
+{% endblock save_button %}
+
+{% block fields %}
+
+<fieldset>
+{{ form_rest(edit_form) }}
+</fieldset>
+{% endblock fields %}
+
+{% block back %}
+    <a href="{{ route_i18n_persona.path('owner_site_employee_list', {}, ['list'], 'employee') }}">
+        Back to the list
+    </a>
+{% endblock back %}

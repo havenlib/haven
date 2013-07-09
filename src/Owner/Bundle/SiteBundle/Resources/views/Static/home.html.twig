@@ -1,0 +1,49 @@
+{%  extends "OwnerSiteBundle::base.html.twig" %}
+
+{% block inside_theater %}
+
+<div id="aside-left-area" class="area">
+    <div class="article">
+        {% render controller("OwnerSiteBundle:Post:displayRandom") %}
+    </div>
+    <div class="article">
+        {% render controller("OwnerSiteBundle:Post:displayRandom") %}
+    </div>
+    <div class="article">
+        {% render controller("OwnerSiteBundle:Post:displayRandom") %}
+    </div>
+    <div class="newsletter">
+        <h3>Neswletter</h3>
+        <p>Inscrivez vous à notre news letter</p>
+        <form>
+            <label> Adresse email </label><input name="email" />
+        </form>
+
+    </div>
+</div>
+
+<div id="center-area" class="area">
+    <h2>Last news Widget</h2>
+    {% render controller("OwnerSiteBundle:Post:displayLastPublished", {"limit": 6})  %}
+</div>
+
+
+<div id="aside-right-area" class="area">
+        <div class="newsletter">
+        <h3>Global Search</h3>
+        <form>
+            <label> </label><input name="email" />
+        </form>
+    </div>
+    ------ aside-right
+</div>
+{% endblock inside_theater %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% if app.environment != 'prod' %}
+        <link href="{{ asset("less/home_template.less") }}" rel="stylesheet/less" type="text/css" />
+    {% else %}
+<!-- CSS -->
+    {% endif %}
+{% endblock stylesheets%}

@@ -3,33 +3,38 @@
                         {{ form_widget(translation.file,{'full_name': translation.file.get('full_name') ~ '[]'})}} 
 #}
 {% block inside_content %}
-<h1>Ajouter</h1>
-    {% if edit_form.translations.vars.prototype is defined %}  
-    <div class="nav nav-tabs lang">{# ajouter le lang comme class pour que le javascript puisse cliqué dessus lors de l'ajout d'items addAnItem, #}
-        {% set vars = edit_form.translations.vars.prototype.trans_lang.vars %}
-        {% for key, translation in vars["choices"] %}
-            <li class="{% if loop.index == 1 %} active{% endif%}" data-formname="{{ edit_form.vars.id }}" data-langindex="{{ loop.index0 }}" onclick="showFormElementClass(this);return false"><a href="#" onclick="return false" data-toggle="tab">{{ translation.label }}</a></li>
-        {% endfor %}
-    </div>
-    {% else %}
-        na pas
-    {% endif %}
+<h2>Ajouter</h2>
 {{ form_errors(edit_form)}}
 <div class="edit-form">
-    <form action="{% block formhead %}{% endblock formhead %}" method="post" {{ form_enctype(edit_form) }} >
-    {% block form %} {% endblock form %}
-    <div>
-        <div>
-            <button type="submit" class="btn">Ok</button>
-        </div>
-    </div>
+    {% block form %} 
+    <form action="{% spaceless %}{% block formhead %}{% endblock formhead %}{% endspaceless %}" method="post" {{ form_enctype(edit_form) }} >
+        {% block inside_form %}
+            {% block save_button %}
+            <div>
+                <div>
+                    <button type="submit" class="btn">Ok</button>
+                </div>
+            </div>
+            {% endblock save_button %}
+            
+            {% if edit_form.translations.vars.prototype is defined %}  
+            <div class="nav nav-tabs lang">{# ajouter le lang comme class pour que le javascript puisse cliqué dessus lors de l'ajout d'items addAnItem, #}
+                {% set vars = edit_form.translations.vars.prototype.trans_lang.vars %}
+                {% for key, translation in vars["choices"] %}
+                    <li class="{% if loop.index == 1 %} active{% endif%}" data-formname="{{ edit_form.vars.id }}" data-langindex="{{ loop.index0 }}" onclick="showFormElementClass(this);return false"><a href="#" onclick="return false" data-toggle="tab">{{ translation.label }}</a></li>
+                {% endfor %}
+            </div>
+            {% else %}
+                na pas
+            {% endif %}
+            
+            {% block fields %}{% endblock fields %}
+        {% endblock inside_form %} 
     </form>
-    {% block back %}
-    <ul>
-        {% block delete %}
-        {% endblock delete %}
-    </ul>
-    {% endblock back %}
+    {% endblock form %}
+        
+    {% block widgets %}
+    {% endblock widgets %}
 </div>
 {% endblock inside_content %}
 

@@ -15,21 +15,19 @@ class PostRepository extends StatusRepository {
 
     private $query_builder;
 
-    public function getQueryBuilder() {
-        return $this->query_builder;
-    }
-
-    public function setQueryBuilder(\Doctrine\ORM\QueryBuilder $query_builder) {
-        $this->query_builder = $query_builder;
-    }
-
     public function findAll() {
         $this->query_builder = $this->createQueryBuilder("e");
         return $this->getResult();
     }
 
+    public function findAllOrderedByRank($direction = 'ASC') {
+        $this->query_builder = $this->createQueryBuilder("e");
+        $this->query_builder->orderBy('e.rank', $direction);
+        return $this->getResult();
+    }
+
     public function findAllPublished() {
-        $this->filterByStatus(Post::STATUS_PUBLISHED)->getQueryBuilder();
+        $this->filterByStatus(Post::STATUS_PUBLISHED);
         return $this->getResult();
     }
 
@@ -37,23 +35,45 @@ class PostRepository extends StatusRepository {
         $this->filterByStatus(Post::STATUS_PUBLISHED);
 
         if (!is_null($limit))
-            $this->limit($limit);
+            $this->query_builder->setMaxResults($limit);
 
         return $this->getResult();
     }
 
-    public function limit($limit) {
-        if (is_null($this->query_builder))
-            $this->query_builder = $this->createQueryBuilder("e");
+    public function findRandomPublished($limit = 1) {
+        $max = $this->_em->createQuery('SELECT MAX(e.id) FROM EvocatioWebBundle:Post e WHERE e.status = :status')
+                ->setParameter('status', Post::STATUS_PUBLISHED)
+                ->getSingleScalarResult();
 
-        $this->query_builder->setMaxResults($limit);
+        $this->filterByStatus(Post::STATUS_PUBLISHED);
+        $this->query_builder
+                ->andWhere("e.id >= :id")
+                ->orderBy("e.id", "ASC")
+                ->setParameter('id', $rand = mt_rand(0, $max))
+                ->setMaxResults($limit);
 
-        return $this;
+        return $this->getResult();
     }
 
-    private function filterByStatus($status) {
-        if (is_null($this->query_builder))
-            $this->query_builder = $this->createQueryBuilder("e");
+//    public function order($field, $direction = 'ASC') {
+//        if (is_null($this->query_builder))
+//            $this->query_builder = $this->createQueryBuilder("e");
+//
+//        $this->query_builder->orderBy('e.' . $field, $direction);
+//
+//        return $this;
+//    }
+//    public function limit($limit) {
+//        if (is_null($this->query_builder))
+//            $this->query_builder = $this->createQueryBuilder("e");
+//
+//        $this->query_builder->setMaxResults($limit);
+//
+//        return $this;
+//    }
+
+    private function filterByStatus($status, $qb = null) {
+        $this->query_builder = ($qb) ? $qb : $this->createQueryBuilder("e");
 
         $this->query_builder->andWhere("e.status = :status");
         $this->query_builder->setParameter("status", $status);

@@ -1,5 +1,6 @@
 {% extends "OwnerSiteBundle::base_admin.html.twig" %}
-{% block inside_content %}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
+{% block inside_theater %}
 <h1>Security</h1>
 
 <table class="record_properties">
@@ -29,12 +30,12 @@
 
 <ul>
     <li>
-        <a href="{{ _route_suffix.path('owner_site_user_list', 'list','user') }}">
+        <a href="{{ route_i18n.path('owner_site_user_list', {}, ['user', 'list']) }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ _route_suffix.path('owner_site_user_edit', 'edit','user', entity.id) }}">
+        <a href="{{ route_i18n.path('owner_site_user_edit', {'id': entity.id}, ['user', 'edit']) }}">
             Edit
         </a>
     </li>
@@ -45,4 +46,4 @@
         </form>
     </li>#}
 </ul>
-{% endblock inside_content %}
+{% endblock inside_theater %}

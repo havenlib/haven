@@ -7,20 +7,21 @@ class Slugifier {
     public function slugifyRequest(\Symfony\Component\HttpFoundation\Request $request, $fields) {
         $data = $request->request->all();
 
-        $sluggify = function (&$array, $fields) use (&$sluggify) {
-                    if (array_key_exists("slug", $array)) {
+        $self = $this;
+        $sluggify = function (&$data, $fields) use (&$sluggify, $self) {
+                    if (array_key_exists("slug", $data)) {
                         $preSlugArray = array();
                         foreach ($fields as $field) {
-                            if (!isset($array[$field]))
+                            if (!isset($data[$field]))
                                 throw new \Exception($field . " field doesn't exist for slugification on the entity");
-                            $preSlugArray[] .= trim($array[$field]);
+                            $preSlugArray[] .= trim($data[$field]);
                         }
 
-                        $slug = (substr($slug = $this->slugifyString(implode("-", $preSlugArray)), -1) == "-") ? substr($slug, 0, -1) : $slug;
-                        $array["slug"] = ($array["slug"] == "") ? $slug : $this->slugifyString($array["slug"]);
+                        $slug = (substr($slug = $self->slugifyString(implode("-", $preSlugArray)), -1) == "-") ? substr($slug, 0, -1) : $slug;
+                        $data["slug"] = ($data["slug"] == "") ? $slug : $self->slugifyString($data["slug"]);
                     }
 
-                    foreach ($array as &$child) {
+                    foreach ($data as &$child) {
                         if (is_array($child))
                             $sluggify($child, $fields);
                     }

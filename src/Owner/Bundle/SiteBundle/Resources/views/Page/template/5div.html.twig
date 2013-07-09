@@ -4,7 +4,7 @@
 {% endblock navigation %}
 {% block header %}
 {% endblock header %}
-{% block inside_content %} 
+{% block inside_theater %} 
 {% for area in entity.template.areas %}
 <div id="{{ area.name }}" class="area" ondrop="addContent()">
         <section>
@@ -37,4 +37,4 @@
         </div>
     </div>
 {% endfor %}
-{% endblock inside_content %}
+{% endblock inside_theater %}
