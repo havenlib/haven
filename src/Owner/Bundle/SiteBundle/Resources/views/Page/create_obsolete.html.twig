@@ -6,7 +6,7 @@
 
 {#% form_theme edit_form "OwnerSiteBundle:Form:formulator.html.twig" %#}
 {% form_theme edit_form "::Form/generic_with_translations.html.twig" %}
-{#% form_theme edit_form.files "::Form/file_upload.html.twig" %#}
+{% form_theme edit_form.files "::Form/file_upload.html.twig" %}
 {% block form %}
 <fieldset>
         {{ form_widget(edit_form) }}
@@ -14,8 +14,6 @@
         </div>
 </fieldset>
 {% endblock form %}
-
-
 {% block available_content %}
 <div id="htmlcontent" class="draggable" ondragstart="console.log('drag')">
     <img width="120px" style="border: 1px solid black" src="/images/html_content.jpg" />

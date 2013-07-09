@@ -6,7 +6,7 @@ use Evocatio\Bundle\CoreBundle\Lib\LanguageReadHandler;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\FormFactory;
 use Evocatio\Bundle\CmsBundle\Entity\Page as Entity;
-use Evocatio\Bundle\CmsBundle\Form\PageInlineType as Type;
+use Evocatio\Bundle\CmsBundle\Form\PageType as Type;
 
 class PageFormHandler {
 
