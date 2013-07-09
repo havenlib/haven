@@ -16,10 +16,9 @@ class PageContentType extends AbstractType {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $type = "\\Evocatio\\Bundle\\CmsBundle\\Form\\".$this->content_type."Type";
         $builder
                 ->add('area')
-                ->add('content', new $type())
+                ->add('content', new $this->content_type())
         ;
     }
 

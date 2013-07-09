@@ -36,11 +36,6 @@ class PageContentFormHandler {
 
     
 
-    /**
-     * 
-     * @param \Website\Bundle\SiteBundle\Entity\Entreprise $entreprise
-     * @return a form for dossier, as dossierType or DossierRequerantType
-     */
     public function createNewFormForPage($page, $content_type = "HtmlContent") {
         
         $create_form = $this->createHtmlContentForm($page);
