@@ -1,0 +1,16 @@
+{%  extends "OwnerSiteBundle::base.html.twig" %}
+{% block inside_theater %}
+<ul>
+    {% for entity in entities %}
+    <li>
+        <span><strong>{{ entity.question }}</strong></span>
+        <p>
+            {{ entity.reponse }}
+        </p>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock inside_theater %}
+
+
+
