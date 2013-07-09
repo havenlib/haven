@@ -21,11 +21,6 @@ class Page extends Translatable {
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="FilePage", mappedBy="parent", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
-    private $files;
-
-    /**
      * @ORM\OneToMany(targetEntity="PageContent", mappedBy="page", cascade={"persist"})
      */
     private $page_contents;
