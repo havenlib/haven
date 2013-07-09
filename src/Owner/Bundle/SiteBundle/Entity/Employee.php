@@ -28,7 +28,7 @@ class Employee extends Persona {
     /**
      * @var string $sex
      *
-     * @ORM\Column(name="sex", type="string", columnDefinition="ENUM('m', 'f')")
+     * @ORM\Column(name="sex", type="string")
      */
     private $sex;
 
