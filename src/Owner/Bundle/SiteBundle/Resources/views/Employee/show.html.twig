@@ -1,0 +1,75 @@
+{%  extends "::base.html.twig" %}
+{% import "EvocatioPersonaBundle::macro/route/i18n.html.twig" as route_i18n_persona %}
+{% block inside_theater %}
+<h1>Person</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.getId() }}</td>
+        </tr>
+        <tr>
+            <th>Actif</th>
+            <td>{{ entity.getSex() }}</td>
+        </tr>
+        <tr>
+            <th>Personname</th>
+            <td>{{ entity.getFirstname() }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ entity.getLastname() }}</td>
+        </tr>
+        {% for coor in entity.getPostal() %}
+        <tr>
+            <th>address</th>
+            <td>{{ coor.getAddress() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getMap() %}
+        <tr>
+            <th>Long</th>
+            <td>{{ coor.getLng() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getWeb() %}
+        <tr>
+            <th>Web</th>
+            <td>{{ coor.getWeb() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getTelephone() %}
+        <tr>
+            <th>Telephone</th>
+            <td>{{ coor.getTelephone() }}</td>
+        </tr>
+        {% endfor %}
+        {% for coor in entity.getTime() %}
+        <tr>
+            <th>Time</th>
+            <td>{{ coor.getMoment().format('d/m/Y') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ route_i18n_persona.path('owner_site_employee_list', {}, ['list'], 'employee') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ route_i18n_persona.path('owner_site_employee_edit', {"id": entity.id}, ['edit'], 'employee') }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        {#<form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>#}
+    </li>
+</ul>
+{% endblock inside_theater %}

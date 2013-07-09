@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>subject.contact</source>
+                <target>Demande de contact</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>message.contact</source>
+                <target>
+                <![CDATA[
+                        <table>
+                            <tr><th>Prénom</th> <td>%firstname%</td></tr>
+                            <tr><th>Nom</th><td>%lastname%</td></tr>
+                            <tr><th>Courriel</th> <td>%email%</td></tr>
+                            <tr><th>Organisation</th> <td>%organisation%</td></tr>
+                            <tr><th>Téléphone</th> <td>%phone%</td></tr>
+                            <tr><th>Référence</th> <td>%reference%</td></tr>
+                        </table>
+                        <div>
+                            <h4>Message:</h4>
+                            <p>%message%</p>
+                        </div>
+                        <style> table th{ text-align: right; } table td{ padding-left: 20px; }</style>
+                ]]>
+                </target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>subject.new_user_account</source>
+                <target>Création de compte utilisateur</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>message.new_user_account</source>
+                <target>
+                <![CDATA[
+                        <p>
+                            Nous vous confirmons la création de votre compte.
+                            <br />
+                            Nous vous invitons à copier le code de confirmation suivant %confirmation_code% et de cliquer sur le lien ci-dessous: <br />
+                            <a href="%confirmation_url%">Initialiser mot de passe</a> 
+                            <br />
+                            Il vous amènera à une page ou vous devrez créer votre nouveau mot de passe. 
+                            Vous devez coller le code de confirmation dans le champ prévu à cette effet 
+                            et créer un mot de passe sécuritaire.
+                        </p>
+
+                        <p>
+                            Pour plus d’information ou des questions, contactez-nous au 514 667-0559 / 514 667-0569.
+                            <br />
+                            <br />
+                            Ce message provient d’un service automatisé, merci de ne pas répondre. 
+                            Si vous n’avez pas créé ce compte et que vous ne reconnaissez pas cette information, nous 
+                            vous demandons de détruire ce message sans conserver de copie et d’aviser immédiatement 
+                            l'émetteur. 
+                            <br />
+                            Toute diffusion, utilisation ou copie de ce courriel ou des renseignements qu’il contient 
+                            par une personne autre que le destinataire désigné est interdite.
+                        </p>
+                ]]>
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

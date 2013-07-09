@@ -63,7 +63,10 @@ class PostController extends ContainerAware {
      */
     public function createAction() {
         $edit_form = $this->container->get("post.form_handler")->createNewForm();
-        return array("edit_form" => $edit_form->createView());
+        return array(
+            'entity' => $edit_form->getData()
+            , "edit_form" => $edit_form->createView()
+        );
     }
 
     /**
@@ -76,20 +79,29 @@ class PostController extends ContainerAware {
     public function addAction() {
         $edit_form = $this->container->get("post.form_handler")->createNewForm();
 
-        $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
-        $edit_form->bind($result);
+        $request = $this->container->get('request_modifier')->setRequest($this->container->get("Request"))
+                ->slug(array("title"))
+                ->getRequest();
 
-        if ($edit_form->isValid()) {
+        $edit_form->bind($request);
+
+        if ($edit_form->get('save')->isClicked() && $edit_form->isValid()) {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
+
             return $this->redirectListAction();
+        } else {
+            if ($edit_form->get('template')->isClicked()) {
+                $edit_form = $this->container->get("post.form_handler")->createNewForm($edit_form->getData());
+            } else {
+                $this->container->get("session")->getFlashBag()->add("error", "create.error");
+            }
         }
 
-        $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
-        $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
+        $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
-            'edit_form' => $edit_form->createView()
+            'entity' => $edit_form->getData()
+            , 'edit_form' => $edit_form->createView()
         );
 
         return new Response($this->container->get('templating')->render($template, $params));
@@ -117,35 +129,41 @@ class PostController extends ContainerAware {
      * @Route("/admin/{edit}/post/{id}")
      * @return RedirectResponse
      * @Method("POST")
-     * @Template("EvocatioWebBundle:Post:edit.html.twig")
+     * @Template
      */
     public function updateAction($id) {
         $entity = $this->container->get('post.read_handler')->get($id);
         $edit_form = $this->container->get("post.form_handler")->createEditForm($entity->getId());
         $delete_form = $this->container->get("post.form_handler")->createDeleteForm($entity->getId());
 
-        $files_post = $this->container->get("request")->files->all();
+        $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
+                ->slug(array("title"))
+                ->getRequest();
 
-        $this->container->get("uploader")->moveFiles($files_post, "------");
-
-        $post_data = $this->container->get("request")->request->all();
-        $result = $this->container->get('slugifier')->slugifyRequest($post_data, array("name"));
-        $edit_form->bind($result);
+        $edit_form->bind($request);
 
 
-        if ($edit_form->isValid()) {
+        if ($edit_form->get('save')->isClicked() && $edit_form->isValid()) {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "update.success");
 
             return $this->redirectListAction();
+        } else {
+            if ($edit_form->get('template')->isClicked()) {
+                $edit_form = $this->container->get("post.form_handler")->createNewForm($edit_form->getData());
+            } else {
+                $this->container->get("session")->getFlashBag()->add("error", "create.error");
+            }
         }
-        $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
-        return array(
+        $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
+        $params = array(
             'entity' => $entity,
             'edit_form' => $edit_form->createView(),
             'delete_form' => $delete_form->createView(),
         );
+
+        return new Response($this->container->get('templating')->render($template, $params));
     }
 
     /**
@@ -224,7 +242,7 @@ class PostController extends ContainerAware {
 
         return new Response($this->container->get('templating')->render($template ? $template : 'EvocatioWebBundle:Post:list_widget.html.twig', array('entities' => $entities)));
     }
-
+    
     protected function redirectListAction() {
         return new RedirectResponse($this->container->get('router')->generate('evocatio_web_post_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }

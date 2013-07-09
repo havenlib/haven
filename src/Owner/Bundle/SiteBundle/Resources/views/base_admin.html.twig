@@ -4,19 +4,21 @@
 {% import "::macro/form/translated_row.html.twig" as _form %}
 
 {% block inside_title %} Evocatio Solution Technologie {% endblock inside_title %}
-
+{% block inside_header %}
+<a href="{#{ path('Evocatio_Home')}#}"><img src="/images/evocatio_modified.png" /></a>
+{% endblock inside_header %}
 {% block inside_theater %} 
     {% block navigation %}
-        {% block inside_navigation %}                
-        <div id="navigation" class="admin navbar">
+        {% block inside_navigation %}    
+<div id="navigation" class="admin navbar">
         {% include "OwnerSiteBundle::navigation_admin.html.twig" %} 
-        </div>
+    </div>
         {% endblock inside_navigation %}
     {% endblock navigation %}
     {% block content %} 
     <div  class="content admin">
-    {% block inside_content %} 
-    {% endblock inside_content %}
-    </div>
+        {% block inside_content %} 
+        {% endblock inside_content %}
+        </div>
     {% endblock content %}
 {% endblock inside_theater %}

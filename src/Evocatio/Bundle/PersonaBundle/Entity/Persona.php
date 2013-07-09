@@ -16,12 +16,8 @@ use \ReflectionClass;
  * @ORM\Entity(repositoryClass="Evocatio\Bundle\PersonaBundle\Repository\PersonaRepository")
  * @InheritanceType("JOINED")
  * @DiscriminatorColumn(name="discr", type="string")
- * @DiscriminatorMap({
- * "person" = "Evocatio\Bundle\PersonaBundle\Entity\Person", 
- * "company" = "Evocatio\Bundle\PersonaBundle\Entity\Company"
- * })
  */
-class Persona {
+class Persona  {
 
     /**
      * @ORM\Id

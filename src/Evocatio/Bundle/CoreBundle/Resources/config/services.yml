@@ -1,4 +1,16 @@
 services:
+  category.read_handler:
+        class:     Evocatio\Bundle\CoreBundle\Lib\Handler\CategoryReadHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+        
+  category.persistence_handler:
+        class:     Evocatio\Bundle\CoreBundle\Lib\Handler\CategoryPersistenceHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
+  category.form_handler:
+      class:     Evocatio\Bundle\CoreBundle\Lib\Handler\CategoryFormHandler
+      arguments: ["@category.read_handler", "@security.context", "@form.factory"]
+      
   language.read_handler:
         class:     Evocatio\Bundle\CoreBundle\Lib\LanguageReadHandler
         arguments: ["@doctrine.orm.entity_manager", "@security.context"]
@@ -24,8 +36,8 @@ services:
       arguments: ["@culture.read_handler", "@language.read_handler", "@security.context", "@form.factory"]
       
   notifier:
-      class:     Evocatio\Bundle\CoreBundle\Lib\Notifier
-      arguments: ["@mailer", "@templating", "%notification_from%", "%notification_to%"]
+      class:     Evocatio\Bundle\CoreBundle\Lib\Mailing\Notifier
+      arguments: ["@mailer", "@templating", "%notification%", "@translator"]
       
   uploader:
       class:        Evocatio\Bundle\CoreBundle\Lib\Uploader

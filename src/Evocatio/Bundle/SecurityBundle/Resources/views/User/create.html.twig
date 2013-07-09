@@ -1,7 +1,7 @@
 {%  extends "EvocatioCoreBundle:Template:add_template.html.twig" %}
-{% import "::macro/route/suffix.html.twig" as route_suffix %}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block formhead %}
-    {{ route_suffix.path('evocatio_security_user_create', 'create','user') }}
+    {#{ route_i18n.path('evocatio_security_user_create', ['user']) }#}
 {% endblock formhead %}
 
 {% block form %}

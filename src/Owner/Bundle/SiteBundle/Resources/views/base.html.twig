@@ -3,12 +3,10 @@
 {% block meta_inside_title %} Evocatio Solution Technologie {% endblock meta_inside_title %}
 
 {% block inside_header %}
-<a href="{#{ path('EcoleDeMusiqueSiteBundle_Home')}#}"><img src="/images/evocatio_modified.png" /></a>
+    <a href="{{ path('owner_site_static_home')}}"><img src="/images/evocatio_modified.png" /></a>
+    {% include "OwnerSiteBundle::navigation.html.twig" %} 
 {% endblock inside_header %}
 
-{% block inside_navigation %} 
-    {% include "OwnerSiteBundle::navigation.html.twig" %} 
-{% endblock inside_navigation %}
     
 {% block inside_footer %} 
     <h4>Footer</h4>

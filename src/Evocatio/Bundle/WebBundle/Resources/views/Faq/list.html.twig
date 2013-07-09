@@ -1,13 +1,12 @@
 {% extends "::base.html.twig" %}
 {% import "::macro/route/crud.html.twig" as _route_crud %}
-{% block inside_content %}
+{% block inside_theater %}
 <dl>
     {% for entity in entities %}
         <dt>
             <div>{{ entity.status?'Published':'Inactive' }}</div> 
             <strong>{{ entity.question }}</strong> 
             <a href="{{ _route_crud.path('evocatio_web_faq_edit', 'edit', entity.id) }}">edit</a> 
-            <a href="{{ _route_crud.path('evocatio_web_faq_show', 'show',entity.id) }}">show</a> 
         </dt>
         <dd>{{ entity.reponse }}</dd>
     {% else %}
@@ -21,7 +20,7 @@
         </a>
     </li>
 </ul>
-{% endblock inside_content %}
+{% endblock inside_theater %}
 {% block aside %}
     {#% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %#}
 {% endblock aside %}

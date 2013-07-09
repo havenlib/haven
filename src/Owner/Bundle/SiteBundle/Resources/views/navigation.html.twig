@@ -1,6 +1,14 @@
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
+
 <ul class="menu">
     <li class="menu-item">
         Evocatio
+        <ul>
+            <li><a href="{{ route_i18n.path('owner_site_static_historic', {}, ['historic']) }}">{{"historic" | trans}}</a></li>
+            <li><a href="{{ route_i18n.path('owner_site_employee_index', {}, ['theteam']) }}">{{"the.team" | trans}}</a></li>
+            <li><a href="{{ route_i18n.path('owner_site_static_realisation', {}, ['realisationprocess']) }}">{{"realisation.process" | trans}}</a></li>
+            <li><a href="{{ route_i18n.path('owner_site_static_portfolio', {}, ['portfolio']) }}">{{"portfolio" | trans}}</a></li>
+        </ul>
     </li>
     <li class="menu-item">
         Comprendre
@@ -16,5 +24,10 @@
     </li>
     <li class="menu-item">
         Aide
+        <ul>
+            <li><a href="{{ route_i18n.path('owner_site_static_contact', {}, ['contact']) }}">Contact</a></li>
+            <li><a href="{{ path('owner_site_faq_index') }}">Faq</a></li>
+            <li>Demande de soumissions</li>
+        </ul>
     </li>
 </ul>
