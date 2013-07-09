@@ -7,15 +7,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Evocatio\Bundle\CoreBundle\Repository\LanguageRepository;
 
-class HtmlContentTranslationType extends AbstractType {
-
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+class TextContentTranslationType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $builder
                 ->add('content', null, array(
-                    "required" => false
-                    , "attr" => array(
-                        "class" => 'ckeditor'
-                    )
+                    "required" =>false
                 ))
                 ->add('trans_lang', null, array(
                     "property" => "name"
@@ -32,14 +30,15 @@ class HtmlContentTranslationType extends AbstractType {
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\CmsBundle\Entity\HtmlContentTranslation'
+            'data_class' => 'Evocatio\Bundle\CmsBundle\Entity\TextContentTranslation'
         ));
     }
 
-    public function getName() {
-        return 'evocatio_bundle_cmsbundle_htmlcontenttranslationtype';
+    public function getName()
+    {
+        return 'evocatio_bundle_cmsbundle_textcontenttranslationtype';
     }
-
 }

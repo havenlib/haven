@@ -11,7 +11,7 @@ use Evocatio\Bundle\CmsBundle\Entity\File;
  * @ORM\Table()
  * @ORM\Entity
  */
-class FilePage extends File {
+class FileEmpty extends File {
 
     /**
      * @var integer $id
