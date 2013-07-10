@@ -12,7 +12,7 @@ class ContentType extends AbstractType {
         $builder
                 ->add("id")
                 ->add('name')
-//                ->add('translations', 'collection', array(
+//                ->add('translations', 'translation', array(
 //                    'type' => new HtmlContentTranslationType()
 //                    , 'allow_add' => true
 //                    , "label" => false

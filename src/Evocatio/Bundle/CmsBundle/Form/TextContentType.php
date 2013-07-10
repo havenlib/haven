@@ -11,7 +11,7 @@ class TextContentType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('status')
-                ->add('translations', 'collection', array(
+                ->add('translations', 'translation', array(
                     'type' => new TextContentTranslationType()
                     , 'allow_add' => true
                     , "label" => false
