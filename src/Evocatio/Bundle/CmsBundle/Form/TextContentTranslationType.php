@@ -7,15 +7,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Evocatio\Bundle\CoreBundle\Repository\LanguageRepository;
 
-class PageTranslationType extends AbstractType {
-
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+class TextContentTranslationType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $builder
-                ->add('status', 'choice', array(
-                    'choices' => array(0 => "Inactive", 1 => "Publish", 2 => "Draft")
+                ->add('content', null, array(
+                    "required" =>false
                 ))
-                ->add('name')
-                ->add('slug')
                 ->add('trans_lang', null, array(
                     "property" => "name"
                     , "label" => false
@@ -24,7 +23,6 @@ class PageTranslationType extends AbstractType {
                                 ->orderByRank()
                                 ->getQueryBuilder();
                     }
-                    ,"empty_value" => false
                     , "attr" => array(
                         "class" => "hidden"
                     )
@@ -32,14 +30,15 @@ class PageTranslationType extends AbstractType {
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\CmsBundle\Entity\PageTranslation'
+            'data_class' => 'Evocatio\Bundle\CmsBundle\Entity\TextContentTranslation'
         ));
     }
 
-    public function getName() {
-        return 'evocatio_bundle_cmsbundle_pagetranslationtype';
+    public function getName()
+    {
+        return 'evocatio_bundle_cmsbundle_textcontenttranslationtype';
     }
-
 }

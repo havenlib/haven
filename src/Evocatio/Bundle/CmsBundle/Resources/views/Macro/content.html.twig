@@ -1,7 +1,7 @@
 {% macro fill_area(entity ,area, edit_form, language) %}
 {# les contenus doivent accepter la langue pour permettre de forcer #}
     {% for page_content in entity.getPageContents() if page_content.getArea() == area %}
-    <div class="page_content {{ page_content.getArea }}">
+    <div class="page_content {{ page_content.getArea~loop.index }} ">
         {% if (page_content.getContent().getMethod() == "include") %}
             {% include (page_content.getContent().getTemplate()) with { 'content':page_content.getContent() , 'language' : language} %}
         {% elseif (page_content.getContent().getMethod() == "render") %}

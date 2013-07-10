@@ -1,5 +1,5 @@
-{#% extends "OwnerSiteBundle:Template:add_template.html.twig" %#}
-{% extends "OwnerSiteBundle:Template:multilangue_page.html.twig" %}
+{#% extends "OwnerSiteBundle:Templates:add_template.html.twig" %#}
+{% extends "OwnerSiteBundle:Templates:multilangue_page.html.twig" %}
 {% block formhead %}
     {{ _route_crud.path('owner_site_pagecontent_create', 'create', {'page_id' : app.getRequest().get("page_id")?app.getRequest().get("page_id"):"28" } ) }}
 {% endblock formhead %}

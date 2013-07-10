@@ -49,3 +49,9 @@ services:
   request_modifier:
       class:     Evocatio\Bundle\CoreBundle\Lib\RequestModifier
       arguments: ["@slugifier", "@uploader"]
+  
+  evocatio.form.type.translation:
+      class: Evocatio\Bundle\CoreBundle\Form\Type\TranslationType
+      arguments: ["@language.read_handler"]
+      tags:
+          - { name: form.type, alias: translation }      
