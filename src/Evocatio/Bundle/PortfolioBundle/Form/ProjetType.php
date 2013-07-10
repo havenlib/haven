@@ -10,7 +10,7 @@ class ProjetType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('translations', 'collection', array(
+                ->add('translations', 'translation', array(
                     'type' => new ProjetTranslationType()
                     , 'allow_add' => true
                     , "label" => false

@@ -1,12 +1,9 @@
 {#% extends "OwnerSiteBundle:Templates:add_template.html.twig" %#}
 {% extends "OwnerSiteBundle:Templates:multilangue_page.html.twig" %}
 {% block formhead %}
-    {{ _route_crud.path('owner_site_page_create', 'create') }}
+    {{ _route_crud.path('owner_site_template_create', 'create') }}
 {% endblock formhead %}
 
-{#% form_theme edit_form "OwnerSiteBundle:Form:formulator.html.twig" %#}
-{% form_theme edit_form "::Form/generic_with_translations.html.twig" %}
-{#% form_theme edit_form.files "::Form/file_upload.html.twig" %#}
 {% block form %}
 <fieldset>
         {{ form_widget(edit_form) }}
@@ -22,7 +19,7 @@
 </div>
 {% endblock available_content %}
 {% block back %}
-    <a href="{{ _route_crud.path('owner_site_page_list', 'list') }}">
+    <a href="{{ _route_crud.path('owner_site_template_list', 'list') }}">
         Back to the list
     </a>
 {% endblock back %}

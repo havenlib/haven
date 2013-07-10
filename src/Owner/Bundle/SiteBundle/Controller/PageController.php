@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Evocatio\Bundle\CmsBundle\Entity\PageTranslation as EntityTranslation;
-
 use Evocatio\Bundle\CmsBundle\Controller\PageController as BasePageController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -40,7 +39,12 @@ class PageController extends BasePageController {
         $locale = $this->container->get("request")->get("_locale");
         if ($entityTranslation->getTransLang()->getSymbol() != \Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale) && $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))) {
             $slug = $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))->getSlug();
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_PageDisplaySlug', array("slug" => $slug)));
+            if (!empty($slug)) { 
+                return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_PageDisplaySlug', array("slug" => $slug)));
+            } else {
+//                @TODO mettre la gestion multilingue des différentes possibilité (draft, or
+                throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException("Cette page n'existe pas pour la locale ".\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale));
+            }
         }
         $entity = $entityTranslation->getParent();
 
@@ -58,8 +62,8 @@ class PageController extends BasePageController {
         );
 
         return new Response($this->container->get('templating')->render($template, $params));
-    }    
-    
+    }
+
     protected function redirectListAction() {
         return new RedirectResponse($this->container->get('router')->generate('owner_site_page_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }

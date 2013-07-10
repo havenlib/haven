@@ -17,7 +17,7 @@ class ProductType extends AbstractType
 //                ))
 //            ->add('Titre', 'text', array('required' => true))
 //            ->add('Name', 'text', array('required' => true))
-//            ->add('translations', 'collection', array('type' => new ProductTranslationType()))
+//            ->add('translations', 'translation', array('type' => new ProductTranslationType()))
             ->add('price')
 //            ->add('Poids')
 //            ->add('Kasher', 'checkbox', array('required'=>false, 'attr' => array('class' => 'inline checkbox')))

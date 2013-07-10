@@ -10,7 +10,7 @@ class NewsWidgetType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('translations', 'collection', array(
+                ->add('translations', 'translation', array(
                     'type' => new NewsWidgetTranslationType()
                     , 'allow_add' => true
                     , "label" => false

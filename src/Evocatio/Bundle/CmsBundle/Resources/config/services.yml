@@ -22,3 +22,15 @@ services:
   page_content.form_handler:
       class:     Evocatio\Bundle\CmsBundle\Lib\PageContentFormHandler
       arguments: ["@page_content.read_handler", "@language.read_handler", "@security.context", "@form.factory"]
+      
+  template.read_handler:
+        class:     Evocatio\Bundle\CmsBundle\Lib\TemplateReadHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+        
+  template.persistence_handler:
+        class:     Evocatio\Bundle\CmsBundle\Lib\TemplatePersistenceHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
+  template.form_handler:
+      class:     Evocatio\Bundle\CmsBundle\Lib\TemplateFormHandler
+      arguments: ["@template.read_handler", "@language.read_handler", "@security.context", "@form.factory"]

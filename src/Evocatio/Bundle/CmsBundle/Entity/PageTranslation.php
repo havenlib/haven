@@ -13,6 +13,10 @@ use \Evocatio\Bundle\CoreBundle\Entity\SluggableMappedBase;
  */
 class PageTranslation extends SluggableMappedBase {
 
+    const STATUS_INACTIVE = 0;
+    const STATUS_PUBLISHED = 1;
+    const STATUS_DRAFT = 2;
+
     /**
      * @var integer
      *
@@ -21,6 +25,13 @@ class PageTranslation extends SluggableMappedBase {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var boolean $status
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
 
     /**
      * @var string
@@ -35,6 +46,11 @@ class PageTranslation extends SluggableMappedBase {
      */
     protected $parent;
 
+    public function __construct() {
+        $this->setStatus(self::STATUS_DRAFT);
+        parent::construct;
+    }
+    
     /**
      * Get id
      *
@@ -88,4 +104,27 @@ class PageTranslation extends SluggableMappedBase {
         return $this->parent;
     }
 
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return PageTranslation
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
 }
