@@ -55,7 +55,7 @@ class FaqController extends ContainerAware {
             $this->container->get("faq.persistence_handler")->batchSave($form->get("faqs")->getData());
             $this->container->get("session")->getFlashBag()->add("success", "ranking.success");
 
-            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_faq_create', array(), array('create')));
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_faq_list', array(), array('list')));
         }
         die("ranking error");
 
@@ -77,8 +77,11 @@ class FaqController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("faq.read_handler")->getAll();
-        return array("entities" => $entities);
+//        $entities = $this->container->get("faq.read_handler")->getAll();
+//        return array();
+        $form = $this->container->get("faq.form_handler")->createRankForm();
+        $entities = $form->get("faqs")->getData();
+        return array("edit_form" => $form->createView(), "entities" => $entities);
     }
 
     /**
