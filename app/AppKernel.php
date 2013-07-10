@@ -23,10 +23,11 @@ class AppKernel extends Kernel {
             new Evocatio\Bundle\WebBundle\EvocatioWebBundle(),
             new Owner\Bundle\SiteBundle\OwnerSiteBundle(),
             new Evocatio\Bundle\CmsBundle\EvocatioCmsBundle(),
+            new Evocatio\Bundle\PortfolioBundle\EvocatioPortfolioBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-            $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
+//            $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();

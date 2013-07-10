@@ -1,0 +1,32 @@
+{% extends "OwnerSiteBundle::base_admin.html.twig" %}
+{% import "EvocatioPersonaBundle::macro/route/i18n.html.twig" as route_i18n_persona %}
+    
+{% block inside_content %}
+    <dl>
+        {% for entity in entities %}
+            <div>
+                <div> {{ entity.firstname }}</div> 
+                <strong>{{ entity.lastname }}</strong> 
+                <a href="{{ route_i18n_persona.path('owner_site_employee_edit', {"id": entity.id}, ['edit'], 'employee') }}">edit</a> 
+                <a href="{{ route_i18n_persona.path('owner_site_employee_show', {"id": entity.id}, ['show'], 'employee') }}">show</a> 
+            </div>
+            <div>sex: {{ entity.sex }}</div>
+            {% for coor in entity.getPostal() %}
+            <div>{{ coor.getAddress() }}</div>
+            {% endfor %}
+            {% for coor in entity.getMap() %}
+            <div>{{ coor.getLng() }}</div>
+            {% endfor %}
+        {% else %}
+            aucune entré
+        {% endfor %}
+    </dl>
+<ul>
+    <li>
+        <a href="{{ route_i18n_persona.path('owner_site_employee_create', {}, ['create'], 'employee') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{% endblock inside_content %}
+

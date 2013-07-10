@@ -167,15 +167,7 @@ function ajaxPostRequest(form, data) {
     return false;
 }
 
-//$(document).ready(setCalendar());
-$(document).ready(function() {
-    $("button.ajax").each(function() {
-        $(this).click(function() {
-            ajaxPostRequest($(this).closest("form"));
-//            return false;
-        });
-    })
-});
+
 
 function getHiddenDateElement(picker_date) {
     return $("#" + $(picker_date).attr("id").replace("_picker", ""))
@@ -614,11 +606,6 @@ function prepareEditor(editor) {
     });
 }
 
-$(document).ready(function() {
-    $('textarea.ckeditor').each(function() {
-        prepareEditor(this);
-    });
-})
 
 function removeCkEditorFrom(target) {
     $(target).find("textarea.ckeditor").each(function() {
@@ -693,6 +680,13 @@ function remove_item_by_id(id) {
         return false;
     }
 }
+
+$(document).ready(setCalendar());
+$(document).ready(function() {
+    $('textarea.ckeditor').each(function() {
+        prepareEditor(this);
+    });
+})
 
 /*
  * 

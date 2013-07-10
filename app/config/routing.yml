@@ -1,3 +1,8 @@
+evocatio_portfolio:
+    resource: "@EvocatioPortfolioBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 OwnerSiteBundle:
     resource: "@OwnerSiteBundle/Resources/config/routing.yml"
     

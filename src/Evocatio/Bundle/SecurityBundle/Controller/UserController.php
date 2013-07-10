@@ -89,16 +89,7 @@ class UserController extends ContainerAware {
         if ($edit_form->isValid()) {
             $this->container->get("user.persistence_handler")->save($user = $edit_form->getData());
 
-            /**
-             * Permet de créer le reset et l'url de reset puis d'envoyer le mail à l'utilisateur
-             */
-            $reset = $this->container->get("user.persistence_handler")->createReset($user);
-            $reset_url = $this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_reset', array("uuid" => $reset->getUuid()), array('password', 'initialize'), null, true);
-
-            $notifier = $this->container->get('notifier');
-            $notifier->createNewUserNotification($reset, $reset_url);
-            $notifier->send();
-
+            $this->createResetAction($user);
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
             return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_list', array(), array('user', 'list')));
         }
@@ -111,6 +102,19 @@ class UserController extends ContainerAware {
         );
 
         return new Response($this->container->get('templating')->render($template, $params));
+    }
+
+    public function createResetAction($user) {
+
+        /**
+         * Permet de créer le reset et l'url de reset puis d'envoyer le mail à l'utilisateur
+         */
+        $reset = $this->container->get("user.persistence_handler")->createReset($user);
+        $reset_url = $this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_reset', array("uuid" => $reset->getUuid()), array('password', 'initialize'), null, true);
+
+        $notifier = $this->container->get('notifier');
+        $notifier->createNewUserNotification($reset, $reset_url);
+        $notifier->send();
     }
 
     /**

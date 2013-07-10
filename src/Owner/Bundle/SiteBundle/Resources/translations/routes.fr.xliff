@@ -46,6 +46,30 @@
                 <source>password</source>
                 <target>mot-de-passe</target>
             </trans-unit>
+            <trans-unit id="12">
+                <source>displayrandom</source>
+                <target>afficher-aleatoire</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>employee</source>
+                <target>employe</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>theteam</source>
+                <target>l-equipe</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>historic</source>
+                <target>historique</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>realisationprocess</source>
+                <target>processus-de-realisation</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>portfolio</source>
+                <target>realisation</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
