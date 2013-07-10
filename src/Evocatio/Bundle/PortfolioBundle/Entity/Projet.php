@@ -7,12 +7,12 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Foglio
+ * Projet
  *
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\PortfolioBundle\Repository\ProjetRepository")
  */
-class Foglio extends Translatable {
+class Projet extends Translatable {
 
     const STATUS_INACTIVE = 0;
     const STATUS_PUBLISHED = 1;
@@ -49,7 +49,7 @@ class Foglio extends Translatable {
 
     /**
      * 
-     * @ORM\OneToMany(targetEntity="FoglioTranslation", mappedBy="parent", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjetTranslation", mappedBy="parent", cascade={"persist"})
      * @Assert\Valid
      */
     protected $translations;
@@ -71,7 +71,7 @@ class Foglio extends Translatable {
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return Foglio
+     * @return Projet
      */
     public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
@@ -92,7 +92,7 @@ class Foglio extends Translatable {
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return Foglio
+     * @return Projet
      */
     public function setUpdatedAt($updatedAt) {
         $this->updatedAt = $updatedAt;
@@ -120,10 +120,10 @@ class Foglio extends Translatable {
     /**
      * Add translations
      *
-     * @param FoglioTranslation $translations
-     * @return Foglio
+     * @param ProjetTranslation $translations
+     * @return Projet
      */
-    public function addTranslation(FoglioTranslation $translations) {
+    public function addTranslation(ProjetTranslation $translations) {
         $translations->setParent($this);
         $this->translations[] = $translations;
 
@@ -133,9 +133,9 @@ class Foglio extends Translatable {
     /**
      * Remove translations
      *
-     * @param FoglioTranslation $translations
+     * @param ProjetTranslation $translations
      */
-    public function removeTranslation(FoglioTranslation $translations) {
+    public function removeTranslation(ProjetTranslation $translations) {
         $this->translations->removeElement($translations);
     }
 
@@ -143,7 +143,7 @@ class Foglio extends Translatable {
      * Set status
      *
      * @param boolean $status
-     * @return Foglio
+     * @return Projet
      */
     public function setStatus($status) {
         $this->status = $status;
