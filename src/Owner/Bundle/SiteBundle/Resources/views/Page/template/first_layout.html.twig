@@ -8,15 +8,6 @@ header
 <div id="header" class="area">
 {{ CHelp.fill_area(entity, "header") }}
     </div>
-    <!-- section>
-        <h6>Available content list</h6>
-        <ul class="contents-list">
-            <li>
-                <input type=button value="Add Html content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_html_contents', '', 'header');" />
-                <input type=button value="Add Text content" onclick="javascript:addHtmlContent('evocatio_bundle_cmsbundle_pagetype_text_contents', '', 'header');" />
-            </li>
-        </ul>
-    </section -->
 {% endblock inside_header %}
 {% block inside_theater %} 
     
@@ -33,6 +24,7 @@ header
     
     {% block inside_footer%} 
     footer
+    {{ CHelp.fill_area(entity, "footer", edit_form is defined?edit_form:null , language is defined?language:"") }}
     {% endblock inside_footer %} 
     
 {% block stylesheets %}
