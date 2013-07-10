@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Evocatio\Bundle\CoreBundle\Entity\SluggableMappedBase;
 
 /**
- * Evocatio\Bundle\PortfolioBundle\Entity\FoglioTranslation
+ * Evocatio\Bundle\PortfolioBundle\Entity\ProjetTranslation
  *
  * @ORM\Table()
  * @ORM\Entity()
  */
-class FoglioTranslation extends SluggableMappedBase {
+class ProjetTranslation extends SluggableMappedBase {
 
     /**
      * @var integer $id
@@ -37,7 +37,7 @@ class FoglioTranslation extends SluggableMappedBase {
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Foglio", inversedBy="translations")
+     * @ORM\ManyToOne(targetEntity="Projet", inversedBy="translations")
      * @ORM\JoinColumn(name="foglio_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $parent;
@@ -46,7 +46,7 @@ class FoglioTranslation extends SluggableMappedBase {
      * Set name
      *
      * @param string $name
-     * @return FoglioTranslation
+     * @return ProjetTranslation
      */
     public function setName($name) {
         $this->name = $name;
@@ -67,7 +67,7 @@ class FoglioTranslation extends SluggableMappedBase {
      * Set description
      *
      * @param string $description
-     * @return FoglioTranslation
+     * @return ProjetTranslation
      */
     public function setDescription($description) {
         $this->description = $description;
@@ -87,10 +87,10 @@ class FoglioTranslation extends SluggableMappedBase {
     /**
      * Set parent
      *
-     * @param \Evocatio\Bundle\PortfolioBundle\Entity\Foglio $parent
-     * @return FoglioTranslation
+     * @param \Evocatio\Bundle\PortfolioBundle\Entity\Projet $parent
+     * @return ProjetTranslation
      */
-    public function setParent(\Evocatio\Bundle\PortfolioBundle\Entity\Foglio $parent = null) {
+    public function setParent(\Evocatio\Bundle\PortfolioBundle\Entity\Projet $parent = null) {
         $this->parent = $parent;
 
         return $this;
@@ -99,7 +99,7 @@ class FoglioTranslation extends SluggableMappedBase {
     /**
      * Get parent
      *
-     * @return \Evocatio\Bundle\PortfolioBundle\Entity\Foglio 
+     * @return \Evocatio\Bundle\PortfolioBundle\Entity\Projet 
      */
     public function getParent() {
         return $this->parent;
