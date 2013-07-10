@@ -27,8 +27,6 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * Finds and displays a post entity.
-     *
      * @Route("/admin/{show}/post/{id}", defaults={"show" = "afficher"})
      * @Method("GET")
      * @Template()
@@ -44,8 +42,6 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * Finds and displays all posts for admin.
-     *
      * @Route("/admin/{list}/post")
      * @Method("GET")
      * @Template()
@@ -53,6 +49,31 @@ class PostController extends ContainerAware {
     public function listAction() {
         $entities = $this->container->get("post.read_handler")->getAll();
         return array("entities" => $entities);
+    }
+
+    /**
+     * @Route("/post/{slug}")
+     * @Method("GET")
+     * @Template()
+     */
+    public function displayAction(EntityTranslation $entityTranslation) {
+        $locale = $this->container->get("request")->get("_locale");
+        if ($entityTranslation->getTransLang()->getSymbol() != \Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale) && $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))) {
+            $slug = $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))->getSlug();
+            return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_PostShowSlug', array("slug" => $slug)));
+        }
+        $entity = $entityTranslation->getParent();
+
+        if (!$entity) {
+            throw new NotFoundHttpException('entity.not.found');
+        }
+
+        $delete_form = $this->container->get("post.form_handler")->createDeleteForm($entity->getId());
+
+        return array(
+            "entity" => $entity,
+            'delete_form' => $delete_form->createView()
+        );
     }
 
     /**
@@ -206,7 +227,7 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/post/{slug}", name="EvocatioWebBundle_PostShowSlug")
+     * @Route("/post/{slug}")
      * @Method("GET")
      * @Template
      */
@@ -241,7 +262,7 @@ class PostController extends ContainerAware {
 
         return new Response($this->container->get('templating')->render($template ? $template : 'EvocatioWebBundle:Post:list_widget.html.twig', array('entities' => $entities)));
     }
-    
+
     protected function redirectListAction() {
         return new RedirectResponse($this->container->get('router')->generate('evocatio_web_post_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }

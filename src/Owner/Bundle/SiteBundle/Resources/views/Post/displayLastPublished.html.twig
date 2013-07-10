@@ -5,6 +5,7 @@
             <p>
                 {{entity.content | raw}}
             </p>
+            <a href="{{ path("owner_site_post_display", {"slug": entity.slug})}}">Voir...</a>
     </li>
     {% endfor %}
 </ul>
