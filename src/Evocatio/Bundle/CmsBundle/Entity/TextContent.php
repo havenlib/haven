@@ -5,7 +5,7 @@ namespace Evocatio\Bundle\CmsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * HtmlContent
+ * TextContent
  *
  * @ORM\Table()
  * @ORM\Entity
@@ -37,7 +37,7 @@ class TextContent extends Content {
     protected $page;
 
     /**
-     * @ORM\OneToMany(targetEntity="HtmlContentTranslation", mappedBy="parent", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="TextContentTranslation", mappedBy="parent", cascade={"persist"})
      */
     protected $translations;
 
@@ -58,7 +58,7 @@ class TextContent extends Content {
      * Set name
      *
      * @param string $name
-     * @return HtmlContent
+     * @return TextContent
      */
     public function setName($name) {
         $this->name = $name;
@@ -83,7 +83,7 @@ class TextContent extends Content {
      * Set status
      *
      * @param boolean $status
-     * @return HtmlContent
+     * @return TextContent
      */
     public function setStatus($status) {
         $this->status = $status;
@@ -103,10 +103,10 @@ class TextContent extends Content {
     /**
      * Add translations
      *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\HtmlContentTranslation $translations
-     * @return HtmlContent
+     * @param \Evocatio\Bundle\CmsBundle\Entity\TextContentTranslation $translations
+     * @return TextContent
      */
-    public function addTranslation(\Evocatio\Bundle\CmsBundle\Entity\HtmlContentTranslation $translations) {
+    public function addTranslation(\Evocatio\Bundle\CmsBundle\Entity\TextContentTranslation $translations) {
         $translations->setParent($this);
         $this->translations[] = $translations;
 
@@ -116,9 +116,9 @@ class TextContent extends Content {
     /**
      * Remove translations
      *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\HtmlContentTranslation $translations
+     * @param \Evocatio\Bundle\CmsBundle\Entity\TextContentTranslation $translations
      */
-    public function removeTranslation(\Evocatio\Bundle\CmsBundle\Entity\HtmlContentTranslation $translations) {
+    public function removeTranslation(\Evocatio\Bundle\CmsBundle\Entity\TextContentTranslation $translations) {
         $this->translations->removeElement($translations);
     }
 
@@ -135,7 +135,7 @@ class TextContent extends Content {
      * Set page
      *
      * @param \Evocatio\Bundle\CmsBundle\Entity\Page $page
-     * @return HtmlContent
+     * @return TextContent
      */
     public function setPage(\Evocatio\Bundle\CmsBundle\Entity\Page $page = null) {
         $this->page = $page;
