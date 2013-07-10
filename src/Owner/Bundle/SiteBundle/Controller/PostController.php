@@ -15,9 +15,7 @@ use Evocatio\Bundle\WebBundle\Controller\PostController as BasePostController;
  */
 class PostController extends BasePostController {
 
-    protected function redirectListAction() {
-        return new RedirectResponse($this->container->get('router')->generate('owner_site_post_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
-    }
+    protected $ROUTE_PREFIX = "owner_site";
 
     /**
      * 
@@ -27,7 +25,7 @@ class PostController extends BasePostController {
      */
     public function displayRandomAction() {
         $entity = $this->container->get('post.read_handler')->getOneRandomPublished();
-   
+
         return array("entity" => $entity);
     }
 
@@ -39,7 +37,7 @@ class PostController extends BasePostController {
      */
     public function displayLastPublishedAction($limit = null) {
         $entities = $this->container->get('post.read_handler')->getLastPublished($limit);
-   
+
         return array("entities" => $entities);
     }
 
