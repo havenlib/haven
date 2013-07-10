@@ -6,11 +6,11 @@
 
     <!--
     <parameters>
-        <parameter key="evocatio_web.example.class">Evocatio\Bundle\WebBundle\Example</parameter>
+        <parameter key="evocatio_portfolio.example.class">Evocatio\Bundle\PortfolioBundle\Example</parameter>
     </parameters>
 
     <services>
-        <service id="evocatio_web.example" class="%evocatio_web.example.class%">
+        <service id="evocatio_portfolio.example" class="%evocatio_portfolio.example.class%">
             <argument type="service" id="service_id" />
             <argument>plain_value</argument>
             <argument>%parameter_name%</argument>

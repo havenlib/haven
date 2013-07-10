@@ -26,7 +26,7 @@ class ProjetType extends AbstractType {
                 ->add('status')
                 ->add('save', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
-                    'label' => 'save.faq'
+                    'label' => 'save.folio'
                 ))
         ;
     }
@@ -38,7 +38,7 @@ class ProjetType extends AbstractType {
     }
 
     public function getName() {
-        return 'evocatio_bundle_portfoliobundle_fogliotype';
+        return 'evocatio_bundle_portfoliobundle_projettype';
     }
 
 }

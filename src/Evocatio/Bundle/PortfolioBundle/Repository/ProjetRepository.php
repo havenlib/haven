@@ -8,8 +8,6 @@ use Evocatio\Bundle\PortfolioBundle\Entity\Projet;
 
 /**
  * Description of ProjetRepository
- *
- * @author lbreleur
  */
 class ProjetRepository extends StatusRepository {
 

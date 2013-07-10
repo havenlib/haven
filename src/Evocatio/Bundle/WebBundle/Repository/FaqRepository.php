@@ -2,7 +2,6 @@
 
 namespace Evocatio\Bundle\WebBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use Evocatio\Bundle\CoreBundle\Generic\StatusRepository;
 use Evocatio\Bundle\WebBundle\Entity\Faq;
 
