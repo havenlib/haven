@@ -7,7 +7,7 @@ use Evocatio\Bundle\CoreBundle\Lib\Handler\FormHandler;
 class PortfolioFormHandler extends FormHandler {
 
     protected function getDefaultTypeClass() {
-        return 'Evocatio\Bundle\PortfolioBundle\Form\FoglioType';
+        return 'Evocatio\Bundle\PortfolioBundle\Form\ProjetType';
     }
 
 }
