@@ -16,6 +16,8 @@ use Evocatio\Bundle\WebBundle\Entity\PostTranslation as EntityTranslation;
 
 class PostController extends ContainerAware {
 
+    protected $ROUTE_PREFIX = "evocatio_post";
+
     /**
      * @Route("/post")
      * @Method("GET")
@@ -60,7 +62,7 @@ class PostController extends ContainerAware {
         $locale = $this->container->get("request")->get("_locale");
         if ($entityTranslation->getTransLang()->getSymbol() != \Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale) && $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))) {
             $slug = $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))->getSlug();
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_PostShowSlug', array("slug" => $slug)));
+            return new RedirectResponse($this->container->get('router')->generate($route = $this->ROUTE_PREFIX . '_post_display', array("slug" => $slug)));
         }
         $entity = $entityTranslation->getParent();
 
@@ -108,7 +110,7 @@ class PostController extends ContainerAware {
         if ($edit_form->get('save')->isClicked() && $edit_form->isValid()) {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
 
-            return $this->redirectListAction();
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_post_list', array(), array('list')));
         } else {
             if ($edit_form->get('template')->isClicked()) {
                 $edit_form = $this->container->get("post.form_handler")->createNewForm($edit_form->getData());
@@ -167,7 +169,7 @@ class PostController extends ContainerAware {
             $this->container->get("post.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "update.success");
 
-            return $this->redirectListAction();
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_post_list', array(), array('list')));
         } else {
             if ($edit_form->get('template')->isClicked()) {
                 $edit_form = $this->container->get("post.form_handler")->createNewForm($edit_form->getData());
@@ -235,7 +237,7 @@ class PostController extends ContainerAware {
         $locale = $this->container->get("request")->get("_locale");
         if ($entityTranslation->getTransLang()->getSymbol() != \Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale) && $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))) {
             $slug = $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))->getSlug();
-            return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_PostShowSlug', array("slug" => $slug)));
+            return new RedirectResponse($this->container->get('router')->generate($route = $this->ROUTE_PREFIX . '_post_showfromslug', array("slug" => $slug)));
         }
         $entity = $entityTranslation->getParent();
 
@@ -263,8 +265,18 @@ class PostController extends ContainerAware {
         return new Response($this->container->get('templating')->render($template ? $template : 'EvocatioWebBundle:Post:list_widget.html.twig', array('entities' => $entities)));
     }
 
+    /**
+     *  /!\ Deprecated, devra être supprimer si plus utilisé.
+     */
     protected function redirectListAction() {
         return new RedirectResponse($this->container->get('router')->generate('evocatio_web_post_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+    }
+
+    protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
+        foreach ($translate as $word) {
+            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes", $lang);
+        }
+        return $this->container->get('router')->generate($route, $parameters, $absolute);
     }
 
 }
