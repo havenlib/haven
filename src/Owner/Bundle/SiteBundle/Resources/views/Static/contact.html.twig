@@ -1,4 +1,4 @@
-{% extends "OwnerSiteBundle:Template:form_template.html.twig" %}
+{% extends "OwnerSiteBundle:Templates:form_template.html.twig" %}
 {% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block formaction %}
     {{ route_i18n.path('owner_site_static_contact', {}, ['contact']) }}

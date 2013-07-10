@@ -10,7 +10,7 @@ class PageType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('translations', 'collection', array(
+                ->add('translations', 'translation', array(
                     'type' => new PageTranslationType()
                     , 'allow_add' => true
                     , "label" => false
@@ -20,19 +20,6 @@ class PageType extends AbstractType {
                     , 'options' => array(
                         'label' => false
                     )
-                ))
-                ->add('files', 'collection', array(
-                    "type" => new FilePageType()
-                    , 'allow_delete' => true
-                    , 'allow_add' => true
-                    , 'by_reference' => false
-                ))
-                ->add('uploads', 'file', array(
-                    "attr" => array(
-                        "multiple" => "multiple"
-                    )
-                    , 'required' => false
-                    , "mapped" => false
                 ))
                 ->add('template')
                 ->add('html_contents', "collection", array(

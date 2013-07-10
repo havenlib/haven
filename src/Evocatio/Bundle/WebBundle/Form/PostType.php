@@ -14,7 +14,7 @@ class PostType extends AbstractType {
                     'attr' => array('class' => 'btn save-btn'),
                     'label' => 'change.template'
                 ))
-                ->add('translations', 'collection', array(
+                ->add('translations', 'translation', array(
                     'type' => new PostTranslationType()
                     , 'allow_add' => true
                     , "label" => false
