@@ -1,0 +1,41 @@
+{% import "::macro/route/crud.html.twig" as _route_crud %}
+{% import "::macro/route/suffix.html.twig" as _route_suffix %}
+{% import "::macro/form/translated_row.html.twig" as _form %}
+
+
+
+    {% spaceless %}
+<div  id="admin">
+<div id="navigation">
+{% include "OwnerSiteBundle::navigation_admin.html.twig" %} 
+</div>
+<div id="edition">
+{% block inside_content %}
+<h1>Ajouter</h1>
+    {% if edit_form.translations.vars.prototype is defined %}  
+<div class="nav nav-tabs lang">{# ajouter le lang comme class pour que le javascript puisse cliqué dessus lors de l'ajout d'items addAnItem, #}
+        {% for key, translation in edit_form.translations.vars.prototype.trans_lang.vars["choices"] %}
+            <li class="{% if loop.index == 1 %} active{% endif%}" data-formname="{{ edit_form.vars.id }}" data-langindex="{{ loop.index0 }}" onclick="showFormElementClass(this);return false"><a href="#" onclick="return false" data-toggle="tab">{{ translation.label }}</a></li>
+        {% endfor %}
+            </div>
+    {% else %}
+            na pas
+    {% endif %}
+{{ form_errors(edit_form)}}
+<div class="edit-form">
+    <form action="{% block formhead %}{% endblock formhead %}" method="post" {{ form_enctype(edit_form) }} >
+    {% block form %} {% endblock form %}
+    <div>
+        <div>
+            <button type="submit" class="btn">Ok</button>
+        </div>
+    </div>
+    </form>
+
+</div>
+{% endblock inside_content %}
+</div>
+</div>
+    {% endspaceless %}
+
+

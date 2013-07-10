@@ -1,0 +1,56 @@
+{% extends entity.getTemplate() is empty?"OwnerSiteBundle:Page:create.html.twig":entity.getTemplate().getPath() %}
+{% set language = 'en' %}
+{% block inside_title %} Edition Spéciale{% endblock inside_title %}
+
+{% block inside_body %}
+{% embed "OwnerSiteBundle:Page\\template:embed_add.html.twig" %}
+{% block formhead %}
+                <a href="{{ _route_crud.edit('owner_site_page_edit',  entity.id) }}">edit</a>
+{% endblock formhead %}
+
+{% form_theme edit_form "::Form/generic_with_translations.html.twig" %}
+{% block form %}
+<fieldset class="half">
+        {{ form_widget(edit_form) }}
+
+        <fieldset> {{ form_widget(edit_form) }} </fieldset>
+        <ul class="contents-list">
+            <li>
+                <input type=button value="Add Html content to theatre" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_html_contents');" />
+                <input type=button value="Add Text content to theatre" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_text_contents');" />
+                <input type=button value="Add News Widget to theatre" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_news_widgets');" />
+                <div class="hiddden">alsdjkfl;asdjf</div>
+            </li>
+        </ul>
+        <ul class="contents-list">
+            <li>
+                <input type=button value="Add Html content to sidebar" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_html_contents');" />
+                <input type=button value="Add Text content to sidebar" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_text_contents');" />
+                <input type=button value="Add News Widget to sidebar" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_news_widgets');" />
+            </li>
+        </ul>
+</fieldset>
+<div class="half">
+        {{ form_widget(edit_html_content_form) }}
+</div>
+{% endblock form %}
+{% endembed %}
+    {{ parent() }}        
+{% endblock inside_body %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% if app.environment != 'prod' %}
+    <link href="{{ asset("less/admin.less") }}" rel="stylesheet/less" type="text/css" />
+    {% else %}
+    <link rel="stylesheet" type="text/css" href="/css/admin.css" />
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/sig.js" type="text/javascript"></script>
+{% endblock javascripts %} 
+    
+
+        

@@ -1,12 +1,14 @@
-{% macro fill_area(entity ,area, edit_form) %}
-
+{% macro fill_area(entity ,area, edit_form, language) %}
+{# les contenus doivent accepter la langue pour permettre de forcer #}
     {% for page_content in entity.getPageContents() if page_content.getArea() == area %}
+    <div class="page_content {{ page_content.getArea }}">
         {% if (page_content.getContent().getMethod() == "include") %}
-            {% include (page_content.getContent().getTemplate()) with { 'content':page_content.getContent() } %}
+            {% include (page_content.getContent().getTemplate()) with { 'content':page_content.getContent() , 'language' : language} %}
         {% elseif (page_content.getContent().getMethod() == "render") %}
         {% import _self as macros %}
             {{ macros.render_widget(page_content.getContent()) }}
         {% endif %}
+   </div>
 {#
 <p>evocatio_bundle_cmsbundle_pagetype_html_contents_0_content_translations_0_content</p>
 <p>evocatio_bundle_cmsbundle_pagetype_html_contents_{{ loop.index0 }}_content_translations_?_content</p>
@@ -29,8 +31,8 @@
     {% set bundle = (entity.bundle)? entity.bundle : app.request.get('_template').get('bundle') %}
     {% set controller = entity.controller %}
     {% set action = entity.action %}
- {{ bundle ~':'~ controller ~':'~ action }}
- {{ dump(entity.options) }}
+ {#{ bundle ~':'~ controller ~':'~ action }}
+ {{ dump(entity.options) }#}
     <h4>{{ entity.name }}</h4>
     {{ render(controller((bundle ~ ":" ~ controller ~ ":" ~ action), {"_locale" : app.getRequest().get("_locale")}|merge(entity.options)))}}
 {% endmacro %}
