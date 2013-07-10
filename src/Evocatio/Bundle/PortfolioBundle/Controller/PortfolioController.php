@@ -13,9 +13,18 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class PortfolioController extends ContainerAware {
 
     protected $ROUTE_PREFIX = "evocatio_portfolio";
-
     /**
-     * @Route("/admin/{list}/foglio")
+     * @Route("/portfolio")
+     * @Method("GET")
+     * @Template()
+     */
+    public function indexAction() {
+        $entities = $this->container->get("portfolio.read_handler")->getAllPublished();
+        return array("entities" => $entities);
+    }
+    
+    /**
+     * @Route("/admin/{list}/portfolio")
      * @Method("GET")
      * @Template()
      */
@@ -25,7 +34,7 @@ class PortfolioController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{create}/foglio")
+     * @Route("/admin/{create}/portfolio")
      * @Method("GET")
      * @Template
      */
@@ -37,7 +46,7 @@ class PortfolioController extends ContainerAware {
     /**
      * Creates a new foglio entity.
      *
-     * @Route("/admin/{create}/foglio")
+     * @Route("/admin/{create}/portfolio")
      * @Method("POST")
      * @Template
      */
@@ -69,7 +78,7 @@ class PortfolioController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{edit}/foglio/{id}")
+     * @Route("/admin/{edit}/portfolio/{id}")
      * @Method("GET")
      * @Template
      */
@@ -86,7 +95,7 @@ class PortfolioController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{edit}/foglio/{id}")
+     * @Route("/admin/{edit}/portfolio/{id}")
      * @return RedirectResponse
      * @Method("POST")
      * @Template
@@ -97,7 +106,7 @@ class PortfolioController extends ContainerAware {
         $delete_form = $this->container->get("portfolio.form_handler")->createDeleteForm($entity->getId());
 
         $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
-                ->slug(array("title"))
+                ->slug(array("name"))
                 ->getRequest();
 
         $edit_form->bind($request);
@@ -107,7 +116,7 @@ class PortfolioController extends ContainerAware {
             $this->container->get("portfolio.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "update.success");
 
-            return $this->redirectListAction();
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_portfolio_list', array(), array('list')));
         } else {
             if ($edit_form->get('template')->isClicked()) {
                 $edit_form = $this->container->get("portfolio.form_handler")->createNewForm($edit_form->getData());

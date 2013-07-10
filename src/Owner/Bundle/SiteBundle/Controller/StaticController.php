@@ -17,7 +17,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
  *        "contact" = "contactez-nous|contact-us"
  *        , "historic" = "historique|historic"
  *        , "realisationprocess" = "realisation-process|processus-de-realisation"
- *        , "portfolio" = "portfolio|realisation"
  * })
  */
 class StaticController extends ContainerAware {
@@ -89,15 +88,6 @@ class StaticController extends ContainerAware {
      * @Template
      */
     public function realisationAction() {
-        return array();
-    }
-
-    /**
-     * @Route("/{portfolio}")
-     * @Method("GET")
-     * @Template
-     */
-    public function portfolioAction() {
         return array();
     }
 

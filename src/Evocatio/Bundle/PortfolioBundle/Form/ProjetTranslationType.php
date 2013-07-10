@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Evocatio\Bundle\CoreBundle\Repository\LanguageRepository;
 
-class FoglioTranslationType extends AbstractType {
+class ProjetTranslationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
@@ -31,7 +31,7 @@ class FoglioTranslationType extends AbstractType {
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\PortfolioBundle\Entity\FoglioTranslation'
+            'data_class' => 'Evocatio\Bundle\PortfolioBundle\Entity\ProjetTranslation'
         ));
     }
 
