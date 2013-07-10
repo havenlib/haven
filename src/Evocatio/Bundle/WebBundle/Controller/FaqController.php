@@ -209,17 +209,6 @@ class FaqController extends ContainerAware {
         return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_FaqList'));
     }
 
-//    protected function redirectListAction() {
-//        return $this->redirectAction('evocatio_web_faq', 'list');
-//    }
-//
-//    protected function redirectCreateAction() {
-//        return $this->redirectAction('evocatio_web_faq', 'create');
-//    }
-//
-//    protected function redirectAction($route, $keyword) {
-//        return new RedirectResponse($this->container->get('router')->generate($route . "_" . $keyword, array($keyword => $this->container->get('translator')->trans($keyword, array(), "routes"))));
-//    }
     protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
         foreach ($translate as $word) {
             $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes", $lang);

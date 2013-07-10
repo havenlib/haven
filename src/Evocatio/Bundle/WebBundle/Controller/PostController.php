@@ -12,7 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 // Evocatio includes
-use Evocatio\Bundle\WebBundle\Form\PostType as Form;
 use Evocatio\Bundle\WebBundle\Entity\PostTranslation as EntityTranslation;
 
 class PostController extends ContainerAware {
