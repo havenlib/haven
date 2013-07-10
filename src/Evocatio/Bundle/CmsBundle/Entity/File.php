@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
  * @InheritanceType("JOINED")
  * @DiscriminatorColumn(name="discr", type="string")
  * @DiscriminatorMap({
- * "filepage" = "Evocatio\Bundle\CmsBundle\Entity\FileEmpty"
+ * "filepage" = "Evocatio\Bundle\CmsBundle\Entity\FilePage"
  * }) 
  */
 class File {

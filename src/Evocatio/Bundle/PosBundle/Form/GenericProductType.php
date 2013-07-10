@@ -12,7 +12,7 @@ class GenericProductType extends AbstractType {
         $builder
                 ->add('price')
                 ->add('status')
-                ->add('translations', 'collection', array('type' => new GenericProductTranslationType()))
+                ->add('translations', 'translation', array('type' => new GenericProductTranslationType()))
         ;
     }
 

@@ -10,7 +10,7 @@ class FoglioType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('translations', 'collection', array(
+                ->add('translations', 'translation', array(
                     'type' => new FoglioTranslationType()
                     , 'allow_add' => true
                     , "label" => false

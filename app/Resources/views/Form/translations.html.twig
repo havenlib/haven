@@ -1,22 +1,25 @@
-{% block collection_widget %}
+{% block translation_widget %}
 {% spaceless %}
     <div class="inside">
-    {% if form is empty  and (prototype is defined and prototype.trans_lang is defined) %}  
-        {% set protoform = form_row(prototype) %}
-        {% for key, translation in prototype.trans_lang.vars.choices %}
+    {% if form is empty   %}  
+        {% for proto in prototype %}
             {# here create one form for each language, removing the hidden from the first line, so you dont have to do it with javascript,  
             note that the hidden is accompanied by a trans class to make sur not to remove other hiddens in the prototype #}
-            {{ protoform | replace({"__name_trans__label__": loop.index0, "__name_trans__": loop.index0, "trans_div" : loop.index0!=0?"trans_div hidden":"trans_div", ('<option value="'~key~'"') : '<option value="'~key~'" selected="selected"'})|raw }}
+            {{ form_row(proto) }}
         {% endfor %} 
     {% else %}
             {% if prototype is defined %}
-                {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+            {% set protofinal = "" %}
+            {% for langue in prototype %}
+                {% set protofinal = protofinal~form_row(langue) %}
+            {% endfor %}
+                {% set attr = attr|merge({'data-prototype': protofinal }) %}
             {% endif %}
         {{ block('form_widget')}}
     {% endif %}
     </div>
 {% endspaceless %}
-{% endblock collection_widget %}
+{% endblock translation_widget %}
 
 
 {% block form_widget %}
