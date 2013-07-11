@@ -11,7 +11,7 @@ class FaqType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('translations', 'collection', array(
+                ->add('translations', 'translation', array(
                     'type' => new FaqTranslationType()
                     , 'allow_add' => true
                     , "label" => false
@@ -24,7 +24,12 @@ class FaqType extends AbstractType {
                 ))
                 ->add('status', 'choice', array(
                     'choices' => array(0 => "Inactive", 1 => "Publish")
-                ));
+                ))
+                ->add('save', 'submit', array(
+                    'attr' => array('class' => 'btn save-btn'),
+                    'label' => 'save.faq'
+                ))
+        ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {

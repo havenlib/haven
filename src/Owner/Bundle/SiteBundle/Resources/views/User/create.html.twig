@@ -1,6 +1,7 @@
-{%  extends "OwnerSiteBundle:Template:add_template.html.twig" %}
+{%  extends "OwnerSiteBundle:Templates:add_template.html.twig" %}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block formhead %}
-    {{ _route_suffix.path('owner_site_user_create', 'create','user') }}
+    {{ route_i18n.path('owner_site_user_create', {}, ['user', 'create']) }}
 {% endblock formhead %}
 
 {% block form %}
@@ -29,11 +30,11 @@
 
                     </ul>
                         {{ form_rest(edit_form) }}
-                </fieldset>
+</fieldset>
 {% endblock form %}
 
 {% block back %}
-                <a href="{{ _route_suffix.path('owner_site_user_list', 'list','user') }}">
+                <a href="{{ route_i18n.path('owner_site_user_list', {}, ['user', 'list']) }}">
                     Back to the list
                 </a>
 {% endblock back %}

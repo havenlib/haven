@@ -3,6 +3,7 @@
 namespace Evocatio\Bundle\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 
 /**
@@ -20,20 +21,26 @@ class Page extends Translatable {
     private $id;
 
     /**
-     *
-     * @return ArrayCollection<CmsContent> $content
-     * 
-     * @ORM\OneToMany(targetEntity="Content", mappedBy="page", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="PageContent", mappedBy="page", cascade={"persist"})
      */
-    private $contents;
+    private $page_contents;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="Template")
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
+     */
+    private $template;
 
     /**
      * @ORM\OneToMany(targetEntity="PageTranslation", mappedBy="parent", cascade={"persist"})
+     * @Assert\Valid
      */
     protected $translations;
 
     public function __construct() {
-        $this->contents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->page_contents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -51,46 +58,12 @@ class Page extends Translatable {
     }
 
     /**
-     * Get HtmlContents
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getHtmlContents() {
-        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getContents()->filter(function ($content) {
-                                    return get_class($content) == "Evocatio\Bundle\CmsBundle\Entity\HtmlContent";
-                                })->getValues());
-        return $return_collection;
-    }
-
-    /**
-     * Add contents
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Content $contents
-     * @return Page
-     */
-    public function addContent(\Evocatio\Bundle\CmsBundle\Entity\Content $contents) {
-        $contents->setPage($this);
-        $this->contents[] = $contents;
-
-        return $this;
-    }
-
-    /**
-     * Remove contents
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Content $contents
-     */
-    public function removeContent(\Evocatio\Bundle\CmsBundle\Entity\Content $contents) {
-        $this->contents->removeElement($contents);
-    }
-
-    /**
-     * Get contents
+     * Get translations
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getContents() {
-        return $this->contents;
+    public function getTranslations() {
+        return $this->translations;
     }
 
     /**
@@ -116,33 +89,220 @@ class Page extends Translatable {
     }
 
     /**
-     * Get translations
+     * Set template
      *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTranslations() {
-        return $this->translations;
-    }
-
-    /**
-     * Add contents
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Content $contents
+     * @param string $template
      * @return Page
      */
-    public function addHtmlContent(\Evocatio\Bundle\CmsBundle\Entity\HtmlContent $contents) {
-        $this->addContent($contents);
+    public function setTemplate($template) {
+        $this->template = $template;
 
         return $this;
     }
 
     /**
-     * Remove contents
+     * Get template
      *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Content $contents
+     * @return string 
      */
-    public function removeHtmlContent(\Evocatio\Bundle\CmsBundle\Entity\HtmlContent $contents) {
-        $this->removeContent($contents);
+    public function getTemplate() {
+        return $this->template;
+    }
+
+    /**
+     * Add page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     * @return Page
+     */
+    public function addPageContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->page_contents[] = $pageContents;
+
+        return $this;
+    }
+
+    /**
+     * Remove page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     */
+    public function removePageContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->page_contents->removeElement($pageContents);
+    }
+
+    /**
+     * Get page_contents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPageContents() {
+        return $this->page_contents;
+    }
+
+    /**
+     * Add page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     * @return Page
+     */
+    public function addHtmlContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $pageContents->setPage($this);
+        $this->page_contents[] = $pageContents;
+
+        return $this;
+    }
+
+    /**
+     * Remove page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     */
+    public function removeHtmlContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->page_contents->removeElement($pageContents);
+    }
+
+    /**
+     * Get page_contents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getHtmlContents() {
+        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getPageContents()->filter(function ($pageContents) {
+                            return get_class($pageContents->getContent()) == "Evocatio\Bundle\CmsBundle\Entity\HtmlContent";
+                        })->getValues());
+
+        return $return_collection;
+    }
+
+    /**
+     * Add page_contents for textcontent type
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     * @return Page
+     */
+    public function addTextContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $pageContents->setPage($this);
+        $this->page_contents[] = $pageContents;
+
+        return $this;
+    }
+
+    /**
+     * Remove page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     */
+    public function removeTextContent(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->page_contents->removeElement($pageContents);
+    }
+
+    /**
+     * Get page_contents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTextContents() {
+        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getPageContents()->filter(function ($pageContents) {
+                            return get_class($pageContents->getContent()) == "Evocatio\Bundle\CmsBundle\Entity\TextContent";
+                        })->getValues());
+
+        return $return_collection;
+    }
+
+    /**
+     * Add page_contents for textcontent type
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     * @return Page
+     */
+    public function addWidget(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $pageContents->setPage($this);
+        $this->page_contents[] = $pageContents;
+
+        return $this;
+    }
+
+    /**
+     * Remove page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     */
+    public function removeWidget(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->page_contents->removeElement($pageContents);
+    }
+
+    /**
+     * Get page_contents
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getWidgets() {
+        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getPageContents()->filter(function ($pageContents) {
+                            return get_class($pageContents->getContent()) == "Evocatio\Bundle\CmsBundle\Entity\Widget";
+                        })->getValues());
+
+        return $return_collection;
+    }
+
+    /**
+     * Add page_contents for textcontent type
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     * @return Page
+     */
+    public function addNewsWidget(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->addWidget($pageContents);
+
+        return $this;
+    }
+
+    /**
+     * Remove page_contents
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents
+     */
+    public function removeNewsWidget(\Evocatio\Bundle\CmsBundle\Entity\PageContent $pageContents) {
+        $this->removeWidget($pageContents);
+    }
+
+    public function getNewsWidgets() {
+        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getPageContents()->filter(function ($pageContents) {
+                            return get_class($pageContents->getContent()) == "Evocatio\Bundle\CmsBundle\Entity\NewsWidget";
+                        })->getValues());
+
+        return $return_collection;
+    }
+
+    /**
+     * Add files
+     *
+     * @param Website\Bundle\SiteBundle\Entity\FileCredit $files
+     * @return ServiceCredit
+     */
+    public function addFile(FilePage $files) {
+        $files->setParent($this);
+        $this->files[] = $files;
+
+        return $this;
+    }
+
+    /**
+     * Remove files
+     *
+     * @param Website\Bundle\SiteBundle\Entity\FileCredit $files
+     */
+    public function removeFile(FilePage $files) {
+        $files->setParent(NULL);
+        $this->files->removeElement($files);
+    }
+
+    /**
+     * Get files
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getFiles() {
+        return $this->files;
     }
 
 }

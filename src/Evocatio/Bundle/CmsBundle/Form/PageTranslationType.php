@@ -11,7 +11,11 @@ class PageTranslationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
+                ->add('status', 'choice', array(
+                    'choices' => array(0 => "Inactive", 1 => "Publish", 2 => "Draft")
+                ))
                 ->add('name')
+                ->add('slug')
                 ->add('trans_lang', null, array(
                     "property" => "name"
                     , "label" => false
@@ -20,6 +24,7 @@ class PageTranslationType extends AbstractType {
                                 ->orderByRank()
                                 ->getQueryBuilder();
                     }
+                    ,"empty_value" => false
                     , "attr" => array(
                         "class" => "hidden"
                     )

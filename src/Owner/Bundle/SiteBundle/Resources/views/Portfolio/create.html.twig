@@ -1,0 +1,25 @@
+{% extends "OwnerSiteBundle:Templates:multilangue_add_template.html.twig" %}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
+{% block formhead %}
+    {{ route_i18n.path('owner_site_portfolio_create', {}, ['create']) }}
+{% endblock formhead %}
+{% form_theme edit_form.translations "::Form/translations.html.twig" %}
+
+{% block save_button %}
+    {{ form_widget(edit_form.save) }}
+{% endblock save_button %}
+
+{% block fields %}
+<fieldset>
+    {{ form_rest(edit_form) }}
+</fieldset>
+{% endblock fields %}
+
+{% block widgets %}
+{% endblock widgets %}
+
+{% block back %}
+               {# <a href="{{ _route_crud.path('owner_site_portfolio_list', 'list') }}">
+                    Back to the list
+                </a>#}
+{% endblock back %}

@@ -12,7 +12,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+/**
+ * @Route("", requirements={
+ *      "rank" = "rank"
+ * })
+ */
 class FaqController extends ContainerAware {
+
+    protected $ROUTE_PREFIX = "evocatio_faq";
 
     /**
      * @Route("/faq")
@@ -25,20 +32,41 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * Finds and displays a post entity.
-     *
-     * @Route("/admin/{show}/faq/{id}")
+     * @Route("/admin/{rank}/faq")
      * @Method("GET")
-     * @Template()
+     * @Template
      */
-    public function showAction($id) {
-        $entity = $this->container->get("faq.read_handler")->get($id);
-        $delete_form = $this->container->get("faq.form_handler")->createDeleteForm($id);
+    public function rankAction() {
+        $form = $this->container->get("faq.form_handler")->createRankForm();
+        return array("edit_form" => $form->createView());
+    }
 
-        return array(
-            'entity' => $entity,
-            "delete_form" => $delete_form->createView()
+    /**
+     * @Route("/admin/{rank}/faq")
+     * @Method("POST")
+     * @Template
+     */
+    public function performRankingAction() {
+        $form = $this->container->get("faq.form_handler")->createRankForm();
+        $form->bind($this->container->get('Request'));
+
+
+        if ($form->isValid()) {
+            $this->container->get("faq.persistence_handler")->batchSave($form->get("faqs")->getData());
+            $this->container->get("session")->getFlashBag()->add("success", "ranking.success");
+
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_faq_list', array(), array('list')));
+        }
+        die("ranking error");
+
+        $this->container->get("session")->getFlashBag()->add("error", "create.error");
+
+        $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
+        $params = array(
+            'edit_form' => $form->createView()
         );
+
+        return new Response($this->container->get('templating')->render($template, $params));
     }
 
     /**
@@ -49,8 +77,11 @@ class FaqController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("faq.read_handler")->getAll();
-        return array("entities" => $entities);
+//        $entities = $this->container->get("faq.read_handler")->getAll();
+//        return array();
+        $form = $this->container->get("faq.form_handler")->createRankForm();
+        $entities = $form->get("faqs")->getData();
+        return array("edit_form" => $form->createView(), "entities" => $entities);
     }
 
     /**
@@ -72,19 +103,19 @@ class FaqController extends ContainerAware {
      */
     public function addAction() {
         $edit_form = $this->container->get("faq.form_handler")->createNewForm();
-        $edit_form->bindRequest($this->container->get('Request'));
+        $edit_form->bind($this->container->get('Request'));
 
 
         if ($edit_form->isValid()) {
             $this->container->get("faq.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->setFlash("success", "create.success");
+            $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return $this->redirectListAction();
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_faq_list', array(), array('list')));
         }
 
-        $this->container->get("session")->setFlash("error", "create.error");
+        $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
-        $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
+        $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
             'edit_form' => $edit_form->createView()
         );
@@ -122,14 +153,14 @@ class FaqController extends ContainerAware {
         $delete_form = $this->container->get("faq.form_handler")->createDeleteForm($entity->getId());
 
 
-        $edit_form->bindRequest($this->container->get('Request'));
+        $edit_form->bind($this->container->get('Request'));
         if ($edit_form->isValid()) {
             $this->container->get("faq.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->setFlash("success", "create.success");
+            $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return $this->redirectListAction();
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_faq_list', array(), array('list')));
         }
-        $this->container->get("session")->setFlash("error", "update.error");
+        $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
         $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
@@ -181,8 +212,11 @@ class FaqController extends ContainerAware {
         return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_FaqList'));
     }
 
-    protected function redirectListAction() {
-        return new RedirectResponse($this->container->get('router')->generate('evocatio_web_faq_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+    protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
+        foreach ($translate as $word) {
+            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes", $lang);
+        }
+        return $this->container->get('router')->generate($route, $parameters, $absolute);
     }
 
 }

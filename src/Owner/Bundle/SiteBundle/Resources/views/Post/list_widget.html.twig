@@ -7,7 +7,7 @@
                 <span>
    {{ entity.excerpt }}
                     </span> 
-                    <a href="{{ path('EvocatioWebBundle_PostShowSlug', { 'slug': entity.slug }) }}">show</a>
+                    <a href="{#{ path("owner_site_post_display", {"slug": entity.slug})}#}">show</a>
                 </li>
     {% else %}
                 Pas d'entité

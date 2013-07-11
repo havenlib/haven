@@ -9,25 +9,43 @@ function addAnItem(source, tag) {
     // This is to allow use to create many forms for a single type of relationship in a table inheritance situtation
     // -------------
     // #TODO : will have to redo the numbering, take into considaration that delete will remove some numbers in the so we can end up with 2 ..._2 if ..._1 was deleted <--- FIX PLZ
+    tag = tag || "__name__";
+    var regpat = new RegExp(tag, "gi")
     newnode = document.createElement("div");
-    //    fait la liste des id's qui sont identique à la source+_xxx (xxx étant des chiffre) et retourne seulement les chiffres. donc une liste des index existants sans les enfants qui pourrait être source_translation_xxx
-    list_ids = $("div[id^='" + source +"_']").map(function() {
-       sindex = $(this).attr("id").match(/\d+\.?\d*$/g);
-        if(this.id == source + "_" + sindex){
-            return sindex;
-        }
-    });
-//    choisi comme next id le plus gros chiffre de la liste d'id , +1
-    next_id = ($(list_ids).length ==0) ? 0 : Math.max.apply( null,list_ids)+1;
 
+    next_id = $("div").filter(function() {
+        return this.id.match('^' + source + '[_][0-9]*$');
+    }).length;
     newnode.innerHTML = $("#" + source).attr('data-prototype').replace(regpat, next_id);
     //     mets le selected sur l'option selon l'index du select pour mettre l' option en anglais plus nescessaire normalement à été corrigé dans translation.html.twig
 //    $(newnode.firstChild).find("select[id$='trans_lang']").each(function(index, element) {
 //        $(element).find("option:eq(" + index + ")").attr("selected", "selected");
 //    });
-    
+
     var ajouter = document.getElementById(source).appendChild(newnode.firstChild);
-    
+
+    // puts the ckeditor where it is needed, really it reloads for all ckeditor class under (ajouter)
+    addCkEditorTo(ajouter);
+
+    // clicker les nav langue pour afficher les bonne traductions, Sinon par défaut lors de l'ajout le nouveau item apparait en français'
+    $(".nav").filter(".lang").find(".active").click();
+}
+
+function addHtmlContent(source, tag, cible) {
+    // si il n'y a pas de tag définie mettre __name__ par default
+    tag = tag || "__name__";
+    var regpat = new RegExp(tag, "gi")
+    newnode = document.createElement("div");
+
+    next_id = $("div").filter(function() {
+        return this.id.match('^' + source + '[_][0-9]*$');
+    }).length;
+    newnode.innerHTML = $("#" + source).attr('data-prototype').replace(regpat, next_id);
+    //     mets le selected sur l'option selon l'index du select pour mettre l' option en anglais plus nescessaire normalement à été corrigé dans translation.html.twig
+
+    var ajouter = document.getElementById(cible).appendChild(newnode.firstChild);
+    $(ajouter).find("input[id$='area']").attr("value", cible);
+
     // puts the ckeditor where it is needed, really it reloads for all ckeditor class under (ajouter)
     addCkEditorTo(ajouter);
 
@@ -58,9 +76,13 @@ function addAnItem(source, tag) {
  }
  */
 function showFormElementClass(tab) {
+//    alert($(tab).attr("data-formname"));
 //    $("div[id^=" + $(tab).attr("data-formname")+"]").children("div.trans").hide();
-    $("div[id^=" + $(tab).attr("data-formname")+"]").filter("div[id*='translations_']").hide();
-    $("div[id^=" + $(tab).attr("data-formname")+"]").filter("div[id$='translations_"+ $(tab).attr("data-langindex") +"']").show();
+//    $("div[id^=" + $(tab).attr("data-formname") + "]").each(function() {
+//        alert($(this).html());
+//    });
+    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("[id*='translations_']").hide();
+    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("[id$='translations_" + $(tab).attr("data-langindex") + "']").show();
     $(tab).siblings("li").removeClass("active");
     //$("." + $(tab).attr("rel")).show();
     $(tab).addClass("active");
@@ -125,7 +147,7 @@ function ajaxRegister(form, data) {
     });
     return false;
 }
-function ajaxResetRequest(form, data) {
+function ajaxPostRequest(form, data) {
     var reset_infos = $(form).serialize();
     $.ajax({
         url: form.action,
@@ -145,7 +167,7 @@ function ajaxResetRequest(form, data) {
     return false;
 }
 
-$(document).ready(setCalendar());
+
 
 function getHiddenDateElement(picker_date) {
     return $("#" + $(picker_date).attr("id").replace("_picker", ""))
@@ -584,12 +606,6 @@ function prepareEditor(editor) {
     });
 }
 
-$(document).ready(function() {
-    $('textarea.ckeditor').each(function() {
-        prepareEditor(this);
-    });
-
-})
 
 function removeCkEditorFrom(target) {
     $(target).find("textarea.ckeditor").each(function() {
@@ -606,77 +622,51 @@ function cancelBubble(e) {
         evt.cancelBubble = true;
 }
 
-function moveServiceReference(current_service_id, where) {
-    current_element = $("#" + current_service_id);
-    next_element = (where === 'down') ? current_element.next() : current_element.prev();
+//function ajaxSearchEnterKey(element) {
+//    if (isEnterPress()) {
+//        $("#search-button").click();
+//        cancelKeypressEvent();
+//    }
+//}
 
-    if (next_element.hasClass("service_reference")) {
-        current_rank = $("#" + current_element.attr("id") + "_rank").val();
+//function cancelKeypressEvent() {
+//    window.event.cancelBubble = true;
+//    window.event.returnValue = false;
+//
+//    if (window.event.stopPropagation) {
+//        window.event.stopPropagation();
+//        window.event.preventDefault();
+//    }
+//}
 
+//function isEnterPress() { // the arguments here are the event (needed to detect which key is pressed), and the name of the resulting function to run if Enter has been pressed.
+//
+//    var keynum; // establish variable to contain the value of the key that was pressed
+//
+//    // now, set that variable equal to the key that was pressed
+//
+//    if (window.event) // ID
+//    {
+//        keynum = window.event.keyCode;
+//    }
+//    else if (e.which) // other browsers
+//    {
+//        keynum = window.event.which;
+//    }
+//
+//    if (keynum == 13) {  // if the key that was pressed was Enter (ascii code 13)
+//        return true; // run the resulting function name that was specified as an argument
+//    } else {
+//        return false;
+//    }
+//}
 
-        $(current_element).each(function() {
-            if (where === 'down') {
-                $(this).insertAfter($(this).next());
-            } else {
-                $(this).insertBefore($(this).prev());
-            }
-        })
-
-        $(current_element).parent().children().each(
-                function(key, value) {
-                    $("#" + $(this).attr("id") + "_rank").val(parseInt(key + 1));
-                }
-        );
-
-    }
-
-}
-
-function ajaxSearchEnterKey(element) {
-    if (isEnterPress()) {
-        $("#search-button").click();
-        cancelKeypressEvent();
-    }
-}
-
-function cancelKeypressEvent() {
-    window.event.cancelBubble = true;
-    window.event.returnValue = false;
-
-    if (window.event.stopPropagation) {
-        window.event.stopPropagation();
-        window.event.preventDefault();
-    }
-}
-
-function isEnterPress() { // the arguments here are the event (needed to detect which key is pressed), and the name of the resulting function to run if Enter has been pressed.
-
-    var keynum; // establish variable to contain the value of the key that was pressed
-
-    // now, set that variable equal to the key that was pressed
-
-    if (window.event) // ID
-    {
-        keynum = window.event.keyCode;
-    }
-    else if (e.which) // other browsers
-    {
-        keynum = window.event.which;
-    }
-
-    if (keynum == 13) {  // if the key that was pressed was Enter (ascii code 13)
-        return true; // run the resulting function name that was specified as an argument
-    } else {
-        return false;
-    }
-}
-
-function uncomplete(target){
-    if($(target+".done").length){
-        confirm('Cette action va enlever le complete de ce service');
-    }
-    $(target+".done").triggerHandler("click");
-}
+//function uncomplete(target) {
+//    if ($(target + ".done").length) {
+//        confirm('Cette action va enlever le complete de ce service');
+//    }
+//    $(target + ".done").triggerHandler("click");
+//}
 function remove_item_by_id(id) {
     if (confirm("Cette information va être définitivement supprimée lors de la sauvegarde.")) {
         $("#" + id).find("div.ckeditor").find("textarea").each(
@@ -690,3 +680,48 @@ function remove_item_by_id(id) {
         return false;
     }
 }
+
+$(document).ready(setCalendar());
+$(document).ready(function() {
+    $('textarea.ckeditor').each(function() {
+        prepareEditor(this);
+    });
+})
+
+/*
+ * 
+ * @param {type} current_element
+ * @param {type} where
+ * @returns {undefined}
+ */
+function rank(current_element, where) {
+    $(current_element).each(function() {
+        if (where === 'down') {
+            $(this).insertAfter($(this).next());
+        } else {
+            $(this).insertBefore($(this).prev());
+        }
+    });
+
+    $(current_element).parent().children().each(
+            function(key) {
+                $(this).find("input[id$='rank']").val(parseInt(key + 1));
+            }
+    );
+}
+
+/**
+ * 
+ * @param {type} element
+ * @param {type} cible
+ * @returns {undefined}
+ * 
+ * La cible peut être un input ou un textarea dans ce cas la ligne pourra être:
+ * 
+ * $(element).closest("form").find("texterea[id$='_title']").val(CKEDITOR.instances["title"].getData());
+ * $(element).closest("form").find("input[id$='_title']").val(CKEDITOR.instances["title"].getData());
+ */
+function updateContent(element, cible) {    
+    $(element).closest("form").find(cible + "[id$='" + $(element).attr("id").replace("_inline", "") + "']").val($(element).html());
+}
+
