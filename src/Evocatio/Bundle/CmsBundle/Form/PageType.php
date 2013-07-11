@@ -10,23 +10,47 @@ class PageType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('translations', 'collection', array(
+                ->add('translations', 'translation', array(
                     'type' => new PageTranslationType()
                     , 'allow_add' => true
                     , "label" => false
                     , 'prototype' => true
                     , 'prototype_name' => '__name_trans__'
-                    , 'by_reference' => false                    
+                    , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
                     )
-                    ))
-                ->add('htmlcontents', "collection", array(
-                    'type' => new HtmlContentType()
+                ))
+                ->add('template')
+                ->add('html_contents', "collection", array(
+                    'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\HtmlContentType')
                     , 'allow_add' => true
+                    , "label" => false
                     , 'allow_delete' => true
                     , 'prototype' => true
-                    , 'by_reference' => false                 
+                    , 'by_reference' => false
+                    , 'options' => array(
+                        'label' => false
+                    )
+                ))
+                ->add('text_contents', "collection", array(
+                    'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\TextContentType')
+                    , 'allow_add' => true
+                    , "label" => false
+                    , 'allow_delete' => true
+                    , 'prototype' => true
+                    , 'by_reference' => false
+                    , 'options' => array(
+                        'label' => false
+                    )
+                ))
+                ->add('news_widgets', "collection", array(
+                    'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\NewsWidgetType')
+                    , 'allow_add' => true
+                    , "label" => false
+                    , 'allow_delete' => true
+                    , 'prototype' => true
+                    , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
                     )

@@ -38,13 +38,13 @@ class CultureController extends ContainerAware {
     public function updateAction() {
         $current_language = $this->container->get("language.read_handler")->getBySymbol($this->container->get('Request')->get('display_language'));
         $edit_form = $this->container->get("culture.form_handler")->createEditForm($current_language->getSymbol());
-        $edit_form->bindRequest($this->container->get('Request'));
+        $edit_form->bind($this->container->get('Request'));
 
         if ($edit_form->isValid()) {
-            
+
             $this->container->get("culture.persistence_handler")->save($edit_form->get("symboles")->getData(), $current_language->getSymbol());
             return new RedirectResponse($this->container->get('router')->generate('evocatio_core_culture_edit', array('edit' => $this->container->get('translator')->trans("edit", array(), "routes"),
-                'display_language' => $current_language->getSymbol())));
+                        'display_language' => $current_language->getSymbol())));
         }
 
         return array('form' => $edit_form->createView());
@@ -101,7 +101,6 @@ class CultureController extends ContainerAware {
             }
         }
     }
-
 
 }
 

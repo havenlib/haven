@@ -1,14 +1,27 @@
-{% extends "OwnerSiteBundle:Template:multilangue_add_template.html.twig" %}
+{% extends "OwnerSiteBundle:Templates:multilangue_add_template.html.twig" %}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block formhead %}
-    {{ _route_crud.path('owner_site_faq_create', 'create') }}
+    {{ route_i18n.path('owner_site_faq_create', {}, ['user', 'create']) }}
 {% endblock formhead %}
 {% form_theme edit_form.translations "::Form/translations.html.twig" %}
-{% block form %}
+
+{% block save_button %}
+    {{ form_widget(edit_form.save) }}
+{% endblock save_button %}
+
+{% block fields %}
 <fieldset>
-  
-                        {{ form_rest(edit_form) }}
-                </fieldset>
-{% endblock form %}
+    {{ form_rest(edit_form) }}
+</fieldset>
+{% endblock fields %}
+
+{% block widgets %}
+<h2>Ordonner</h2>
+{#% render(controller("OwnerSiteBundle:Faq:rank")) %#}
+<!--button>
+    <img src="/images/refresh.png" width="30" />
+</button-->
+{% endblock widgets %}
 
 {% block back %}
                {# <a href="{{ _route_crud.path('owner_site_faq_list', 'list') }}">

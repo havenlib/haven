@@ -1,6 +1,7 @@
 {%  extends "OwnerSiteBundle:User:create.html.twig" %}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block formhead %}
-    {{ _route_suffix.path('owner_site_user_edit', 'edit','user', entity.id) }}
+    {{ route_i18n.path('owner_site_user_edit', {'id': entity.id} , ['user', 'edit']) }}
 {% endblock formhead %}
 {% block delete %}
 {#<li>

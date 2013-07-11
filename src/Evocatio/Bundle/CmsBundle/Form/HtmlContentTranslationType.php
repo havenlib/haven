@@ -12,10 +12,10 @@ class HtmlContentTranslationType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('content', null, array(
-                    "attr" => array(
-                        "class" => "ckeditor"
+                    "required" => false
+                    , "attr" => array(
+                        "class" => 'ckeditor'
                     )
-                    ,"required" =>false
                 ))
                 ->add('trans_lang', null, array(
                     "property" => "name"

@@ -88,12 +88,12 @@ class PurchaseController extends ContainerAware {
         $edit_form->bindRequest($this->container->get('Request'));
 
         if ($this->processForm($edit_form) === true) {
-            $this->container->get("session")->setFlash("success", "create.success");
+            $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_PurchaseList'));
         }
 
-        $this->container->get("session")->setFlash("error", "create.error");
+        $this->container->get("session")->getFlashBag()->add("error", "create.error");
         return array(
             'edit_form' => $edit_form->createView()
         );
@@ -139,11 +139,11 @@ class PurchaseController extends ContainerAware {
 
         $edit_form->bindRequest($this->container->get('Request'));
         if ($this->processForm($edit_form) === true) {
-            $this->container->get("session")->setFlash("success", "update.success");
+            $this->container->get("session")->getFlashBag()->add("success", "update.success");
 
             return new RedirectResponse($this->container->get('router')->generate('EvocatioPosBundle_PurchaseList'));
         }
-        $this->container->get("session")->setFlash("error", "update.error");
+        $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
         return array(
             'entity' => $entity,

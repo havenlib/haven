@@ -1,0 +1,48 @@
+{%  extends "OwnerSiteBundle::base_admin.html.twig" %}
+{# Note: to make a multiple upload file in twig add [] to the full_name
+                        {{ form_widget(translation.file,{'full_name': translation.file.get('full_name') ~ '[]'})}} 
+#}
+{% block inside_content %}
+<h1>Ajouter</h1>
+    {% if edit_form.translations.vars.prototype is defined %}  
+    <div class="nav nav-tabs lang">{# ajouter le lang comme class pour que le javascript puisse cliqué dessus lors de l'ajout d'items addAnItem, #}
+        {% set vars = edit_form.translations.vars.prototype.0.trans_lang.vars %}
+        {% for key, translation in vars["choices"] %}
+            <li class="{% if loop.index == 1 %} active{% endif%}" data-formname="{{ edit_form.vars.id }}" data-langindex="{{ loop.index0 }}" onclick="showFormElementClass(this);return false"><a href="#" onclick="return false" data-toggle="tab">{{ translation.label }}</a></li>
+        {% endfor %}
+    </div>
+    {% else %}
+        na pas
+    {% endif %}
+{{ form_errors(edit_form)}}
+<div class="edit-form">
+    <form action="{% block formhead %}{% endblock formhead %}" method="post" {{ form_enctype(edit_form) }} >
+    {% block form %} {% endblock form %}
+    <div>
+        <div>
+            <button type="submit" class="btn">Ok</button>
+        </div>
+    </div>
+    </form>
+    {% block template %}
+    {% endblock template %}
+    {% block available_content %}
+    {% endblock available_content %}
+    {% block back %}
+    <ul>
+        {% block delete %}
+        {% endblock delete %}
+    </ul>
+    {% endblock back %}
+</div>
+{% endblock inside_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/sig.js" type="text/javascript"></script>
+{% endblock javascripts %}
+
+{# 
+so far takes a form block, delete block and, formhead block
+should add a title and h1 block
+#}

@@ -64,14 +64,21 @@ class Post extends Translatable {
 
     /**
      * @ORM\OneToMany(targetEntity="PostTranslation", mappedBy="parent", cascade={"persist"})
+     * @Assert\Valid
      */
     protected $translations;
-    
+
+    /**
+     * @ORM\ManyToMany(targetEntity="\Evocatio\Bundle\CoreBundle\Entity\Category", inversedBy="posts", cascade={"persist"})
+     * @ORM\JoinTable(name="PostsCatgories")
+     */
+    protected $categories;
+
     /**
      * @Assert\File(maxSize="6000000")
      */
     public $file;
-    
+
     public function __construct() {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
@@ -86,9 +93,11 @@ class Post extends Translatable {
     public function getId() {
         return $this->id;
     }
-    public function getFile(){
+
+    public function getFile() {
         return $this->file;
     }
+
     /**
      * Set created_at
      *
@@ -104,7 +113,7 @@ class Post extends Translatable {
      * @return datetime
      */
     public function getCreatedAt($format = null) {
-        return $format?$this->getFormated($this->created_at,$format):$this->created_at;
+        return $format ? $this->getFormated($this->created_at, $format) : $this->created_at;
     }
 
     /**
@@ -122,7 +131,7 @@ class Post extends Translatable {
      * @return datetime
      */
     public function getUpdatedAt($format = null) {
-        return $format?$this->getFormated($this->updated_at,$format):$this->updated_at;
+        return $format ? $this->getFormated($this->updated_at, $format) : $this->updated_at;
     }
 
     /**
@@ -161,7 +170,7 @@ class Post extends Translatable {
      * @return datetime
      */
     public function getPostbeginAt($format = null) {
-        return $format?$this->getFormated($this->postbegin_at,$format):$this->postbegin_at;
+        return $format ? $this->getFormated($this->postbegin_at, $format) : $this->postbegin_at;
     }
 
     /**
@@ -179,7 +188,7 @@ class Post extends Translatable {
      * @return datetime
      */
     public function getPostendAt($format = null) {
-        return $format?$this->getFormated($this->postend_at,$format):$this->postend_at;
+        return $format ? $this->getFormated($this->postend_at, $format) : $this->postend_at;
     }
 
     /**
@@ -228,9 +237,8 @@ class Post extends Translatable {
         return $this->getTranslated('path', $lang);
     }
 
-    private function getFormated($date, $format)
-    {
-        return $date?strftime($format, $date->getTimestamp()):"";
+    private function getFormated($date, $format) {
+        return $date ? strftime($format, $date->getTimestamp()) : "";
     }
 
     /**
@@ -239,11 +247,10 @@ class Post extends Translatable {
      * @param Evocatio\Bundle\WebBundle\Entity\PostTranslation $translations
      * @return Post
      */
-    public function addTranslation(PostTranslation $translations)
-    {
+    public function addTranslation(PostTranslation $translations) {
         $translations->setParent($this);
         $this->translations[] = $translations;
-    
+
         return $this;
     }
 
@@ -252,8 +259,62 @@ class Post extends Translatable {
      *
      * @param Evocatio\Bundle\WebBundle\Entity\PostTranslation $translations
      */
-    public function removeTranslation(PostTranslation $translations)
-    {
+    public function removeTranslation(PostTranslation $translations) {
         $this->translations->removeElement($translations);
+    }
+
+    /**
+     * Add categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
+     * @return Post
+     */
+    public function addCategory(\Evocatio\Bundle\CoreBundle\Entity\Category $category) {
+        $category->addPost($this);
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
+     */
+    public function removeCategory(\Evocatio\Bundle\CoreBundle\Entity\Category $category) {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCategories() {
+        return $this->categories;
+    }
+
+
+    /**
+     * Add categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
+     * @return Post
+     */
+    public function addCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $categories)
+    {
+        $this->categories[] = $categories;
+    
+        return $this;
+    }
+
+    /**
+     * Remove categories
+     *
+     * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
+     */
+    public function removeCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $categories)
+    {
+        $this->categories->removeElement($categories);
     }
 }

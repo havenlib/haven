@@ -2,7 +2,6 @@
 
 namespace Evocatio\Bundle\WebBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use Evocatio\Bundle\CoreBundle\Generic\StatusRepository;
 use Evocatio\Bundle\WebBundle\Entity\Faq;
 
@@ -34,6 +33,11 @@ class FaqRepository extends StatusRepository {
         return $this->getResult();
     }
 
+    public function findAllOrderedByRank() {
+        $this->order('rank');
+        return $this->getResult();
+    }
+
     private function filterByStatus($status) {
         if (is_null($this->query_builder))
             $this->query_builder = $this->createBaseBuilder();
@@ -48,6 +52,15 @@ class FaqRepository extends StatusRepository {
         $this->query_builder = $this->createQueryBuilder("e");
         return $this->query_builder->select("e, t")
                         ->leftJoin("e.translations", "t");
+    }
+
+    public function order($field, $direction = 'ASC') {
+        if (is_null($this->query_builder))
+            $this->query_builder = $this->createQueryBuilder("e");
+
+        $this->query_builder->orderBy('e.' . $field, $direction);
+
+        return $this;
     }
 
     public function getResult() {

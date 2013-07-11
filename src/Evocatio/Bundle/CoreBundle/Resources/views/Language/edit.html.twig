@@ -3,8 +3,7 @@
 
 {% block title %}Info sur la translation{% endblock %}
 
-{% block inside_content %}
-{{ app.session.flash('notice')|trans }}
+{% block inside_theater %}
 <ul>
 {% for language in languages %}
 <li>
@@ -20,6 +19,6 @@
 
 <input type="submit" value="go" />
 </form>
-{% endblock inside_content %}
+{% endblock inside_theater %}
 
 

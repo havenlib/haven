@@ -21,7 +21,7 @@ use Evocatio\Bundle\SecurityBundle\Form\UserType as Form;
 class LoginController extends ContainerAware {
 
     /**
-     *  @Route("/auth/login", name="EvocatioSecurityBundle_login")
+     *  @Route("/auth/login")
      *  @Method("GET")
      */
     public function loginAction() {
@@ -92,40 +92,40 @@ class LoginController extends ContainerAware {
      * reset confirmation by the user
      * @Route("/auth/confirmation/{uuid}", name="EvocatioSecurityBundle_resetConfirmation") 
      */
-    public function resetConfirmationAction($uuid) {
-        $em = $this->container->get("doctrine")->getEntityManager();
-        $request = $this->container->get("request");
-        $confirm_data = $request->get("evocatio_bundle_securitybundle_confirmtype");
-        $user_reset = $em->getRepository("EvocatioSecurityBundle:UserReset")->findOneBy(array("uuid" => $uuid));
-        if (null == $user_reset) {
-            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException("page.pas.trouve");
-        }
-
-        $confirm_form = $this->container->get("form.factory")->create(new \Evocatio\Bundle\SecurityBundle\Form\ConfirmType());
-
-        $templating = $this->container->get("templating");
-        $render = null;
-        if ($request->getMethod() == "POST") {
-            $confirm_form->bind($confirm_data);
-            if ($confirm_form->isValid()) {
-                if ($user_reset->getConfirmation() == $confirm_data["confirmation"] && !null == $user_reset->getUser()) {
-                    $factory = $this->container->get('security.encoder_factory');
-                    $user = $user_reset->getUser();
-                    $encoder = $factory->getEncoder($user);
-                    $user->setPassword($encoder->encodePassword($confirm_data["plainPassword"]["first"], $user->getSalt()));
-                } else {
-                    throw new \Exception("the user cannot be found or the reset doesnt exist");
-                }
-                $em->persist($user);
-                $em->remove($user_reset);
-                $em->flush();
-                $this->container->get("session")->setFlash("success", "c'est réussi");
-
-                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->container->get("router")->generate("EvocatioSecurityBundle_homepage"));
-            }
-        }
-        return new Response($templating->render("EvocatioSecurityBundle:Admin:resetConfirmation.html.twig", array("confirm_form" => $confirm_form->createView(), "uuid" => $uuid)));
-    }
+//    public function resetConfirmationAction($uuid) {
+//        $em = $this->container->get("doctrine")->getEntityManager();
+//        $request = $this->container->get("request");
+//        $confirm_data = $request->get("evocatio_bundle_securitybundle_confirmtype");
+//        $user_reset = $em->getRepository("EvocatioSecurityBundle:UserReset")->findOneBy(array("uuid" => $uuid));
+//        if (null == $user_reset) {
+//            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException("page.pas.trouve");
+//        }
+//
+//        $confirm_form = $this->container->get("form.factory")->create(new \Evocatio\Bundle\SecurityBundle\Form\ConfirmType());
+//
+//        $templating = $this->container->get("templating");
+//        $render = null;
+//        if ($request->getMethod() == "POST") {
+//            $confirm_form->bind($confirm_data);
+//            if ($confirm_form->isValid()) {
+//                if ($user_reset->getConfirmation() == $confirm_data["confirmation"] && !null == $user_reset->getUser()) {
+//                    $factory = $this->container->get('security.encoder_factory');
+//                    $user = $user_reset->getUser();
+//                    $encoder = $factory->getEncoder($user);
+//                    $user->setPassword($encoder->encodePassword($confirm_data["plainPassword"]["first"], $user->getSalt()));
+//                } else {
+//                    throw new \Exception("the user cannot be found or the reset doesnt exist");
+//                }
+//                $em->persist($user);
+//                $em->remove($user_reset);
+//                $em->flush();
+//                $this->container->get("session")->getFlashBag()->add("success", "c'est réussi");
+//
+//                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->container->get("router")->generate("EvocatioSecurityBundle_homepage"));
+//            }
+//        }
+//        return new Response($templating->render("EvocatioSecurityBundle:Admin:resetConfirmation.html.twig", array("confirm_form" => $confirm_form->createView(), "uuid" => $uuid)));
+//    }
 
     /**
      * @Route("/auth/reset_request", name="EvocatioSecurityBundle_resetRequest") 

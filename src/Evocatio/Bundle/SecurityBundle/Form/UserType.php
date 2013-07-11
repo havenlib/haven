@@ -16,10 +16,16 @@ class UserType extends AbstractType {
                     , "first_name" => "password"
                     , "second_name" => "confirmation"
                     , "invalid_message" => "mot.de.passe.pas.identiques"
-                    ,"required" => false
-                    ,'label' => 'Password'
-                    ))
-                ->add('status')
+                    , "required" => false
+                    , 'label' => 'Password'
+                ))
+                ->add('status', 'choice', array(
+                    'choices' => array(
+                        1 => 'actif'
+                        , 2 => 'inactif'
+                    )
+                    , 'multiple' => false
+                ))
                 ->add('locked', 'checkbox', array("required" => false))
 
         ;

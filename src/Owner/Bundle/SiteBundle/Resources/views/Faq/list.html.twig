@@ -1,12 +1,12 @@
 {%  extends "OwnerSiteBundle::base_admin.html.twig" %}
+{#% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block inside_content %}
 <dl>
     {% for entity in entities %}
         <dt>
             <div>Status: {{ entity.status?'Published':'Inactive' }}</div> 
             {{ entity.question }}
-            <a href="{{ _route_crud.path('owner_site_faq_edit', 'edit', entity.id) }}">edit</a> 
-            <a href="{{ _route_crud.path('owner_site_faq_show', 'show',entity.id) }}">show</a> 
+            <a href="{{ route_i18n.path('owner_site_faq_edit', {'id': entity.id} , ['edit']) }}">edit</a> 
         </dt>
         <dd>{{ entity.reponse | raw }}</dd>
     {% else %}
@@ -20,9 +20,30 @@
         </a>
     </li>
 </ul>#}
-{% endblock inside_content %}
+{#% endblock inside_content %}
 {% block aside %}
     {#% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %#}
-{% endblock aside %}
+{#% endblock aside %#}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
+{% block inside_content %}
+{% block fields %}
+<form class="form" action="{{ route_i18n.path('owner_site_faq_rank', {}, ['rank']) }}" method="POST">
+    <fieldset>
+        <ul>
+        {% for form in edit_form.faqs %}
+        <li class="faq">
+            <a class="btn rank up" onclick="rank($(this).parent(), 'up');"><img src="/images/arrow_up.png" /></a>
+            <a class="btn rank down" onclick="rank($(this).parent(), 'down');"><img src="/images/arrow_down.png" /></a>
+            <h4>{{ form.vars["data"].question }}</h4>
+            <p>{{ form.vars["data"].reponse }}</p>
+            {{ form_widget(form, {'attr': {'class': 'hidden'}}) }}
+        </li>    
+        {% endfor %}
+        </ul>
+    {{ form_rest(edit_form) }}
+    </fieldset>
+</form>
+{% endblock fields %}
+{% endblock inside_content %}
 
 

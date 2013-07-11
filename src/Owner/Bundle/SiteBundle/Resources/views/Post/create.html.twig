@@ -1,19 +1,31 @@
-{%  extends "OwnerSiteBundle:Template:multilangue_add_template.html.twig" %}
+{%  extends "OwnerSiteBundle:Templates:multilangue_add_template.html.twig" %}
 {% block formhead %}
     {{  _route_crud.path('owner_site_post_create',  'create') }}
 {% endblock formhead %}
 
 {#% form_theme edit_form "OwnerSiteBundle:Form:formulator.html.twig" %#}
-{% form_theme edit_form "::Form/generic.html.twig" %}
-{% block form %}
+{#% form_theme edit_form "::Form/inline.html.twig" %#}
+{% form_theme edit_form.translations "::Form/translations.html.twig" %}
+
+{% block save_button %}
+    {{ form_widget(edit_form.save) }}
+{% endblock save_button %}
+
+{% block fields %}
+
 <fieldset>
-   
-                        {{ form_widget(edit_form) }}
-            </fieldset>
-{% endblock form %}
+{{ form_rest(edit_form) }}
+</fieldset>
+{% endblock fields %}
+
+{% block widgets %}
+<div >
+    <h2>Gallerie d'image</h2>
+</div>
+{% endblock widgets %}
 
 {% block back %}
-            <a href="{{ _route_crud.path('owner_site_post_list', 'list') }}">
-                Back to the list
-            </a>
+    <a href="{{ _route_crud.path('owner_site_post_list', 'list') }}">
+        Back to the list
+    </a>
 {% endblock back %}

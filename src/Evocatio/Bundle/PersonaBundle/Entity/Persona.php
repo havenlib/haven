@@ -16,12 +16,8 @@ use \ReflectionClass;
  * @ORM\Entity(repositoryClass="Evocatio\Bundle\PersonaBundle\Repository\PersonaRepository")
  * @InheritanceType("JOINED")
  * @DiscriminatorColumn(name="discr", type="string")
- * @DiscriminatorMap({
- * "person" = "Evocatio\Bundle\PersonaBundle\Entity\Person", 
- * "company" = "Evocatio\Bundle\PersonaBundle\Entity\Company"
- * })
  */
-class Persona {
+class Persona  {
 
     /**
      * @ORM\Id
@@ -143,7 +139,7 @@ class Persona {
     }
 
     /**
-     * Add coordinate
+     * Add map
      *
      * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
      * @return Persona
@@ -153,7 +149,7 @@ class Persona {
     }
 
     /**
-     * Remove coordinate
+     * Remove map
      *
      * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
      */
@@ -162,14 +158,15 @@ class Persona {
     }
 
     /**
-     * Get coordinate
-     *
+     * Get map
      * @return Doctrine\Common\Collections\Collection 
      */
     public function getMap() {
-        return $this->getCoordinate()->filter(function ($coordinate) {
+        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getCoordinate()->filter(function ($coordinate) {
                             return get_class($coordinate) == "Evocatio\Bundle\PersonaBundle\Entity\Map";
-                        });
+                        })->getValues());
+
+        return $return_collection;
     }
 
     /**
@@ -193,13 +190,14 @@ class Persona {
 
     /**
      * Get coordinate
-     *
      * @return Doctrine\Common\Collections\Collection 
      */
     public function getPostal() {
-        return $this->getCoordinate()->filter(function ($coordinate) {
+        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getCoordinate()->filter(function ($coordinate) {
                             return get_class($coordinate) == "Evocatio\Bundle\PersonaBundle\Entity\Postal";
-                        });
+                        })->getValues());
+
+        return $return_collection;
     }
 
     /**
@@ -223,13 +221,15 @@ class Persona {
 
     /**
      * Get coordinate
-     *
+     * @Assert\Valid()
      * @return Doctrine\Common\Collections\Collection 
      */
     public function getWeb() {
-        return $this->getCoordinate()->filter(function ($coordinate) {
+        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getCoordinate()->filter(function ($coordinate) {
                             return get_class($coordinate) == "Evocatio\Bundle\PersonaBundle\Entity\Web";
-                        });
+                        })->getValues());
+
+        return $return_collection;
     }
 
     /**
@@ -253,17 +253,80 @@ class Persona {
 
     /**
      * Get coordinate
-     *
      * @return Doctrine\Common\Collections\Collection 
      */
     public function getTelephone() {
-        return $this->getCoordinate()->filter(function ($coordinate) {
+        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getCoordinate()->filter(function ($coordinate) {
                             return get_class($coordinate) == "Evocatio\Bundle\PersonaBundle\Entity\Telephone";
-                        });
+                        })->getValues());
+
+        return $return_collection;
     }
+//
+//    /**
+//     * Add coordinate
+//     *
+//     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+//     * @return Persona
+//     */
+//    public function addCell(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+//        return $this->addCoordinate($coordinate);
+//    }
+//
+//    /**
+//     * Remove coordinate
+//     *
+//     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+//     */
+//    public function removeCell(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+//        $this->removeCoordinate($coordinate);
+//    }
+//
+//    /**
+//     * Get coordinate
+//     * @return Doctrine\Common\Collections\Collection 
+//     */
+//    public function getCell() {
+//        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getCoordinate()->filter(function ($coordinate) {
+//                            return get_class($coordinate) == "Evocatio\Bundle\PersonaBundle\Entity\Cell";
+//                        })->getValues());
+//
+//        return $return_collection;
+//    }
+//
+//    /**
+//     * Add coordinate
+//     *
+//     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+//     * @return Persona
+//     */
+//    public function addFax(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+//        return $this->addCoordinate($coordinate);
+//    }
+//
+//    /**
+//     * Remove coordinate
+//     *
+//     * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
+//     */
+//    public function removeFax(\Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate) {
+//        $this->removeCoordinate($coordinate);
+//    }
+//
+//    /**
+//     * Get coordinate
+//     * @return Doctrine\Common\Collections\Collection 
+//     */
+//    public function getFax() {
+//        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getCoordinate()->filter(function ($coordinate) {
+//                            return get_class($coordinate) == "Evocatio\Bundle\PersonaBundle\Entity\Fax";
+//                        })->getValues());
+//
+//        return $return_collection;
+//    }
 
     /**
-     * Add coordinate
+     * Add time
      *
      * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
      * @return Persona
@@ -273,7 +336,7 @@ class Persona {
     }
 
     /**
-     * Remove coordinate
+     * Remove time
      *
      * @param Evocatio\Bundle\PersonaBundle\Entity\Coordinate $coordinate
      */
@@ -282,19 +345,14 @@ class Persona {
     }
 
     /**
-     * Get coordinate
-     *
+     * Get time
      * @return Doctrine\Common\Collections\Collection 
      */
     public function getTime() {
-        return $this->getCoordinate()->filter(function ($coordinate) {
+        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getCoordinate()->filter(function ($coordinate) {
                             return get_class($coordinate) == "Evocatio\Bundle\PersonaBundle\Entity\Time";
-                        });
-    }
+                        })->getValues());
 
-    public static function getDiscriminatorMap() {
-        $reader = new AnnotationReader();
-        return $reader->getClassAnnotation(new ReflectionClass(__CLASS__), "\Doctrine\ORM\Mapping\DiscriminatorMap");
+        return $return_collection;
     }
-
 }

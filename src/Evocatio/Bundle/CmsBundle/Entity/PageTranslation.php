@@ -3,15 +3,19 @@
 namespace Evocatio\Bundle\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Evocatio\Bundle\CoreBundle\Entity\TranslationMappedBase;
+use \Evocatio\Bundle\CoreBundle\Entity\SluggableMappedBase;
 
 /**
  * PageTranslation
  *
- * @ORM\Table()
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="slug_unique",columns={"trans_lang_id","slug"})})
  * @ORM\Entity(repositoryClass="Evocatio\Bundle\CmsBundle\Repository\PageTranslationRepository")
  */
-class PageTranslation extends TranslationMappedBase {
+class PageTranslation extends SluggableMappedBase {
+
+    const STATUS_INACTIVE = 0;
+    const STATUS_PUBLISHED = 1;
+    const STATUS_DRAFT = 2;
 
     /**
      * @var integer
@@ -23,9 +27,16 @@ class PageTranslation extends TranslationMappedBase {
     private $id;
 
     /**
+     * @var boolean $status
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
@@ -35,6 +46,11 @@ class PageTranslation extends TranslationMappedBase {
      */
     protected $parent;
 
+    public function __construct() {
+        $this->setStatus(self::STATUS_DRAFT);
+        parent::construct;
+    }
+    
     /**
      * Get id
      *
@@ -51,7 +67,9 @@ class PageTranslation extends TranslationMappedBase {
      * @return PageTranslation
      */
     public function setName($name) {
+
         $this->name = $name;
+        $this->setSlug($name);
 
         return $this;
     }
@@ -65,17 +83,15 @@ class PageTranslation extends TranslationMappedBase {
         return $this->name;
     }
 
-
     /**
      * Set parent
      *
      * @param \Evocatio\Bundle\CmsBundle\Entity\Page $parent
      * @return PageTranslation
      */
-    public function setParent(\Evocatio\Bundle\CmsBundle\Entity\Page $parent = null)
-    {
+    public function setParent(\Evocatio\Bundle\CmsBundle\Entity\Page $parent = null) {
         $this->parent = $parent;
-    
+
         return $this;
     }
 
@@ -84,8 +100,31 @@ class PageTranslation extends TranslationMappedBase {
      *
      * @return \Evocatio\Bundle\CmsBundle\Entity\Page 
      */
-    public function getParent()
-    {
+    public function getParent() {
         return $this->parent;
+    }
+
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return PageTranslation
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

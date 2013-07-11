@@ -6,6 +6,26 @@
                 <source>Symfony2 is great</source>
                 <target>J'aime Symfony2</target>
             </trans-unit>
+            <trans-unit id="2">
+                <source>save.faq</source>
+                <target>Sauvegarder la FAQ</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>rank</source>
+                <target>Ordonner</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>the.team</source>
+                <target>L'équipe</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>male</source>
+                <target>M</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>female</source>
+                <target>F</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

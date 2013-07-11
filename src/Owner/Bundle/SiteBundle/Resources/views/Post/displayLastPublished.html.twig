@@ -1,0 +1,11 @@
+<ul>
+    {% for entity in entities %}
+    <li>
+            <h4>{{entity.title}}</h4>
+            <p>
+                {{entity.content | raw}}
+            </p>
+            <a href="{{ path("owner_site_post_display", {"slug": entity.slug})}}">Voir...</a>
+    </li>
+    {% endfor %}
+</ul>

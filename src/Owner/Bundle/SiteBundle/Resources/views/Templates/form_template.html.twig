@@ -1,0 +1,27 @@
+{%  extends "OwnerSiteBundle::base.html.twig" %}
+{% block inside_theater %}
+    {{ form_errors(edit_form)}}
+    {% block form %}
+    <form action="{% block formaction %}{% endblock formaction %}" method="post" {{ form_enctype(edit_form) }} >
+        {% block inside_form %}
+            {% block fields %}
+            {% endblock fields %}
+            <div>
+                <div>
+                    <input type="submit" value="OK">
+                </div>
+            </div>
+        {% endblock inside_form %} 
+    </form>
+    {% endblock form %}
+{% endblock inside_theater %}
+
+{% block javascripts %}
+    {{ parent() }}
+        <script src="/js/sig.js" type="text/javascript"></script>
+{% endblock javascripts %}
+
+{# 
+so far takes a form block, delete block and, formhead block
+should add a title and h1 block
+#}
