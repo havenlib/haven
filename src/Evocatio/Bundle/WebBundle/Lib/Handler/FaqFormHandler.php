@@ -8,7 +8,6 @@ use Evocatio\Bundle\CoreBundle\Lib\Handler\FormHandler;
 class FaqFormHandler extends FormHandler {
 
     /**
-     * Creates an edit_form with all the translations objects added for status languages
      * @return Form 
      */
     public function createRankForm() {
