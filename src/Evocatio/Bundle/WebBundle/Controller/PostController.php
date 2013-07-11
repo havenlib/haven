@@ -29,6 +29,44 @@ class PostController extends ContainerAware {
     }
 
     /**
+     * @Route("/admin/{rank}/post")
+     * @Method("GET")
+     * @Template
+     */
+    public function rankAction() {
+        $form = $this->container->get("post.form_handler")->createRankForm();
+        return array("edit_form" => $form->createView());
+    }
+
+    /**
+     * @Route("/admin/{rank}/post")
+     * @Method("POST")
+     * @Template
+     */
+    public function performRankingAction() {
+        $form = $this->container->get("post.form_handler")->createRankForm();
+        $form->bind($this->container->get('Request'));
+
+
+        if ($form->isValid()) {
+            $this->container->get("post.persistence_handler")->batchSave($form->get("posts")->getData());
+            $this->container->get("session")->getFlashBag()->add("success", "ranking.success");
+
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_post_rank', array(), array('rank')));
+        }
+        die("ranking error");
+
+        $this->container->get("session")->getFlashBag()->add("error", "create.error");
+
+        $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
+        $params = array(
+            'edit_form' => $form->createView()
+        );
+
+        return new Response($this->container->get('templating')->render($template, $params));
+    }
+
+    /**
      * @Route("/admin/{show}/post/{id}", defaults={"show" = "afficher"})
      * @Method("GET")
      * @Template()
