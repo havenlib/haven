@@ -719,3 +719,17 @@ function updateContent(element, cible) {
     $(element).closest("form").find(cible + "[id$='" + $(element).attr("id").replace("_inline", "") + "']").val($(element).html());
 }
 
+$(function() {
+    $(".sortable").sortable({
+        revert: true,
+        update: function(event, ui) {
+            ui.item.closest(".sortable").children().each(
+                    function(key, value) {
+                        $(this).find("input[name$='rank']").val(parseInt(key + 1));
+                    }
+            );
+            ui.item.find("button").removeClass("hidden");
+        }
+    });
+})
+
