@@ -53,8 +53,8 @@ class Page extends Translatable {
         return $this->id;
     }
 
-    public function getName($lang = null) {
-        return $this->getTranslated('Name', $lang);
+    public function getTitle($lang = null) {
+        return $this->getTranslated('Title', $lang);
     }
 
     /**

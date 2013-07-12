@@ -19,9 +19,6 @@ class PageReadHandler {
 
         $entity = $this->em->getRepository("EvocatioCmsBundle:Page")->find($id);
 
-        if (!$entity)
-            throw new \Exception('entity.not.found');
-
         return $entity;
     }
 
@@ -33,6 +30,11 @@ class PageReadHandler {
         return $this->em->getRepository("EvocatioCmsBundle:Page")->findAllPublished();
     }
 
+    public function getBySlugForLanguage($slug, $language){
+        $entity = $this->em->getRepository("EvocatioCmsBundle:Page")->findByLocalizedSlug( $slug, $language);
+
+        return $entity;        
+    }
 }
 
 ?>

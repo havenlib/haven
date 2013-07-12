@@ -27,10 +27,18 @@
                 <target>F</target>
             </trans-unit>
             <trans-unit id="7">
+                <source>save.page</source>
+                <target>Save this page</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>save.post</source>
+                <target>Save this news</target>
+            </trans-unit>
+            <trans-unit id="9">
                 <source>post.list</source>
                 <target>Post list</target>
             </trans-unit>
-            <trans-unit id="8">
+            <trans-unit id="10">
                 <source>faq.list</source>
                 <target>Faq list</target>
             </trans-unit>
