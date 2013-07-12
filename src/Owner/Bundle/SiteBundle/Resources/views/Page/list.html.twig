@@ -4,7 +4,7 @@
     <dl>
         {% for entity in entities %}
             <div>
-                <div> {{ entity.name }}</div> 
+                <div> {{ entity.title }}</div> 
                 <a href="{{ _route_crud.edit('owner_site_page_edit',  entity.id) }}">edit</a> 
                 <a href="{{ _route_crud.show('owner_site_page_show', entity.id) }}">show</a> 
             </div>

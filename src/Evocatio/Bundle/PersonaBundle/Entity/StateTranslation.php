@@ -68,7 +68,7 @@ class StateTranslation {
      *
      * @param Evocatio\Bundle\PersonaBundle\Entity\State $state
      */
-    public function setState(\Evocatio\Bundle\PersonaBundleEntity\State $state)
+    public function setState(\Evocatio\Bundle\PersonaBundle\Entity\State $state)
     {
         $this->state = $state;
     }

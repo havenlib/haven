@@ -36,9 +36,9 @@ class PageTranslation extends SluggableMappedBase {
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
-    private $name;
+    private $title;
 
     /**
      * @ORM\ManyToOne(targetEntity="Page", inversedBy="translations")
@@ -47,10 +47,8 @@ class PageTranslation extends SluggableMappedBase {
     protected $parent;
 
     public function __construct() {
-        $this->setStatus(self::STATUS_DRAFT);
-        parent::construct;
+        $this->status = 1;
     }
-    
     /**
      * Get id
      *
@@ -61,26 +59,26 @@ class PageTranslation extends SluggableMappedBase {
     }
 
     /**
-     * Set name
+     * Set title
      *
-     * @param string $name
+     * @param string $title
      * @return PageTranslation
      */
-    public function setName($name) {
+    public function setTitle($title) {
 
-        $this->name = $name;
-        $this->setSlug($name);
+        $this->title = $title;
+        $this->setSlug($title);
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get title
      *
      * @return string 
      */
-    public function getName() {
-        return $this->name;
+    public function getTitle() {
+        return $this->title;
     }
 
     /**
@@ -114,7 +112,7 @@ class PageTranslation extends SluggableMappedBase {
     public function setStatus($status)
     {
         $this->status = $status;
-    
+    echo 'tabarnac';
         return $this;
     }
 

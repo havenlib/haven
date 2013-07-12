@@ -35,18 +35,11 @@ class PageController extends BasePageController {
      * @Method("GET")
      * @Template
      */
-    public function displayFromSlugAction(EntityTranslation $entityTranslation) {
+    public function displayFromSlugAction($slug) {
+//         @TODO remove the automatique finder, make a query with not just slug but slug and locale, so that a french and an english page can have the same slug
         $locale = $this->container->get("request")->get("_locale");
-        if ($entityTranslation->getTransLang()->getSymbol() != \Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale) && $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))) {
-            $slug = $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))->getSlug();
-            if (!empty($slug)) { 
-                return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_PageDisplaySlug', array("slug" => $slug)));
-            } else {
-//                @TODO mettre la gestion multilingue des différentes possibilité (draft, or
-                throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException("Cette page n'existe pas pour la locale ".\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale));
-            }
-        }
-        $entity = $entityTranslation->getParent();
+        
+        $entity = $this->container->get("page.read_handler")->getBySlugForLanguage($slug, $locale);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
