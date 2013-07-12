@@ -36,7 +36,7 @@ class Faq extends Translatable {
     /**
      * @var integer $rank
      *
-     * @ORM\Column(name="rank", type="interger", length=255, nullable = true)
+     * @ORM\Column(name="rank", type="integer", length=255, nullable = true)
      */
     private $rank;
 
