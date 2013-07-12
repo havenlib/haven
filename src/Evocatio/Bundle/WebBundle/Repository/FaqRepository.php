@@ -38,6 +38,16 @@ class FaqRepository extends StatusRepository {
         return $this->getResult();
     }
 
+    public function findAllFromRank($new_rank, $old_rank, $id) {
+        $this->query_builder = $this->createQueryBuilder("e");
+
+        $this->query_builder->where('(e.rank BETWEEN :new_rank AND :old_rank OR e.rank BETWEEN :old_rank AND :new_rank) AND e.id != :id');
+        $this->query_builder->setParameters(array("new_rank" => $new_rank, "old_rank" => $old_rank, "id" => $id));
+        $this->query_builder->orderBy('e.rank', 'ASC');
+
+        return $this->getResult();
+    }
+
     private function filterByStatus($status) {
         if (is_null($this->query_builder))
             $this->query_builder = $this->createBaseBuilder();
