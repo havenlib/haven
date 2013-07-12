@@ -32,29 +32,6 @@ class Slugifier {
         return $data;
     }
 
-    /**
-     * recursive look into the ArrayFiles to find all ["uploads"], and transform them to ["files"] and merge them with arrayRequest.
-     * It changes the uploadedFiles to array's and moves the files to a new location configured in %secure_upload_dir%
-     * @param type $arrayFile
-     * @param type $arrayRequest
-     */
-//    private function changeSlugs($arrayRequest, &$fields) {
-//        if (array_key_exists("slug", $arrayRequest)) {
-//            $preSlugArray = null;
-//            foreach ($fields as $key => $field) {
-//                $preSlugArray[] .= trim($arrayRequest[$field]);
-//            }
-//
-//            $slug = (substr($slug = $this->slugifyString(implode("-", $preSlugArray)), -1) == "-") ? substr($slug, 0, -1) : $slug;
-//            $arrayRequest["slug"] = ($arrayRequest["slug"] == "") ? $slug : $this->slugifyString($arrayRequest["slug"]);
-//        }
-//        foreach ($arrayRequest as $key => &$child) {
-//            if (is_array($child)) {
-//                $this->changeSlugs($child, $fields);
-////                unset($child);
-//            }
-//        }
-//    }
 
     public function slugifyString($string, $separator = "-") {
         $string = $this->normalizeUtf8String($string);

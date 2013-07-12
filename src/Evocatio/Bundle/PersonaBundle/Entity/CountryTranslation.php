@@ -68,7 +68,7 @@ class CountryTranslation {
      *
      * @param Evocatio\Bundle\PersonaBundle\Entity\Country $country
      */
-    public function setCountry(\Evocatio\Bundle\PersonaBundleEntity\Country $country)
+    public function setCountry(\Evocatio\Bundle\PersonaBundle\Entity\Country $country)
     {
         $this->country = $country;
     }

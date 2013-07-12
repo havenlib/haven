@@ -5,6 +5,7 @@ namespace Evocatio\Bundle\CmsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormInterface;
 
 class PageType extends AbstractType {
 
@@ -20,6 +21,8 @@ class PageType extends AbstractType {
                     , 'options' => array(
                         'label' => false
                     )
+//                    need to put the data class to have default from the entity
+                    , 'empty_data' =>  "\Evocatio\Bundle\CmsBundle\Entity\PageTranslation"
                 ))
                 ->add('template')
                 ->add('html_contents', "collection", array(
@@ -54,6 +57,10 @@ class PageType extends AbstractType {
                     , 'options' => array(
                         'label' => false
                     )
+                ))
+                ->add('save', 'submit', array(
+                    'attr' => array('class' => 'btn save-btn'),
+                    'label' => 'save.page'
                 ))
         ;
     }
