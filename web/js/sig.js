@@ -688,26 +688,20 @@ $(document).ready(function() {
     });
 })
 
-/*
- * 
- * @param {type} current_element
- * @param {type} where
- * @returns {undefined}
- */
-function rank(current_element, where) {
-    $(current_element).each(function() {
-        if (where === 'down') {
-            $(this).insertAfter($(this).next());
-        } else {
-            $(this).insertBefore($(this).prev());
-        }
-    });
 
-    $(current_element).parent().children().each(
-            function(key) {
-                $(this).find("input[id$='rank']").val(parseInt(key + 1));
-            }
-    );
+function ranking(arrow, line_element) {
+    old_rank = $(arrow).closest(line_element).find("input[name$='rank']").val();
+
+    if ($(arrow).hasClass('up')) {
+        new_rank = $(arrow).closest(line_element).prev().find("input[name$='rank']").val();
+        $(arrow).closest(line_element).insertBefore($(arrow).closest(line_element).prev()).next().find("input[name$='rank']").val(old_rank);
+    } else {
+        new_rank = $(arrow).closest(line_element).next().find("input[name$='rank']").val();
+        $(arrow).closest(line_element).insertAfter($(arrow).closest('tr').next()).prev().find("input[name$='rank']").val(old_rank);
+    }
+
+    $(arrow).closest(line_element).find("input[name$='rank']").val(new_rank);
+    $(arrow).closest(line_element).find("button").removeClass("hidden");
 }
 
 /**
@@ -721,7 +715,7 @@ function rank(current_element, where) {
  * $(element).closest("form").find("texterea[id$='_title']").val(CKEDITOR.instances["title"].getData());
  * $(element).closest("form").find("input[id$='_title']").val(CKEDITOR.instances["title"].getData());
  */
-function updateContent(element, cible) {    
+function updateContent(element, cible) {
     $(element).closest("form").find(cible + "[id$='" + $(element).attr("id").replace("_inline", "") + "']").val($(element).html());
 }
 

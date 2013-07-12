@@ -1,21 +1,44 @@
 {%  extends "OwnerSiteBundle::base_admin.html.twig" %}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block inside_content %}
-    <dl>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>Status</td>
+            <td>Title</td>
+            <td>Rank</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
         {% for entity in entities %}
-            <dt><div>{{ entity.status?'Published':'Inactive' }}</div> <strong>{{ entity.title }}</strong> 
-            <a href="{{ path('owner_site_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">edit</a> 
-            <a href="{{ path('owner_site_post_show', {'show': ('show' | trans({}, 'routes')), 'id': entity.id}) }}">show</a> </dt>
-            <dd>{{ entity.excerpt }}</dd>
-        {{ entity.name }}
+            <tr>
+                <td>{{ entity.status }}</td>
+                <td>{{ entity.title }}</td>
+                <td>
+                    <a class="btn up pull-left" onclick="ranking(this, 'tr');"><img src="/images/arrow_up.png" /></a>
+                    <a class="btn down pull-left" onclick="ranking(this, 'tr');"><img src="/images/arrow_down.png" /></a>
+                    <form class="form no-margin" action="{{ route_i18n.path('owner_site_post_rank', {'id': entity.id}, ['rank']) }}" method="POST">
+                        <input class="hidden" id="ranktype_rank" type="text" name="rank" value="{{entity.rank}}">
+                        <button class="btn hidden pull-left" type="submit" id="ranktype_submit" name="submit">Ok</button>
+                    </form>
+                </td>
+                <td>
+                    <a href="{{ path('owner_site_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">edit</a>
+                    | <a href="{{ path('owner_site_post_show', {'show': ('show' | trans({}, 'routes')), 'id': entity.id}) }}">show</a>
+                    | <a href="{{ route_i18n.path('owner_site_post_rank', {'id': entity.id}, ['rank']) }}">ordonner</a>
+                </td>
+            </tr>
         {% else %}
-            aucune entré
+        </tbody>
+        aucune entré
         {% endfor %}
-    </dl>
-<ul>
-    <li>
-        <a href="{{ path('owner_site_post_create', {'create': ('create' | trans({}, 'routes'))}) }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+    </table>
+    <ul>
+        <li>
+            <a href="{{ path('owner_site_post_create', {'create': ('create' | trans({}, 'routes'))}) }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
 {% endblock inside_content %}
