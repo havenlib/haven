@@ -29,41 +29,33 @@ class PostController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{rank}/post")
+     * @Route("/admin/{rank}/post/{id}")
      * @Method("GET")
      * @Template
      */
-    public function rankAction() {
-        $form = $this->container->get("post.form_handler")->createRankForm();
-        return array("edit_form" => $form->createView());
+    public function rankAction($id) {
+        $entity = $this->container->get("post.read_handler")->get($id);
+        return array("entity" => $entity);
     }
 
     /**
-     * @Route("/admin/{rank}/post")
+     * @Route("/admin/{rank}/post/{id}")
      * @Method("POST")
      * @Template
      */
-    public function performRankingAction() {
-        $form = $this->container->get("post.form_handler")->createRankForm();
-        $form->bind($this->container->get('Request'));
+    public function performRankingAction($id) {
+        $entity = $this->container->get("post.read_handler")->get($id);
+        $new_rank = (int) $this->container->get('Request')->request->get("rank");
 
-
-        if ($form->isValid()) {
-            $this->container->get("post.persistence_handler")->batchSave($form->get("posts")->getData());
+        if (is_int($new_rank) && $new_rank) {
+            $this->container->get("post.persistence_handler")->rank($entity, $new_rank);
             $this->container->get("session")->getFlashBag()->add("success", "ranking.success");
 
-            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_post_rank', array(), array('rank')));
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_post_list', array(), array('list')));
         }
-        die("ranking error");
 
-        $this->container->get("session")->getFlashBag()->add("error", "create.error");
-
-        $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
-        $params = array(
-            'edit_form' => $form->createView()
-        );
-
-        return new Response($this->container->get('templating')->render($template, $params));
+        $this->container->get("session")->getFlashBag()->add("error", "ranking.error");
+        return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_post_list', array(), array('list')));
     }
 
     /**
@@ -87,7 +79,8 @@ class PostController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("post.read_handler")->getAll();
+        $entities = $this->container->get("post.read_handler")->getAllOrderedByRank();
+
         return array("entities" => $entities);
     }
 
@@ -146,7 +139,7 @@ class PostController extends ContainerAware {
         $edit_form->bind($request);
 
         if ($edit_form->get('save')->isClicked() && $edit_form->isValid()) {
-            $this->container->get("post.persistence_handler")->save($edit_form->getData());
+            $this->container->get("post.persistence_handler")->firstSave($edit_form->getData());
 
             return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_post_list', array(), array('list')));
         } else {

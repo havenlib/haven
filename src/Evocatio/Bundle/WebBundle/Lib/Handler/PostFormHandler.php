@@ -14,14 +14,6 @@ class PostFormHandler extends FormHandler {
         return $form = $this->doCreate($this->getDefaultTypeClass(), $data);
     }
 
-    /**
-     * @return Form 
-     */
-    public function createRankForm() {
-        $entities = $this->read_handler->getAllOrderedByRank();
-        return $form = $this->doCreate("Evocatio\Bundle\WebBundle\Form\PostCollectionType", array('posts' => $entities));
-    }
-
     public function getDefaultTypeClass() {
         return 'Evocatio\Bundle\WebBundle\Form\PostType';
     }
