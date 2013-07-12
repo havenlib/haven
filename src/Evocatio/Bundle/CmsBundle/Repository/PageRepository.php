@@ -12,4 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class PageRepository extends EntityRepository
 {
+    public function findByLocalizedSlug($slug, $language){
+        $query_builder = $this->createQueryBuilder("p")
+                      ->leftJoin("p.translations", "t")
+                      ->leftJoin("t.trans_lang", "tl")
+                      ->andWhere("tl.symbol= :language")
+                      ->andWhere("t.slug = :slug")
+                      ->setParameter("slug", $slug)
+                      ->setParameter("language", $language)
+//                      ->setParameter("page_name", $page_name)
+                      ;
+        $page = $query_builder->getQuery()->getOneOrNullResult();
+        
+        return $page;       
+    }
 }

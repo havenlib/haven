@@ -5,7 +5,7 @@
     {% block formhead %}
         {{ _route_crud.path('owner_site_page_edit', 'edit', { 'id':entity.id}) }}
     {% endblock formhead %}
-    {% block form %}
+    {% block fields %}
         <fieldset> {{ form_widget(edit_form) }} </fieldset>
         <ul class="contents-list">
             <li>
@@ -14,20 +14,8 @@
                 <input type=button value="Add News Widget" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_news_widgets');" />
             </li>
         </ul>
-    {% endblock form %}
-{% endembed %}->>
-<menu type="toolbar">
-    <button type="command" label="Save" onclick="goDaddy();" >go</button>>
-</menu>
-<<-
-{{ parent() }}
-<script>
-    function goDaddy(){
-    var data = CKEDITOR.instances.editable43.getData();
-    alert(data);
-    }
-    // Your code to save "data", usually through Ajax.
-</script>
+    {% endblock fields %}
+{% endembed %}
 {% endblock inside_body %}
 
 

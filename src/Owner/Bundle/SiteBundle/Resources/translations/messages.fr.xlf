@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="2">
                 <source>save.faq</source>
-                <target>Sauvegarder la FAQ</target>
+                <target>Enregister la FAQ</target>
             </trans-unit>
             <trans-unit id="3">
                 <source>rank</source>
@@ -25,6 +25,14 @@
             <trans-unit id="6">
                 <source>female</source>
                 <target>F</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>save.page</source>
+                <target>Enregister la page</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>save.post</source>
+                <target>Enregister la news</target>
             </trans-unit>
         </body>
     </file>

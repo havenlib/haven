@@ -33,6 +33,12 @@ class TranslationType extends AbstractType {
                 $prototype = $builder->create($count++, $options['type'], array_replace(array(
                     'label' => $options['prototype_name'] . 'label__',
                                 ), $options['options']));
+//              Default for empty_data is a closure, if not default use the object to 
+                if (is_string($options["empty_data"])) {
+                    $entity = new $options["empty_data"]();
+                    $entity->setTransLang($language);
+                    $prototype->setData($entity);
+                }
                 $prototype->get("trans_lang")->setData($language);
 //            print_r(array_keys($temp->get("trans_lang")->getAttributes()));
                 $prototype_array[] = $prototype->getForm();

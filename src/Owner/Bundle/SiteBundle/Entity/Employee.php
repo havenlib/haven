@@ -138,38 +138,8 @@ class Employee extends Persona {
     public function __construct() {
         parent::__construct();
 
-        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Add translations
-     *
-     * @param \Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations
-     * @return Employee
-     */
-    public function addTranslation(\Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations) {
-        $this->translations[] = $translations;
-
-        return $this;
-    }
-
-    /**
-     * Remove translations
-     *
-     * @param \Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations
-     */
-    public function removeTranslation(\Owner\Bundle\SiteBundle\Entity\EmployeeTranslation $translations) {
-        $this->translations->removeElement($translations);
-    }
-
-    /**
-     * Get translations
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTranslations() {
-        return $this->translations;
-    }
 
     /**
      * Set profile

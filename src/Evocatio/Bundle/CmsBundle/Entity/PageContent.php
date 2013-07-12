@@ -23,7 +23,7 @@ class PageContent {
 
     /**
      * @ORM\ManyToOne(targetEntity="Page", inversedBy="page_contents", cascade={"persist"})
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="page_id", referencedColumnName="id",  onDelete="CASCADE")
      * */
     private $page;
 
@@ -114,29 +114,5 @@ class PageContent {
 
     public function __toString() {
         return (string) $this->getId();
-    }
-
-
-    /**
-     * Set content_options
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\ContentOptions $contentOptions
-     * @return PageContent
-     */
-    public function setContentOptions(\Evocatio\Bundle\CmsBundle\Entity\ContentOptions $contentOptions = null)
-    {
-        $this->content_options = $contentOptions;
-    
-        return $this;
-    }
-
-    /**
-     * Get content_options
-     *
-     * @return \Evocatio\Bundle\CmsBundle\Entity\ContentOptions 
-     */
-    public function getContentOptions()
-    {
-        return $this->content_options;
     }
 }
