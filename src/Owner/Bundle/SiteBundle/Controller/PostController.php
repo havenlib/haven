@@ -5,12 +5,12 @@ namespace Owner\Bundle\SiteBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Evocatio\Bundle\WebBundle\Controller\PostController as BasePostController;
 
 /**
  * @Route("", requirements={
  *        "displayrandom" = "display-random|afficher-aleatoire"
+ *      , "rank" = "rank|ordonner"
  * })
  */
 class PostController extends BasePostController {

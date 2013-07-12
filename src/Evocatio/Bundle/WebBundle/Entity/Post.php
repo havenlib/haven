@@ -49,6 +49,13 @@ class Post extends Translatable {
     private $status;
 
     /**
+     * @var integer $rank
+     *
+     * @ORM\Column(name="rank", type="integer", length=255, nullable = true)
+     */
+    private $rank;
+
+    /**
      * @var datetime $postbegin_at
      *
      * @ORM\Column(name="postbegin_at", type="datetime", nullable = true)
@@ -294,17 +301,15 @@ class Post extends Translatable {
         return $this->categories;
     }
 
-
     /**
      * Add categories
      *
      * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
      * @return Post
      */
-    public function addCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $categories)
-    {
+    public function addCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $categories) {
         $this->categories[] = $categories;
-    
+
         return $this;
     }
 
@@ -313,8 +318,31 @@ class Post extends Translatable {
      *
      * @param \Evocatio\Bundle\CoreBundle\Entity\Category $categories
      */
-    public function removeCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $categories)
-    {
+    public function removeCategorie(\Evocatio\Bundle\CoreBundle\Entity\Category $categories) {
         $this->categories->removeElement($categories);
+    }
+
+
+    /**
+     * Set rank
+     *
+     * @param string $rank
+     * @return Post
+     */
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+    
+        return $this;
+    }
+
+    /**
+     * Get rank
+     *
+     * @return string 
+     */
+    public function getRank()
+    {
+        return $this->rank;
     }
 }
