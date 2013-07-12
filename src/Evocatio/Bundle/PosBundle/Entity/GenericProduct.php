@@ -33,10 +33,10 @@ class GenericProduct extends Product {
     /**
      * Add translations
      *
-     * @param Evocatio\Bundle\PosBundle\Entity\FaqTranslation $translations
+     * @param Evocatio\Bundle\PosBundle\Entity\GenericProductTranslation $translations
      * @return GenericProduct
      */
-    public function addTranslation(\Evocatio\Bundle\PosBundle\Entity\FaqTranslation $translations) {
+    public function addTranslation(\Evocatio\Bundle\PosBundle\Entity\GenericProductTranslation $translations) {
         $this->translations[] = $translations;
 
         return $this;
@@ -45,9 +45,9 @@ class GenericProduct extends Product {
     /**
      * Remove translations
      *
-     * @param Evocatio\Bundle\PosBundle\Entity\FaqTranslation $translations
+     * @param Evocatio\Bundle\PosBundle\Entity\GenericProductTranslation $translations
      */
-    public function removeTranslation(\Evocatio\Bundle\PosBundle\Entity\FaqTranslation $translations) {
+    public function removeTranslation(\Evocatio\Bundle\PosBundle\Entity\GenericProductTranslation $translations) {
         $this->translations->removeElement($translations);
     }
 
