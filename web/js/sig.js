@@ -695,6 +695,7 @@ $(document).ready(function() {
  * @returns {undefined}
  */
 function rank(current_element, where) {
+    alert("yooo");
     $(current_element).each(function() {
         if (where === 'down') {
             $(this).insertAfter($(this).next());

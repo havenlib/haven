@@ -51,7 +51,7 @@ class Post extends Translatable {
     /**
      * @var integer $rank
      *
-     * @ORM\Column(name="rank", type="string", length=255, nullable = true)
+     * @ORM\Column(name="rank", type="integer", length=255, nullable = true)
      */
     private $rank;
 

@@ -12,6 +12,10 @@ class PostRankType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('rank', 'text')
+                ->add('submit', 'submit', array(
+                    'attr' => array('class' => 'btn pull-right ajax')
+                    , 'label' => 'rank'
+                ))
         ;
     }
 
@@ -22,7 +26,7 @@ class PostRankType extends AbstractType {
     }
 
     public function getName() {
-        return 'evocatio_bundle_webbundle_postranktype';
+        return 'ranktype';
     }
 
 }
