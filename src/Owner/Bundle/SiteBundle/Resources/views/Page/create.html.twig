@@ -26,12 +26,3 @@
         Back to the list
     </a>
 {% endblock back %}
-
-{% block stylesheets %}
-{{ parent() }}
-            {% if app.environment != 'prod' %}
-                <link href="{{ asset("less/formulator.less") }}" rel="stylesheet/less" type="text/css" />
-            {% else %}
-                <link rel="stylesheet" type="text/css" href="/css/base.css" />
-            {% endif %}
-{% endblock stylesheets %}
