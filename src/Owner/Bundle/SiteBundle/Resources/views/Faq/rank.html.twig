@@ -1,19 +1,10 @@
-{# empty Twig template #}
+{%  extends "OwnerSiteBundle::base_admin.html.twig" %}
 {% import "::macro/route/i18n.html.twig" as route_i18n %}
+{% block inside_content %}
 {% block fields %}
-<form class="form" action="{{ route_i18n.path('owner_site_faq_rank', {}, ['rank']) }}" method="POST">
-    <fieldset>
-        <ul>
-        {% for form in edit_form.faqs %}
-        <li class="faq">
-            <a class="btn rank up" onclick="rank($(this).parent(), 'up');"><img src="/images/arrow_up.png" /></a>
-            <a class="btn rank down" onclick="rank($(this).parent(), 'down');"><img src="/images/arrow_down.png" /></a>
-            {{ form.vars["data"].question }}
-            {{ form_widget(form) }}
-        </li>    
-        {% endfor %}
-        </ul>
-    {{ form_rest(edit_form) }}
-    </fieldset>
+<form class="form" action="{{ route_i18n.path('owner_site_post_rank', {'id': entity.id}, ['rank']) }}" method="POST">
+    <input id="ranktype_rank" type="text" name="rank" value="{{entity.rank}}">
+    <button class="btn" type="submit" id="ranktype_submit" name="submit">Ok</button>
 </form>
 {% endblock fields %}
+{% endblock inside_content %}
