@@ -12,14 +12,12 @@
         {% block stylesheets %}
             {% if app.environment != 'prod' %}
             <!-- Switch environnement développement développement:  -->
-            <script type="text/javascript"> less = { env: 'development' }; </script>
-
             <!-- JS -->
-            <link href="{{ asset("less/base.less") }}" rel="stylesheet/less" type="text/css" />
 
             <!-- CSS -->
-        <!--    <link rel="stylesheet" type="text/css" href="{{ asset("css/bootstrap-responsive.min.css") }}" /> -->
             <link rel="stylesheet" type="text/css" href="{{ asset("css/bootstrap.min.css") }}" />
+            <script type="text/javascript"> less = { env: 'development' }; </script>
+            <link href="{{ asset("less/base.less") }}" rel="stylesheet/less" type="text/css" />
             {% else %}
             <link rel="stylesheet" type="text/css" href="{{ asset("css/bootstrap-responsive.min.css") }}" />
             <link rel="stylesheet" type="text/css" href="{{ asset("css/bootstrap.min.css") }}" />

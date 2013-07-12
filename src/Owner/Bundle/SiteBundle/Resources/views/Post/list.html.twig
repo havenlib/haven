@@ -10,35 +10,35 @@
             <td></td>
         </tr>
     </thead>
-        {% for entity in entities %}
     <tbody>
-        <tr>
-            <td>{{ entity.status }}</td>
-            <td>{{ entity.title }}</td>
-            <td>
-                <form class="form" action="{{ route_i18n.path('owner_site_post_rank', {'id': entity.id}, ['rank']) }}" method="POST">
-                    <a class="btn rank up" onclick="rank($(this).parent(), 'up');"><img src="/images/arrow_up.png" /></a>
-                    <a class="btn rank down" onclick="rank($(this).parent(), 'down');"><img src="/images/arrow_down.png" /></a>
-                    <input id="ranktype_rank" type="text" name="rank" value="{{entity.rank}}">
-                    <button class="btn" type="submit" id="ranktype_submit" name="submit">Ok</button>
-                </form>
-            </td>
-            <td>
-                <a href="{{ path('owner_site_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">edit</a>
-                | <a href="{{ path('owner_site_post_show', {'show': ('show' | trans({}, 'routes')), 'id': entity.id}) }}">show</a>
-                | <a href="{{ route_i18n.path('owner_site_post_rank', {'id': entity.id}, ['rank']) }}">ordonner</a>
-            </td>
-        </tr>
-    </tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.status }}</td>
+                <td>{{ entity.title }}</td>
+                <td>
+                    <a class="btn up pull-left" onclick="ranking(this, 'tr');"><img src="/images/arrow_up.png" /></a>
+                    <a class="btn down pull-left" onclick="ranking(this, 'tr');"><img src="/images/arrow_down.png" /></a>
+                    <form class="form no-margin" action="{{ route_i18n.path('owner_site_post_rank', {'id': entity.id}, ['rank']) }}" method="POST">
+                        <input class="hidden" id="ranktype_rank" type="text" name="rank" value="{{entity.rank}}">
+                        <button class="btn hidden pull-left" type="submit" id="ranktype_submit" name="submit">Ok</button>
+                    </form>
+                </td>
+                <td>
+                    <a href="{{ path('owner_site_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}">edit</a>
+                    | <a href="{{ path('owner_site_post_show', {'show': ('show' | trans({}, 'routes')), 'id': entity.id}) }}">show</a>
+                    | <a href="{{ route_i18n.path('owner_site_post_rank', {'id': entity.id}, ['rank']) }}">ordonner</a>
+                </td>
+            </tr>
         {% else %}
-    aucune entré
+        </tbody>
+        aucune entré
         {% endfor %}
-</table>
-<ul>
-    <li>
-        <a href="{{ path('owner_site_post_create', {'create': ('create' | trans({}, 'routes'))}) }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+    </table>
+    <ul>
+        <li>
+            <a href="{{ path('owner_site_post_create', {'create': ('create' | trans({}, 'routes'))}) }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
 {% endblock inside_content %}
