@@ -4,34 +4,33 @@
 {% block navigation %}
 {% endblock navigation %}
 {% block inside_header %}
-header
 <div id="header" class="area">
+    {{ parent() }}
 {{ CHelp.fill_area(entity, "header") }}
     </div>
 {% endblock inside_header %}
-{% block inside_theater %} 
-    
+{% block inside_main %} 
+
+        <div id="blue-bar">&nbsp;</div>
     <div id="sidebar" class="area">
-        sidebar
 {{ CHelp.fill_area(entity, "sidebar", edit_form is defined?edit_form:null , language is defined?language:"") }}
-        </div>
-        <div id="theatre" class="area">
-            theatre
+    </div>
+    <div id="theatre" class="area">
+
 {{ CHelp.fill_area(entity, "theatre", edit_form is defined?edit_form:null , language is defined?language:"") }}
 
-            </div>
-{% endblock inside_theater %}
-    
+    </div>
+{% endblock inside_main %}
+
     {% block inside_footer%} 
-    footer
     {{ CHelp.fill_area(entity, "footer", edit_form is defined?edit_form:null , language is defined?language:"") }}
     {% endblock inside_footer %} 
-    
+
 {% block stylesheets %}
     {{ parent() }}
     {% if app.environment != 'prod' %}
-            <link href="{{ asset("less/first-layout.less") }}" rel="stylesheet/less" type="text/css" />
+    <link href="{{ asset("less/first-layout.less") }}" rel="stylesheet/less" type="text/css" />
     {% else %}
-            <link rel="stylesheet" type="text/css" href="/css/first-layout.css" />
+    <link rel="stylesheet" type="text/css" href="/css/first-layout.css" />
     {% endif %}
 {% endblock %}

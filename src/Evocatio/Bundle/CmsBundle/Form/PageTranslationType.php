@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Evocatio\Bundle\CoreBundle\Repository\LanguageRepository;
+use Evocatio\Bundle\CmsBundle\Entity\PageTranslation;
 
 class PageTranslationType extends AbstractType {
 
@@ -14,7 +15,7 @@ class PageTranslationType extends AbstractType {
                 ->add('status', 'choice', array(
                     'choices' => array(0 => "Inactive", 1 => "Publish", 2 => "Draft")
                 ))
-                ->add('name')
+                ->add('title')
                 ->add('slug')
                 ->add('trans_lang', null, array(
                     "property" => "name"
@@ -24,7 +25,7 @@ class PageTranslationType extends AbstractType {
                                 ->orderByRank()
                                 ->getQueryBuilder();
                     }
-                    ,"empty_value" => false
+                    , "empty_value" => false
                     , "attr" => array(
                         "class" => "hidden"
                     )

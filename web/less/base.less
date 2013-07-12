@@ -1,5 +1,6 @@
 @import "mixin.less";
 @import "color.less";
+@import "size.less";
 
 /* apply a natural box layout model to all elements */
 * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
@@ -9,111 +10,116 @@ root {
 }
 
 body {  
-    margin: 0;
+        margin: 0 ;
+        position: relative;
+}
+html{
+
+    font-size: 16px;    font-size: 1rem;
+    line-height: 24px;    line-height: 1.5rem;
 }
 
-#theater{
- > div{
-        display: inline-block;
-        vertical-align: top;
-        &#navigation{
-            &.admin{
-              //  min-width: 142px;
-            }
-          //  background-color: red;
-        }
-        &.content{
-            width: 100%;
-          //  background-color: yellow;
-        }
-    }
-
-    .content{
-        > div{
-            //   display: inline-block;
-              // height: 20px;
-       }
-       > .area{
-               display: inline-block;
-            vertical-align: top;
-       }
-       > #area1{
-            display: inline-block;
-            padding: 10px;
-            width: 30%;
-            min-height: 20%;
-            background-color: orange;
-        }
-       > #module{
-        vertical-align: top;
-            display: inline-block;
-            padding: 10px;
-            width: 70%;
-            background-color: green;
-        }
-       > #area2{
-            width: 20%;
-            background-color: red;
-        }
-       > #area3{
-            width: 20%;
-            background-color: blue;
-        }
-       > #area4{
-            width: 20%;
-            background-color: purple;
-        }
-       > #area5{
-            width: 60%;
-            background-color: pink;
-        }
-       > #area6{
-            width: 20%;
-            background-color: grey;
-        }
-    }
-
-}
-
-.post-inline-editor{
-    border: 1px solid #B3B3B3;
-}
 .hidden{
     display: none;
 }
 
-.edit-form{
-    .save-btn{
-        float: right;
+h1{
+    padding-top: 0;
+    font-size: 54px;    font-size: 3.375rem;
+    line-height: 60px;    line-height: 3.75rem;
+    margin: 0;
+}
+
+h2{
+    padding-top: 0;
+    font-size: 32px;    font-size: 2rem;
+    line-height: 48px;    line-height: 3rem;
+    margin: 0;
+}
+
+h3{
+    padding-top: 0;
+    font-size: 24px;    font-size: 1.5rem;
+    line-height: 36px;    line-height: 2.25rem;
+    margin: 0;
+}
+
+p{
+    padding-top: 7px;    padding-top: 0.4375rem;
+    font-size: 16px;    font-size: 1rem;
+    line-height: 24px;    line-height: 1.5rem;
+    margin-bottom: 5px;    margin-bottom: .3125rem;
+    margin-top: 0 ;
+}
+
+li{
+    padding-top: 7px;    padding-top: 0.4375rem;
+    font-size: 16px;    font-size: 1rem;
+    line-height: 24px;    line-height: 1.5rem;
+    margin-bottom: 5px;    margin-bottom: .3125rem;
+    margin-top: 0 ;   
+}
+
+#main{    
+    width: @max-width;
+    margin-top: -75px;
+    margin: 0 auto;
+    position: relative;
+    > div{
+        display: inline-block;
+        vertical-align: top;
     }
-    input[type='text'], textarea{
-        width:  100%;
-        height: auto;
+    //background-color: #aaffff;
+}
+
+header{
+ //   background-color: #aaaaaa;
+    width: @max-width;    
+    margin: 0 auto;
+    margin-bottom: 0px;
+    overflow: hidden;
+    min-height: 136px;    min-height: 9rem;
+    #logo{
+        margin-left: @sidebar-width;
+        padding-left: 24px;  padding-left: 1.5rem;
+        margin-top: 28px;       margin-top: 1.75rem; 
+        margin-bottom: 0;
     }
-    textarea{
-        min-height: 120px;
-    }
-    li.faq{
-        .btn.rank{
-            width: 36px;
-            height: 23px;
-            padding: 0;
+    .menu{
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-left: @sidebar-width;
+        padding-left: 24px;  padding-left: 1.5rem;
+        li{
+            display:inline-block;
+            padding-top: 0;
+            font-size: 24px;    font-size: 1.5rem;
+            line-height: 36px;    line-height: 2.25rem;
+            margin: 0;
+            margin-right: 24px;            margin-right: 1.5rem;
+            color: @evorange;
+            li{
+                display: none;
+            }
         }
-        &:first-child{
-            .btn.rank{
-                width: 72px;
-            }
-            .btn.rank.up{
-              display: none;
-            }
-        }  
-        &:last-child{
-            .btn.rank{
-                width: 72px;
-            }
-            .btn.rank.down{
-              display: none;
-            }
-        }  
     }
 }
+
+footer{
+ //   background-color: #ffaaff;
+    min-height: 120px;    min-height: 7.5rem;
+}
+
+#sidebar{
+    width: @sidebar-width;
+    padding: 0px 12px;    padding: 0rem .75rem;
+ //   background-color: #ffffaa;
+}
+
+#theatre{
+    width: 80%;
+    padding: 0px 24px;    padding: 0rem 1.5rem;
+    min-height: 360px;    min-height: 22.5rem;
+}
+
+
