@@ -120,6 +120,7 @@ input, textarea{
     margin-bottom: 3px;   margin-bottom: .1875rem;
     margin-top: 0 ;
     display: inline-block;
+    border: 1px inset;
 }
 textarea{
     margin-bottom: -8px;    margin-bottom: -.5rem;
@@ -164,5 +165,23 @@ ul.contents-list{
             margin-top: 4px;            margin-top: .25rem;
             margin-bottom: 4px;            margin-bottom: .25rem;
         }
+    }
+}
+table{
+    border-collapse:collapse;
+    width: 100%;
+tr{
+    cursor: pointer;
+}
+    th{
+        font-weight: bold;
+        text-align: left;
+    }
+    td{
+        border-top: 1px solid #DDD;
+        padding: 0 px;
+    }
+    tr td:last-child{
+        text-align: right;
     }
 }

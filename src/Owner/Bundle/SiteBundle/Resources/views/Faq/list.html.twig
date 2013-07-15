@@ -2,13 +2,13 @@
 {% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block inside_content %}
 <h2>{{"faq.list" | trans}}</h2>
-<table class="table table-bordered">
+<table>
     <thead>
         <tr>
-            <td>Status</td>
-            <td>Title</td>
-            <td>Rank</td>
-            <td></td>
+            <th>Status</th>
+            <th>Title</th>
+            <th>Rank</th>
+            <th></th>
         </tr>
     </thead>
     <tbody class="sortable">
@@ -30,10 +30,14 @@
                 </td>
             </tr>
         {% else %}
-        </tbody>
-        aucune entré
+            <tr>
+                <td>
+                    aucune entré
+                </td>
+            </tr>
         {% endfor %}
-    </table>
+    </tbody>
+</table>
     <ul>
         <li>
             <a href="{{ path('owner_site_faq_create', {'create': ('create' | trans({}, 'routes'))}) }}">
