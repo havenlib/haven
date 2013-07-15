@@ -116,7 +116,6 @@ class PostTranslation extends SluggableMappedBase {
     public function setTitle($title) {
         $this->title = $title;
 //        sets the title as the slug
-        $this->setSlug($title);
     }
 
     /**
