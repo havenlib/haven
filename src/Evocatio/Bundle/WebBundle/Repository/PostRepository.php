@@ -106,6 +106,7 @@ class PostRepository extends StatusRepository {
         $this->query_builder = ($qb) ? $qb : $this->createBaseQueryBuilder();
 
         $this->query_builder
+                ->leftJoin("t.trans_lang", "tl")
                 ->andWhere("tl.symbol= :language")
                 ->setParameter("language", $lang)
         ;
@@ -120,7 +121,6 @@ class PostRepository extends StatusRepository {
     public function createBaseQueryBuilder() {
         return $this->createQueryBuilder("e")
                         ->leftJoin("e.translations", "t")
-                        ->leftJoin("t.trans_lang", "tl")
         ;
     }
 

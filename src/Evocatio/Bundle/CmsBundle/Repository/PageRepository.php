@@ -44,6 +44,7 @@ class PageRepository extends EntityRepository {
         $this->query_builder = ($qb) ? $qb : $this->createBaseQueryBuilder();
 
         $this->query_builder
+                ->leftJoin("t.trans_lang", "tl")
                 ->andWhere("tl.symbol= :language")
                 ->setParameter("language", $lang)
         ;
@@ -53,7 +54,6 @@ class PageRepository extends EntityRepository {
     public function createBaseQueryBuilder() {
         return $this->createQueryBuilder("e")
                         ->leftJoin("e.translations", "t")
-                        ->leftJoin("t.trans_lang", "tl")
         ;
     }
 
