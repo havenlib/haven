@@ -18,8 +18,9 @@ class PageContentType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('area')
-                ->add('content', new $this->content_type())
-        ;
+                ->add('content', new $this->content_type(), array(
+                     "label" => false
+                ))        ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {

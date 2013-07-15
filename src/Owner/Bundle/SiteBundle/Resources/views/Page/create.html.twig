@@ -5,7 +5,8 @@
 {% endblock formhead %}
 
 {#% form_theme edit_form "OwnerSiteBundle:Form:formulator.html.twig" %#}
-{#% form_theme edit_form "::Form/generic_with_translations.html.twig" %#}
+
+{% form_theme edit_form "::Form/generic_with_translations.html.twig" %}
 {% form_theme edit_form.translations "::Form/translations.html.twig" %}
 {#% form_theme edit_form.files "::Form/file_upload.html.twig" %#}
 {% block fields %}
