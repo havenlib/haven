@@ -23,7 +23,6 @@ class FaqTranslation extends TranslationMappedBase
      */
     protected $id;
     
-   
     /**
      * @var text $question
      * 

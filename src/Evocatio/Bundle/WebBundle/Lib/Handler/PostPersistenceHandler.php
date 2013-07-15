@@ -28,7 +28,7 @@ class PostPersistenceHandler extends PersistenceHandler {
         /**
          * Set the default rank to max rank + 1
          */
-        $this->em->getConnection()->exec("UPDATE Post AS p, (SELECT MAX(rank) AS rank  FROM Post) p2 SET p.rank = p2.rank + 1 WHERE p.id = " . $entity->getId());
+        $this->em->getConnection()->exec("UPDATE Post AS p, (SELECT IFNULL(MAX(rank), 0) AS rank FROM Post) p2 SET p.rank = p2.rank + 1 WHERE p.id = " . $entity->getId());
     }
 
 }
