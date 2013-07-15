@@ -17,7 +17,7 @@ class PostTranslationType extends AbstractType {
                 ->add('excerpt', "text", array('required' => false))
                 ->add('content', "textarea", array(
                     'required' => false
-                    , 'label' => false
+//                    , 'label' => false
                     , 'attr' => array('class' => 'hiden')
                 ))
                 ->add('title', "text", array(
