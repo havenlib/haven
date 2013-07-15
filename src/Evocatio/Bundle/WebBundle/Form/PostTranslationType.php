@@ -17,7 +17,7 @@ class PostTranslationType extends AbstractType {
                 ->add('excerpt', "text", array('required' => false))
                 ->add('content', "textarea", array(
                     'required' => false
-                    , 'label' => false
+//                    , 'label' => false
                     , 'attr' => array('class' => 'hiden')
                 ))
                 ->add('title', "text", array(
@@ -25,6 +25,9 @@ class PostTranslationType extends AbstractType {
                     'attr' => array("inline-editing" => true)
                 ))
                 ->add('file', "file", array('required' => false, "attr" => array("multiple" => true)))
+                ->add('status', 'choice', array(
+                    'choices' => array(0 => "Inactive", 1 => "Publish", 2 => "Draft")
+                ))
 //                ->add('image', "collection", array(
 //                    'type' => new MediaType(),
 //                    'allow_add' => true,

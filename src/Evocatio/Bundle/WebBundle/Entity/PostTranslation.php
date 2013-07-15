@@ -14,6 +14,10 @@ use Evocatio\Bundle\CoreBundle\Entity\SluggableMappedBase;
  */
 class PostTranslation extends SluggableMappedBase {
 
+    const STATUS_INACTIVE = 0;
+    const STATUS_PUBLISHED = 1;
+    const STATUS_DRAFT = 2;
+
     /**
      * @var integer $id
      *
@@ -76,6 +80,13 @@ class PostTranslation extends SluggableMappedBase {
      * @ORM\JoinColumn(name="Post_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $parent;
+
+    /**
+     * @var integer $status
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
 
     /**
      * Get id
@@ -217,4 +228,27 @@ class PostTranslation extends SluggableMappedBase {
         return $this->subtitle;
     }
 
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return PostTranslation
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
 }

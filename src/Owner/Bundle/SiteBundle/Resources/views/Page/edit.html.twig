@@ -1,29 +1,34 @@
-{% extends entity.getTemplate() is empty?"OwnerSiteBundle:Page:create.html.twig":entity.getTemplate().getPath() %}
-{% block inside_body %}
+{#% extends entity.getTemplate() is empty?"OwnerSiteBundle:Page:create.html.twig":entity.getTemplate().getPath() %#}
+{% extends "OwnerSiteBundle:Page:create.html.twig" %}
 
-{% embed ("OwnerSiteBundle:Page:create.html.twig" ) %}
+
+
     {% block formhead %}
         {{ _route_crud.path('owner_site_page_edit', 'edit', { 'id':entity.id}) }}
     {% endblock formhead %}
     {% block fields %}
-        <fieldset> {{ form_widget(edit_form) }} </fieldset>
-        <ul class="contents-list">
-            <li>
-                <input type=button value="Add Html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_html_contents');" />
-                <input type=button value="Add Text content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_text_contents');" />
-                <input type=button value="Add News Widget" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_news_widgets');" />
-            </li>
-        </ul>
+<fieldset> {{ form_widget(edit_form) }} </fieldset>
+<ul class="contents-list">
+    <li>
+        <input type=button value="Add Html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_html_contents');" />
+    </li>
+    <li>
+        <input type=button value="Add Text content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_text_contents');" />
+    </li>
+    <li>
+        <input type=button value="Add News Widget" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_news_widgets');" />
+    </li>
+</ul>
+<p>
     {% endblock fields %}
-{% endembed %}
-{% endblock inside_body %}
+
 
 
 {% block delete %}
-    <li>
+<li>
    {# <form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
         <button type="submit">Delete</button>
     </form>#}
-        </li>
+    </li>
 {% endblock delete %}

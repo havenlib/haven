@@ -18,6 +18,12 @@ class PostReadHandler extends ReadHandler {
         return $this->em->getRepository($this->getDefaultEntityClass())->findAllOrderedByRank();
     }
 
+    public function getBySlugForLanguage($slug, $language) {
+        $entity = $this->em->getRepository("EvocatioWebBundle:Post")->findByLocalizedSlug($slug, $language);
+
+        return $entity;
+    }
+
     protected function getDefaultEntityClass() {
         return "Evocatio\Bundle\WebBundle\Entity\Post";
     }
