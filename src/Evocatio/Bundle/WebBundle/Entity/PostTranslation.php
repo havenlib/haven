@@ -14,6 +14,10 @@ use Evocatio\Bundle\CoreBundle\Entity\SluggableMappedBase;
  */
 class PostTranslation extends SluggableMappedBase {
 
+    const STATUS_INACTIVE = 0;
+    const STATUS_PUBLISHED = 1;
+    const STATUS_DRAFT = 2;
+
     /**
      * @var integer $id
      *
@@ -22,12 +26,14 @@ class PostTranslation extends SluggableMappedBase {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @var text $content
      *
      * @ORM\Column(name="content", type="text", nullable = true)
      */
     private $content;
+
     /**
      * @var text $title
      *
@@ -35,41 +41,53 @@ class PostTranslation extends SluggableMappedBase {
      * @Assert\NotNull
      */
     private $title;
+
     /**
      * @var string $subtitle
      *
      * @ORM\Column(name="subtitle", type="string", length=255, nullable=true)
      */
     protected $subtitle;
+
     /**
      * @var text $excerpt
      *
      * @ORM\Column(name="excerpt", type="text", nullable = true)
      */
     private $excerpt;
+
     /**
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255, nullable = true)
      */
     private $name;
+
     /**
      * @Assert\File(maxSize="6000000")
      */
     public $file;
-    
+
     /**
      * @var string $path
      *
      * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
     protected $path;
+
     /**
      * @var Post parent
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="translations")
      * @ORM\JoinColumn(name="Post_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $parent;
+
+    /**
+     * @var integer $status
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
 
     /**
      * Get id
@@ -79,9 +97,11 @@ class PostTranslation extends SluggableMappedBase {
     public function getId() {
         return $this->id;
     }
-    public function getFile(){
+
+    public function getFile() {
         return $this->file;
     }
+
     /**
      * Set content
      *
@@ -192,14 +212,12 @@ class PostTranslation extends SluggableMappedBase {
         return $this->path;
     }
 
-
     /**
      * Set subtitle
      *
      * @param string $subtitle
      */
-    public function setSubtitle($subtitle)
-    {
+    public function setSubtitle($subtitle) {
         $this->subtitle = $subtitle;
     }
 
@@ -208,8 +226,31 @@ class PostTranslation extends SluggableMappedBase {
      *
      * @return string 
      */
-    public function getSubtitle()
-    {
+    public function getSubtitle() {
         return $this->subtitle;
+    }
+
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return PostTranslation
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

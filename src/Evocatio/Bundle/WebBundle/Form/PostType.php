@@ -25,9 +25,6 @@ class PostType extends AbstractType {
                         'label' => false
                     )
                 ))
-                ->add('status', 'choice', array(
-                    'choices' => array(0 => "Inactive", 1 => "Publish", 2 => "Draft")
-                ))
 //                ->add('categories'/* , null, array(
 //                          'expanded' => true,
 //                          "multiple" => true) */
@@ -43,6 +40,9 @@ class PostType extends AbstractType {
 //                    'widget' => 'single_text',
 //                    'input' => 'timestamp',
                     'format' => 'dd-MM-yyyy',
+                ))
+                ->add('status', 'choice', array(
+                    'choices' => array(0 => "Inactive", 1 => "Publish", 2 => "Draft")
                 ))
                 ->add('save', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
