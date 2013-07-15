@@ -1,7 +1,7 @@
 {% extends "OwnerSiteBundle:Templates:multilangue_add_template.html.twig" %}
 {% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block formhead %}
-    {{ route_i18n.path('owner_site_faq_create', {}, ['user', 'create']) }}
+    {{ route_i18n.path('owner_site_faq_create', {}, ['create']) }}
 {% endblock formhead %}
 {% form_theme edit_form.translations "::Form/translations.html.twig" %}
 

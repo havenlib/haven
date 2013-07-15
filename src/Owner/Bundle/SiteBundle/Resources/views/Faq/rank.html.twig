@@ -2,7 +2,7 @@
 {% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block inside_content %}
 {% block fields %}
-<form class="form" action="{{ route_i18n.path('owner_site_post_rank', {'id': entity.id}, ['rank']) }}" method="POST">
+<form class="form" action="{{ route_i18n.path('owner_site_faq_rank', {'id': entity.id}, ['rank']) }}" method="POST">
     <input id="ranktype_rank" type="text" name="rank" value="{{entity.rank}}">
     <button class="btn" type="submit" id="ranktype_submit" name="submit">Ok</button>
 </form>
