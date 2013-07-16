@@ -14,15 +14,10 @@
 {% block fields %}
 
 <fieldset>
+    
 {{ form_rest(edit_form) }}
 </fieldset>
 {% endblock fields %}
-
-{% block widgets %}
-<div >
-    <h2>Gallerie d'image</h2>
-</div>
-{% endblock widgets %}
 
 {% block back %}
     <a href="{{ _route_crud.path('owner_site_post_list', 'list') }}">

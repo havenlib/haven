@@ -89,24 +89,26 @@ class PostController extends ContainerAware {
      * @Method("GET")
      * @Template()
      */
-    public function displayAction(EntityTranslation $entityTranslation) {
+    public function displayAction($slug) {
         $locale = $this->container->get("request")->get("_locale");
-        if ($entityTranslation->getTransLang()->getSymbol() != \Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale) && $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))) {
-            $slug = $entityTranslation->getParent()->getTranslationByLang(\Evocatio\Bundle\CoreBundle\Lib\Locale::getPrimaryLanguage($locale))->getSlug();
-            return new RedirectResponse($this->container->get('router')->generate($route = $this->ROUTE_PREFIX . '_post_display', array("slug" => $slug)));
-        }
-        $entity = $entityTranslation->getParent();
+
+        $entity = $this->container->get("post.read_handler")->getBySlugForLanguage($slug, $locale);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
         }
 
-        $delete_form = $this->container->get("post.form_handler")->createDeleteForm($entity->getId());
 
-        return array(
+        $delete_form = $this->container->get("page.form_handler")->createDeleteForm($entity->getId());
+
+        $template = str_replace(":displayFromSlug.html.twig", ":display.html.twig", $this->container->get("request")->get('_template'));
+
+        $params = array(
             "entity" => $entity,
             'delete_form' => $delete_form->createView()
         );
+
+        return new Response($this->container->get('templating')->render($template, $params));
     }
 
     /**

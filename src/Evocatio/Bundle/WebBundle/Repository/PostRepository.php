@@ -4,6 +4,7 @@ namespace Evocatio\Bundle\WebBundle\Repository;
 
 use \Evocatio\Bundle\CoreBundle\Generic\StatusRepository;
 use Evocatio\Bundle\WebBundle\Entity\Post;
+use Evocatio\Bundle\WebBundle\Entity\PostTranslation;
 
 /**
  * Evocatio\Bundle\WebBundle\Entity\PostRepository
@@ -50,6 +51,15 @@ class PostRepository extends StatusRepository {
         return $this->getResult();
     }
 
+    public function findByLocalizedSlug($slug, $language) {
+        $query_builder = $this->createBaseQueryBuilder();
+        $this->filterByLang($language, $query_builder);
+        $this->filterBySlug($slug, $query_builder);
+        $this->filterTranslationByStatus(PostTranslation::STATUS_PUBLISHED, $query_builder);
+
+        return $query_builder->getQuery()->getOneOrNullResult();
+    }
+
     public function findRandomPublished($limit = 1) {
         $max = $this->_em->createQuery('SELECT MAX(e.id) FROM EvocatioWebBundle:Post e WHERE e.status = :status')
                 ->setParameter('status', Post::STATUS_PUBLISHED)
@@ -74,9 +84,44 @@ class PostRepository extends StatusRepository {
         return $this;
     }
 
+    private function filterTranslationByStatus($status, $qb = null) {
+        $this->query_builder = ($qb) ? $qb : $this->createQueryBuilder("e");
+
+        $this->query_builder->andWhere("t.status = :status");
+        $this->query_builder->setParameter("status", $status);
+
+        return $this;
+    }
+
+    private function filterBySlug($slug, $qb = null) {
+        $this->query_builder = ($qb) ? $qb : $this->createBaseQueryBuilder();
+
+        $this->query_builder->andWhere("t.slug = :slug");
+        $this->query_builder->setParameter("slug", $slug);
+
+        return $this;
+    }
+
+    private function filterByLang($lang, $qb = null) {
+        $this->query_builder = ($qb) ? $qb : $this->createBaseQueryBuilder();
+
+        $this->query_builder
+                ->andWhere("tl.symbol= :language")
+                ->setParameter("language", $lang)
+        ;
+        return $this;
+    }
+
     public function getResult() {
         $query = $this->query_builder->getQuery();
         return $query->getResult();
+    }
+
+    public function createBaseQueryBuilder() {
+        return $this->createQueryBuilder("e")
+                        ->leftJoin("e.translations", "t")
+                        ->leftJoin("t.trans_lang", "tl")
+        ;
     }
 
     /**
