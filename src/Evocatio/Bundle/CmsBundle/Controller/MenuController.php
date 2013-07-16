@@ -21,8 +21,15 @@ class MenuController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("menu.read_handler")->getAll();
+//        $entities = $this->container->get("menu.read_handler")->getAll();
 
+        echo '<pre>';
+        $collection = $this->container->get("router")->getRouteCollection();
+        foreach ($collection as $name => $route)
+            echo "<br />".print_r($name, 1)."<br />";
+        echo '</pre>';
+        die();
+        
         return array("entities" => $entities);
     }
 
