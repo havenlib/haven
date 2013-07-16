@@ -1,0 +1,44 @@
+{% extends "OwnerSiteBundle::base.html.twig" %}
+{% import "EvocatioCmsBundle:Macro:content.html.twig" as CHelp %}
+
+{# set the language variable if it is null to not get errors , has to add the language to the call to the fill area and handle the translation in the macro for each type of content if we want to be able to display in another language then we work in #}
+{% block navigation %}
+{% endblock navigation %}
+
+{% block inside_header %}
+<div id="header" class="area">
+    {{ parent() }}
+{#{ CHelp.fill_area(entity, "header") }#}
+    </div>
+{% endblock inside_header %}
+{% block inside_main %} 
+
+<div>
+    {% for html in entity.getHtmlContents() %}
+        {{ html.content.content | raw }}
+    {% endfor %}
+</div>
+
+        <div id="blue-bar">&nbsp;</div>
+    <div id="sidebar" class="area">
+{{ CHelp.fill_area(entity, "sidebar", edit_form is defined?edit_form:null , language is defined?language:"") }}
+    </div>
+    <div id="theatre" class="area">
+
+{{ CHelp.fill_area(entity, "theatre", edit_form is defined?edit_form:null , language is defined?language:"") }}
+
+    </div>
+{% endblock inside_main %}
+
+    {% block inside_footer%} 
+    {{ CHelp.fill_area(entity, "footer", edit_form is defined?edit_form:null , language is defined?language:"") }}
+    {% endblock inside_footer %} 
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% if app.environment != 'prod' %}
+    <link href="{{ asset("less/first-layout.less") }}" rel="stylesheet/less" type="text/css" />
+    {% else %}
+    <link rel="stylesheet" type="text/css" href="/css/first-layout.css" />
+    {% endif %}
+{% endblock %}
