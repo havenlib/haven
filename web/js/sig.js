@@ -590,15 +590,15 @@ function addCkEditorTo(target) {
 }
 
 function prepareEditor(editor) {
-    toolbar = ['NumberedList', 'Table'];
-    if ($(editor).hasClass("ck-criminal")) {
-        toolbar.push('TableCriminal');
-    } else if ($(editor).hasClass("ck-credit")) {
-        toolbar.push('TableCredit');
-        toolbar.push('TableRecouvrement');
-    } else if ($(editor).hasClass("ck-scolarite")) {
-        toolbar.push('TableScolarite');
-    }
+//    toolbar = ['NumberedList', 'Table'];
+//    if ($(editor).hasClass("ck-criminal")) {
+//        toolbar.push('TableCriminal');
+//    } else if ($(editor).hasClass("ck-credit")) {
+//        toolbar.push('TableCredit');
+//        toolbar.push('TableRecouvrement');
+//    } else if ($(editor).hasClass("ck-scolarite")) {
+//        toolbar.push('TableScolarite');
+//    }
 
     //        lang = $("#" + $(this).attr("id").replace(/text$/, "trans_lang") + " option:selected").html();
     CKEDITOR.replace(editor, {
