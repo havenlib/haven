@@ -55,3 +55,11 @@ services:
       arguments: ["@language.read_handler"]
       tags:
           - { name: form.type, alias: translation }      
+          
+  nested_set_manager:
+      class:  Evocatio\Bundle\CoreBundle\Lib\NestedSet\Manager
+      arguments: ["@nested_set_config"]
+      
+  nested_set_config:
+      class:     Evocatio\Bundle\CoreBundle\Lib\NestedSet\Config
+      arguments: ["@doctrine.orm.entity_manager"]

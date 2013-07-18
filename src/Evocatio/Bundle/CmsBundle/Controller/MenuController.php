@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Evocatio\Bundle\CmsBundle\Entity\Menu;
+
 
 class MenuController extends ContainerAware {
 
@@ -21,15 +23,40 @@ class MenuController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-//        $entities = $this->container->get("menu.read_handler")->getAll();
+        $entities = $this->container->get("menu.read_handler")->getAll();
 
-        echo '<pre>';
-        $collection = $this->container->get("router")->getRouteCollection();
-        foreach ($collection as $name => $route)
-            echo "<br />".print_r($name, 1)."<br />";
-        echo '</pre>';
-        die();
-        
+//        echo '<pre>';
+//
+//        $em = $this->container->get("doctrine")->getEntityManager();
+//        $config = new Config($em, 'Evocatio\Bundle\CmsBundle\Entity\Menu');
+//        $nsm = new Manager($config);
+//
+////        $menu = $this->container->getRepository("Evocatio\Bundle\CmsBundle\Entity\Menu")->find();
+//        
+////        $menu = new Menu();
+////        $menu->setType('Root Menu 2');
+//
+////        $rootNode = $nsm->createRoot($menu);
+//        $rootNode = $nsm->fetchTree(8);
+////
+//        $child1 = new Menu();
+////        $child1->setType('Child Menu 3');
+////
+////        $child2 = new Menu();
+////        $child2->setType('Child Menu 4');
+////
+////        $rootNode->addChild($child1);
+////        $rootNode->addChild($child2);
+////        
+//        foreach($rootNode->getDescendants() as $childs)
+//            echo 'done-> '.$childs;
+//
+////        $collection = $this->container->get("router")->getRouteCollection();
+////        foreach ($collection as $name => $route)
+////            echo "<br />".print_r($name, 1)."<br />";
+//        echo '</pre>';
+//        die();
+
         return array("entities" => $entities);
     }
 
@@ -52,31 +79,29 @@ class MenuController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{create}/menu/{page_id}")
+     * @Route("/admin/{create}/menu")
      * @Method("GET")
      * @Template
      */
-    public function createAction($page_id) {
-        $page = $this->container->get("page.read_handler")->get($page_id);
-        $edit_form = $this->container->get("menu.form_handler")->createNewFormForPage($page);
-        
+    public function createAction() {
+        $edit_form = $this->container->get("menu.form_handler")->createNewForm();
+
         return array("edit_form" => $edit_form->createView());
     }
 
     /**
-     * @Route("/admin/{create}/menu/{page_id}")
+     * @Route("/admin/{create}/menu")
      * @Method("POST")
      * @Template
      */
-    public function addAction($page_id) {
-        $page = $this->container->get("page.read_handler")->get($page_id);
-        $edit_form = $this->container->get("menu.form_handler")->createNewFormForPage($page);
+    public function addAction() {
+        $edit_form = $this->container->get("menu.form_handler")->createNewForm();
 
         $edit_form->bind($this->container->get("request")->get("evocatio_bundle_cmsbundle_menutype"));
 
 
         if ($edit_form->isValid()) {
-            $this->container->get("menu.persistence_handler")->save($edit_form->getData());
+            $this->container->get("menu.persistence_handler")->createRootMenu($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return $this->redirectEditAction($edit_form->getData()->getId());
@@ -102,9 +127,9 @@ class MenuController extends ContainerAware {
         $entity = $this->container->get('menu.read_handler')->get($id);
         $edit_form = $this->container->get("menu.form_handler")->createEditForm($entity->getId());
         $delete_form = $this->container->get("menu.form_handler")->createDeleteForm($entity->getId());
-        
-        
-        
+
+
+
         return array(
             'entity' => $entity,
             'edit_form' => $edit_form->createView(),

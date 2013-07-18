@@ -1,0 +1,32 @@
+{% extends "OwnerSiteBundle::base_admin.html.twig" %}
+{% block inside_content %}
+<h2>Liste des menus</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="sortable">
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.type }}</td>
+                <td>
+                    <a href="{#{ _route_crud.edit('owner_site_menu_edit',  entity.id) }}">edit</a> 
+                    | <a href="{{ _route_crud.show('owner_site_menu_show', entity.id) }#}">show</a> 
+                </td>
+            </tr>
+        {% else %}
+            aucune entré
+        {% endfor %}
+    </tbody>
+</table>
+<ul>
+    <li>
+        <a href="{#{ _route_crud.path('owner_site_menu_create', 'create') }#}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{% endblock inside_content %}
