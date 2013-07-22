@@ -8,19 +8,15 @@
 {% block inside_header %}
 <div id="header" class="area">
     {{ parent() }}
-{#{ CHelp.fill_area(entity, "header") }#}
-    </div>
+</div>
 {% endblock inside_header %}
 {% block inside_main %} 
 
-        <div id="blue-bar">&nbsp;</div>
-    <div id="sidebar" class="area">
-{#{ CHelp.fill_area(entity, "sidebar", edit_form is defined?edit_form:null , language is defined?language:"") }#}
+    <div id="sidebar-left" class="area two-columns">
+        sidebar left
     </div>
-    <div id="theatre" class="area">
-
-{{ CHelp.fill_area(entity, "theatre", edit_form is defined?edit_form:null , language is defined?language:"") }}
-
+    <div id="theatre" class="area two-columns">
+        {{ CHelp.fill_area(entity, "theatre", edit_form is defined?edit_form:null , language is defined?language:"") }}
     </div>
 {% endblock inside_main %}
 
@@ -31,7 +27,7 @@
 {% block stylesheets %}
     {{ parent() }}
     {% if app.environment != 'prod' %}
-    <link href="{{ asset("less/first-layout.less") }}" rel="stylesheet/less" type="text/css" />
+    <link href="{{ asset("less/default.less") }}" rel="stylesheet/less" type="text/css" />
     {% else %}
     <link rel="stylesheet" type="text/css" href="/css/first-layout.css" />
     {% endif %}
