@@ -7,6 +7,8 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\FormFactory;
 use Evocatio\Bundle\CmsBundle\Entity\Page as Entity;
 use Evocatio\Bundle\CmsBundle\Form\PageType as Type;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class PageFormHandler {
 
@@ -14,18 +16,20 @@ class PageFormHandler {
     protected $language_read_handler;
     protected $form_factory;
     protected $security_context;
+    protected $logger;
 
     public function __construct(PageReadHandler $read_handler, LanguageReadHandler $language_read_handler, SecurityContext $security_context, FormFactory $form_factory) {
         $this->read_handler = $read_handler;
         $this->language_read_handler = $language_read_handler;
         $this->form_factory = $form_factory;
         $this->security_context = $security_context;
+
+        // create a log channel
+        $this->logger = new Logger('general');
+        $this->logger->pushHandler(new StreamHandler('/home/lbreleur/workspace/evocatio/sites2/app/logs/general.log'));
+        $this->logger->addInfo(__CLASS__ . " buildind done");
     }
 
-    /**
-     * Creates an edit_form with all the translations objects added for status languages
-     * @return Form 
-     */
     public function createEditForm($id) {
         $entity = $this->read_handler->get($id);
         $edit_form = $this->form_factory->create(new Type(), $entity);
@@ -33,16 +37,8 @@ class PageFormHandler {
         return $edit_form;
     }
 
-    /**
-     * 
-     * @param \Website\Bundle\SiteBundle\Entity\Entreprise $entreprise
-     * @return a form for dossier, as dossierType or DossierRequerantType
-     */
-    public function createNewForm() {
-        $entity = new Entity();
-        $create_form = $this->form_factory->create(new Type(), $entity);
-
-        return $create_form;
+    public function createNewForm($data = null) {
+        return $form = $this->doCreate($this->getDefaultTypeClass(), $data);
     }
 
     /**
