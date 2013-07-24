@@ -14,6 +14,7 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL.
+ * from : https://github.com/blt04/doctrine2-nestedset
  */
 
 namespace Evocatio\Bundle\CoreBundle\Lib\NestedSet;

@@ -21,6 +21,7 @@ class MenuPersistenceHandler {
     }
 
     public function createRootMenu($entity) {
+        $entity->setType("root");
         $rootNode = $this->nsm->createRoot($entity);
 
         return $rootNode;

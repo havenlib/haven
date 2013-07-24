@@ -23,43 +23,66 @@ class MenuController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("menu.read_handler")->getAll();
-
-        echo '<pre>';
-
-        $em = $this->container->get("doctrine")->getEntityManager();
-        $config = new \Evocatio\Bundle\CoreBundle\Lib\NestedSet\Config($em, 'Evocatio\Bundle\CmsBundle\Entity\Menu');
-        $nsm = new \Evocatio\Bundle\CoreBundle\Lib\NestedSet\Manager($config);
-
-//        $menu = $this->container->getRepository("Evocatio\Bundle\CmsBundle\Entity\Menu")->find();
-        
-//        $menu = new Menu();
-//        $menu->setType('Root Menu 2');
-
-//        $rootNode = $nsm->createRoot($menu);
-        $rootNode = $nsm->fetchTree(3);
+        $entities = $this->container->get("menu.read_handler")->getAllRootMenus();
+//        foreach ($entities as $entity){
+//            echo $entity->getId()."<br />";
+//        }
 //
-        $child1 = new Menu();
-        $child1->setType('Child Menu 3');
-
-        $child2 = new Menu();
-        $child2->setType('Child Menu 4');
+////        echo '<pre>';
 //
-        $rootNode->addChild($child1);
-        $rootNode->addChild($child2);
+//        $em = $this->container->get("doctrine")->getEntityManager();
+//        $config = new \Evocatio\Bundle\CoreBundle\Lib\NestedSet\Config($em, 'Evocatio\Bundle\CmsBundle\Entity\Menu');
+//        $nsm = new \Evocatio\Bundle\CoreBundle\Lib\NestedSet\Manager($config);
+//
+////        $menu = $this->container->getRepository("Evocatio\Bundle\CmsBundle\Entity\Menu")->find();
 //        
-        foreach($rootNode->getDescendants() as $childs)
-            echo 'done-> '.$childs;
+////        print_r (($this->container->get("router")->getRouteCollection()->all()));
+//        
+////        $menu = new Menu();
+////        $menu->setType('Root Menu 2');
 //
-//        $collection = $this->container->get("router")->getRouteCollection();
-//        foreach ($collection as $name => $route)
-//            echo "<br />" . print_r($name, 1) . "<br />";
-//        echo "<br />" . print_r(get_class_methods($this->container->get("router")), 1) . "<br />";
-//        echo "<br />" . print_r(($this->container->get("request")->get("_route")), 1) . "<br />";
-//        echo '</pre>';
-        die();
+////        $rootNode = $nsm->createRoot($menu);
+//        $rootNode = $nsm->fetchTree(3);
+//////
+////        $child1 = new Menu();
+////        $child1->setType('Child Menu 3');
+////
+////        $child2 = new Menu();
+////        $child2->setType('Child Menu 4');
+//////
+////        $rootNode->addChild($child1);
+////        $rootNode->addChild($child2);
+////        
+//        foreach($rootNode->getDescendants() as $childs){
+//            
+////            echo 'done-> '.print_r(get_class_methods($childs),1);
+////            echo 'done-> '.$childs;
+//        }
+////
+////        $collection = $this->container->get("router")->getRouteCollection();
+////        foreach ($collection as $name => $route)
+////            echo "<br />" . print_r($name, 1) . "<br />";
+////        echo "<br />" . print_r(get_class_methods($this->container->get("router")), 1) . "<br />";
+//        echo "<div style=' width: 45%; display:inline-block'><pre>" . print_r($this->container->get("request")->get("_route"), 1) . "</pre></div>";
+//        echo "<div style=' width: 45%;display:inline-block '><pre>" .print_r ($this->container->get("request")->get("_route_params"), 1) . "</pre></div>";
+//        $route = new \Evocatio\Bundle\CmsBundle\Lib\MenuRoute($this->container->get("request")->get("_route"), $this->container->get("request")->get("_route_params"));
+//        echo '<br />';
+//        print_r($route);
+//        echo '<br />';
+//        echo $this->container->get('router')->generate($route->getRoute(), $route->getParameters());
+//        echo '<br />';
+//        $serializeRoute =  serialize($route);
+//        echo $serializeRoute;
+//        echo '<br />';
+//        print_r(unserialize($serializeRoute));
+////        echo '</pre>';
+////        die();
 
-        return array("entities" => $entities);
+        $delete_form = $this->container->get("menu.form_handler")->createDeleteForm($id);
+
+        return array("entities" => $entities
+            , 'delete_form' => $delete_form->createView()
+        );
     }
 
     /**
@@ -128,20 +151,11 @@ class MenuController extends ContainerAware {
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get('menu.read_handler')->getBranch($id);
+        $entity = $this->container->get('menu.read_handler')->get($id);
         $edit_form = $this->container->get("menu.form_handler")->createEditForm($id);
-        $delete_form = $this->container->get("menu.form_handler")->createDeleteForm($id);
-        foreach($entity as $shit){
-            echo " entitry: ".$shit->getNode()->getName();
-        }
-//        echo "-------".print_r(array_keys($entity),1);
-//        echo 'afta';
-//        die();
-
         return array(
             'entity' => $entity,
             'edit_form' => $edit_form->createView(),
-            'delete_form' => $delete_form->createView(),
         );
     }
 
@@ -177,6 +191,27 @@ class MenuController extends ContainerAware {
         );
 
         return new Response($this->container->get('templating')->render($template, $params));
+    }
+
+    /**
+     * Deletes a post entity.
+     *
+     * @Route("/admin/{delete}/menu")
+     * @Method("POST")
+     */
+    public function deleteAction() {
+
+        $em = $this->container->get('Doctrine')->getEntityManager();
+        $entity = $em->getRepository("EvocatioWebBundle:Post")->find($id);
+
+        if (!$entity) {
+            throw new NotFoundHttpException('entity.not.found');
+        }
+
+        $em->remove($entity);
+        $em->flush();
+
+        return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_PostList'));
     }
 
 }

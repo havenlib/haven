@@ -20,7 +20,7 @@ class PostReadHandler extends ReadHandler {
 
     public function getBySlugForLanguage($slug, $language) {
         $entity = $this->em->getRepository("EvocatioWebBundle:Post")->findByLocalizedSlug($slug, $language);
-
+        
         return $entity;
     }
 

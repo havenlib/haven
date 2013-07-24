@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Menu
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\CmsBundle\Repository\MenuRepository")
  */
 class Menu extends NestedSetMappedBase {
 
@@ -30,9 +30,24 @@ class Menu extends NestedSetMappedBase {
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="MenuTranslation", mappedBy="parent", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="MenuTranslation", mappedBy="parent", cascade={"persist", "remove"})
      */
-    protected $translations;    
+    protected $translations;
+
+    public function getName($language = null) {
+        return $this->getTranslated("Name", $language);
+    }
+
+    public function getLink($language = null) {
+        return $this->getTranslated("Link", $language);
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -65,24 +80,15 @@ class Menu extends NestedSetMappedBase {
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
      * Add translations
      *
      * @param \Evocatio\Bundle\CmsBundle\Entity\MenuTranslation $translations
      * @return Menu
      */
-    public function addTranslation(\Evocatio\Bundle\CmsBundle\Entity\MenuTranslation $translations)
-    {
+    public function addTranslation(\Evocatio\Bundle\CmsBundle\Entity\MenuTranslation $translations) {
         $translations->setParent($this);
         $this->translations[] = $translations;
-    
+
         return $this;
     }
 
@@ -91,8 +97,7 @@ class Menu extends NestedSetMappedBase {
      *
      * @param \Evocatio\Bundle\CmsBundle\Entity\MenuTranslation $translations
      */
-    public function removeTranslation(\Evocatio\Bundle\CmsBundle\Entity\MenuTranslation $translations)
-    {
+    public function removeTranslation(\Evocatio\Bundle\CmsBundle\Entity\MenuTranslation $translations) {
         $this->translations->removeElement($translations);
     }
 
@@ -101,16 +106,7 @@ class Menu extends NestedSetMappedBase {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getTranslations()
-    {
+    public function getTranslations() {
         return $this->translations;
-    }
-    
-    public function getName($language = null){
-        return $this->getTranslated("Name", $language);
-    }
-    
-    public function getLink($language = null){
-        return $this->getTranslated("Link", $language);
     }
 }

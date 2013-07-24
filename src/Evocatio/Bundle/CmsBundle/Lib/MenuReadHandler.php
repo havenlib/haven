@@ -36,6 +36,10 @@ class MenuReadHandler {
         return $this->em->getRepository("EvocatioCmsBundle:Menu")->findAll();
     }
 
+    public function getAllRootMenus() {
+        return $this->em->getRepository("EvocatioCmsBundle:Menu")->findRootMenus();
+    }
+
     public function getAllPublished() {
         return $this->em->getRepository("EvocatioCmsBundle:Menu")->findAllPublished();
     }

@@ -11,7 +11,7 @@ class MenuTranslationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('link')
+//                ->add('link')
                 ->add('name')
                 ->add('trans_lang', null, array(
                     "property" => "name"

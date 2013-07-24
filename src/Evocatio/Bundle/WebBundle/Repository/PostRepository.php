@@ -16,13 +16,20 @@ class PostRepository extends StatusRepository {
 
     private $query_builder;
 
+    public function __construct($em, \Doctrine\ORM\Mapping\ClassMetadata $class) {
+        parent::__construct($em, $class);
+        $this->query_builder = $this->createQueryBuilder("e")
+                        ->leftJoin("e.translations", "t")
+                        ->leftJoin("t.trans_lang", "tl");
+    }
+    
     public function findAll() {
-        $this->query_builder = $this->createQueryBuilder("e");
+//        $this->query_builder = $this->createQueryBuilder("e");
         return $this->getResult();
     }
 
     public function findAllOrderedByRank($direction = 'ASC') {
-        $this->query_builder = $this->createQueryBuilder("e");
+//        $this->query_builder = $this->createQueryBuilder("e");
         $this->query_builder->orderBy('e.rank', $direction);
         return $this->getResult();
     }
@@ -33,7 +40,7 @@ class PostRepository extends StatusRepository {
     }
 
     public function findAllFromRank($new_rank, $old_rank, $id) {
-        $this->query_builder = $this->createQueryBuilder("e");
+//        $this->query_builder = $this->createQueryBuilder("e");
 
         $this->query_builder->where('(e.rank BETWEEN :new_rank AND :old_rank OR e.rank BETWEEN :old_rank AND :new_rank) AND e.id != :id');
         $this->query_builder->setParameters(array("new_rank" => $new_rank, "old_rank" => $old_rank, "id" => $id));
@@ -52,12 +59,12 @@ class PostRepository extends StatusRepository {
     }
 
     public function findByLocalizedSlug($slug, $language) {
-        $query_builder = $this->createBaseQueryBuilder();
-        $this->filterByLang($language, $query_builder);
-        $this->filterBySlug($slug, $query_builder);
-        $this->filterTranslationByStatus(PostTranslation::STATUS_PUBLISHED, $query_builder);
+//        $query_builder = $this->createBaseQueryBuilder();
+        $this->filterByLang($language);
+        $this->filterBySlug($slug);
+        $this->filterTranslationByStatus(PostTranslation::STATUS_PUBLISHED);
 
-        return $query_builder->getQuery()->getOneOrNullResult();
+        return $this->query_builder->getQuery()->getOneOrNullResult();
     }
 
     public function findRandomPublished($limit = 1) {
@@ -75,8 +82,8 @@ class PostRepository extends StatusRepository {
         return $this->getResult();
     }
 
-    private function filterByStatus($status, $qb = null) {
-        $this->query_builder = ($qb) ? $qb : $this->createQueryBuilder("e");
+    private function filterByStatus($status) {
+//        $this->query_builder = ($qb) ? $qb : $this->createQueryBuilder("e");
 
         $this->query_builder->andWhere("e.status = :status");
         $this->query_builder->setParameter("status", $status);
@@ -84,8 +91,8 @@ class PostRepository extends StatusRepository {
         return $this;
     }
 
-    private function filterTranslationByStatus($status, $qb = null) {
-        $this->query_builder = ($qb) ? $qb : $this->createQueryBuilder("e");
+    private function filterTranslationByStatus($status) {
+//        $this->query_builder = ($qb) ? $qb : $this->createQueryBuilder("e");
 
         $this->query_builder->andWhere("t.status = :status");
         $this->query_builder->setParameter("status", $status);
@@ -93,8 +100,8 @@ class PostRepository extends StatusRepository {
         return $this;
     }
 
-    private function filterBySlug($slug, $qb = null) {
-        $this->query_builder = ($qb) ? $qb : $this->createBaseQueryBuilder();
+    private function filterBySlug($slug) {
+//        $this->query_builder = ($qb) ? $qb : $this->createBaseQueryBuilder();
 
         $this->query_builder->andWhere("t.slug = :slug");
         $this->query_builder->setParameter("slug", $slug);
@@ -102,8 +109,8 @@ class PostRepository extends StatusRepository {
         return $this;
     }
 
-    private function filterByLang($lang, $qb = null) {
-        $this->query_builder = ($qb) ? $qb : $this->createBaseQueryBuilder();
+    private function filterByLang($lang) {
+//        $this->query_builder = ($qb) ? $qb : $this->createBaseQueryBuilder();
 
         $this->query_builder
                 ->andWhere("tl.symbol= :language")
@@ -117,12 +124,12 @@ class PostRepository extends StatusRepository {
         return $query->getResult();
     }
 
-    public function createBaseQueryBuilder() {
-        return $this->createQueryBuilder("e")
-                        ->leftJoin("e.translations", "t")
-                        ->leftJoin("t.trans_lang", "tl")
-        ;
-    }
+//    public function createBaseQueryBuilder() {
+//        return $this->createQueryBuilder("e")
+//                        ->leftJoin("e.translations", "t")
+//                        ->leftJoin("t.trans_lang", "tl")
+//        ;
+//    }
 
     /**
      * Return a query for last crated post.
@@ -132,13 +139,13 @@ class PostRepository extends StatusRepository {
      * @return type
      */
     public function findLastCreatedOnline($qt = null) {
-        $query_builder = $this->createQueryBuilder("e");
-        $query_builder->orderBy("e.created_at", "ASC")
+//        $query_builder = $this->createQueryBuilder("e");
+        $this->query_builder->orderBy("e.created_at", "ASC")
                 ->setMaxResults($qt);
-        $query_builder = $this->filterOnlines($query_builder);
+        $this->query_builder = $this->filterOnlines();
 
 
-        return $query_builder->getQuery()->getResult();
+        return $this->query_builder->getQuery()->getResult();
     }
 
 }
