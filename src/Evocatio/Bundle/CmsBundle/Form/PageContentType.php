@@ -19,7 +19,6 @@ class PageContentType extends AbstractType {
         $builder
                 ->add('area', 'choice', array(
                     'choices' => $options['areas']
-                    , 'preferred_choices' => array('theater')
                     , 'multiple' => false
                     , 'required' => false
                 ))
