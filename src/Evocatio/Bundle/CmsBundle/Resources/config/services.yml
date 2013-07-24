@@ -34,3 +34,15 @@ services:
   template.form_handler:
       class:     Evocatio\Bundle\CmsBundle\Lib\TemplateFormHandler
       arguments: ["@template.read_handler", "@language.read_handler", "@security.context", "@form.factory"]
+      
+  menu.read_handler:
+        class:     Evocatio\Bundle\CmsBundle\Lib\MenuReadHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@nested_set_manager"]
+        
+  menu.persistence_handler:
+        class:     Evocatio\Bundle\CmsBundle\Lib\MenuPersistenceHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@nested_set_manager"]
+
+  menu.form_handler:
+      class:     Evocatio\Bundle\CmsBundle\Lib\MenuFormHandler
+      arguments: ["@menu.read_handler", "@language.read_handler", "@security.context", "@form.factory", "@nested_set_manager"]

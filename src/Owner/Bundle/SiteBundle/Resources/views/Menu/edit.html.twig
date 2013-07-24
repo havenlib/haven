@@ -1,0 +1,23 @@
+{#% extends entity.getTemplate() is empty?"OwnerSiteBundle:Menu:create.html.twig":entity.getTemplate().getPath() %#}
+{% extends "OwnerSiteBundle:Menu:create.html.twig" %}
+
+
+
+    {% block formhead %}
+        {{ _route_crud.path('owner_site_menu_edit', 'edit', { 'id':entity.id}) }}
+    {% endblock formhead %}
+    {% block fields %}
+<fieldset> {{ form_widget(edit_form) }} </fieldset>
+
+    {% endblock fields %}
+
+
+
+{% block delete %}
+<li>
+   {# <form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <button type="submit">Delete</button>
+    </form>#}
+    </li>
+{% endblock delete %}

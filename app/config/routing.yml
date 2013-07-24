@@ -1,3 +1,11 @@
+#redirect / to /admin/lister/page c'était en autre pour un exemple de redirect pris ici : http://symfony.com/doc/current/cookbook/routing/redirect_in_config.html
+root:
+    path:     /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /fr/admin/lister/page
+        permanent: true
+
 evocatio_portfolio:
     resource: "@EvocatioPortfolioBundle/Controller/"
     type:     annotation

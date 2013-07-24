@@ -18,6 +18,11 @@
     {{ crud.path(route, 'list', {"id" : id}) }}
 {% endmacro %}
 
+{% macro delete(route) %}
+    {% import _self as crud %}
+    {{ crud.path(route, 'delete') }}
+{% endmacro %}
+
 {% macro path(route, keyword, options = {} ) %}
 {% spaceless %}
     {% set parameters = {(keyword): (keyword | trans({}, 'routes'))}| merge(options is iterable ? options:{}) %}
