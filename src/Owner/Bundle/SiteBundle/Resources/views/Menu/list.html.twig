@@ -4,17 +4,17 @@
 <table>
     <thead>
         <tr>
-            <th>Title</th>
+            <th>Nom</th>
             <th></th>
         </tr>
     </thead>
     <tbody class="sortable">
         {% for entity in entities %}
             <tr>
-                <td>{{ entity.type }}</td>
+                <td>{{ entity.getName() }}</td>
                 <td>
-                    <a href="{#{ _route_crud.edit('owner_site_menu_edit',  entity.id) }}">edit</a> 
-                    | <a href="{{ _route_crud.show('owner_site_menu_show', entity.id) }#}">show</a> 
+                    <a href="{{ _route_crud.edit('owner_site_menu_edit',  entity.id) }}">edit</a> 
+                    | <a href="{{ _route_crud.show('owner_site_menu_show', entity.id) }}">show</a> 
                 </td>
             </tr>
         {% else %}
@@ -24,7 +24,7 @@
 </table>
 <ul>
     <li>
-        <a href="{#{ _route_crud.path('owner_site_menu_create', 'create') }#}">
+        <a href="{{ _route_crud.path('owner_site_menu_create', 'create') }}">
             Create a new entry
         </a>
     </li>

@@ -80,6 +80,7 @@ class Menu extends NestedSetMappedBase {
      */
     public function addTranslation(\Evocatio\Bundle\CmsBundle\Entity\MenuTranslation $translations)
     {
+        $translations->setParent($this);
         $this->translations[] = $translations;
     
         return $this;
@@ -103,5 +104,13 @@ class Menu extends NestedSetMappedBase {
     public function getTranslations()
     {
         return $this->translations;
+    }
+    
+    public function getName($language = null){
+        return $this->getTranslated("Name", $language);
+    }
+    
+    public function getLink($language = null){
+        return $this->getTranslated("Link", $language);
     }
 }

@@ -25,9 +25,9 @@ class MenuTranslation extends TranslationMappedBase {
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="text", nullable=true)
+     * @ORM\Column(name="link", type="text", nullable=true)
      */
-    private $content;
+    private $link;
 
     /**
      * @var string
@@ -36,6 +36,12 @@ class MenuTranslation extends TranslationMappedBase {
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Menu", inversedBy="translations")
+     * @ORM\JoinColumn(name="menu_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $parent;    
+    
     /**
      * Get id
      *
@@ -46,49 +52,26 @@ class MenuTranslation extends TranslationMappedBase {
     }
 
     /**
-     * Set content
+     * Set link
      *
-     * @param string $content
+     * @param string $link
      * @return MenuTranslation
      */
-    public function setContent($content) {
-        $this->content = $content;
+    public function setLink($link) {
+        $this->link = $link;
 
         return $this;
     }
 
     /**
-     * Get content
+     * Get link
      *
      * @return string 
      */
-    public function getContent() {
-        return $this->content;
+    public function getLink() {
+        return $this->link;
     }
 
-
-    /**
-     * Set parent
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Menu $parent
-     * @return MenuTranslation
-     */
-    public function setParent(\Evocatio\Bundle\CmsBundle\Entity\Menu $parent = null)
-    {
-        $this->parent = $parent;
-    
-        return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return \Evocatio\Bundle\CmsBundle\Entity\Menu 
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
 
     /**
      * Set name
@@ -111,5 +94,28 @@ class MenuTranslation extends TranslationMappedBase {
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\Menu $parent
+     * @return MenuTranslation
+     */
+    public function setParent(\Evocatio\Bundle\CmsBundle\Entity\Menu $parent = null)
+    {
+        $this->parent = $parent;
+    
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Evocatio\Bundle\CmsBundle\Entity\Menu 
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }

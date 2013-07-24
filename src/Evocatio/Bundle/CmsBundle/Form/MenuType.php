@@ -10,9 +10,9 @@ class MenuType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('type', 'choice', array(
-                    'choices' => array("root", "route", 'link')
-                ))
+//                ->add('type', 'choice', array(
+//                    'choices' => array("root", "route", 'link')
+//                ))
                 ->add('translations', 'translation', array(
                     'type' => new MenuTranslationType()
                     , 'allow_add' => true

@@ -10,8 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+// Evocatio includes
 use Evocatio\Bundle\CmsBundle\Entity\Menu;
-
 
 class MenuController extends ContainerAware {
 
@@ -25,37 +25,39 @@ class MenuController extends ContainerAware {
     public function listAction() {
         $entities = $this->container->get("menu.read_handler")->getAll();
 
-//        echo '<pre>';
+        echo '<pre>';
+
+        $em = $this->container->get("doctrine")->getEntityManager();
+        $config = new \Evocatio\Bundle\CoreBundle\Lib\NestedSet\Config($em, 'Evocatio\Bundle\CmsBundle\Entity\Menu');
+        $nsm = new \Evocatio\Bundle\CoreBundle\Lib\NestedSet\Manager($config);
+
+//        $menu = $this->container->getRepository("Evocatio\Bundle\CmsBundle\Entity\Menu")->find();
+        
+//        $menu = new Menu();
+//        $menu->setType('Root Menu 2');
+
+//        $rootNode = $nsm->createRoot($menu);
+        $rootNode = $nsm->fetchTree(3);
 //
-//        $em = $this->container->get("doctrine")->getEntityManager();
-//        $config = new Config($em, 'Evocatio\Bundle\CmsBundle\Entity\Menu');
-//        $nsm = new Manager($config);
+        $child1 = new Menu();
+        $child1->setType('Child Menu 3');
+
+        $child2 = new Menu();
+        $child2->setType('Child Menu 4');
 //
-////        $menu = $this->container->getRepository("Evocatio\Bundle\CmsBundle\Entity\Menu")->find();
+        $rootNode->addChild($child1);
+        $rootNode->addChild($child2);
 //        
-////        $menu = new Menu();
-////        $menu->setType('Root Menu 2');
+        foreach($rootNode->getDescendants() as $childs)
+            echo 'done-> '.$childs;
 //
-////        $rootNode = $nsm->createRoot($menu);
-//        $rootNode = $nsm->fetchTree(8);
-////
-//        $child1 = new Menu();
-////        $child1->setType('Child Menu 3');
-////
-////        $child2 = new Menu();
-////        $child2->setType('Child Menu 4');
-////
-////        $rootNode->addChild($child1);
-////        $rootNode->addChild($child2);
-////        
-//        foreach($rootNode->getDescendants() as $childs)
-//            echo 'done-> '.$childs;
-//
-////        $collection = $this->container->get("router")->getRouteCollection();
-////        foreach ($collection as $name => $route)
-////            echo "<br />".print_r($name, 1)."<br />";
+//        $collection = $this->container->get("router")->getRouteCollection();
+//        foreach ($collection as $name => $route)
+//            echo "<br />" . print_r($name, 1) . "<br />";
+//        echo "<br />" . print_r(get_class_methods($this->container->get("router")), 1) . "<br />";
+//        echo "<br />" . print_r(($this->container->get("request")->get("_route")), 1) . "<br />";
 //        echo '</pre>';
-//        die();
+        die();
 
         return array("entities" => $entities);
     }
@@ -104,7 +106,9 @@ class MenuController extends ContainerAware {
             $this->container->get("menu.persistence_handler")->createRootMenu($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return $this->redirectEditAction($edit_form->getData()->getId());
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('add', "edit", $this->container->get("request")->get("_route")), array(
+                        'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
+                        , 'id' => $edit_form->getData()->getId())));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
@@ -124,11 +128,15 @@ class MenuController extends ContainerAware {
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get('menu.read_handler')->get($id);
-        $edit_form = $this->container->get("menu.form_handler")->createEditForm($entity->getId());
-        $delete_form = $this->container->get("menu.form_handler")->createDeleteForm($entity->getId());
-
-
+        $entity = $this->container->get('menu.read_handler')->getBranch($id);
+        $edit_form = $this->container->get("menu.form_handler")->createEditForm($id);
+        $delete_form = $this->container->get("menu.form_handler")->createDeleteForm($id);
+        foreach($entity as $shit){
+            echo " entitry: ".$shit->getNode()->getName();
+        }
+//        echo "-------".print_r(array_keys($entity),1);
+//        echo 'afta';
+//        die();
 
         return array(
             'entity' => $entity,
@@ -154,7 +162,9 @@ class MenuController extends ContainerAware {
             $this->container->get("menu.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return $this->redirectEditAction($edit_form->getData()->getId());
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('edit', "update", $this->container->get("request")->get("_route")), array(
+                        'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
+                        , 'id' => $edit_form->getData()->getId())));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "update.error");
@@ -167,16 +177,6 @@ class MenuController extends ContainerAware {
         );
 
         return new Response($this->container->get('templating')->render($template, $params));
-    }
-
-    protected function redirectListAction() {
-        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_menu_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
-    }
-
-    protected function redirectEditAction($id) {
-        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_menu_edit', array(
-                    'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
-                    , 'id' => $id)));
     }
 
 }
