@@ -155,5 +155,9 @@ class Area {
     public function getContents() {
         return $this->contents;
     }
+    
+    public function __toString() {
+        return $this->getName();
+    }
 
 }

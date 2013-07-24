@@ -9,6 +9,15 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class PageType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
+//
+//        echo "Template: ". $options['data']->getTemplate()->getName();
+//        echo "<br />";
+//        echo "<pre>";
+//        print_r($options['data']->getTemplate()->getAreasAsArray());
+//        echo "</pre>";
+//        echo "<br />";
+//        echo "<br />";
+//        ;
         $builder
                 ->add('translations', 'translation', array(
                     'type' => new PageTranslationType()
@@ -24,6 +33,10 @@ class PageType extends AbstractType {
                     , 'empty_data' => "\Evocatio\Bundle\CmsBundle\Entity\PageTranslation"
                 ))
                 ->add('template')
+                ->add('tpl', 'submit', array(
+                    'attr' => array('class' => 'btn save-btn'),
+                    'label' => 'change.template'
+                ))
                 ->add('html_contents', "collection", array(
                     'type' => new PageContentType('Evocatio\Bundle\CmsBundle\Form\HtmlContentType')
                     , 'allow_add' => true
@@ -33,6 +46,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
+                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
                     )
                 ))
                 ->add('text_contents', "collection", array(
@@ -44,6 +58,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
+                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
                     )
                 ))
                 ->add('news_widgets', "collection", array(
@@ -55,15 +70,12 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
+                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
                     )
                 ))
                 ->add('save', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
                     'label' => 'save.page'
-                ))
-                ->add('tpl', 'submit', array(
-                    'attr' => array('class' => 'btn save-btn'),
-                    'label' => 'change.template'
                 ))
         ;
     }

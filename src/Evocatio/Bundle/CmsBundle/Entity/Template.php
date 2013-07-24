@@ -98,21 +98,19 @@ class Template {
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->areas = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add areas
      *
      * @param \Evocatio\Bundle\CmsBundle\Entity\Area $areas
      * @return Template
      */
-    public function addArea(\Evocatio\Bundle\CmsBundle\Entity\Area $areas)
-    {
+    public function addArea(\Evocatio\Bundle\CmsBundle\Entity\Area $areas) {
         $this->areas[] = $areas;
-    
+
         return $this;
     }
 
@@ -121,8 +119,7 @@ class Template {
      *
      * @param \Evocatio\Bundle\CmsBundle\Entity\Area $areas
      */
-    public function removeArea(\Evocatio\Bundle\CmsBundle\Entity\Area $areas)
-    {
+    public function removeArea(\Evocatio\Bundle\CmsBundle\Entity\Area $areas) {
         $this->areas->removeElement($areas);
     }
 
@@ -131,8 +128,17 @@ class Template {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getAreas()
-    {
+    public function getAreas() {
         return $this->areas;
     }
+
+    public function getAreasAsArray() {
+        $areas = array();
+        foreach ($this->getAreas() as $area) {
+            $areas[$area->getName()] = $area->getName();
+        }
+
+        return $areas;
+    }
+
 }
