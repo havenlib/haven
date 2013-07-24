@@ -17,15 +17,21 @@ class PageContentType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('area')
+                ->add('area', 'choice', array(
+                    'choices' => $options['areas']
+                    , 'preferred_choices' => array('theater')
+                    , 'multiple' => false
+                    , 'required' => false
+                ))
                 ->add('content', new $this->content_type(), array(
-                     "label" => false
-                ))        ;
+                    "label" => false
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Evocatio\Bundle\CmsBundle\Entity\PageContent'
+            , 'areas' => array()
         ));
     }
 

@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class PageController extends ContainerAware {
 
@@ -69,13 +71,23 @@ class PageController extends ContainerAware {
 
         $edit_form->bind($request);
 
-
-
-        if ($edit_form->isValid()) {
+        if ($edit_form->get('save')->isClicked() && $edit_form->isValid()) {
             $this->container->get("page.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return $this->redirectEditAction($edit_form->getData()->getId());
+        } else {
+            if ($edit_form->get('tpl')->isClicked()) {
+
+                // create a log channel
+                $this->logger = new Logger('general');
+                $this->logger->pushHandler(new StreamHandler('/home/lbreleur/workspace/evocatio/sites2/app/logs/general.log'));
+                $this->logger->addInfo("Change template from " . $edit_form->getData()->get("template")->getName());
+
+                $this->container->get("page.form_handler")->createNewForm($edit_form->getData());
+            } else {
+                $this->container->get("session")->getFlashBag()->add("error", "create.error");
+            }
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
@@ -99,9 +111,9 @@ class PageController extends ContainerAware {
         $edit_form = $this->container->get("page.form_handler")->createEditForm($id);
         $delete_form = $this->container->get("page.form_handler")->createDeleteForm($id);
 //        $edit_html_content_form = $this->container->get("page_content.form_handler")->createNewFormForPage($edit_form->getData());
-        
-        
-        
+
+
+
         return array(
             'entity' => $edit_form->getData(),
             'edit_form' => $edit_form->createView(),
@@ -128,14 +140,21 @@ class PageController extends ContainerAware {
 
         $edit_form->bind($request);
 
-        if ($edit_form->isValid()) {
+        if ($edit_form->get('save')->isClicked() && $edit_form->isValid()) {
             $this->container->get("page.persistence_handler")->save($edit_form->getData());
-            $this->container->get("session")->getFlashBag()->add("success", "create.success");
+            $this->container->get("session")->getFlashBag()->add("success", "edit.success");
 
             return $this->redirectEditAction($edit_form->getData()->getId());
+        } else {
+            if ($edit_form->get('tpl')->isClicked()) {
+
+                $this->container->get("session")->getFlashBag()->add("success", "template.changed");
+                $edit_form = $this->container->get("page.form_handler")->changeTemplate($edit_form->getData());
+            } else {
+                $this->container->get("session")->getFlashBag()->add("error", "edit.error");
+            }
         }
 
-        $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
         $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
         $params = array(

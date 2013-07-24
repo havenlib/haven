@@ -7,6 +7,8 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\FormFactory;
 use Evocatio\Bundle\CmsBundle\Entity\Page as Entity;
 use Evocatio\Bundle\CmsBundle\Form\PageType as Type;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class PageFormHandler {
 
@@ -22,10 +24,6 @@ class PageFormHandler {
         $this->security_context = $security_context;
     }
 
-    /**
-     * Creates an edit_form with all the translations objects added for status languages
-     * @return Form 
-     */
     public function createEditForm($id) {
         $entity = $this->read_handler->get($id);
         $edit_form = $this->form_factory->create(new Type(), $entity);
@@ -33,16 +31,14 @@ class PageFormHandler {
         return $edit_form;
     }
 
-    /**
-     * 
-     * @param \Website\Bundle\SiteBundle\Entity\Entreprise $entreprise
-     * @return a form for dossier, as dossierType or DossierRequerantType
-     */
-    public function createNewForm() {
-        $entity = new Entity();
-        $create_form = $this->form_factory->create(new Type(), $entity);
+    public function changeTemplate($data) {
+        return $edit_form = $this->form_factory->create(new Type(), $data);
+    }
 
-        return $create_form;
+    public function createNewForm() {
+        $edit_form = $this->form_factory->create(new Type());
+
+        return $edit_form;
     }
 
     /**
