@@ -25,7 +25,7 @@ class MenuTranslation extends TranslationMappedBase {
     /**
      * @var string
      *
-     * @ORM\Column(name="link", type="text", nullable=true)
+     * @ORM\OneToOne(targetEntity="\Evocatio\Bundle\CoreBundle\Entity\Link", cascade={"all"}, orphanRemoval=true)
      */
     private $link;
 

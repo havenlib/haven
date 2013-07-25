@@ -13,6 +13,12 @@ class MenuTranslationType extends AbstractType {
         $builder
 //                ->add('link')
                 ->add('name')
+                ->add('ExternalLink', new \Evocatio\Bundle\CoreBundle\Form\ExternalLinkType, array(
+                    'property_path' => 'link'
+                ))
+//                ->add('InternalLink', new \Evocatio\Bundle\CoreBundle\Form\InternalLinkType, array(
+//                    'property_path' => 'link'
+//                ))
                 ->add('trans_lang', null, array(
                     "property" => "name"
                     , "label" => false
