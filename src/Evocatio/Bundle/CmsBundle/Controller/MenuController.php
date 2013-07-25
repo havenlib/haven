@@ -78,10 +78,11 @@ class MenuController extends ContainerAware {
 ////        echo '</pre>';
 ////        die();
 
-        $delete_form = $this->container->get("menu.form_handler")->createDeleteForm($id);
-
+        foreach($entities as $entity){
+            $delete_form[$entity->getId()] = $this->container->get("menu.form_handler")->createDeleteForm($entity->getId())->createView();
+        }
         return array("entities" => $entities
-            , 'delete_form' => $delete_form->createView()
+            , 'delete_form' => $delete_form
         );
     }
 
@@ -202,7 +203,7 @@ class MenuController extends ContainerAware {
     public function deleteAction() {
 
         $em = $this->container->get('Doctrine')->getEntityManager();
-        $entity = $em->getRepository("EvocatioWebBundle:Post")->find($id);
+        $entity = $em->getRepository("EvocatioWebBundle:Post")->find($this);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');

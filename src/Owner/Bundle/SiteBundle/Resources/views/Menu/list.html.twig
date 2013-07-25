@@ -14,8 +14,8 @@
                 <td>{{ entity.getId() }} {{ entity.getName() }}</td>
                 <td>
                     <a href="{{ _route_crud.edit('owner_site_menu_edit',  entity.id) }}">edit</a> 
-                    | <form action="{{ _route_crud.delete('owner_site_menu_delete', entity.id) }}">
-                        {{ form_widget(delete_form) }}
+                    | <form action="{{ _route_crud.delete('owner_site_menu_delete') }}" method="post">
+                        {{ form_widget(delete_form[entity.getId()]) }}
                     </form> 
                 </td>
             </tr>

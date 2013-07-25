@@ -12,9 +12,10 @@ class MenuPersistenceHandler {
     protected $security_context;
     protected $nsm;
 
-    public function __construct(EntityManager $em, SecurityContext $security_context, NestedSetManager $nsm) {
+    public function __construct(MenuReadHandler $read_handler, EntityManager $em, SecurityContext $security_context, NestedSetManager $nsm) {
         $this->em = $em;
         $this->security_context = $security_context;
+        $this->read_handler = $read_handler;
         $config = $nsm->getConfiguration();
         $config->setClass('Evocatio\Bundle\CmsBundle\Entity\Menu');
         $this->nsm = $nsm;
@@ -28,6 +29,12 @@ class MenuPersistenceHandler {
     }
 
     public function save($entity) {
+
+        $this->em->persist($entity);
+        $this->em->flush();
+    }
+
+    public function delete($entity) {
 
         $this->em->persist($entity);
         $this->em->flush();
