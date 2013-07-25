@@ -37,15 +37,28 @@ class MenuPersistenceHandler {
     }
 
     public function delete($id) {
-
+//      for some reason the links dont delete on cascade, it seems to work with normal function, not with nested set, if we do it otherwise it tries to recreate the parent.
         $entity = $this->read_handler->get($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
         }
 
-        $node = $this->nsm->wrapNode($entity);
+        $entity2 = clone $entity;
+        
+        $links = array();
+        foreach ($entity->getTranslations() as $translation) {
+            $links[] = $translation->getLink();
+        }
+        $node = $this->nsm->wrapNode($entity2);
         $node->delete();
+        
+//            $this->em->flush();
+        foreach ($links as $link) {
+            $this->em->remove($link);
+        }
+            $this->em->flush(); 
+//            $this->em->flush()
     }
 
 }

@@ -25,7 +25,8 @@ class MenuTranslation extends TranslationMappedBase {
     /**
      * @var string
      *
-     * @ORM\OneToOne(targetEntity="\Evocatio\Bundle\CoreBundle\Entity\Link", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="\Evocatio\Bundle\CoreBundle\Entity\Link", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="link_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     private $link;
 
@@ -38,7 +39,7 @@ class MenuTranslation extends TranslationMappedBase {
 
     /**
      * @ORM\ManyToOne(targetEntity="Menu", inversedBy="translations")
-     * @ORM\JoinColumn(name="menu_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="menu_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     protected $parent;    
     
