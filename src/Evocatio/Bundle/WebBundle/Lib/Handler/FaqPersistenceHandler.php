@@ -2,10 +2,21 @@
 
 namespace Evocatio\Bundle\WebBundle\Lib\Handler;
 
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Evocatio\Bundle\CoreBundle\Lib\Handler\PersistenceHandler;
 
-class FaqPersistenceHandler extends PersistenceHandler {
+class FaqPersistenceHandler {
+
+    protected $em;
+    protected $security_context;
+    protected $read_handler;
+
+    public function __construct(FaqReadHandler $read_handler, EntityManager $em, SecurityContext $security_context) {
+        $this->em = $em;
+        $this->security_context = $security_context;
+        $this->read_handler = $read_handler;
+    }
 
     public function rank($entity, $new_rank) {
 
@@ -21,6 +32,18 @@ class FaqPersistenceHandler extends PersistenceHandler {
         $this->em->persist($entity);
         $this->em->flush();
     }
+
+    public function save($entity) {
+        $this->em->persist($entity);
+        $this->em->flush();
+    }
+
+    public function delete($id) {
+        $entity = $this->read_handler->get($id);
+        $this->em->remove($entity);
+        $this->em->flush();
+    }
+
     public function firstSave($entity) {
         $this->em->persist($entity);
         $this->em->flush();
@@ -30,6 +53,7 @@ class FaqPersistenceHandler extends PersistenceHandler {
          */
         $this->em->getConnection()->exec("UPDATE Faq AS p, (SELECT IFNULL(MAX(rank), 0) AS rank FROM Faq) p2 SET p.rank = p2.rank + 1 WHERE p.id = " . $entity->getId());
     }
+
 }
 
 ?>

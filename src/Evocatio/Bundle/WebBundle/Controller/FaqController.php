@@ -69,11 +69,16 @@ class FaqController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-//        $entities = $this->container->get("faq.read_handler")->getAll();
-//        return array();
-        $form = $this->container->get("faq.form_handler")->createRankForm();
-        $entities = $form->get("faqs")->getData();
-        return array("edit_form" => $form->createView(), "entities" => $entities);
+        $entities = $this->container->get("faq.read_handler")->getAll();
+
+
+        foreach ($entities as $entity) {
+            $delete_forms[$entity->getId()] = $this->container->get("faq.form_handler")->createDeleteForm($entity->getId())->createView();
+        }
+
+        return array("entities" => $entities
+            , 'delete_forms' => isset($delete_forms) && is_array($delete_forms) ? $delete_forms : array()
+        );
     }
 
     /**
@@ -184,24 +189,17 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * Deletes a faq entity.
-     *
-     * @Route("/admin/faq/{id}/delete", name="EvocatioWebBundle_FaqDelete")
+     * @Route("/admin/{delete}/faq")
      * @Method("POST")
      */
-    public function deleteAction($id) {
+    public function deleteAction() {
 
-        $em = $this->container->get('Doctrine')->getEntityManager();
-        $entity = $em->getRepository("EvocatioWebBundle:Faq")->find($id);
+        $form_data = $this->container->get("request")->get('form');
+        $this->container->get("faq.persistence_handler")->delete($form_data['id']);
 
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
+        return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
+                    'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
 
-        $em->remove($entity);
-        $em->flush();
-
-        return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_FaqList'));
     }
 
     protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
