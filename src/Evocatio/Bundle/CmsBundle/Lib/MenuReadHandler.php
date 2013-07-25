@@ -22,7 +22,7 @@ class MenuReadHandler {
 
     public function get($id) {
 
-        $entity = $this->em->getRepository("EvocatioCmsBundle:Menu")->find($id);
+        $entity = $this->nsm->fetchBranch($id);
 
         return $entity;
     }
@@ -32,23 +32,15 @@ class MenuReadHandler {
         return $test;
     }
     
-    public function getAll() {
-        return $this->em->getRepository("EvocatioCmsBundle:Menu")->findAll();
-    }
-
     public function getAllRootMenus() {
-        return $this->em->getRepository("EvocatioCmsBundle:Menu")->findRootMenus();
+        $roots = $this->em->getRepository("EvocatioCmsBundle:Menu")->findRootMenus();
+        foreach($roots as $root){
+            $entities[] = $this->nsm->fetchTree($root->getId());
+        }
+        
+        return $entities;
     }
 
-    public function getAllPublished() {
-        return $this->em->getRepository("EvocatioCmsBundle:Menu")->findAllPublished();
-    }
-
-    public function getBySlugForLanguage($slug, $language){
-        $entity = $this->em->getRepository("EvocatioCmsBundle:Menu")->findByLocalizedSlug( $slug, $language);
-
-        return $entity;        
-    }
 }
 
 ?>

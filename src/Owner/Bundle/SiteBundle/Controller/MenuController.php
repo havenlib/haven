@@ -15,6 +15,11 @@ class MenuController extends BaseMenuController {
 
     protected $ROUTE_PREFIX = "owner_site";
 
+    public function displayMenuAction($id) {
+        $entities = $this->container->get('menu.read_handler')->getBranch($id);
+
+        return array("entities" => $entities);
+    }
 }
 
 ?>

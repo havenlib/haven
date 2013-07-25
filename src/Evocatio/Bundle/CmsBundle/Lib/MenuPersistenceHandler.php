@@ -30,6 +30,16 @@ class MenuPersistenceHandler {
         return $rootNode;
     }
 
+    public function createChildMenu($entity, $parent) {
+        $entity->setType("child");
+//        echo $parent;
+//        die();
+        $rootNode = $this->nsm->fetchBranch($parent);
+        $rootNode->addChild($entity);
+
+        return $rootNode;
+    }
+
     public function save($entity) {
 
         $this->em->persist($entity);

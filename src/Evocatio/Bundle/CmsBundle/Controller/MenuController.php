@@ -21,67 +21,19 @@ class MenuController extends ContainerAware {
      * @Route("admin/{list}/menu")
      * @Method("GET")
      * @Template()
+     * 
+     * put an option here for the root node number, and make entities = child of node instead of all root menu, make all root menu if null
      */
     public function listAction() {
         $entities = $this->container->get("menu.read_handler")->getAllRootMenus();
-//        foreach ($entities as $entity){
-//            echo $entity->getId()."<br />";
-//        }
-//
-////        echo '<pre>';
-//
-//        $em = $this->container->get("doctrine")->getEntityManager();
-//        $config = new \Evocatio\Bundle\CoreBundle\Lib\NestedSet\Config($em, 'Evocatio\Bundle\CmsBundle\Entity\Menu');
-//        $nsm = new \Evocatio\Bundle\CoreBundle\Lib\NestedSet\Manager($config);
-//
-////        $menu = $this->container->getRepository("Evocatio\Bundle\CmsBundle\Entity\Menu")->find();
-//        
-////        print_r (($this->container->get("router")->getRouteCollection()->all()));
-//        
-////        $menu = new Menu();
-////        $menu->setType('Root Menu 2');
-//
-////        $rootNode = $nsm->createRoot($menu);
-//        $rootNode = $nsm->fetchTree(3);
-//////
-////        $child1 = new Menu();
-////        $child1->setType('Child Menu 3');
-////
-////        $child2 = new Menu();
-////        $child2->setType('Child Menu 4');
-//////
-////        $rootNode->addChild($child1);
-////        $rootNode->addChild($child2);
-////        
-//        foreach($rootNode->getDescendants() as $childs){
-//            
-////            echo 'done-> '.print_r(get_class_methods($childs),1);
-////            echo 'done-> '.$childs;
-//        }
-////
-////        $collection = $this->container->get("router")->getRouteCollection();
-////        foreach ($collection as $name => $route)
-////            echo "<br />" . print_r($name, 1) . "<br />";
-////        echo "<br />" . print_r(get_class_methods($this->container->get("router")), 1) . "<br />";
-//        echo "<div style=' width: 45%; display:inline-block'><pre>" . print_r($this->container->get("request")->get("_route"), 1) . "</pre></div>";
-//        echo "<div style=' width: 45%;display:inline-block '><pre>" .print_r ($this->container->get("request")->get("_route_params"), 1) . "</pre></div>";
-//        $route = new \Evocatio\Bundle\CmsBundle\Lib\MenuRoute($this->container->get("request")->get("_route"), $this->container->get("request")->get("_route_params"));
-//        echo '<br />';
-//        print_r($route);
-//        echo '<br />';
-//        echo $this->container->get('router')->generate($route->getRoute(), $route->getParameters());
-//        echo '<br />';
-//        $serializeRoute =  serialize($route);
-//        echo $serializeRoute;
-//        echo '<br />';
-//        print_r(unserialize($serializeRoute));
-////        echo '</pre>';
-////        die();
 
         foreach ($entities as $entity) {
             $delete_forms[$entity->getId()] = $this->container->get("menu.form_handler")->createDeleteForm($entity->getId())->createView();
         }
-        return array("entities" => $entities
+//        echo "<pre>".print_r(get_class_methods(($entity)))."</pre>";
+
+        return array(
+            "entities" => $entities
             , 'delete_forms' => isset($delete_forms) && is_array($delete_forms) ? $delete_forms : array()
         );
     }
@@ -105,29 +57,47 @@ class MenuController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{create}/menu")
+     * @Route("/admin/{create}/menu/{parent}" ,defaults={"parent" = null})
      * @Method("GET")
      * @Template
      */
-    public function createAction() {
-        $edit_form = $this->container->get("menu.form_handler")->createNewForm();
+    public function createAction($parent) {
 
-        return array("edit_form" => $edit_form->createView());
+        if (is_null($parent)) {
+            $edit_form = $this->container->get("menu.form_handler")->createNewForm();
+        } else {
+            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm("\Evocatio\Bundle\CmsBundle\Form\MenuExternalLinkType");
+        }
+
+        return array("edit_form" => $edit_form->createView()
+            , "parent" => $parent);
     }
 
     /**
-     * @Route("/admin/{create}/menu")
+     * @Route("/admin/{create}/menu/{parent}" ,defaults={"parent" = null})
      * @Method("POST")
      * @Template
      */
-    public function addAction() {
-        $edit_form = $this->container->get("menu.form_handler")->createNewForm();
+    public function addAction($parent) {
+//        echo '<pre>';
+//        print_r(get_class_methods($this->container->get("Request")));
+//        echo '</pre>';
+//        die();
+        if (is_null($parent)) {
+            $edit_form = $this->container->get("menu.form_handler")->createNewForm();
+        } else {
+            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm("\Evocatio\Bundle\CmsBundle\Form\MenuExternalLinkType");
+        }
 
         $edit_form->bind($this->container->get("request")->get("evocatio_bundle_cmsbundle_menutype"));
 
 
         if ($edit_form->isValid()) {
-            $this->container->get("menu.persistence_handler")->createRootMenu($edit_form->getData());
+            if (is_null($parent)) {
+                $this->container->get("menu.persistence_handler")->createRootMenu($edit_form->getData());
+            } else {
+                $this->container->get("menu.persistence_handler")->createChildMenu($edit_form->getData(), $parent);
+            }
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate(str_replace('add', "edit", $this->container->get("request")->get("_route")), array(
@@ -140,6 +110,7 @@ class MenuController extends ContainerAware {
         $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
             'edit_form' => $edit_form->createView()
+            , "parent" => $parent
         );
 
         return new Response($this->container->get('templating')->render($template, $params));
@@ -153,9 +124,15 @@ class MenuController extends ContainerAware {
      */
     public function editAction($id) {
         $entity = $this->container->get('menu.read_handler')->get($id);
-        $edit_form = $this->container->get("menu.form_handler")->createEditForm($id);
+        
+        if (!$entity->hasParent()) {
+            $edit_form = $this->container->get("menu.form_handler")->createEditForm($id);
+        } else {
+            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm("\Evocatio\Bundle\CmsBundle\Form\MenuExternalLinkType", $id);
+        }
+//        $edit_form = $this->container->get("menu.form_handler")->createEditForm($id);
         return array(
-            'entity' => $entity,
+            'entity' => $edit_form->getData(),
             'edit_form' => $edit_form->createView(),
         );
     }
@@ -168,7 +145,13 @@ class MenuController extends ContainerAware {
      */
     public function updateAction($id) {
         $entity = $this->container->get('menu.read_handler')->get($id);
-        $edit_form = $this->container->get("menu.form_handler")->createEditForm($entity->getId());
+        
+        if (!$entity->hasParent()) {
+            $edit_form = $this->container->get("menu.form_handler")->createEditForm($id);
+        } else {
+            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm("\Evocatio\Bundle\CmsBundle\Form\MenuExternalLinkType", $id);
+        }
+        
         $delete_form = $this->container->get("menu.form_handler")->createDeleteForm($entity->getId());
 
         $edit_form->bind($this->container->get("request")->get("evocatio_bundle_cmsbundle_menutype"));
@@ -205,7 +188,6 @@ class MenuController extends ContainerAware {
 
         return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
                     'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
-
     }
 
 }
