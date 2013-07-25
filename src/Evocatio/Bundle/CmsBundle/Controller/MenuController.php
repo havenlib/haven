@@ -195,8 +195,6 @@ class MenuController extends ContainerAware {
     }
 
     /**
-     * Deletes a post entity.
-     *
      * @Route("/admin/{delete}/menu")
      * @Method("POST")
      */
