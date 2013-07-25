@@ -5,7 +5,7 @@ services:
         
   page.persistence_handler:
         class:     Evocatio\Bundle\CmsBundle\Lib\PagePersistenceHandler
-        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+        arguments: ["@page.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
 
   page.form_handler:
       class:     Evocatio\Bundle\CmsBundle\Lib\PageFormHandler
