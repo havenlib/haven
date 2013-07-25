@@ -25,7 +25,13 @@ class PageController extends ContainerAware {
     public function listAction() {
         $entities = $this->container->get("page.read_handler")->getAll();
 
-        return array("entities" => $entities);
+        foreach ($entities as $entity) {
+            $delete_forms[$entity->getId()] = $this->container->get("faq.form_handler")->createDeleteForm($entity->getId())->createView();
+        }
+
+        return array("entities" => $entities
+            , 'delete_forms' => isset($delete_forms) && is_array($delete_forms) ? $delete_forms : array()
+        );
     }
 
     /**
@@ -152,6 +158,19 @@ class PageController extends ContainerAware {
         );
 
         return new Response($this->container->get('templating')->render($template, $params));
+    }
+
+    /**
+     * @Route("/admin/{delete}/page")
+     * @Method("POST")
+     */
+    public function deleteAction() {
+
+        $form_data = $this->container->get("request")->get('form');
+        $this->container->get("page.persistence_handler")->delete($form_data['id']);
+
+        return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
+                    'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }
 
     protected function redirectListAction() {

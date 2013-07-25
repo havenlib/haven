@@ -27,6 +27,10 @@ abstract class PersistenceHandler {
         $this->em->persist($entity);
         $this->em->flush();
     }
+    
+    public function delete(){
+        
+    }
 
 }
 

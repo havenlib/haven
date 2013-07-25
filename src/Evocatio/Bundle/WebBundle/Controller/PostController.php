@@ -80,8 +80,13 @@ class PostController extends ContainerAware {
      */
     public function listAction() {
         $entities = $this->container->get("post.read_handler")->getAllOrderedByRank();
+        foreach ($entities as $entity) {
+            $delete_forms[$entity->getId()] = $this->container->get("faq.form_handler")->createDeleteForm($entity->getId())->createView();
+        }
 
-        return array("entities" => $entities);
+        return array("entities" => $entities
+            , 'delete_forms' => isset($delete_forms) && is_array($delete_forms) ? $delete_forms : array()
+        );
     }
 
     /**
@@ -240,25 +245,18 @@ class PostController extends ContainerAware {
         return new RedirectResponse($this->container->get("request")->headers->get('referer'));
     }
 
-    /**
-     * Deletes a post entity.
-     *
-     * @Route("/admin/post/{id}/delete", name="EvocatioWebBundle_PostDelete")
+     /**
+     * @Route("/admin/{delete}/post")
      * @Method("POST")
      */
-    public function deleteAction($id) {
+    public function deleteAction() {
 
-        $em = $this->container->get('Doctrine')->getEntityManager();
-        $entity = $em->getRepository("EvocatioWebBundle:Post")->find($id);
+        $form_data = $this->container->get("request")->get('form');
+        $this->container->get("post.persistence_handler")->delete($form_data['id']);
 
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
+        return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
+                    'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
 
-        $em->remove($entity);
-        $em->flush();
-
-        return new RedirectResponse($this->container->get('router')->generate('EvocatioWebBundle_PostList'));
     }
 
     /**

@@ -49,6 +49,7 @@ abstract class FormHandler {
     public function createDeleteForm($id) {
         return $this->form_factory->createBuilder('form', array('id' => $id))
                         ->add('id', 'hidden')
+                        ->add('delete' , 'submit')
                         ->getForm()
         ;
     }

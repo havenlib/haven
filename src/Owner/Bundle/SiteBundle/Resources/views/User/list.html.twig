@@ -23,7 +23,10 @@
                 <td>{{ entity.email }}</td>
                 <td>
                     <a href="{{ route_i18n.path('owner_site_user_edit', {'id': entity.id}, ['user', 'edit']) }}">edit</a> 
-                    | <a href="{{ route_i18n.path('owner_site_user_show', {'id': entity.id}, ['user', 'show']) }}">show</a> </dt>
+                    | <a href="{{ route_i18n.path('owner_site_user_show', {'id': entity.id}, ['user', 'show']) }}">show</a>|
+                     <form action="{{ route_i18n.path('owner_site_user_delete', {}, ['user', 'delete']) }}" method="post">
+                        {{ form_widget(delete_forms[entity.getId()]) }}
+                    </form>
                 </td>
                 <td>
                     {{ entity.locked }}

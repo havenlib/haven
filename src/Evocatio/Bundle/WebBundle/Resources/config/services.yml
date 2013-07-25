@@ -5,7 +5,7 @@ services:
       
   faq.persistence_handler:
       class:     Evocatio\Bundle\WebBundle\Lib\Handler\FaqPersistenceHandler
-      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+      arguments: ["@faq.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
 
   faq.form_handler:
       class:     Evocatio\Bundle\WebBundle\Lib\Handler\FaqFormHandler
@@ -13,7 +13,7 @@ services:
       
   post.persistence_handler:
       class:     Evocatio\Bundle\WebBundle\Lib\Handler\PostPersistenceHandler
-      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+      arguments: ["@post.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
       
   post.read_handler:
       class:     Evocatio\Bundle\WebBundle\Lib\Handler\PostReadHandler

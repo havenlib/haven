@@ -16,6 +16,7 @@ class UserReset {
 
     /**
      * @ORM\OneToOne(targetEntity="Evocatio\Bundle\SecurityBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id",  onDelete="CASCADE")
      */
     private $user;
 
@@ -25,16 +26,16 @@ class UserReset {
      * @ORM\Column(name="uuid", type="string", length=255, unique=true, nullable=false)
      */
     private $uuid;
-    
+
     /**
      * var string $confirmation
      * @ORM\Column(name="confirmation", type="string", length=128, unique=true, nullable=false)
      */
     private $confirmation;
-    
-    public function __construct(){
-        $this->uuid= md5(uniqid());
-        $this->confirmation=  uniqid();
+
+    public function __construct() {
+        $this->uuid = md5(uniqid());
+        $this->confirmation = uniqid();
     }
 
     /**
@@ -42,8 +43,7 @@ class UserReset {
      *
      * @param string $uuid
      */
-    public function setUuid($uuid)
-    {
+    public function setUuid($uuid) {
         $this->uuid = $uuid;
     }
 
@@ -52,8 +52,7 @@ class UserReset {
      *
      * @return string 
      */
-    public function getUuid()
-    {
+    public function getUuid() {
         return $this->uuid;
     }
 
@@ -62,8 +61,7 @@ class UserReset {
      *
      * @param string $confirmation
      */
-    public function setConfirmation($confirmation)
-    {
+    public function setConfirmation($confirmation) {
         $this->confirmation = $confirmation;
     }
 
@@ -72,8 +70,7 @@ class UserReset {
      *
      * @return string 
      */
-    public function getConfirmation()
-    {
+    public function getConfirmation() {
         return $this->confirmation;
     }
 
@@ -82,8 +79,7 @@ class UserReset {
      *
      * @param Evocatio\Bundle\SecurityBundle\Entity\User $user
      */
-    public function setUser(\Evocatio\Bundle\SecurityBundle\Entity\User $user)
-    {
+    public function setUser(\Evocatio\Bundle\SecurityBundle\Entity\User $user) {
         $this->user = $user;
     }
 
@@ -92,8 +88,8 @@ class UserReset {
      *
      * @return Evocatio\Bundle\SecurityBundle\Entity\User 
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
+
 }
