@@ -4,12 +4,12 @@ namespace Evocatio\Bundle\PortfolioBundle\Repository;
 
 use \Evocatio\Bundle\CoreBundle\Generic\StatusRepository;
 use \Doctrine\ORM\QueryBuilder;
-use Evocatio\Bundle\PortfolioBundle\Entity\Projet;
+use Evocatio\Bundle\PortfolioBundle\Entity\Sheet;
 
 /**
- * Description of ProjetRepository
+ * Description of SheetRepository
  */
-class ProjetRepository extends StatusRepository {
+class SheetRepository extends StatusRepository {
 
     private $query_builder;
 
@@ -25,12 +25,12 @@ class ProjetRepository extends StatusRepository {
     }
 
     public function findAllPublished() {
-        $this->filterByStatus(Projet::STATUS_PUBLISHED);
+        $this->filterByStatus(Sheet::STATUS_PUBLISHED);
         return $this->getResult();
     }
 
     public function findLastPublished($limit = null) {
-        $this->filterByStatus(Projet::STATUS_PUBLISHED);
+        $this->filterByStatus(Sheet::STATUS_PUBLISHED);
 
         if (!is_null($limit))
             $this->query_builder->setMaxResults($limit);

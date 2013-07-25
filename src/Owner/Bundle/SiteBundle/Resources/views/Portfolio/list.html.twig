@@ -7,8 +7,15 @@
             <div>Status: {{ entity.status?'Published':'Inactive' }}</div> 
             {{ entity.name }}
             <a href="{{ route_i18n.path('owner_site_portfolio_edit', {'id': entity.id} , ['edit']) }}">edit</a> 
+            <a href="{{ route_i18n.path('owner_site_sheet_create', {'portfolio_id': entity.id} , ['create']) }}">{{"add.a.sheet"}}</a> 
         </dt>
-        <dd>{{ entity.description | raw }}</dd>
+        <dd>
+            <ul>
+            {% for sheet in entity.sheets %}
+                {{ sheet.name | raw }} => <a href="{{ route_i18n.path('owner_site_sheet_edit', { 'id': sheet.id, 'portfolio_id': entity.id} , ['edit']) }}">{{"edit"}}</a> 
+            {% endfor %}
+            </ul>
+        </dd>
     {% else %}
         aucun
     {% endfor %}

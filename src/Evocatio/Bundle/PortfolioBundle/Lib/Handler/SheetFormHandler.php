@@ -4,10 +4,10 @@ namespace Evocatio\Bundle\PortfolioBundle\Lib\Handler;
 
 use Evocatio\Bundle\CoreBundle\Lib\Handler\FormHandler;
 
-class PortfolioFormHandler extends FormHandler {
+class SheetFormHandler extends FormHandler {
 
     protected function getDefaultTypeClass() {
-        return 'Evocatio\Bundle\PortfolioBundle\Form\PortfolioType';
+        return 'Evocatio\Bundle\PortfolioBundle\Form\SheetType';
     }
 
 }

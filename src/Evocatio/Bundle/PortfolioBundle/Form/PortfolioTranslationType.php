@@ -7,13 +7,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Evocatio\Bundle\CoreBundle\Repository\LanguageRepository;
 
-class ProjetTranslationType extends AbstractType {
+class PortfolioTranslationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('slug')
                 ->add('name')
-                ->add('description')
+                ->add('slug')
                 ->add('trans_lang', null, array(
                     "property" => "name"
                     , "label" => false
@@ -31,7 +30,7 @@ class ProjetTranslationType extends AbstractType {
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\PortfolioBundle\Entity\ProjetTranslation'
+            'data_class' => 'Evocatio\Bundle\PortfolioBundle\Entity\PortfolioTranslation'
         ));
     }
 
