@@ -1,18 +1,38 @@
 {%  extends "OwnerSiteBundle::base_admin.html.twig" %}
 {% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block inside_content %}
-<dl>
-    {% for entity in entities %}
-        <dt>
-            <div>Status: {{ entity.status?'Published':'Inactive' }}</div> 
-            {{ entity.name }}
-            {{ entity.description }}
-            <a href="{{ route_i18n.path('owner_site_sheet_edit', {'id': entity.id, 'portfolio_id': portfolio_id} , ['edit']) }}">edit</a> 
-        </dt>
-    {% else %}
-        aucun
-    {% endfor %}
-</dl>
+<h2>{{"portfolio.list" | trans}}</h2>
+<table>
+    <thead>
+        <tr>
+            <th>{{"status" | trans}}</th>
+            <th>{{"name" | trans}}</th>
+            <th>{{"description" | trans}}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="sortable">
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.status }}</td>
+                <td>{{ entity.name }}</td>
+                <td>{{ entity.description }}</td>
+                <td>
+                    <a href="{{ route_i18n.path('owner_site_sheet_edit', {'id': entity.id, 'portfolio_id': portfolio_id} , ['edit']) }}">edit</a> |
+                     <form action="{{ route_i18n.path('owner_site_sheet_delete', {'id': entity.id, 'portfolio_id': portfolio_id}, ['delete']) }}" method="post">
+                        {{ form_widget(delete_forms[entity.getId()]) }}
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>
+                    aucune entré
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {#<ul>
     <li>
         <a href="{{ _route_crud.path('owner_site_sheet_create', 'create') }}">

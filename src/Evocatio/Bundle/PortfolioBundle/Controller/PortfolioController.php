@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class PortfolioController extends ContainerAware {
 
     protected $ROUTE_PREFIX = "evocatio_portfolio";
+
     /**
      * @Route("/portfolio")
      * @Method("GET")
@@ -22,7 +23,7 @@ class PortfolioController extends ContainerAware {
         $entities = $this->container->get("portfolio.read_handler")->getAllPublished();
         return array("entities" => $entities);
     }
-    
+
     /**
      * @Route("/admin/{list}/portfolio")
      * @Method("GET")
@@ -30,7 +31,28 @@ class PortfolioController extends ContainerAware {
      */
     public function listAction() {
         $entities = $this->container->get("portfolio.read_handler")->getAll();
-        return array("entities" => $entities);
+        foreach ($entities as $entity) {
+            $delete_forms[$entity->getId()] = $this->container->get("portfolio.form_handler")->createDeleteForm($entity->getId())->createView();
+        }
+
+        return array("entities" => $entities
+            , 'delete_forms' => isset($delete_forms) && is_array($delete_forms) ? $delete_forms : array()
+        );
+    }
+
+    /**
+     * @Route("/admin/{show}/portfolio/{id}", defaults={"show" = "afficher"})
+     * @Method("GET")
+     * @Template()
+     */
+    public function showAction($id) {
+        $entity = $this->container->get("portfolio.read_handler")->get($id);
+        $delete_form = $this->container->get("portfolio.form_handler")->createDeleteForm($id);
+
+        return array(
+            'entity' => $entity,
+            "delete_form" => $delete_form->createView()
+        );
     }
 
     /**
@@ -133,6 +155,19 @@ class PortfolioController extends ContainerAware {
         );
 
         return new Response($this->container->get('templating')->render($template, $params));
+    }
+
+    /**
+     * @Route("/admin/{delete}/portfolio")
+     * @Method("POST")
+     */
+    public function deleteAction() {
+
+        $form_data = $this->container->get("request")->get('form');
+        $this->container->get("portfolio.persistence_handler")->delete($form_data['id']);
+
+        return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
+                    'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }
 
     protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
