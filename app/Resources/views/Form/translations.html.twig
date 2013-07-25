@@ -25,12 +25,14 @@
 {% block form_widget %}
 {% spaceless %}
     {% if compound %}
+    {% if "trans_lang" in form|keys %}
     {# set class to hidden if name not 0, so basically hide all but first for translation list #}
         {% if 0 != name %}
             {% set attr = attr|merge({'class' : 'trans_div hidden'}) %}
         {% elseif "translations" != name %}
-            {% set attr = attr|merge({'class' : 'trans_div'}) %}
+            {% set attr = attr|merge({'class' : 'trans_div '~dump(form | keys)}) %}
         {% endif %}
+{% endif %}
         {{ block('form_widget_compound') }}
     {% else %}
         {{ block('form_widget_simple') }}

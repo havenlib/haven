@@ -81,21 +81,21 @@ function showFormElementClass(tab) {
 //    $("div[id^=" + $(tab).attr("data-formname") + "]").each(function() {
 //        alert($(this).html());
 //    });
-    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("[id*='translations_']").hide();
-    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("[id$='translations_" + $(tab).attr("data-langindex") + "']").show();
+    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("[id*='translations_']").filter(".trans_div").hide();
+    $("div[id^=" + $(tab).attr("data-formname") + "]").filter("[id$='translations_" + $(tab).attr("data-langindex") + "']").filter(".trans_div").show();
     $(tab).siblings("li").removeClass("active");
     //$("." + $(tab).attr("rel")).show();
     $(tab).addClass("active");
 }
 
-function showFormElement(tab) {
-//    $("#" + $(tab).attr("rel")).siblings().hide();
-//    $(tab).siblings("li").removeClass("active");
-    $(".trans").hide();
-    $("." + $(tab).attr("rel")).show();
-    $("#" + $(tab).attr("rel")).show();
-//    $(tab).addClass("active");
-}
+//function showFormElement(tab) {
+////    $("#" + $(tab).attr("rel")).siblings().hide();
+////    $(tab).siblings("li").removeClass("active");
+//    $(".trans").hide();
+//    $("." + $(tab).attr("rel")).show();
+//    $("#" + $(tab).attr("rel")).show();
+////    $(tab).addClass("active");
+//}
 
 function ajaxLogin(form, data) {
 

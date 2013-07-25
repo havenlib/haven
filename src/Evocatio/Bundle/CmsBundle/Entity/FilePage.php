@@ -5,12 +5,6 @@ namespace Evocatio\Bundle\CmsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Evocatio\Bundle\CmsBundle\Entity\File;
 
-/**
- * Evocatio\Bundle\CmsBundle\Entity\FileCredit
- *
- * @ORM\Table()
- * @ORM\Entity
- */
 class FilePage extends File {
 
     /**
