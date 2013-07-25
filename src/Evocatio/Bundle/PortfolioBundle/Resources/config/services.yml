@@ -5,7 +5,7 @@ services:
       
   portfolio.persistence_handler:
       class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\PortfolioPersistenceHandler
-      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+      arguments: ["@portfolio.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
 
   portfolio.form_handler:
       class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\PortfolioFormHandler
@@ -17,7 +17,7 @@ services:
       
   sheet.persistence_handler:
       class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\SheetPersistenceHandler
-      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+      arguments: ["@sheet.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
 
   sheet.form_handler:
       class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\SheetFormHandler

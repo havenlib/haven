@@ -32,7 +32,14 @@ class SheetController extends ContainerAware {
     public function listAction() {
         $portfolio_id = $this->container->get('request')->get("portfolio_id");
         $entities = $this->container->get("sheet.read_handler")->getAll();
-        return array("entities" => $entities, "portfolio_id" => $portfolio_id);
+        foreach ($entities as $entity) {
+            $delete_forms[$entity->getId()] = $this->container->get("portfolio.form_handler")->createDeleteForm($entity->getId())->createView();
+        }
+
+        return array("entities" => $entities
+            , 'delete_forms' => isset($delete_forms) && is_array($delete_forms) ? $delete_forms : array()
+            , "portfolio_id" => $portfolio_id
+        );
     }
 
     /**
@@ -70,7 +77,7 @@ class SheetController extends ContainerAware {
             $edit_form->getData()->setPortfolio($portfolio);
             $this->container->get("sheet.persistence_handler")->save($edit_form->getData());
 
-            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_sheet_list', array(), array('list')));
+            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_sheet_list', array("portfolio_id" => $portfolio_id), array('list')));
         } else {
             $this->container->get("session")->getFlashBag()->add("error", "create.error");
         }
@@ -146,6 +153,20 @@ class SheetController extends ContainerAware {
         );
 
         return new Response($this->container->get('templating')->render($template, $params));
+    }
+
+    /**
+     * @Route("/admin/portfolio/{portfolio_id}/{delete}/sheet/{id}")
+     * @Method("POST")
+     */
+    public function deleteAction() {
+        $portfolio_id = $this->container->get('request')->get("portfolio_id");
+        $form_data = $this->container->get("request")->get('form');
+        $this->container->get("sheet.persistence_handler")->delete($form_data['id']);
+
+        return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
+                    'list' => $this->container->get('translator')->trans("list", array(), "routes")
+                    , 'portfolio_id' => $portfolio_id)));
     }
 
     protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
