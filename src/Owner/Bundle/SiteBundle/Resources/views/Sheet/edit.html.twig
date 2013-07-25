@@ -1,0 +1,14 @@
+{%  extends "OwnerSiteBundle:Portfolio:create.html.twig" %}
+{% import "::macro/route/i18n.html.twig" as route_i18n %}
+{% block formhead %}
+    {{ route_i18n.path('owner_site_sheet_edit', {"portfolio_id": portfolio_id, 'id': entity.id} , ['edit']) }}
+{% endblock formhead %}
+{% block delete %}
+<li>
+   {# <form action="{{ path('EvocatiosheetBundle_sheetDelete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <button type="submit">Delete</button>
+    </form>#}
+</li>
+{% endblock delete %}
+

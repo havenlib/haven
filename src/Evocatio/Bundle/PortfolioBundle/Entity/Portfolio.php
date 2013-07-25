@@ -7,12 +7,13 @@ use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Projet
+ * Portfolio
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\PortfolioBundle\Repository\ProjetRepository")
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\PortfolioBundle\Repository\PortfolioRepository")
  */
-class Projet extends Translatable {
+class Portfolio extends Translatable {
 
     const STATUS_INACTIVE = 0;
     const STATUS_PUBLISHED = 1;
@@ -49,10 +50,17 @@ class Projet extends Translatable {
 
     /**
      * 
-     * @ORM\OneToMany(targetEntity="ProjetTranslation", mappedBy="parent", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="PortfolioTranslation", mappedBy="parent", cascade={"persist"})
      * @Assert\Valid
      */
     protected $translations;
+
+    /**
+     * 
+     * @ORM\OneToMany(targetEntity="Sheet", mappedBy="portfolio", cascade={"persist"})
+     * @Assert\Valid
+     */
+    protected $sheets;
 
     public function __construct() {
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
@@ -71,7 +79,7 @@ class Projet extends Translatable {
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return Projet
+     * @return Portfolio
      */
     public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
@@ -92,7 +100,7 @@ class Projet extends Translatable {
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return Projet
+     * @return Portfolio
      */
     public function setUpdatedAt($updatedAt) {
         $this->updatedAt = $updatedAt;
@@ -120,10 +128,10 @@ class Projet extends Translatable {
     /**
      * Add translations
      *
-     * @param ProjetTranslation $translations
-     * @return Projet
+     * @param PortfolioTranslation $translations
+     * @return Portfolio
      */
-    public function addTranslation(ProjetTranslation $translations) {
+    public function addTranslation(PortfolioTranslation $translations) {
         $translations->setParent($this);
         $this->translations[] = $translations;
 
@@ -133,9 +141,9 @@ class Projet extends Translatable {
     /**
      * Remove translations
      *
-     * @param ProjetTranslation $translations
+     * @param PortfolioTranslation $translations
      */
-    public function removeTranslation(ProjetTranslation $translations) {
+    public function removeTranslation(PortfolioTranslation $translations) {
         $this->translations->removeElement($translations);
     }
 
@@ -143,7 +151,7 @@ class Projet extends Translatable {
      * Set status
      *
      * @param boolean $status
-     * @return Projet
+     * @return Portfolio
      */
     public function setStatus($status) {
         $this->status = $status;
@@ -167,6 +175,52 @@ class Projet extends Translatable {
      */
     public function getTranslations() {
         return $this->translations;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist() {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate() {
+        $this->setUpdatedAt(new \DateTime());
+    }
+
+    /**
+     * Add sheets
+     *
+     * @param \Evocatio\Bundle\PortfolioBundle\Entity\Sheet $sheets
+     * @return Portfolio
+     */
+    public function addSheet(\Evocatio\Bundle\PortfolioBundle\Entity\Sheet $sheet) {
+        $sheet->setPortfolio($this);
+        $this->sheets[] = $sheet;
+
+        return $this;
+    }
+
+    /**
+     * Remove sheets
+     *
+     * @param \Evocatio\Bundle\PortfolioBundle\Entity\Sheet $sheets
+     */
+    public function removeSheet(\Evocatio\Bundle\PortfolioBundle\Entity\Sheet $sheets) {
+        $this->sheets->removeElement($sheets);
+    }
+
+    /**
+     * Get sheets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSheets() {
+        return $this->sheets;
     }
 
 }

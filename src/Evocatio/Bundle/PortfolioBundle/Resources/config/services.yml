@@ -10,4 +10,16 @@ services:
   portfolio.form_handler:
       class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\PortfolioFormHandler
       arguments: ["@portfolio.read_handler", "@security.context", "@form.factory"]
+      
+  sheet.read_handler:
+      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\SheetReadHandler
+      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+      
+  sheet.persistence_handler:
+      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\SheetPersistenceHandler
+      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
+  sheet.form_handler:
+      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\SheetFormHandler
+      arguments: ["@sheet.read_handler", "@security.context", "@form.factory"]
     

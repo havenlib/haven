@@ -6,12 +6,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProjetType extends AbstractType {
+class SheetType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('translations', 'translation', array(
-                    'type' => new ProjetTranslationType()
+                    'type' => new SheetTranslationType()
                     , 'allow_add' => true
                     , "label" => false
                     , 'prototype' => true
@@ -33,7 +33,7 @@ class ProjetType extends AbstractType {
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\PortfolioBundle\Entity\Projet'
+            'data_class' => 'Evocatio\Bundle\PortfolioBundle\Entity\Sheet'
         ));
     }
 
