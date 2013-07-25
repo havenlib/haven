@@ -5,12 +5,14 @@ namespace Evocatio\Bundle\CmsBundle\Lib;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
 use Evocatio\Bundle\CoreBundle\Lib\NestedSet\Manager as NestedSetManager;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MenuPersistenceHandler {
 
     protected $em;
     protected $security_context;
     protected $nsm;
+    protected $read_handler;
 
     public function __construct(MenuReadHandler $read_handler, EntityManager $em, SecurityContext $security_context, NestedSetManager $nsm) {
         $this->em = $em;
@@ -34,10 +36,16 @@ class MenuPersistenceHandler {
         $this->em->flush();
     }
 
-    public function delete($entity) {
+    public function delete($id) {
 
-        $this->em->persist($entity);
-        $this->em->flush();
+        $entity = $this->read_handler->get($id);
+
+        if (!$entity) {
+            throw new NotFoundHttpException('entity.not.found');
+        }
+
+        $node = $this->nsm->wrapNode($entity);
+        $node->delete();
     }
 
 }

@@ -41,7 +41,7 @@ services:
         
   menu.persistence_handler:
         class:     Evocatio\Bundle\CmsBundle\Lib\MenuPersistenceHandler
-        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@nested_set_manager"]
+        arguments: ["@menu.read_handler","@doctrine.orm.entity_manager", "@security.context", "@nested_set_manager"]
 
   menu.form_handler:
       class:     Evocatio\Bundle\CmsBundle\Lib\MenuFormHandler
