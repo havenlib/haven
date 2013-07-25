@@ -61,7 +61,14 @@ class UserController extends ContainerAware {
      */
     public function listAction() {
         $entities = $this->container->get("user.read_handler")->getAll();
-        return array("entities" => $entities);
+
+        foreach ($entities as $entity) {
+            $delete_forms[$entity->getId()] = $this->container->get("user.form_handler")->createDeleteForm($entity->getId())->createView();
+        }
+
+        return array("entities" => $entities
+            , 'delete_forms' => isset($delete_forms) && is_array($delete_forms) ? $delete_forms : array()
+        );
     }
 
     /**
@@ -89,7 +96,13 @@ class UserController extends ContainerAware {
         if ($edit_form->isValid()) {
             $this->container->get("user.persistence_handler")->save($user = $edit_form->getData());
 
-            $this->createResetAction($user);
+            $reset = $this->container->get("user.persistence_handler")->createReset($user);
+            $reset_url = $this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_reset', array("uuid" => $reset->getUuid()), array('password', 'initialize'), null, true);
+
+            $notifier = $this->container->get('notifier');
+            $notifier->createNewUserNotification($reset, $reset_url);
+            $notifier->send();
+
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
             return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_list', array(), array('user', 'list')));
         }
@@ -186,24 +199,17 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * Deletes a user entity.
-     *
-     * @Route("/admin/user/{id}/delete", name="EvocatioSecurityBundle_delete")
+     * @Route("/admin/{delete}/{user}")
      * @Method("POST")
      */
-    public function deleteAction($id) {
+    public function deleteAction() {
 
-        $em = $this->container->get('Doctrine')->getEntityManager();
-        $entity = $em->getRepository("EvocatioSecurityBundle:User")->find($id);
+        $form_data = $this->container->get("request")->get('form');
+        $this->container->get("user.persistence_handler")->delete($form_data['id']);
 
-        if (!$entity) {
-            throw new NotFoundHttpException('entity.not.found');
-        }
-
-        $em->remove($entity);
-        $em->flush();
-
-        return new RedirectResponse($this->container->get('router')->generate('EvocatioSecurityBundle_UserList'));
+        return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
+                    'list' => $this->container->get('translator')->trans("list", array(), "routes")
+                    , 'user' => $this->container->get('translator')->trans("user", array(), "routes"))));
     }
 
     /**

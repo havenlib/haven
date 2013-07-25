@@ -27,6 +27,10 @@ class UserType extends AbstractType {
                     , 'multiple' => false
                 ))
                 ->add('locked', 'checkbox', array("required" => false))
+                ->add('save', 'submit', array(
+                    'attr' => array('class' => 'btn save-btn'),
+                    'label' => 'save.user'
+                ))
 
         ;
     }
