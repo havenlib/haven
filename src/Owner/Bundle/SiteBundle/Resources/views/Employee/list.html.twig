@@ -2,25 +2,39 @@
 {% import "EvocatioPersonaBundle::macro/route/i18n.html.twig" as route_i18n_persona %}
     
 {% block inside_content %}
-    <dl>
+<h2>{{"employee.list" | trans}}</h2>
+<table>
+    <thead>
+        <tr>
+            <th>{{"firstname"|trans}}</th>
+            <th>{{"lastname"|trans}}</th>
+            <th>Sex</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="sortable">
         {% for entity in entities %}
-            <div>
-                <div> {{ entity.firstname }}</div> 
-                <strong>{{ entity.lastname }}</strong> 
-                <a href="{{ route_i18n_persona.path('owner_site_employee_edit', {"id": entity.id}, ['edit'], 'employee') }}">edit</a> 
-                <a href="{{ route_i18n_persona.path('owner_site_employee_show', {"id": entity.id}, ['show'], 'employee') }}">show</a> 
-            </div>
-            <div>sex: {{ entity.sex }}</div>
-            {% for coor in entity.getPostal() %}
-            <div>{{ coor.getAddress() }}</div>
-            {% endfor %}
-            {% for coor in entity.getMap() %}
-            <div>{{ coor.getLng() }}</div>
-            {% endfor %}
+            <tr>
+                <td>{{ entity.firstname }}</td>
+                <td>{{ entity.lastname }}</td>
+                <td>{{ entity.sex }}</td>
+                <td>
+                    <a href="{{ route_i18n_persona.path('owner_site_employee_edit', {"id": entity.id}, ['edit'], 'employee') }}">edit</a>
+                    | <a href="{{ route_i18n_persona.path('owner_site_employee_show', {"id": entity.id}, ['show'], 'employee') }}">show</a> |
+                     <form action="{{ route_i18n_persona.path('owner_site_employee_delete', {'id': entity.id}, ['delete']) }}" method="post">
+                        {{ form_widget(delete_forms[entity.getId()]) }}
+                    </form>
+                </td>
+            </tr>
         {% else %}
-            aucune entré
+            <tr>
+                <td>
+                    aucune entré
+                </td>
+            </tr>
         {% endfor %}
-    </dl>
+    </tbody>
+</table>
 <ul>
     <li>
         <a href="{{ route_i18n_persona.path('owner_site_employee_create', {}, ['create'], 'employee') }}">

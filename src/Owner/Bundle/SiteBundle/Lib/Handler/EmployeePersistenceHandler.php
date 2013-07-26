@@ -2,18 +2,30 @@
 
 namespace Owner\Bundle\SiteBundle\Lib\Handler;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Evocatio\Bundle\CoreBundle\Lib\Handler\PersistenceHandler;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 
-class EmployeePersistenceHandler extends PersistenceHandler {
+class EmployeePersistenceHandler{
 
+    protected $em;
+    protected $security_context;
     protected $encoder_factory;
+    protected $read_handler;
 
-    public function __construct(\Doctrine\ORM\EntityManager $em, SecurityContext $security_context, EncoderFactory $encoder_factory) {
-        parent::__construct($em, $security_context);
+    public function __construct(EmployeeReadHandler $read_handler, EntityManager $em, SecurityContext $security_context, EncoderFactory $encoder_factory) {
+        $this->em = $em;
+        $this->security_context = $security_context;
         $this->encoder_factory = $encoder_factory;
+        $this->read_handler = $read_handler;
+    }
+
+    public function batchSave($entities) {
+        foreach ($entities as $entity) {
+            $this->em->persist($entity);
+        }
+        $this->em->flush();
     }
 
     public function save($entity) {
@@ -25,6 +37,12 @@ class EmployeePersistenceHandler extends PersistenceHandler {
         }
 
         $this->em->persist($entity);
+        $this->em->flush();
+    }
+
+    public function delete($id) {
+        $entity = $this->read_handler->get($id);
+        $this->em->remove($entity);
         $this->em->flush();
     }
 
