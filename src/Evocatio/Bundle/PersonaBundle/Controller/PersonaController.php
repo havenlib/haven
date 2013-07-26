@@ -36,8 +36,13 @@ abstract class PersonaController extends ContainerAware {
      */
     public function listAction() {
         $entities = $this->container->get($this->PERSONA . ".read_handler")->getAll();
+        foreach ($entities as $entity) {
+            $delete_forms[$entity->getId()] = $this->container->get($this->PERSONA . ".form_handler")->createDeleteForm($entity->getId())->createView();
+        }
 
-        return array("entities" => $entities);
+        return array("entities" => $entities
+            , 'delete_forms' => isset($delete_forms) && is_array($delete_forms) ? $delete_forms : array()
+        );
     }
 
     /**
@@ -157,6 +162,20 @@ abstract class PersonaController extends ContainerAware {
         );
 
         return new Response($this->container->get('templating')->render($template, $params));
+    }
+
+    /**
+     * @Route("/admin/{delete}/post")
+     * @Method("POST")
+     */
+    public function deleteAction() {
+
+        $form_data = $this->container->get("request")->get('form');
+        $this->container->get($this->PERSONA . ".persistence_handler")->delete($form_data['id']);
+
+        return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
+                    'list' => $this->container->get('translator')->trans("list", array(), "routes")
+                    , 'persona' => $this->container->get('translator')->trans($this->PERSONA, array(), "routes"))));
     }
 
     protected function generateI18nRoute($route, $persona, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {

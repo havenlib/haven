@@ -17,4 +17,4 @@ services:
       
   employee.persistence_handler:
         class:     Owner\Bundle\SiteBundle\Lib\Handler\EmployeePersistenceHandler
-        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.encoder_factory"]
+        arguments: ["@employee.read_handler", "@doctrine.orm.entity_manager", "@security.context", "@security.encoder_factory"]
