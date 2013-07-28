@@ -28,7 +28,7 @@ class MenuFormHandler {
      */
     public function createEditForm($id) {
         $entity = $this->read_handler->get($id);
-        $edit_form = $this->form_factory->create(new Type(), $entity);
+        $edit_form = $this->form_factory->create(new Type(), $entity->getNode());
 
         return $edit_form;
     }
@@ -54,9 +54,22 @@ class MenuFormHandler {
     public function createDeleteForm($id) {
         return $this->form_factory->createBuilder('form', array('id' => $id))
                         ->add('id', 'hidden')
-                        ->add('delete' , 'submit')
+//                        ->add('delete' , 'submit')
                         ->getForm()
         ;
+    }
+
+    /**
+     * Create a form to add a child of type
+     * @param integer $id
+     * @return form
+     */
+    public function createAddChildForm($type, $id = null) {
+        if(!empty($id)){
+            $entity = $this->read_handler->get($id);
+            return $this->form_factory->create(new $type(), $entity->getNode());
+        }
+        return $this->form_factory->create(new $type());
     }
 
 }

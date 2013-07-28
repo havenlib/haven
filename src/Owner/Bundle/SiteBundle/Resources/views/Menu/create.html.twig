@@ -1,7 +1,8 @@
 {% extends "OwnerSiteBundle:Templates:multilangue_add_template.html.twig" %}
 {#% extends "OwnerSiteBundle:Templates:multilangue_menu.html.twig" %#}
 {% block formhead %}
-    {{ _route_crud.path('owner_site_menu_create', 'create') }}
+        {{ _route_crud.path('owner_site_menu_create', "create", {"parent": parent}) }}
+
 {% endblock formhead %}
 
 {#% form_theme edit_form "OwnerSiteBundle:Form:formulator.html.twig" %#}
