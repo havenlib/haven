@@ -30,8 +30,24 @@ class MenuPersistenceHandler {
         return $rootNode;
     }
 
-    public function createChildMenu($entity, $parent) {
-        $entity->setType("child");
+    public function createChildMenu($entity, $parent, $page = null) {
+//        echo "<p>->" . $entity->getType() . "<-</p>";
+echo "create is called";
+        if ($entity->getType() == "internal") {
+            $i =0;
+            foreach ($entity->getTranslations() as $translation) {
+                echo $i++;
+                $link = new \Evocatio\Bundle\CoreBundle\Entity\InternalLink();
+                $link->setRoute("EvocatioWebBundle_PageDisplaySlug");
+                $link->setRouteParams(serialize(array(
+                            "slug" => $page->getSlug($translation->getTransLang()->getSymbol())
+                            , "_locale" => $translation->getTransLang()->getSymbol()
+                        )));
+                $translation->setLink($link);
+//                echo "<p>->" . $page->getSlug($translation->getTransLang()->getSymbol()) . "<-</p>";
+            }
+        }
+
 //        echo $parent;
 //        die();
         $rootNode = $this->nsm->fetchBranch($parent);
@@ -55,19 +71,19 @@ class MenuPersistenceHandler {
         }
 
         $entity2 = clone $entity;
-        
+
         $links = array();
         foreach ($entity->getTranslations() as $translation) {
             $links[] = $translation->getLink();
         }
         $node = $this->nsm->wrapNode($entity2);
         $node->delete();
-        
+
 //            $this->em->flush();
         foreach ($links as $link) {
             $this->em->remove($link);
         }
-            $this->em->flush(); 
+        $this->em->flush();
 //            $this->em->flush()
     }
 

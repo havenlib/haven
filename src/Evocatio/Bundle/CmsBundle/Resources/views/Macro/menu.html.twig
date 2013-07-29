@@ -2,16 +2,22 @@
     {% import _self as menu %}
 {% import "::macro/route/crud.html.twig" as _route_crud %}
             {% for child in entity.getChildren() %}
-            <ul>
-                <li>id loop: {{ loop.index }} -- {{ child.id }} {{ child.node.name }}<
-                    <a href="{{ _route_crud.edit('owner_site_menu_edit',  child.id) }}">edit</a> 
-                    <a href="{{ _route_crud.path('owner_site_menu_create', "create", {"parent": child.id}) }}" method="post">
+<ul>
+    <li>id loop: {{ loop.index }} -- {{ child.id }} {{ child.node.name }}
+        <ul class='links'>
+            <li>
+                <a href="{{ _route_crud.edit('owner_site_menu_edit',  child.id) }}">edit</a> 
+            </li>
+            <li>
+                <a href="{{ _route_crud.path('owner_site_menu_create', "create", {"parent": child.id}) }}" method="post">
                     ajouter un enfant
-                    </a>
-                </li>
+                </a>
+            </li>
+        </ul>
+    </li>
                 {% if(child.hasChildren) %}
                     {{ menu.list_children(child) }}
                 {% endif %}
-            </ul>
+</ul>
             {% endfor %}
 {% endmacro %}

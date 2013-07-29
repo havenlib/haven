@@ -57,6 +57,10 @@ class Page extends Translatable {
         return $this->getTranslated('Title', $lang);
     }
 
+    public function getSlug($lang = null) {
+        return $this->getTranslated('Slug', $lang);
+    }
+
     /**
      * Get translations
      *
