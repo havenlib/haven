@@ -3,7 +3,7 @@
 {% import "::macro/route/crud.html.twig" as _route_crud %}
             {% for child in entity.getChildren() %}
 <ul>
-    <li>id loop: {{ loop.index }} -- {{ child.id }} {{ child.node.name }}
+    <li>id loop: {{ loop.index }} -- {{ child.id }} <a href="{{ (child.node.type=="internal")?path(child.node.link.route, child.node.link.routeParams) :child.node.link.url}}">{{ child.node.name }}</a>
         <ul class='links'>
             <li>
                 <a href="{{ _route_crud.edit('owner_site_menu_edit',  child.id) }}">edit</a> 

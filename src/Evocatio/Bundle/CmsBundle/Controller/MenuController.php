@@ -93,7 +93,7 @@ class MenuController extends ContainerAware {
         if (is_null($parent)) {
             $edit_form = $this->container->get("menu.form_handler")->createNewForm();
         } else if (!empty($type)) {
-                $edit_form = $this->container->get("menu.form_handler")->createAddChildForm($type);
+            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm($type);
         } else {
             throw new \Exception("can't execute add child with no type");
         }
@@ -125,8 +125,8 @@ class MenuController extends ContainerAware {
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate(str_replace('add', "edit", $this->container->get("request")->get("_route")), array(
-                                'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
-                                , 'id' => $edit_form->getData()->getId())));
+                        'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
+                        , 'id' => $edit_form->getData()->getId())));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
@@ -153,9 +153,9 @@ class MenuController extends ContainerAware {
 //        die();
         if (!$entity->hasParent()) {
             $edit_form = $this->container->get("menu.form_handler")->createEditForm($id);
-        } else  {
-                $edit_form = $this->container->get("menu.form_handler")->createAddChildForm($entity->getNode()->getType(), $id);
-        } 
+        } else {
+            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm($entity->getNode()->getType(), $id);
+        }
         return array(
             'entity' => $edit_form->getData(),
             'edit_form' => $edit_form->createView(),
@@ -171,23 +171,48 @@ class MenuController extends ContainerAware {
     public function updateAction($id) {
         $entity = $this->container->get('menu.read_handler')->get($id);
 
-         if (!$entity->hasParent()) {
+        if (!$entity->hasParent()) {
             $edit_form = $this->container->get("menu.form_handler")->createEditForm($id);
-        } else  {
-                $edit_form = $this->container->get("menu.form_handler")->createAddChildForm($entity->getNode()->getType(), $id);
-        } 
+        } else {
+            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm($entity->getNode()->getType(), $id);
+        }
 
         $delete_form = $this->container->get("menu.form_handler")->createDeleteForm($entity->getId());
 
         $edit_form->bind($this->container->get("request")->get("evocatio_bundle_cmsbundle_menutype"));
 
         if ($edit_form->isValid()) {
-            $this->container->get("menu.persistence_handler")->save($edit_form->getData());
+            $type = $entity->getNode()->getType();
+            if (!$entity->hasParent()) {
+                $this->container->get("menu.persistence_handler")->createRootMenu($edit_form->getData());
+            } else if (!empty($type)) {
+                $parent = $entity->getParent();
+                echo 'parent id ->'.$parent->getId().'<-id';
+                switch ($type) {
+                    case "external" :
+//                        $edit_form->getData()->setType('external');
+                        $this->container->get("menu.persistence_handler")->createChildMenu($edit_form->getData(), $parent);
+                        break;
+                    case "internal" :
+//                        $edit_form->getData()->setType('internal');
+//                        echo 'page: ' . get_class($edit_form);
+//                        die('laksdjf');
+                        $page = $this->container->get("page.read_handler")->get($edit_form->get("page")->getData()->getId());
+                        $this->container->get("menu.persistence_handler")->save($edit_form->getData(), $page);
+                        break;
+                    default :
+                        $edit_form = $this->container->get("menu.form_handler")->createNewForm();
+                        break;
+                }
+            } else {
+                throw new \Exception("can't execute add child with no type");
+            }
+
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate(str_replace('edit', "update", $this->container->get("request")->get("_route")), array(
-                                'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
-                                , 'id' => $edit_form->getData()->getId())));
+                        'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
+                        , 'id' => $edit_form->getData()->getId())));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "update.error");
@@ -212,7 +237,7 @@ class MenuController extends ContainerAware {
         $this->container->get("menu.persistence_handler")->delete($form_data['id']);
 
         return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
-                            'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+                    'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }
 
 }

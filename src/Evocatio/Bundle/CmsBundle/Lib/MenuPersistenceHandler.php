@@ -56,8 +56,18 @@ echo "create is called";
         return $rootNode;
     }
 
-    public function save($entity) {
-
+    public function save($entity, $page =null) {
+ if ($entity->getType() == "internal") {
+            foreach ($entity->getTranslations() as $translation) {
+                $link = new \Evocatio\Bundle\CoreBundle\Entity\InternalLink();
+                $link->setRoute("EvocatioWebBundle_PageDisplaySlug");
+                $link->setRouteParams(serialize(array(
+                            "slug" => $page->getSlug($translation->getTransLang()->getSymbol())
+                            , "_locale" => $translation->getTransLang()->getSymbol()
+                        )));
+                $translation->setLink($link);
+            }
+        }
         $this->em->persist($entity);
         $this->em->flush();
     }

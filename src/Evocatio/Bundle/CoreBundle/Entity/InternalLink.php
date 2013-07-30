@@ -67,7 +67,7 @@ class InternalLink extends Link {
      * @return array 
      */
     public function getRouteParams() {
-        return $this->_route_params;
+        return unserialize($this->_route_params);
     }
 
 }

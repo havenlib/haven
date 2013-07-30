@@ -79,7 +79,6 @@ class MenuFormHandler {
                 break;
             case "external":
                 $form = $this->form_factory->create(new External, $entity);
-                echo 'exexexexexexexexexex';
                 return $form;
                 break;
         }
