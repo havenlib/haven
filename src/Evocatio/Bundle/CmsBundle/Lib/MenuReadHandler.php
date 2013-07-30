@@ -16,7 +16,7 @@ class MenuReadHandler {
         $this->em = $em;
         $this->security_context = $security_context;
         $config = $nsm->getConfiguration();
-        $config->setClass('Evocatio\Bundle\CmsBundle\Entity\Menu');        
+        $config->setClass('Evocatio\Bundle\CmsBundle\Entity\Menu');
         $this->nsm = $nsm;
     }
 
@@ -26,18 +26,20 @@ class MenuReadHandler {
 
         return $entity;
     }
+
     public function getBranch($id) {
         $test = $this->nsm->fetchBranchAsArray($id);
-        
+
         return $test;
     }
-    
+
     public function getAllRootMenus() {
         $roots = $this->em->getRepository("EvocatioCmsBundle:Menu")->findRootMenus();
-        foreach($roots as $root){
+        $entities = array();
+        foreach ($roots as $root) {
             $entities[] = $this->nsm->fetchTree($root->getId());
         }
-        
+
         return $entities;
     }
 

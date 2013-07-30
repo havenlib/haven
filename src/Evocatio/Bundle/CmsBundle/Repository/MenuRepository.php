@@ -27,9 +27,9 @@ class MenuRepository extends EntityRepository {
         return $this->query_builder->getQuery()->getResult();
     }
 
-    public function createBaseQueryBuilder() {
+    public function getQueryBuilder() {
 
-        ;
+        return $this->query_builder;
     }
 
     private function filterByRoot() {
