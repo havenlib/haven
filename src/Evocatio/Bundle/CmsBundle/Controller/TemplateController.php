@@ -62,12 +62,7 @@ class TemplateController extends ContainerAware {
     public function addAction() {
         $edit_form = $this->container->get("template.form_handler")->createNewForm();
 
-        $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
-                ->slug(array("name"))
-                ->upload()
-                ->getRequest();
-
-        $edit_form->bind($request);
+        $edit_form->bind($this->container->get("request"));
 
 
 
@@ -75,7 +70,9 @@ class TemplateController extends ContainerAware {
             $this->container->get("template.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return $this->redirectEditAction($edit_form->getData()->getId());
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('edit', "update", $this->container->get("request")->get("_route")), array(
+                        'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
+                        , 'id' => $edit_form->getData()->getId())));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
@@ -99,9 +96,9 @@ class TemplateController extends ContainerAware {
         $edit_form = $this->container->get("template.form_handler")->createEditForm($id);
         $delete_form = $this->container->get("template.form_handler")->createDeleteForm($id);
 //        $edit_html_content_form = $this->container->get("template_content.form_handler")->createNewFormForTemplate($edit_form->getData());
-        
-        
-        
+
+
+
         return array(
             'entity' => $edit_form->getData(),
             'edit_form' => $edit_form->createView(),
@@ -121,18 +118,20 @@ class TemplateController extends ContainerAware {
         $delete_form = $this->container->get("template.form_handler")->createDeleteForm($id);
 //        $edit_html_content_form = $this->container->get("template_content.form_handler")->createNewFormForTemplate($edit_form->getData());
 
-        $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
-                ->slug(array("name"))
-                ->upload()
-                ->getRequest();
-
-        $edit_form->bind($request);
-
+//        $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
+//                ->slug(array("name"))
+//                ->upload()
+//                ->getRequest();
+echo 'before';
+        $edit_form->bind($this->container->get("request"));
+echo 'afterg';
         if ($edit_form->isValid()) {
             $this->container->get("template.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return $this->redirectEditAction($edit_form->getData()->getId());
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('edit', "update", $this->container->get("request")->get("_route")), array(
+                        'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
+                        , 'id' => $edit_form->getData()->getId())));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "update.error");
@@ -151,12 +150,11 @@ class TemplateController extends ContainerAware {
         return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_template_list', array('list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }
 
-    protected function redirectEditAction($id) {
-        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_template_edit', array(
-                    'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
-                    , 'id' => $id)));
-    }
-
+//    protected function redirectEditAction($id) {
+//        return new RedirectResponse($this->container->get('router')->generate('evocatio_cms_template_edit', array(
+//                    'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
+//                    , 'id' => $id)));
+//    }
 }
 
 ?>

@@ -30,16 +30,22 @@ class Area {
 
     /**
      * @ORM\ManyToOne(targetEntity="Template", inversedBy="areas")
-     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
      */
     private $template;
+
+    
+    public function __toString() {
+        return $this->getName();
+    }
+
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -49,9 +55,10 @@ class Area {
      * @param string $name
      * @return Area
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
-
+    
         return $this;
     }
 
@@ -60,29 +67,9 @@ class Area {
      *
      * @return string 
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
-    }
-
-    /**
-     * Set page
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Page $page
-     * @return Area
-     */
-    public function setPage(\Evocatio\Bundle\CmsBundle\Entity\Page $page = null) {
-        $this->page = $page;
-
-        return $this;
-    }
-
-    /**
-     * Get page
-     *
-     * @return \Evocatio\Bundle\CmsBundle\Entity\Page 
-     */
-    public function getPage() {
-        return $this->page;
     }
 
     /**
@@ -91,9 +78,10 @@ class Area {
      * @param \Evocatio\Bundle\CmsBundle\Entity\Template $template
      * @return Area
      */
-    public function setTemplate(\Evocatio\Bundle\CmsBundle\Entity\Template $template = null) {
+    public function setTemplate(\Evocatio\Bundle\CmsBundle\Entity\Template $template = null)
+    {
         $this->template = $template;
-
+    
         return $this;
     }
 
@@ -102,62 +90,8 @@ class Area {
      *
      * @return \Evocatio\Bundle\CmsBundle\Entity\Template 
      */
-    public function getTemplate() {
+    public function getTemplate()
+    {
         return $this->template;
     }
-
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->contents = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Get HtmlContents
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getHtmlContents() {
-        $return_collection = new \Doctrine\Common\Collections\ArrayCollection($this->getContents()->filter(function ($content) {
-                            return get_class($content) == "Evocatio\Bundle\CmsBundle\Entity\HtmlContent";
-                        })->getValues());
-        return $return_collection;
-    }
-
-    /**
-     * Add contents
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Content $contents
-     * @return Page
-     */
-    public function addContent(\Evocatio\Bundle\CmsBundle\Entity\Content $contents) {
-        $contents->setPage($this);
-        $this->contents[] = $contents;
-
-        return $this;
-    }
-
-    /**
-     * Remove contents
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Content $contents
-     */
-    public function removeContent(\Evocatio\Bundle\CmsBundle\Entity\Content $contents) {
-        $this->contents->removeElement($contents);
-    }
-
-    /**
-     * Get contents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getContents() {
-        return $this->contents;
-    }
-    
-    public function __toString() {
-        return $this->getName();
-    }
-
 }

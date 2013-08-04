@@ -249,7 +249,7 @@ class MenuController extends ContainerAware {
     }
 
     /**
-     * @Route("/{slug}", requirements={"slug" = ".+"})
+     * Route("/{slug}", requirements={"slug" = ".+"})
      * @Method("get")
      */
     public function showMenuLinkAction($slug) {

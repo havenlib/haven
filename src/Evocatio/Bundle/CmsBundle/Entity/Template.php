@@ -40,99 +40,6 @@ class Template {
      */
     private $areas;
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId() {
-        return $this->id;
-    }
-
-    /**
-     * Set path
-     *
-     * @param string $path
-     * @return Template
-     */
-    public function setPath($path) {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string 
-     */
-    public function getPath() {
-        return $this->path;
-    }
-
-    public function __toString() {
-        return $this->getName();
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Template
-     */
-    public function setName($name) {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName() {
-        return $this->name;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->areas = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add areas
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Area $areas
-     * @return Template
-     */
-    public function addArea(\Evocatio\Bundle\CmsBundle\Entity\Area $areas) {
-        $area->setTemplate($this);
-        $this->areas[] = $areas;
-
-        return $this;
-    }
-
-    /**
-     * Remove areas
-     *
-     * @param \Evocatio\Bundle\CmsBundle\Entity\Area $areas
-     */
-    public function removeArea(\Evocatio\Bundle\CmsBundle\Entity\Area $areas) {
-        $this->areas->removeElement($areas);
-    }
-
-    /**
-     * Get areas
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAreas() {
-        return $this->areas;
-    }
-
     public function getAreasAsArray() {
         $areas = array();
         foreach ($this->getAreas() as $area) {
@@ -142,4 +49,101 @@ class Template {
         return $areas;
     }
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->areas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     * @return Template
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+    
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string 
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Template
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Add areas
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\Area $areas
+     * @return Template
+     */
+    public function addArea(\Evocatio\Bundle\CmsBundle\Entity\Area $areas)
+    {
+        $areas->setTemplate($this);
+        $this->areas[] = $areas;
+    
+        return $this;
+    }
+
+    /**
+     * Remove areas
+     *
+     * @param \Evocatio\Bundle\CmsBundle\Entity\Area $areas
+     */
+    public function removeArea(\Evocatio\Bundle\CmsBundle\Entity\Area $areas)
+    {
+        $this->areas->removeElement($areas);
+    }
+
+    /**
+     * Get areas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAreas()
+    {
+        return $this->areas;
+    }
 }

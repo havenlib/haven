@@ -32,7 +32,9 @@ class PageType extends AbstractType {
 //                    need to put the data class to have default from the entity
                     , 'empty_data' => "\Evocatio\Bundle\CmsBundle\Entity\PageTranslation"
                 ))
-                ->add('template')
+                ->add('template', null, array(
+                    "property" => "name"
+                ))
                 ->add('tpl', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
                     'label' => 'change.template'
@@ -46,7 +48,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
-//                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
+                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
                     )
                 ))
                 ->add('text_contents', "collection", array(
@@ -58,7 +60,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
-//                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
+                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
                     )
                 ))
                 ->add('news_widgets', "collection", array(
@@ -70,7 +72,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
-//                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
+                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
                     )
                 ))
                 ->add('save', 'submit', array(
