@@ -11,8 +11,8 @@ evocatio_portfolio:
     type:     annotation
     prefix:   /
 
-OwnerSiteBundle:
-    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
+#OwnerSiteBundle:
+#    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
     
 #    
 #WebsiteSiteBundle_ProductAdmin:

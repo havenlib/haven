@@ -68,7 +68,6 @@ class MenuFormHandler {
      */
     public function createAddChildForm($type, $id = null) {
         $entity = null;
-        echo "<br />-->" . $type . " and id : " . $id . " <--";
         if (!empty($id)) {
             $entity = $this->read_handler->get($id)->getNode();
         }

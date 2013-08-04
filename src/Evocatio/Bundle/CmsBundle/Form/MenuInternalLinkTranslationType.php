@@ -16,6 +16,9 @@ class MenuInternalLinkTranslationType extends AbstractType {
 //                    'property_path' => 'link'
 //                    ,'label' => false
 //                ))
+                ->add('slug', null, array(
+                    "required" => false
+                ))
                 ->add('trans_lang', null, array(
                     "property" => "name"
                     , "label" => false

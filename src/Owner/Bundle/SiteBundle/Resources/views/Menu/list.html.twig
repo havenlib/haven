@@ -1,10 +1,12 @@
 {% extends "OwnerSiteBundle::base_admin.html.twig" %}
 {% import "EvocatioCmsBundle:Macro:menu.html.twig" as _menu %}
 {% block inside_content %}
+
 <h2>Liste des menus</h2>
-        {% for entity in entities %}
+<div class="centre">
 <ul class='list'>
-    <li>{{ entity.id }} {{ entity.node.name }}
+        {% for entity in entities %}
+    <li>{{ entity.node.name }}
         <ul class='links'>
             <li>
                 <a href="{{ _route_crud.edit('owner_site_menu_edit',  entity.id) }}">edit</a>
@@ -25,12 +27,15 @@
         </ul>
     </li>
                 {% if(entity.hasChildren) %}
+    <ul>
                     {{ _menu.list_children(entity) }}
+    </ul>
                 {% endif %}
-</ul>
         {% else %}
 Aucun Menu
         {% endfor %}
+</ul>
+</div>
 <ul>
     <li>
         <a href="{{ _route_crud.path('owner_site_menu_create', 'create') }}">

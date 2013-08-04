@@ -21,5 +21,3 @@ class MenuController extends BaseMenuController {
         return array("entities" => $entities);
     }
 }
-
-?>

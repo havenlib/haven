@@ -11,8 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class InternalLink extends Link {
-
-
+    
     /**
      * @ORM\Column(name="route", type="string", length=128)
      */

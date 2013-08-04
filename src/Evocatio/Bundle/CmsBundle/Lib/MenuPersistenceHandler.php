@@ -30,43 +30,61 @@ class MenuPersistenceHandler {
         return $rootNode;
     }
 
-    public function createChildMenu($entity, $parent, $page = null) {
-//        echo "<p>->" . $entity->getType() . "<-</p>";
-echo "create is called";
-        if ($entity->getType() == "internal") {
-            $i =0;
-            foreach ($entity->getTranslations() as $translation) {
-                echo $i++;
-                $link = new \Evocatio\Bundle\CoreBundle\Entity\InternalLink();
-                $link->setRoute("EvocatioWebBundle_PageDisplaySlug");
-                $link->setRouteParams(serialize(array(
-                            "slug" => $page->getSlug($translation->getTransLang()->getSymbol())
-                            , "_locale" => $translation->getTransLang()->getSymbol()
-                        )));
-                $translation->setLink($link);
-//                echo "<p>->" . $page->getSlug($translation->getTransLang()->getSymbol()) . "<-</p>";
-            }
-        }
+    public function createChildMenuForUrl($entity, $parent) {
 
-//        echo $parent;
-//        die();
         $rootNode = $this->nsm->fetchBranch($parent);
         $rootNode->addChild($entity);
 
         return $rootNode;
     }
 
-    public function save($entity, $page =null) {
- if ($entity->getType() == "internal") {
-            foreach ($entity->getTranslations() as $translation) {
-                $link = new \Evocatio\Bundle\CoreBundle\Entity\InternalLink();
+    public function createChildMenuForPage($entity, $parent, $page = null) {
+        $rootNode = $this->nsm->fetchBranch($parent);
+//        $curNode = $rootNode;
+//        while(!$curNode->isRoot()){
+//        echo '<p>-->'.$curNode->getNode()->getLink()->getSlug().'<--</p>';
+//            $curNode = $curNode->getParent();
+//        }
+//        echo '<p>-->'.$curNode->getId().'<--</p>';
+//foreach($rootNode->getParent() as $node){
+//    echo $node->getNode()->getSlug();
+//}
+//        echo $rootNode->getNode()->getSlug();
+
+
+        foreach ($entity->getTranslations() as $translation) {
+            $translation->setSlug(($rootNode->getNode()->getSlug() != "") ? $rootNode->getNode()->getSlug() . "/" . $translation->getSlug() : $translation->getSlug());
+            $link = new \Evocatio\Bundle\CoreBundle\Entity\InternalLink();
+            $link->setRoute("EvocatioWebBundle_PageDisplaySlug");
+            $link->setRouteParams(serialize(array(
+                "slug" => $page->getSlug($translation->getTransLang()->getSymbol())
+                , "_locale" => $translation->getTransLang()->getSymbol()
+            )));
+            $translation->setLink($link);
+        }
+        $rootNode->addChild($entity);
+
+        return $rootNode;
+    }
+
+    public function save($entity, $page = null) {
+        $node = $this->nsm->wrapNode($entity);
+
+        if ($node->getNode()->getType() == "internal") {
+            foreach ($node->getNode()->getTranslations() as $translation) {
+                //                $translation->setSlug(($rootNode->getNode()->getSlug()!="")?$rootNode->getNode()->getSlug()."/".$translation->getSlug():$translation->getSlug());
+                $link = $translation->getLink();
+                if (empty($link)) {
+                    $link = new \Evocatio\Bundle\CoreBundle\Entity\InternalLink();
+                }
                 $link->setRoute("EvocatioWebBundle_PageDisplaySlug");
                 $link->setRouteParams(serialize(array(
-                            "slug" => $page->getSlug($translation->getTransLang()->getSymbol())
-                            , "_locale" => $translation->getTransLang()->getSymbol()
-                        )));
+                    "slug" => $page->getSlug($translation->getTransLang()->getSymbol())
+                    , "_locale" => $translation->getTransLang()->getSymbol()
+                )));
                 $translation->setLink($link);
             }
+            $this->updateSlug($node);
         }
         $this->em->persist($entity);
         $this->em->flush();
@@ -95,6 +113,19 @@ echo "create is called";
         }
         $this->em->flush();
 //            $this->em->flush()
+    }
+
+    private function updateSlug($node) {
+        if ($node->getNode()->getType() == "internal") {
+            foreach ($node->getNode()->getTranslations() as $translation) {
+                $translation->setSlug(($node->getParent()->getNode()->getFullSlug() != "") ? $node->getParent()->getNode()->getFullSlug($translation->getTransLang()) . "/" . $translation->getSlug() : $translation->getSlug());
+            }
+            if ($node->hasChildren()) {
+                foreach ($node->getChildren() as $child) {
+                    $this->updateSlug($child);
+                }
+            }
+        }
     }
 
 }

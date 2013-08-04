@@ -35,7 +35,7 @@ class MenuExternalLinkType extends AbstractType {
     }
 
     public function getName() {
-        return 'evocatio_bundle_cmsbundle_menutype';
+        return 'evocatio_bundle_cmsbundle_menuexternallinktype';
     }
 
 }

@@ -11,7 +11,6 @@ class MenuTranslationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-//                ->add('link')
                 ->add('name')
 //                ->add('ExternalLink', new \Evocatio\Bundle\CoreBundle\Form\ExternalLinkType, array(
 //                    'property_path' => 'link'
