@@ -36,7 +36,7 @@ class Template {
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Area", mappedBy="template")
+     * @ORM\OneToMany(targetEntity="Area", mappedBy="template", cascade={"persist","remove"})
      */
     private $areas;
 
@@ -109,6 +109,7 @@ class Template {
      * @return Template
      */
     public function addArea(\Evocatio\Bundle\CmsBundle\Entity\Area $areas) {
+        $area->setTemplate($this);
         $this->areas[] = $areas;
 
         return $this;

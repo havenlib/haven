@@ -46,7 +46,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
-                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
+//                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
                     )
                 ))
                 ->add('text_contents', "collection", array(
@@ -58,7 +58,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
-                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
+//                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
                     )
                 ))
                 ->add('news_widgets', "collection", array(
@@ -70,7 +70,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
-                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
+//                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
                     )
                 ))
                 ->add('save', 'submit', array(

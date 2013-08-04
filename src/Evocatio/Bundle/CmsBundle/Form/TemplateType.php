@@ -12,9 +12,12 @@ class TemplateType extends AbstractType {
         $builder
                 ->add('name')
                 ->add('path')
-//                ->add('areas', 'collection', array(
-//                    'type' => new AreaType()
-//                ))
+                ->add('areas', 'collection', array(
+                    'type' => new AreaType()
+                    ,'allow_add' => true
+                    ,'prototype' => true
+                    ,'by_reference' => false
+                ))
         ;
     }
 
