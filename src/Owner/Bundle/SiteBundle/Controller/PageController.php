@@ -45,13 +45,11 @@ class PageController extends BasePageController {
             throw new NotFoundHttpException('entity.not.found');
         }
 
-        $delete_form = $this->container->get("page.form_handler")->createDeleteForm($entity->getId());
 
         $template = str_replace(":displayFromSlug.html.twig", ":display.html.twig", $this->container->get("request")->get('_template'));
 
         $params = array(
             "entity" => $entity,
-            'delete_form' => $delete_form->createView()
         );
 
         return new Response($this->container->get('templating')->render($template, $params));

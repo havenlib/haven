@@ -1,18 +1,18 @@
-EvocatioSecurityBundle_Login:
-    resource: "@EvocatioSecurityBundle/Controller/LoginController.php"
-    type:     annotation
-
-EvocatioSecurityBundle_User:
-    resource: "@EvocatioSecurityBundle/Controller/UserController.php"
-    type:     annotation
-    prefix: /{_locale}/
-    defaults:
-      admin: admin
-    requirements: 
-      _locale: fr|en
-      admin: "admin"
-      user: "user|utilisateur"
-      create: "create|creer"
-      edit: "edit|editer"
-      list: "list|lister"
-      show: "show|afficher"
+#EvocatioSecurityBundle_Login:
+#    resource: "@EvocatioSecurityBundle/Controller/LoginController.php"
+#    type:     annotation
+#
+#EvocatioSecurityBundle_User:
+#    resource: "@EvocatioSecurityBundle/Controller/UserController.php"
+#    type:     annotation
+#    prefix: /{_locale}/
+#    defaults:
+#      admin: admin
+#    requirements: 
+#      _locale: fr|en
+#      admin: "admin"
+#      user: "user|utilisateur"
+#      create: "create|creer"
+#      edit: "edit|editer"
+#      list: "list|lister"
+#      show: "show|afficher"

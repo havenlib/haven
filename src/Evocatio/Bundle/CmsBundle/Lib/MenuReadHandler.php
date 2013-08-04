@@ -27,11 +27,11 @@ class MenuReadHandler {
         return $entity;
     }
 
-    public function getBranch($id) {
-        $test = $this->nsm->fetchBranchAsArray($id);
-
-        return $test;
-    }
+//    public function getBranch($id) {
+//        $test = $this->nsm->fetchBranchAsArray($id);
+//
+//        return $test;
+//    }
 
     public function getAllRootMenus() {
         $roots = $this->em->getRepository("EvocatioCmsBundle:Menu")->findRootMenus();
@@ -42,6 +42,12 @@ class MenuReadHandler {
 
         return $entities;
     }
+    
+    public function getBySlugForLanguage($slug, $language){
+        $entity = $this->em->getRepository("EvocatioCmsBundle:Menu")->findByLocalizedSlug( $slug, $language);
+
+        return $entity;        
+    }    
 
 }
 
