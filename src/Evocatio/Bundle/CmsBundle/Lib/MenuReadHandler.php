@@ -35,7 +35,7 @@ class MenuReadHandler {
     public function getAllRootMenus() {
         $roots = $this->em->getRepository("EvocatioCmsBundle:Menu")->findRootMenus();
         $entities = array();
-        foreach($roots as $root){
+        foreach ($roots as $root) {
             $entities[] = $this->nsm->fetchTree($root->getId());
         }
         

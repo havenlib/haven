@@ -7,15 +7,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  use Evocatio\Bundle\CoreBundle\Repository\LanguageRepository;
 
-class MenuExternalLinkTranslationType extends AbstractType {
+class MenuInternalLinkTranslationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('name')
-                ->add('ExternalLink', new \Evocatio\Bundle\CoreBundle\Form\ExternalLinkType, array(
-                    'property_path' => 'link'
-                    ,'label' => false
-                ))
+//                ->add('InternalLink', new \Evocatio\Bundle\CoreBundle\Form\InternalLinkType, array(
+//                    'property_path' => 'link'
+//                    ,'label' => false
+//                ))
                 ->add('trans_lang', null, array(
                     "property" => "name"
                     , "label" => false

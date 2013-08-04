@@ -26,6 +26,10 @@ class PageReadHandler {
         return $this->em->getRepository("EvocatioCmsBundle:Page")->findAll();
     }
 
+    public function getList($lang = null) {
+        return $this->em->getRepository("EvocatioCmsBundle:Page")->getListForLang();
+    }
+
     public function getAllPublished() {
         return $this->em->getRepository("EvocatioCmsBundle:Page")->findAllPublished();
     }
