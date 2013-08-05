@@ -21,7 +21,7 @@ class PageType extends AbstractType {
                         'label' => false
                     )
 //                    need to put the data class to have default from the entity
-                    , 'empty_data' => "\Evocatio\Bundle\CmsBundle\Entity\PageTranslation"
+//                    , 'empty_data' => "\Evocatio\Bundle\CmsBundle\Entity\PageTranslation"
                 ))
                 ->add('template')
                 ->add('html_contents', "collection", array(

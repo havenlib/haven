@@ -112,7 +112,6 @@ class PageTranslation extends SluggableMappedBase {
     public function setStatus($status)
     {
         $this->status = $status;
-    echo 'tabarnac';
         return $this;
     }
 

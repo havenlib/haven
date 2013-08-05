@@ -79,11 +79,6 @@ class PageController extends ContainerAware {
         } else {
             if ($edit_form->get('tpl')->isClicked()) {
 
-                // create a log channel
-                $this->logger = new Logger('general');
-                $this->logger->pushHandler(new StreamHandler('/home/lbreleur/workspace/evocatio/sites2/app/logs/general.log'));
-                $this->logger->addInfo("Change template from " . $edit_form->getData()->get("template")->getName());
-
                 $this->container->get("page.form_handler")->createNewForm($edit_form->getData());
             } else {
                 $this->container->get("session")->getFlashBag()->add("error", "create.error");
