@@ -3,7 +3,7 @@
 
 {% block title %}Info sur la translation{% endblock %}
 
-{% block inside_theater %}
+{% block inside_main %}
 
 &nbsp;
 <h1>Choisir la culture pour "{{ language.symbol }}"</h1>
@@ -14,6 +14,6 @@
 </form>
 <br />
 <a href="{{ path('evocatio_core_language_edit', {'edit': ('edit' | trans({}, 'routes'))}) }}">Choisir les langues</a>
-{% endblock inside_theater %}
+{% endblock inside_main %}
 
 
