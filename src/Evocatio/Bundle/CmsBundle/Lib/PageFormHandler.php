@@ -7,12 +7,10 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\FormFactory;
 use Evocatio\Bundle\CmsBundle\Entity\Page as Entity;
 use Evocatio\Bundle\CmsBundle\Form\PageType as Type;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 
 class PageFormHandler {
 
-    protected $read_handler; // devrait être son listhandler je pense
+    protected $read_handler;
     protected $language_read_handler;
     protected $form_factory;
     protected $security_context;
