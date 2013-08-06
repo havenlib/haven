@@ -130,8 +130,8 @@ class MenuController extends ContainerAware {
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate(str_replace('add', "edit", $this->container->get("request")->get("_route")), array(
-                        'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
-                        , 'id' => $edit_form->getData()->getId())));
+                                'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
+                                , 'id' => $edit_form->getData()->getId())));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
@@ -219,8 +219,8 @@ class MenuController extends ContainerAware {
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate(str_replace('edit', "update", $this->container->get("request")->get("_route")), array(
-                        'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
-                        , 'id' => $edit_form->getData()->getId())));
+                                'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
+                                , 'id' => $edit_form->getData()->getId())));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "update.error");
@@ -245,13 +245,10 @@ class MenuController extends ContainerAware {
         $this->container->get("menu.persistence_handler")->delete($form_data['id']);
 
         return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
-                    'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+                            'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }
 
     public function showMenuLinkAction($slug) {
-
-
-
 //         @TODO remove the automatique finder, make a query with not just slug but slug and locale, so that a french and an english page can have the same slug
         $locale = $this->container->get("request")->get("_locale");
 
@@ -264,17 +261,29 @@ class MenuController extends ContainerAware {
         if ("internal" == $entity->getType()) {
             $temp = $this->container->get("router")->getRouteCollection()->get($entity->getLink()->getRoute())->getDefaults();
             $path["_controller"] = $temp["_controller"];
-            $subRequest = $this->container->get('request')->duplicate($this->container->get("request")->query->All(), $this->container->get("request")->request->All(), array_merge($entity->getLink()->getRouteParams(), $path));
+            $subRequest = $this->container->get('request')->duplicate($this->container->get("request")->query->All(), $this->container->get("request")->request->All(), array_merge($entity->getLink()->getRouteParams(), $path, array("current_menu_id" => $entity->getId())));
 
             return $this->container->get('http_kernel')->handle($subRequest, \Symfony\Component\HttpKernel\HttpKernelInterface::SUB_REQUEST);
 
 //        return $kernel->forward($entity->getLink()->getRoute(), $entity->getLink()->getParams());
         }
-
     }
-    
-    public function buildMenuAction($root, $drillDown = null){
-        
+
+    /**
+     * @Route("/menu/build/{root}/{depth}")
+     * @Template
+     * @param type $root
+     * @param type $drillDown
+     */
+    public function buildMenuAction($root, $depth = null) {
+        $entity = $this->container->get('menu.read_handler')->get($root);
+
+//        $list = $entity->getDescendants();
+
+//        foreach ($list as $item) {
+//            echo "<p>" . ($item->getNode()->getFullSlug()) . "</p>";
+//        }
+        return array("entity" => $entity, "depth" => $depth);
     }
 
 }

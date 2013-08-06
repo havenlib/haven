@@ -21,11 +21,29 @@
         </li>
             {% endif %}
     </ul>
-</li>
                 {% if(child.hasChildren) %}
 <ul>
                     {{ menu.list_children(child) }}
     </ul>
                 {% endif %}
+</li>
             {% endfor %}
+{% endmacro %}
+
+{% macro show_menu(entity, depth = null, current_menu_id) %}
+    {% import _self as menu %}
+{% if depth > 0 or depth is null %}
+{% import "::macro/route/crud.html.twig" as _route_crud %}
+            {% for child in entity.getChildren() %}
+
+<li {% if child.node.id == current_menu_id or child.isAncestorOfNodeId(current_menu_id) %}class="active"{% endif %}> <a href="{{ (child.node.type=="internal")?child.node.FullSlug is not empty?path("owner_site_menu_showmenulink", {"slug" : child.node.FullSlug}):"" :child.node.link.url}}">{{ child.node.name }}</a>
+                {% if(child.hasChildren) %}
+<ul>
+                    {{ menu.show_menu(child, depth is null?null:depth - 1, current_menu_id) }}
+    </ul>
+                {% endif %}
+</li>
+            {% endfor %}
+                {% endif %}
+
 {% endmacro %}

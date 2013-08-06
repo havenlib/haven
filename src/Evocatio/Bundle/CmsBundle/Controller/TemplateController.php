@@ -70,7 +70,7 @@ class TemplateController extends ContainerAware {
             $this->container->get("template.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate(str_replace('edit', "update", $this->container->get("request")->get("_route")), array(
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('add', "edit", $this->container->get("request")->get("_route")), array(
                         'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
                         , 'id' => $edit_form->getData()->getId())));
         }
@@ -122,14 +122,12 @@ class TemplateController extends ContainerAware {
 //                ->slug(array("name"))
 //                ->upload()
 //                ->getRequest();
-echo 'before';
         $edit_form->bind($this->container->get("request"));
-echo 'afterg';
         if ($edit_form->isValid()) {
             $this->container->get("template.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return new RedirectResponse($this->container->get('router')->generate(str_replace('edit', "update", $this->container->get("request")->get("_route")), array(
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('update', "edit", $this->container->get("request")->get("_route")), array(
                         'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
                         , 'id' => $edit_form->getData()->getId())));
         }

@@ -4,43 +4,45 @@
 
 <h2>Liste des menus</h2>
 <div class="centre">
-<ul class='list'>
+    <ul class='list'>
         {% for entity in entities %}
-    <li>{{ entity.node.name }}
-        <ul class='links'>
-            <li>
-                <a href="{{ _route_crud.edit('owner_site_menu_edit',  entity.id) }}">edit</a>
- <!-- form action="{{ _route_crud.delete('owner_site_menu_delete') }}" method="post">
+            <li>{{ entity.node.name }}
+                <ul class='links'>
+                    <li>
+                        <a href="{{ _route_crud.edit('owner_site_menu_edit',  entity.id) }}">edit</a>
+         <!-- form action="{{ _route_crud.delete('owner_site_menu_delete') }}" method="post">
                         {{ form_widget(delete_forms[entity.id]) }}
-        </form--> 
-            </li>
+                </form--> 
+                    </li>
+                    <li>
+                        <a href="{{ _route_crud.path('owner_site_menu_create', "create", {"parent": entity.id, 'type': "external"}) }}" method="post">
+                            ajouter un lien externe
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ _route_crud.path('owner_site_menu_create', "create", {"parent": entity.id, 'type': "internal"}) }}" method="post">
+                            ajouter des liens interne
+                        </a>
+                    </li>
+                </ul>
+                {% if(entity.hasChildren) %}
+                <ul>
+                    {{ _menu.list_children(entity) }}
+                    </ul>
+                {% endif %}
+                </li>
+        {% else %}
+                Aucun Menu
+        {% endfor %}
+            </ul>
+        </div>
+        <ul>
             <li>
-                <a href="{{ _route_crud.path('owner_site_menu_create', "create", {"parent": entity.id, 'type': "external"}) }}" method="post">
-                    ajouter un lien externe
-                </a>
-            </li>
-            <li>
-                <a href="{{ _route_crud.path('owner_site_menu_create', "create", {"parent": entity.id, 'type': "internal"}) }}" method="post">
-                    ajouter des liens interne
+                <a href="{{ _route_crud.path('owner_site_menu_create', 'create') }}">
+                    Create a new entry
                 </a>
             </li>
         </ul>
-    </li>
-                {% if(entity.hasChildren) %}
-    <ul>
-                    {{ _menu.list_children(entity) }}
-    </ul>
-                {% endif %}
-        {% else %}
-Aucun Menu
-        {% endfor %}
-</ul>
-</div>
-<ul>
-    <li>
-        <a href="{{ _route_crud.path('owner_site_menu_create', 'create') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+
+
 {% endblock inside_content %}
