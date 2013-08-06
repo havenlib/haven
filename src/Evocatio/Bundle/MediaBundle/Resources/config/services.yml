@@ -1,0 +1,13 @@
+services:
+  evocatio_media.file.read_handler:
+      class:     Evocatio\Bundle\MediaBundle\Lib\Handler\FileReadHandler
+      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+      
+  evocatio_media.file.persistence_handler:
+      class:     Evocatio\Bundle\MediaBundle\Lib\Handler\FilePersistenceHandler
+      arguments: ["@faq.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
+
+  evocatio_media.file.form_handler:
+      class:     Evocatio\Bundle\MediaBundle\Lib\Handler\FileFormHandler
+      arguments: ["@evocatio_media.file.read_handler", "@security.context", "@form.factory"]
+    

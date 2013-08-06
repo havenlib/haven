@@ -5,4 +5,5 @@ imports:
 #    - { resource: "@EvocatioPersonaBundle/Resources/config/services.yml" }
     - { resource: "@EvocatioCmsBundle/Resources/config/services.yml" }
     - { resource: "@EvocatioPortfolioBundle/Resources/config/services.yml" }
+    - { resource: "@EvocatioMediaBundle/Resources/config/services.yml" }
     - { resource: "@OwnerSiteBundle/Resources/config/services.yml" }
