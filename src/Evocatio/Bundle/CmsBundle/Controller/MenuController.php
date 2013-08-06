@@ -248,10 +248,6 @@ class MenuController extends ContainerAware {
                     'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }
 
-    /**
-     * Route("/{slug}", requirements={"slug" = ".+"})
-     * @Method("get")
-     */
     public function showMenuLinkAction($slug) {
 
 
