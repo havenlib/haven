@@ -1,25 +1,28 @@
 <?php
 
-namespace Evocatio\Bundle\CmsBundle\Entity;
+namespace Evocatio\Bundle\MediaBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\ORM\Mapping\InheritanceType;
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
- * Evocatio\Bundle\CmsBundle\Entity\File
+ * Evocatio\Bundle\MediaBundle\Entity\File
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity()
- * @InheritanceType("JOINED")
- * @DiscriminatorColumn(name="discr", type="string")
- * @DiscriminatorMap({
- * "filepage" = "Evocatio\Bundle\CmsBundle\Entity\Filepage"
- * }) 
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
  */
 class File {
+
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     /**
      * @var string $mimeType
@@ -60,15 +63,6 @@ class File {
      * @ORM\Column(name="size", type="integer", nullable = true)
      */
     private $size;
-
-    /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * Set mimeType

@@ -273,36 +273,4 @@ class Page extends Translatable {
         return $return_collection;
     }
 
-    /**
-     * Add files
-     *
-     * @param Website\Bundle\SiteBundle\Entity\FileCredit $files
-     * @return ServiceCredit
-     */
-    public function addFile(FilePage $files) {
-        $files->setParent($this);
-        $this->files[] = $files;
-
-        return $this;
-    }
-
-    /**
-     * Remove files
-     *
-     * @param Website\Bundle\SiteBundle\Entity\FileCredit $files
-     */
-    public function removeFile(FilePage $files) {
-        $files->setParent(NULL);
-        $this->files->removeElement($files);
-    }
-
-    /**
-     * Get files
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getFiles() {
-        return $this->files;
-    }
-
 }
