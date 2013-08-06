@@ -30,7 +30,7 @@ class PageType extends AbstractType {
                         'label' => false
                     )
 //                    need to put the data class to have default from the entity
-                    , 'empty_data' => "\Evocatio\Bundle\CmsBundle\Entity\PageTranslation"
+//                    , 'empty_data' => "\Evocatio\Bundle\CmsBundle\Entity\PageTranslation"
                 ))
                 ->add('template', null, array(
                     "property" => "name"
@@ -48,7 +48,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
-                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
+                        , 'areas' => (isset($options['data'])) ? $options['data']->getTemplate()->getAreasAsArray() : array()
                     )
                 ))
                 ->add('text_contents', "collection", array(
@@ -60,7 +60,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
-                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
+                        , 'areas' => (isset($options['data'])) ? $options['data']->getTemplate()->getAreasAsArray() : array()
                     )
                 ))
                 ->add('news_widgets', "collection", array(
@@ -72,7 +72,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
-                        , 'areas' => $options['data']->getTemplate()->getAreasAsArray()
+                        , 'areas' => (isset($options['data'])) ? $options['data']->getTemplate()->getAreasAsArray() : array()
                     )
                 ))
                 ->add('save', 'submit', array(

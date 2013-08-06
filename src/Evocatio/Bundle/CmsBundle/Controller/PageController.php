@@ -82,6 +82,13 @@ class PageController extends ContainerAware {
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return $this->redirectEditAction($edit_form->getData()->getId());
+        } else {
+            if ($edit_form->get('tpl')->isClicked()) {
+
+                $this->container->get("page.form_handler")->createNewForm($edit_form->getData());
+            } else {
+                $this->container->get("session")->getFlashBag()->add("error", "create.error");
+            }
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
