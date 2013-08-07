@@ -1,11 +1,22 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Laurent Breleur <lbreleur@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\MediaBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use \Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class FileController extends ContainerAware {
 
@@ -20,36 +31,6 @@ class FileController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/rank/file/{id}")
-     * @Method("GET")
-     * @Template
-     */
-    public function rankAction($id) {
-        $entity = $this->container->get("file.read_handler")->get($id);
-        return array("entity" => $entity);
-    }
-
-    /**
-     * @Route("/admin/rank/file/{id}")
-     * @Method("POST")
-     * @Template
-     */
-    public function performRankingAction($id) {
-        $entity = $this->container->get("file.read_handler")->get($id);
-        $new_rank = (int) $this->container->get('Request')->request->get("rank");
-
-        if (is_int($new_rank) && $new_rank) {
-            $this->container->get("file.persistence_handler")->rank($entity, $new_rank);
-            $this->container->get("session")->getFlashBag()->add("success", "ranking.success");
-
-            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_file_list', array(), array('list')));
-        }
-
-        $this->container->get("session")->getFlashBag()->add("error", "ranking.error");
-        return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_file_list', array(), array('list')));
-    }
-
-    /**
      * Finds and displays all files for admin.
      *
      * @Route("/admin/list/file")
@@ -57,11 +38,11 @@ class FileController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("file.read_handler")->getAll();
+        $entities = $this->container->get("evocatio_media.file.read_handler")->getAll();
 
 
         foreach ($entities as $entity) {
-            $delete_forms[$entity->getId()] = $this->container->get("file.form_handler")->createDeleteForm($entity->getId())->createView();
+            $delete_forms[$entity->getId()] = $this->container->get("evocatio_media.file.form_handler")->createDeleteForm($entity->getId())->createView();
         }
 
         return array("entities" => $entities
@@ -75,7 +56,7 @@ class FileController extends ContainerAware {
      * @Template
      */
     public function createAction() {
-        $edit_form = $this->container->get("evocatio_media.file.form_handler")->createNewForm();
+        $edit_form = $this->container->get("evocatio_media.file.form_handler")->createMultipleNewForm();
         return array("edit_form" => $edit_form->createView());
     }
 
@@ -87,15 +68,21 @@ class FileController extends ContainerAware {
      * @Template
      */
     public function addAction() {
-        $edit_form = $this->container->get("file.form_handler")->createNewForm();
-        $edit_form->bind($this->container->get('Request'));
+        $edit_form = $this->container->get("evocatio_media.file.form_handler")->createMultipleNewForm();
+        $request = $this->container->get('request_modifier')->setRequest($this->container->get("Request"))
+                ->slug(array("title"))
+                ->upload()
+                ->getRequest();
+
+        $edit_form->bind($request);
 
 
         if ($edit_form->isValid()) {
-            $this->container->get("file.persistence_handler")->firstSave($edit_form->getData());
+            $this->container->get("evocatio_media.file.persistence_handler")->saveMultiple($edit_form->get("files")->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_file_list', array(), array('list')));
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('add', "list", $this->container->get("request")->get("_route")), array(
+                        'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
@@ -183,7 +170,7 @@ class FileController extends ContainerAware {
     public function deleteAction() {
 
         $form_data = $this->container->get("request")->get('form');
-        $this->container->get("file.persistence_handler")->delete($form_data['id']);
+        $this->container->get("evocatio_media.file.persistence_handler")->delete($form_data['id']);
 
         return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
                     'list' => $this->container->get('translator')->trans("list", array(), "routes"))));

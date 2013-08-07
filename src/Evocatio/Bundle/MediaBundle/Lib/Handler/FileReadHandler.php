@@ -18,7 +18,7 @@ class FileReadHandler {
 
     public function get($id) {
 
-        $entity = $this->em->getRepository($this->getDefaultEntityClass())->find($id);
+        $entity = $this->em->getRepository("Evocatio\Bundle\MediaBundle\Entity\File")->find($id);
 
         if (!$entity)
             throw new \Exception('entity.not.found');
@@ -27,12 +27,9 @@ class FileReadHandler {
     }
 
     public function getAll() {
-        return $this->em->getRepository($this->getDefaultEntityClass())->findAll();
+        return $this->em->getRepository("Evocatio\Bundle\MediaBundle\Entity\File")->findAll();
     }
 
-    protected function getDefaultEntityClass() {
-        return "Evocatio\Bundle\MediaBundle\Entity\Faq";
-    }
 
 }
 

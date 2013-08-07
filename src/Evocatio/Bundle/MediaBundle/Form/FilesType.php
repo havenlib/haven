@@ -15,18 +15,22 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FileType extends AbstractType {
+class FilesType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('mimeType', 'text',array("required" => false))
-                ->add('pathName', 'text', array("required" => false))
-                ->add('name', 'text', array("required" => false))
-                ->add('fileName', 'text', array("required" => false))
-                ->add('size', 'text', array("required" => false))
-//                ->add('upload', 'file', array(
-//                    "mapped" => false
-//                ))
+                ->add('files', 'collection', array(
+                    "type" => new FileType()
+                    , 'allow_delete' => true
+                    , 'allow_add' => true
+                    , 'by_reference' => false
+                ))
+                ->add('uploads', 'file', array(
+                    "attr" => array(
+                        "multiple" => "multiple",
+                    )
+                    , "mapped" => false
+                ))
                 ->add('save', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
                     'label' => 'save.faq'
@@ -35,13 +39,11 @@ class FileType extends AbstractType {
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
-        $resolver->setDefaults(array(
-            'data_class' => 'Evocatio\Bundle\MediaBundle\Entity\File'
-        ));
+        $resolver->setDefaults(array());
     }
 
     public function getName() {
-        return 'evocatio_mediabundle_filetype';
+        return 'evocatio_mediabundle_filestype';
     }
 
 }
