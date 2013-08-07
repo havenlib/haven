@@ -1,4 +1,4 @@
-    
+
 EvocatioCoreBundle:
     resource: "@EvocatioCoreBundle/Resources/config/routing.yml"
 #    
@@ -13,10 +13,16 @@ EvocatioCoreBundle:
 #    
 #EvocatioCmsBundle:
 #    resource: "@EvocatioCmsBundle/Resources/config/routing.yml"
-       
+
+#EvocatioMediaBundle:
+#    resource: "@EvocatioMediaBundle/Controller/FileController.php"
+#    type:     annotation
+#    prefix:   /
+    
 OwnerSiteBundle:
     resource: "@OwnerSiteBundle/Resources/config/routing.yml"
-
+       
+    
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
     prefix:   /_wdt

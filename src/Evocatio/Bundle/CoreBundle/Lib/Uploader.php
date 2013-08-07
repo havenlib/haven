@@ -47,7 +47,10 @@ class Uploader {
             $arrayRequest["files"] = array_merge(!empty($arrayRequest["files"]) ? $arrayRequest["files"] : array(), $this->transformUploadedFileToFileArray($arrayFile["uploads"]));
 //                echo 'i------------n' . print_r(array_keys($arrayFile), 1);
 //            unset($array["uploads"]);
-        }
+        }/* else if (array_key_exists("upload", $arrayFile)) {
+            $arrayRequest["files"] = array_merge(!empty($arrayRequest["files"]) ? $arrayRequest["files"] : array(), $this->transformUploadedFileToFileArray(array($arrayFile["upload"])));
+        }*/
+
         foreach ($arrayFile as $key => &$child) {
             if (is_array($child)) {
                 $this->changeUploadsToFiles($child, $arrayRequest[$key]);

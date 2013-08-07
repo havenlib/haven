@@ -6,7 +6,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Evocatio\Bundle\CoreBundle\Lib\Handler\FormHandler;
 use Symfony\Component\Form\FormFactory;
 
-class FileFormHandler extends FormHandler {
+class FileFormHandler {
 
     protected $read_handler;
     protected $form_factory;
@@ -24,7 +24,11 @@ class FileFormHandler extends FormHandler {
     }
 
     public function createNewForm() {
-        return $form = $this->doCreate($this->getDefaultTypeClass());
+        return $form = $this->doCreate('Evocatio\Bundle\MediaBundle\Form\FileType');
+    }
+
+    public function createMultipleNewForm() {
+        return $form = $this->doCreate('Evocatio\Bundle\MediaBundle\Form\FilesType');
     }
 
     protected function doCreate($type, $entity = null) {
