@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Laurent Breleur <lbreleur@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\MediaBundle\Lib\Handler;
 
 use Symfony\Component\Security\Core\SecurityContext;
@@ -20,15 +29,11 @@ class FileFormHandler {
 
     public function createEditForm($id) {
         $entity = $this->read_handler->get($id);
-        return $form = $this->doCreate($this->getDefaultTypeClass(), $entity);
+        return $form = $this->doCreate('Evocatio\Bundle\MediaBundle\Form\FileType', $entity);
     }
 
     public function createNewForm() {
-        return $form = $this->doCreate('Evocatio\Bundle\MediaBundle\Form\FileType');
-    }
-
-    public function createMultipleNewForm() {
-        return $form = $this->doCreate('Evocatio\Bundle\MediaBundle\Form\FilesType');
+        return $form = $this->doCreate('Evocatio\Bundle\MediaBundle\Form\UploadType');
     }
 
     protected function doCreate($type, $entity = null) {
@@ -48,10 +53,6 @@ class FileFormHandler {
                         ->add('delete', 'submit')
                         ->getForm()
         ;
-    }
-
-    protected function getDefaultTypeClass() {
-        return 'Evocatio\Bundle\MediaBundle\Form\FileType';
     }
 
 }

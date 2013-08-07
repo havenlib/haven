@@ -5,9 +5,13 @@ services:
       
   evocatio_media.file.persistence_handler:
       class:     Evocatio\Bundle\MediaBundle\Lib\Handler\FilePersistenceHandler
-      arguments: ["@evocatio_media.file.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
+      arguments: ["@evocatio_media.file.read_handler", "@doctrine.orm.entity_manager", "@security.context", "@evocatio_media.file.manipulator"]
 
   evocatio_media.file.form_handler:
       class:     Evocatio\Bundle\MediaBundle\Lib\Handler\FileFormHandler
       arguments: ["@evocatio_media.file.read_handler", "@security.context", "@form.factory"]
+
+  evocatio_media.file.manipulator:
+      class:     Evocatio\Bundle\MediaBundle\Lib\Manipulator\FileManipulator
+      arguments:    [%kernel.root_dir%, %secure_upload_dir%]
     
