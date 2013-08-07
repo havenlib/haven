@@ -12,7 +12,46 @@
 namespace Evocatio\Bundle\MediaBundle\Lib\Manipulator;
 
 class FileManipulator {
-    //put your code here
+
+    private $root_dir;
+    private $upload_dir;
+
+    public function __construct($root_dir, $upload_dir) {
+        $this->root_dir = $root_dir;
+        $this->upload_dir = $upload_dir;
+    }
+
+    public function transformTo($entity) {
+        if (preg_match("/image/", $entity->getMimeType())) {
+            return $this->transformToImage($entity);
+        } else {
+            return $this->transformToUnknow($entity);
+        }
+    }
+
+    private function transformToImage($entity) {
+        $entity = $this->merge($entity, new \Evocatio\Bundle\MediaBundle\Entity\ImageFile());
+
+        list($width, $height) = getimagesize($this->root_dir . "/" . $entity->getPathName());
+        $entity->setWidth($width);
+        $entity->setHeight($height);
+
+        return $entity;
+    }
+
+    private function transformToUnknow($entity) {
+        return $entity = $this->merge($entity, new \Evocatio\Bundle\MediaBundle\Entity\UnknowFile());
+    }
+
+    public function merge($obj1, $obj2) {
+        foreach ((array) $obj1 as $key => $value) {
+            if (method_exists($obj2, $method_name = "set" . ucfirst(trim(str_replace(get_class($obj1), "", $key)))))
+                $obj2->{$method_name}($value);
+        }
+
+        return $obj2;
+    }
+
 }
 
 ?>

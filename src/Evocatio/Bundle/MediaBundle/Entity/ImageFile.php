@@ -20,6 +20,11 @@ use Evocatio\Bundle\MediaBundle\Entity\File;
 class ImageFile extends File {
 
     /**
+     * @var integer
+     */
+    protected $id;
+
+    /**
      * @var integer $width
      * @ORM\Column(name="width", type="integer")
      */
@@ -31,6 +36,12 @@ class ImageFile extends File {
      */
     private $height;
 
+    /**
+     * @var text $alt
+     * 
+     * @ORM\Column(name="alt", type="text", nullable=true)
+     */
+    protected $alt;
 
     /**
      * Set width
@@ -38,10 +49,9 @@ class ImageFile extends File {
      * @param integer $width
      * @return ImageFile
      */
-    public function setWidth($width)
-    {
+    public function setWidth($width) {
         $this->width = $width;
-    
+
         return $this;
     }
 
@@ -50,8 +60,7 @@ class ImageFile extends File {
      *
      * @return integer 
      */
-    public function getWidth()
-    {
+    public function getWidth() {
         return $this->width;
     }
 
@@ -61,10 +70,9 @@ class ImageFile extends File {
      * @param integer $height
      * @return ImageFile
      */
-    public function setHeight($height)
-    {
+    public function setHeight($height) {
         $this->height = $height;
-    
+
         return $this;
     }
 
@@ -73,8 +81,38 @@ class ImageFile extends File {
      *
      * @return integer 
      */
-    public function getHeight()
-    {
+    public function getHeight() {
         return $this->height;
     }
+
+    /**
+     * Set alt
+     *
+     * @param string $alt
+     * @return ImageFile
+     */
+    public function setAlt($alt) {
+        $this->alt = $alt;
+
+        return $this;
+    }
+
+    /**
+     * Get alt
+     *
+     * @return string 
+     */
+    public function getAlt() {
+        return $this->alt;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId() {
+        return $this->id;
+    }
+
 }

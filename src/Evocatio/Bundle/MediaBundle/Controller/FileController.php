@@ -56,7 +56,7 @@ class FileController extends ContainerAware {
      * @Template
      */
     public function createAction() {
-        $edit_form = $this->container->get("evocatio_media.file.form_handler")->createMultipleNewForm();
+        $edit_form = $this->container->get("evocatio_media.file.form_handler")->createNewForm();
         return array("edit_form" => $edit_form->createView());
     }
 
@@ -68,7 +68,7 @@ class FileController extends ContainerAware {
      * @Template
      */
     public function addAction() {
-        $edit_form = $this->container->get("evocatio_media.file.form_handler")->createMultipleNewForm();
+        $edit_form = $this->container->get("evocatio_media.file.form_handler")->createNewForm();
         $request = $this->container->get('request_modifier')->setRequest($this->container->get("Request"))
                 ->slug(array("title"))
                 ->upload()
@@ -78,7 +78,7 @@ class FileController extends ContainerAware {
 
 
         if ($edit_form->isValid()) {
-            $this->container->get("evocatio_media.file.persistence_handler")->saveMultiple($edit_form->get("files")->getData());
+            $this->container->get("evocatio_media.file.persistence_handler")->batchSave($edit_form->get("files")->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate(str_replace('add', "list", $this->container->get("request")->get("_route")), array(
