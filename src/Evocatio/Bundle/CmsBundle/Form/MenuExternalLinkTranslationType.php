@@ -16,9 +16,6 @@ class MenuExternalLinkTranslationType extends AbstractType {
                     'property_path' => 'link'
                     ,'label' => false
                 ))
-//                ->add('InternalLink', new \Evocatio\Bundle\CoreBundle\Form\InternalLinkType, array(
-//                    'property_path' => 'link'
-//                ))
                 ->add('trans_lang', null, array(
                     "property" => "name"
                     , "label" => false

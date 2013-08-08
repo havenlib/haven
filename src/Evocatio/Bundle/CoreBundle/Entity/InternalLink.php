@@ -11,8 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class InternalLink extends Link {
-
-
+    
     /**
      * @ORM\Column(name="route", type="string", length=128)
      */
@@ -67,7 +66,7 @@ class InternalLink extends Link {
      * @return array 
      */
     public function getRouteParams() {
-        return $this->_route_params;
+        return unserialize($this->_route_params);
     }
 
 }

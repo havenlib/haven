@@ -32,7 +32,9 @@ class PageType extends AbstractType {
 //                    need to put the data class to have default from the entity
 //                    , 'empty_data' => "\Evocatio\Bundle\CmsBundle\Entity\PageTranslation"
                 ))
-                ->add('template')
+                ->add('template', null, array(
+                    "property" => "name"
+                ))
                 ->add('tpl', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
                     'label' => 'change.template'

@@ -5,13 +5,14 @@ namespace Evocatio\Bundle\CmsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Evocatio\Bundle\CmsBundle\Repository\PageRepository;
 
-class MenuExternalLinkType extends AbstractType {
+class MenuInternalLinkType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('translations', 'translation', array(
-                    'type' => new MenuExternalLinkTranslationType()
+                    'type' => new MenuInternalLinkTranslationType()
                     , 'allow_add' => true
                     , "label" => false
                     , 'prototype' => true
@@ -20,6 +21,15 @@ class MenuExternalLinkType extends AbstractType {
                     , 'options' => array(
                         'label' => false
                     )
+                ))
+                ->add("page", "entity", array(
+                    "property" => "title"
+                    ,"class" => "Evocatio\Bundle\CmsBundle\Entity\Page"
+                    , "label" => false
+                    , "mapped" => false
+                    , 'query_builder' => function(PageRepository $er) {
+                        return $er->getQueryBuilder();
+                    }
                 ))
                 ->add('save', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
@@ -35,7 +45,7 @@ class MenuExternalLinkType extends AbstractType {
     }
 
     public function getName() {
-        return 'evocatio_bundle_cmsbundle_menuexternallinktype';
+        return 'evocatio_bundle_cmsbundle_menuinternallinktype';
     }
 
 }

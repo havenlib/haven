@@ -99,6 +99,7 @@ header{
         margin-top: 28px;       margin-top: 1.75rem; 
         margin-bottom: 0;
     }
+}
     .menu{
         margin-top: 0;
         margin-bottom: 0;
@@ -113,11 +114,17 @@ header{
             margin-right: 24px;            margin-right: 1.5rem;
             color: @evorange;
             li{
-                display: none;
+              //  display: none;
             }
         }
+            .active{
+            > a:visited, a:link{
+                    color: red;   
+                }
+            }
     }
-}
+
+
 
 footer{
  //   background-color: #ffaaff;
@@ -161,5 +168,18 @@ footer{
         vertical-align: right;
     }
 }
-
+ul.list{
+    text-align: left;
+    display: inline-block;
+    border-bottom: 1px solid black;
+    padding-bottom: 16px;    margin-bottom:  1em;
+    .links {
+            float: right;
+        li{
+            background-color: #eee;
+            display: inline-block;
+            padding: 0 @small-padding;
+        }
+    }
+} 
 

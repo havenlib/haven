@@ -12,7 +12,15 @@
     </div>
 {% endblock inside_header %}
 {% block inside_main %} 
-
+{{ dump(app.request.attributes) }}
+<<<
+ {{ dump(app.request| keys) }}
+>>>
+{{ render(controller('OwnerSiteBundle:Menu:buildMenu', {
+        'root': 1
+        ,'depth': 3
+        ,'current_menu_id' : app.request.attributes.get('current_menu_id')
+    })) }}
         <div id="blue-bar">&nbsp;</div>
     <div id="sidebar" class="area">
 {#{ CHelp.fill_area(entity, "sidebar", edit_form is defined?edit_form:null , language is defined?language:"") }#}

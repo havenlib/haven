@@ -42,6 +42,14 @@ class Menu extends NestedSetMappedBase {
         return $this->getTranslated("Link", $language);
     }
 
+    public function getSlug($language = null) {
+        return $this->getTranslated("Slug", $language);
+    }
+
+    public function getFullSlug($language = null) {
+        return $this->getTranslated("FullSlug", $language);
+    }
+
     /**
      * Constructor
      */

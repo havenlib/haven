@@ -4,6 +4,7 @@ namespace Evocatio\Bundle\CmsBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
 // Sensio includes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -57,16 +58,18 @@ class MenuController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{create}/menu/{parent}" ,defaults={"parent" = null})
+     * @Route("/admin/{create}/menu/{parent}/{type}" ,defaults={"parent" = null, "type" = null})
      * @Method("GET")
      * @Template
      */
-    public function createAction($parent) {
+    public function createAction($parent, $type) {
 
         if (is_null($parent)) {
             $edit_form = $this->container->get("menu.form_handler")->createNewForm();
+        } else if (!empty($type)) {
+            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm($type);
         } else {
-            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm("\Evocatio\Bundle\CmsBundle\Form\MenuExternalLinkType");
+            throw new \Exception("can't execute add child with no type");
         }
 
         return array("edit_form" => $edit_form->createView()
@@ -74,35 +77,61 @@ class MenuController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{create}/menu/{parent}" ,defaults={"parent" = null})
+     * @Route("/admin/{create}/menu/{parent}/{type}" ,defaults={"parent" = null, "type" = null})
      * @Method("POST")
      * @Template
      */
-    public function addAction($parent) {
-//        echo '<pre>';
-//        print_r(get_class_methods($this->container->get("Request")));
-//        echo '</pre>';
-//        die();
+    public function addAction($parent, $type) {
+        $post_data = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
+                        ->slug(array("name"))
+                        ->getRequest()->request->all();
+
         if (is_null($parent)) {
             $edit_form = $this->container->get("menu.form_handler")->createNewForm();
         } else {
-            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm("\Evocatio\Bundle\CmsBundle\Form\MenuExternalLinkType");
+            switch (key($post_data)) {
+                case "evocatio_bundle_cmsbundle_menuexternallinktype":
+                    $type = "external";
+                    $edit_form = $this->container->get("menu.form_handler")->createAddChildForm("external");
+                    break;
+                case "evocatio_bundle_cmsbundle_menuinternallinktype":
+                    $type = "internal";
+                    $edit_form = $this->container->get("menu.form_handler")->createAddChildForm("internal");
+                    break;
+                default : throw new \Exception("Unknown form in Menu Controller");
+                    break;
+            }
         }
 
-        $edit_form->bind($this->container->get("request")->get("evocatio_bundle_cmsbundle_menutype"));
-
+        $edit_form->bind(current($post_data));
 
         if ($edit_form->isValid()) {
             if (is_null($parent)) {
                 $this->container->get("menu.persistence_handler")->createRootMenu($edit_form->getData());
+            } else if (!empty($type)) {
+                switch ($type) {
+                    case "external" :
+                        $edit_form->getData()->setType('external');
+                        $this->container->get("menu.persistence_handler")->createChildMenuForUrl($edit_form->getData(), $parent);
+                        break;
+                    case "internal" :
+                        $edit_form->getData()->setType('internal');
+                        $page = $this->container->get("page.read_handler")->get($edit_form->get("page")->getData()->getId());
+
+                        $this->container->get("menu.persistence_handler")->createChildMenuForPage($edit_form->getData(), $parent, $page);
+                        break;
+                    default :
+                        $edit_form = $this->container->get("menu.form_handler")->createNewForm();
+                        break;
+                }
             } else {
-                $this->container->get("menu.persistence_handler")->createChildMenu($edit_form->getData(), $parent);
+                throw new \Exception("can't execute add child with no type");
             }
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate(str_replace('add', "edit", $this->container->get("request")->get("_route")), array(
-                        'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
-                        , 'id' => $edit_form->getData()->getId())));
+                                'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
+                                , 'id' => $edit_form->getData()->getId())));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
@@ -124,13 +153,15 @@ class MenuController extends ContainerAware {
      */
     public function editAction($id) {
         $entity = $this->container->get('menu.read_handler')->get($id);
-        
+
+//        echo $entity->getNode()->getType();
+//        die();
         if (!$entity->hasParent()) {
             $edit_form = $this->container->get("menu.form_handler")->createEditForm($id);
         } else {
-            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm("\Evocatio\Bundle\CmsBundle\Form\MenuExternalLinkType", $id);
+            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm($entity->getNode()->getType(), $id);
         }
-//        $edit_form = $this->container->get("menu.form_handler")->createEditForm($id);
+
         return array(
             'entity' => $edit_form->getData(),
             'edit_form' => $edit_form->createView(),
@@ -145,24 +176,51 @@ class MenuController extends ContainerAware {
      */
     public function updateAction($id) {
         $entity = $this->container->get('menu.read_handler')->get($id);
-        
+        $post_data = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
+                        ->slug(array("name"))
+                        ->getRequest()->request->all();
+
         if (!$entity->hasParent()) {
             $edit_form = $this->container->get("menu.form_handler")->createEditForm($id);
         } else {
-            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm("\Evocatio\Bundle\CmsBundle\Form\MenuExternalLinkType", $id);
+            $edit_form = $this->container->get("menu.form_handler")->createAddChildForm($entity->getNode()->getType(), $id);
         }
-        
+
         $delete_form = $this->container->get("menu.form_handler")->createDeleteForm($entity->getId());
 
-        $edit_form->bind($this->container->get("request")->get("evocatio_bundle_cmsbundle_menutype"));
+        $edit_form->bind(current($post_data));
 
         if ($edit_form->isValid()) {
-            $this->container->get("menu.persistence_handler")->save($edit_form->getData());
+            $type = $entity->getNode()->getType();
+            if (!$entity->hasParent()) {
+                $this->container->get("menu.persistence_handler")->createRootMenu($edit_form->getData());
+            } else if (!empty($type)) {
+                $parent = $entity->getParent();
+                switch ($type) {
+                    case "external" :
+//                        $edit_form->getData()->setType('external');
+                        $this->container->get("menu.persistence_handler")->save($edit_form->getData());
+                        break;
+                    case "internal" :
+//                        $edit_form->getData()->setType('internal');
+//                        echo 'page: ' . get_class($edit_form);
+//                        die('laksdjf');
+                        $page = $this->container->get("page.read_handler")->get($edit_form->get("page")->getData()->getId());
+                        $this->container->get("menu.persistence_handler")->save($edit_form->getData(), $page);
+                        break;
+                    default :
+                        $edit_form = $this->container->get("menu.form_handler")->createNewForm();
+                        break;
+                }
+            } else {
+                throw new \Exception("can't execute add child with no type");
+            }
+
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate(str_replace('edit', "update", $this->container->get("request")->get("_route")), array(
-                        'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
-                        , 'id' => $edit_form->getData()->getId())));
+                                'edit' => $this->container->get('translator')->trans("edit", array(), "routes")
+                                , 'id' => $edit_form->getData()->getId())));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "update.error");
@@ -187,9 +245,45 @@ class MenuController extends ContainerAware {
         $this->container->get("menu.persistence_handler")->delete($form_data['id']);
 
         return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
-                    'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+                            'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
+    }
+
+    public function showMenuLinkAction($slug) {
+//         @TODO remove the automatique finder, make a query with not just slug but slug and locale, so that a french and an english page can have the same slug
+        $locale = $this->container->get("request")->get("_locale");
+
+        $entity = $this->container->get("menu.read_handler")->getBySlugForLanguage($slug, $locale);
+
+        if (!$entity) {
+            throw new NotFoundHttpException('entity.not.found');
+        }
+
+        if ("internal" == $entity->getType()) {
+            $temp = $this->container->get("router")->getRouteCollection()->get($entity->getLink()->getRoute())->getDefaults();
+            $path["_controller"] = $temp["_controller"];
+            $subRequest = $this->container->get('request')->duplicate($this->container->get("request")->query->All(), $this->container->get("request")->request->All(), array_merge($entity->getLink()->getRouteParams(), $path, array("current_menu_id" => $entity->getId())));
+
+            return $this->container->get('http_kernel')->handle($subRequest, \Symfony\Component\HttpKernel\HttpKernelInterface::SUB_REQUEST);
+
+//        return $kernel->forward($entity->getLink()->getRoute(), $entity->getLink()->getParams());
+        }
+    }
+
+    /**
+     * @Route("/menu/build/{root}/{depth}")
+     * @Template
+     * @param type $root
+     * @param type $drillDown
+     */
+    public function buildMenuAction($root, $depth = null) {
+        $entity = $this->container->get('menu.read_handler')->get($root);
+
+//        $list = $entity->getDescendants();
+
+//        foreach ($list as $item) {
+//            echo "<p>" . ($item->getNode()->getFullSlug()) . "</p>";
+//        }
+        return array("entity" => $entity, "depth" => $depth);
     }
 
 }
-
-?>

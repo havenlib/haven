@@ -7,6 +7,8 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\FormFactory;
 use Evocatio\Bundle\CmsBundle\Entity\Menu as Entity;
 use Evocatio\Bundle\CmsBundle\Form\MenuType as Type;
+use Evocatio\Bundle\CmsBundle\Form\MenuExternalLinkType as External;
+use Evocatio\Bundle\CmsBundle\Form\MenuInternalLinkType as Internal;
 
 class MenuFormHandler {
 
@@ -65,11 +67,21 @@ class MenuFormHandler {
      * @return form
      */
     public function createAddChildForm($type, $id = null) {
-        if(!empty($id)){
-            $entity = $this->read_handler->get($id);
-            return $this->form_factory->create(new $type(), $entity->getNode());
+        $entity = null;
+        if (!empty($id)) {
+            $entity = $this->read_handler->get($id)->getNode();
         }
-        return $this->form_factory->create(new $type());
+        switch ($type) {
+            case "internal":
+                $form = $this->form_factory->create(new Internal, $entity);
+                return $form;
+                break;
+            case "external":
+                $form = $this->form_factory->create(new External, $entity);
+                return $form;
+                break;
+        }
+        return $form;
     }
 
 }

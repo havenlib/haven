@@ -1497,7 +1497,24 @@ class NodeWrapper implements Node
                 (!$this->hasManyRoots() || ($this->getRootValue() == $node->getRootValue())));
     }
 
+    /**
+     * determines if this node is an ancestor of the given node
+     *
+     * @param integer
+     *
+     * @return bool
+     */
+    public function isAncestorOfNodeId($nodeId)
+    {
+        foreach($this->getDescendants() as $child){
+            if($child->getId() == $nodeId){
+                return true;
+            }
+        }
+        return false;
 
+    }
+    
     /**
      * determines if this node is equal to the given node
      *

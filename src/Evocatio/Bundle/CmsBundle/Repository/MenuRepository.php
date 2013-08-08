@@ -26,16 +26,44 @@ class MenuRepository extends EntityRepository {
 
         return $this->query_builder->getQuery()->getResult();
     }
+    public function findByLocalizedSlug($slug, $language) {
+//        $this->query_builder = $this->createBaseQueryBuilder();
+        $this->filterByLang($language, $this->query_builder);
+        $this->filterBySlug($slug, $this->query_builder);
+//        $this->filterTranslationByStatus(PageTranslation::STATUS_PUBLISHED, $this->query_builder);
 
-    public function createBaseQueryBuilder() {
+        return $this->query_builder->getQuery()->getOneOrNullResult();
+    }
+    
+    public function getQueryBuilder() {
 
-        ;
+        return $this->query_builder;
     }
 
     private function filterByRoot() {
 
         $this->query_builder->andWhere("m.id = m.root");
 
+        return $this;
+    }
+
+    private function filterBySlug($slug, $qb = null) {
+//        $this->query_builder = ($qb) ? $qb : $this->createBaseQueryBuilder();
+
+        $this->query_builder->andWhere("t.slug = :slug");
+        $this->query_builder->setParameter("slug", $slug);
+
+        return $this;
+    }
+
+    private function filterByLang($lang, $qb = null) {
+//        $this->query_builder = ($qb) ? $qb : $this->createBaseQueryBuilder();
+
+        $this->query_builder
+//                ->leftJoin("t.trans_lang", "tl")
+                ->andWhere("tl.symbol= :language")
+                ->setParameter("language", $lang)
+        ;
         return $this;
     }
 

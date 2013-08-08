@@ -11,8 +11,9 @@ class InternalLinkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('route')
-            ->add('route_params')
+            ->add('slug')
+//            ->add('route')
+//            ->add('route_params')
         ;
     }
 

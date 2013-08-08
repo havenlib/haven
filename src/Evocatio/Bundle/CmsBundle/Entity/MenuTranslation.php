@@ -23,6 +23,12 @@ class MenuTranslation extends TranslationMappedBase {
     protected $id;
 
     /**
+     * @var string $slug
+     * @ORM\Column(name="slug", type="string", length=1024, nullable=true)
+     */
+    private $slug;    
+
+    /**
      * @var string
      *
      * @ORM\OneToOne(targetEntity="\Evocatio\Bundle\CoreBundle\Entity\Link", cascade={"persist", "remove"})
@@ -118,5 +124,35 @@ class MenuTranslation extends TranslationMappedBase {
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return MenuTranslation
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        $array = explode("/", $this->slug);
+        
+        return end($array);
+    }
+
+    public function getFullSlug()
+    {
+        return $this->slug;
     }
 }
