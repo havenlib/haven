@@ -102,9 +102,9 @@ class FileController extends ContainerAware {
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get('file.read_handler')->get($id);
-        $edit_form = $this->container->get("file.form_handler")->createEditForm($entity->getId());
-        $delete_form = $this->container->get("file.form_handler")->createDeleteForm($entity->getId());
+        $entity = $this->container->get('evocatio_media.file.read_handler')->get($id);
+        $edit_form = $this->container->get("evocatio_media.file.form_handler")->createEditForm($entity->getId());
+        $delete_form = $this->container->get("evocatio_media.file.form_handler")->createDeleteForm($entity->getId());
 
         return array(
             'entity' => $entity,
@@ -120,17 +120,18 @@ class FileController extends ContainerAware {
      * @Template
      */
     public function updateAction($id) {
-        $entity = $this->container->get('file.read_handler')->get($id);
-        $edit_form = $this->container->get("file.form_handler")->createEditForm($entity->getId());
-        $delete_form = $this->container->get("file.form_handler")->createDeleteForm($entity->getId());
+        $entity = $this->container->get('evocatio_media.file.read_handler')->get($id);
+        $edit_form = $this->container->get("evocatio_media.file.form_handler")->createEditForm($entity->getId());
+        $delete_form = $this->container->get("evocatio_media.file.form_handler")->createDeleteForm($entity->getId());
 
 
         $edit_form->bind($this->container->get('Request'));
         if ($edit_form->isValid()) {
-            $this->container->get("file.persistence_handler")->save($edit_form->getData());
+            $this->container->get("evocatio_media.file.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_file_list', array(), array('list')));
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('update', "list", $this->container->get("request")->get("_route")), array(
+                        'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
         $this->container->get("session")->getFlashBag()->add("error", "update.error");
 

@@ -29,7 +29,23 @@ class FileFormHandler {
 
     public function createEditForm($id) {
         $entity = $this->read_handler->get($id);
-        return $form = $this->doCreate('Evocatio\Bundle\MediaBundle\Form\FileType', $entity);
+
+        switch (get_class($entity)) {
+            case "Evocatio\Bundle\MediaBundle\Entity\ImageFile":
+                $form_class = "Evocatio\Bundle\MediaBundle\Form\ImageFileType";
+                break;
+            case "Evocatio\Bundle\MediaBundle\Entity\ApplicationFile":
+                $form_class = "Evocatio\Bundle\MediaBundle\Form\ApplicationFileType";
+                break;
+            case "Evocatio\Bundle\MediaBundle\Entity\AudioFile":
+                $form_class = "Evocatio\Bundle\MediaBundle\Form\AudioFileType";
+                break;
+            default:
+                $form_class = "Evocatio\Bundle\MediaBundle\Form\FileType";
+                break;
+        }
+
+        return $form = $this->doCreate($form_class, $entity);
     }
 
     public function createNewForm() {
