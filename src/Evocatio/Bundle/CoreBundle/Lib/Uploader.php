@@ -28,6 +28,7 @@ class Uploader {
 
             $this->changeUploadsToFiles($filesT, $requestT);
         }
+
 //           print_r($filesT);die();
 //        echo "return values ======>";
 //        print_r($requestT);
@@ -50,6 +51,7 @@ class Uploader {
         }
 
         foreach ($arrayFile as $key => &$child) {
+
             if (is_array($child)) {
                 $this->changeUploadsToFiles($child, $arrayRequest[$key]);
 //                unset($child);
@@ -60,7 +62,7 @@ class Uploader {
     private function transformUploadedFileToFileArray($file) {
         $upload_dir = $this->upload_dir;
         array_walk_recursive($file, function(&$item, &$key) use ($upload_dir) {
-                    if ($item instanceof UploadedFile) {
+                    if ($item instanceof UploadedFile /*&& !$item->getError()*/) {
                         $on_rep_name = uniqid() . "." . $item->guessExtension();
                         $array = Array
                             (
