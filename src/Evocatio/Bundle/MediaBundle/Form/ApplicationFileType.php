@@ -15,35 +15,26 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class UploadType extends AbstractType {
+class ApplicationFileType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('files', 'collection', array(
-                    "type" => new UploadedFileType()
-                    , 'allow_delete' => true
-                    , 'allow_add' => true
-                    , 'by_reference' => false
-                ))
-                ->add('uploads', 'file', array(
-                    "attr" => array(
-                        "multiple" => "multiple",
-                    )
-                    , "mapped" => false
-                ))
+                ->add('name', 'text', array("required" => false))
                 ->add('save', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
-                    'label' => 'upload.files'
+                    'label' => 'save.file'
                 ))
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
-        $resolver->setDefaults(array());
+        $resolver->setDefaults(array(
+            'data_class' => 'Evocatio\Bundle\MediaBundle\Entity\ApplicationFile'
+        ));
     }
 
     public function getName() {
-        return 'evocatio_mediabundle_uploadtype';
+        return 'evocatio_mediabundle_applicationfiletype';
     }
 
 }
