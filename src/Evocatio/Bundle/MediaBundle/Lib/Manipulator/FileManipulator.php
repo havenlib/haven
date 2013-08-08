@@ -44,7 +44,6 @@ class FileManipulator {
     }
 
     private function transformToApplication($entity) {
-        list($width, $height) = getimagesize($this->root_dir . "/" . $entity->getPathName());
         return $entity = $this->merge($entity, new \Evocatio\Bundle\MediaBundle\Entity\ApplicationFile());
     }
 
