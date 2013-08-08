@@ -40,6 +40,9 @@ class FileFormHandler {
             case "Evocatio\Bundle\MediaBundle\Entity\AudioFile":
                 $form_class = "Evocatio\Bundle\MediaBundle\Form\AudioFileType";
                 break;
+            case "Evocatio\Bundle\MediaBundle\Entity\UnknowFile":
+                $form_class = "Evocatio\Bundle\MediaBundle\Form\UnknowFileType";
+                break;
             default:
                 $form_class = "Evocatio\Bundle\MediaBundle\Form\FileType";
                 break;

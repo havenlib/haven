@@ -20,7 +20,7 @@ class UploadType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('files', 'collection', array(
-                    "type" => new FileType()
+                    "type" => new UploadedFileType()
                     , 'allow_delete' => true
                     , 'allow_add' => true
                     , 'by_reference' => false
