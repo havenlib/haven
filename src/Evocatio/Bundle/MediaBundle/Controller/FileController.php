@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use \Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class FileController extends ContainerAware {
 
@@ -146,25 +147,6 @@ class FileController extends ContainerAware {
     }
 
     /**
-     * Set a file entity state to inactive.
-     *
-     * @Route("/admin/file/{id}/state", name="EvocatioWebBundle_FileToggleState")
-     * @Method("GET")
-     */
-    public function toggleStateAction($id) {
-        $em = $this->container->get('doctrine')->getEntityManager();
-        $entity = $em->find('EvocatioWebBundle:File', $id);
-        if (!$entity) {
-            throw new NotFoundHttpException("File non trouvé");
-        }
-        $entity->setStatus(!$entity->getStatus());
-        $em->persist($entity);
-        $em->flush();
-
-        return new RedirectResponse($this->container->get("request")->headers->get('referer'));
-    }
-
-    /**
      * @Route("/admin/delete/file")
      * @Method("POST")
      */
@@ -177,4 +159,43 @@ class FileController extends ContainerAware {
                     'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }
 
+    /**
+     * @Route("/admin/download/file/{id}")
+     * @Method("POST")
+     */
+    public function downloadAction($id) {
+        $send_file = $this->container->get("evocatio_media.file.read_handler")->get($id);
+        $path = $this->container->get('kernel')->getRootDir() . "/" . $send_file->getPathName();
+
+        $content = file_get_contents($path);
+        ob_clean();
+
+        $response = new Response();
+        $response->headers->set('Content-Type', $send_file->getMimeType());
+        $response->headers->set('Content-Length', $send_file->getSize());
+        $response->setContent($content);
+        $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $send_file->getName(), "DownloadedFile");
+        $response->headers->set('Content-Disposition', $d);
+
+        return $response;
+    }
+
+//    /**
+//     * Set a file entity state to inactive.
+//     *
+//     * @Route("/admin/file/{id}/state", name="EvocatioWebBundle_FileToggleState")
+//     * @Method("GET")
+//     */
+//    public function toggleStateAction($id) {
+//        $em = $this->container->get('doctrine')->getEntityManager();
+//        $entity = $em->find('EvocatioWebBundle:File', $id);
+//        if (!$entity) {
+//            throw new NotFoundHttpException("File non trouvé");
+//        }
+//        $entity->setStatus(!$entity->getStatus());
+//        $em->persist($entity);
+//        $em->flush();
+//
+//        return new RedirectResponse($this->container->get("request")->headers->get('referer'));
+//    }
 }
