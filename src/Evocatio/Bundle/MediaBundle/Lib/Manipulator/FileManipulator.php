@@ -24,6 +24,10 @@ class FileManipulator {
     public function transformTo($entity) {
         if (preg_match("/image/", $entity->getMimeType())) {
             return $this->transformToImage($entity);
+        } elseif (preg_match("/application/", $entity->getMimeType())) {
+            return $this->transformToApplication($entity);
+        } elseif (preg_match("/audio/", $entity->getMimeType())) {
+            return $this->transformToAudio($entity);
         } else {
             return $this->transformToUnknow($entity);
         }
@@ -37,6 +41,14 @@ class FileManipulator {
         $entity->setHeight($height);
 
         return $entity;
+    }
+
+    private function transformToApplication($entity) {
+        return $entity = $this->merge($entity, new \Evocatio\Bundle\MediaBundle\Entity\ApplicationFile());
+    }
+
+    private function transformToAudio($entity) {
+        return $entity = $this->merge($entity, new \Evocatio\Bundle\MediaBundle\Entity\AudioFile());
     }
 
     private function transformToUnknow($entity) {

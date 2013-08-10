@@ -15,15 +15,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FileType extends AbstractType {
+class UploadedFileType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
+                ->add('mimeType', 'text', array("required" => false))
+                ->add('pathName', 'text', array("required" => false))
+                ->add('name', 'text', array("required" => false))
                 ->add('fileName', 'text', array("required" => false))
-                ->add('save', 'submit', array(
-                    'attr' => array('class' => 'btn save-btn'),
-                    'label' => 'save.faq'
-                ))
+                ->add('size', 'text', array("required" => false))
+//                ->add('upload', 'file', array(
+//                    "mapped" => false
+//                ))
         ;
     }
 
@@ -34,7 +37,7 @@ class FileType extends AbstractType {
     }
 
     public function getName() {
-        return 'evocatio_mediabundle_filetype';
+        return 'evocatio_mediabundle_uploadedfiletype';
     }
 
 }
