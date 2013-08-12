@@ -1,5 +1,8 @@
 <ul>
     <li>
+        {% render(controller("EvocatioMediaBundle:ImageFile:show", {"id": entity.id})) %}
+    </li>
+    <li>
         <a href="{{ path('owner_site_imagefile_resize', {'id': entity.id}) }}">resize</a>
     </li>
     <li>

@@ -43,7 +43,7 @@ class ImageFileController extends ContainerAware {
      * @Route("/admin/resize/image/{id}")
      * @return RedirectResponse
      * @Method("POST")
-     * @Template$src_h
+     * @Template
      */
     public function perfomResizingAction($id) {
         $entity = $this->container->get('evocatio_media.file.read_handler')->get($id);
@@ -72,6 +72,20 @@ class ImageFileController extends ContainerAware {
         );
 
         return new Response($this->container->get('templating')->render($template, $params));
+    }
+    
+    /**
+     * @Route("/admin/show/image/{id}")
+     * @return RedirectResponse
+     * @Method("GET")
+     * @Template
+     */
+    public function showAction($id){
+        $entity = $this->container->get('evocatio_media.file.read_handler')->get($id);
+
+        return array(
+            'entity' => $entity
+                );
     }
 
 }
