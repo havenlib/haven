@@ -17,11 +17,10 @@
                 <td>
                     <a class="btn up pull-left" onclick="ranking(this, 'tr');"><img src="/images/arrow_up.png" /></a>
                     <a class="btn down pull-left" onclick="ranking(this, 'tr');"><img src="/images/arrow_down.png" /></a>
-
                 </td>
                 <td>
-                    {% include ['OwnerSiteBundle:File:action/' ~ entity.type ~ '.html.twig'
-                                ,'OwnerSiteBundle:File:action/default.html.twig'] %}
+                    {% include ['OwnerSiteBundle:File:list/' ~ entity.type ~ '.html.twig'
+                                ,'OwnerSiteBundle:File:list/default.html.twig'] %}
                 </td>
                 </tr>
         {% else %}

@@ -33,6 +33,12 @@ class ImageFileFormHandler {
         return $form = $this->doCreate('Evocatio\Bundle\MediaBundle\Form\ResizeType', array('width' => $entity->getWidth(), 'height' => $entity->getHeight()));
     }
 
+    public function createCropForm($id) {
+        $entity = $this->read_handler->get($id);
+
+        return $form = $this->doCreate('Evocatio\Bundle\MediaBundle\Form\CropType', array('width' => $entity->getWidth(), 'height' => $entity->getHeight()));
+    }
+
     public function createNewForm() {
         return $form = $this->doCreate('Evocatio\Bundle\MediaBundle\Form\UploadType');
     }

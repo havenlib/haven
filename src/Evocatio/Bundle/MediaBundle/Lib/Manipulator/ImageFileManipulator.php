@@ -21,6 +21,43 @@ class ImageFileManipulator {
         $this->upload_dir = $upload_dir;
     }
 
+    public function crop($entity, $width, $height, $x, $y) {
+        $image = $this->imageCreateFrom($entity);
+        $newPathName = str_replace($entity->getFileName(), $newFileName = str_replace(strstr($entity->getFileName(), ".", true), uniqid(), $entity->getFileName()), $entity->getPathName());
+
+        $newImage = imagecreatetruecolor($width, $height);
+
+        //Keep png file transparency
+        if ($entity->getMimeType() == "image/png") {
+            imagealphablending($newImage, false);
+            imagesavealpha($newImage, true);
+            imagefilledrectangle($newImage, 0, 0, $width, $height, $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127));
+        }
+
+        $resizeSuccess = imagecopyresampled($newImage, $image, 0, 0, $x, $y, $width, $height, $entity->getWidth(), $entity->getHeight());
+
+        if ($resizeSuccess) {
+            $createSuccess = $this->createPhysicalFile($entity, $newImage, $newPath = $this->root_dir . "/" . $newPathName, 100);
+            if ($createSuccess) {
+                $newEntity = new \Evocatio\Bundle\MediaBundle\Entity\ImageFile();
+                $newEntity->setPathName($newPathName);
+                $newEntity->setName($name = $width . 'x' . $height . "_" . $entity->getName());
+                $newEntity->setWidth($width);
+                $newEntity->setHeight($height);
+                $newEntity->setFileName($newFileName);
+                $newEntity->setMimeType($entity->getMimeType());
+                $newEntity->setAlt($entity->getAlt());
+                $newEntity->setSize(filesize($newPath));
+
+                return $newEntity;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     public function resize($entity, $width, $height) {
         $image = $this->imageCreateFrom($entity);
         $newPathName = str_replace($entity->getFileName(), $newFileName = str_replace(strstr($entity->getFileName(), ".", true), uniqid(), $entity->getFileName()), $entity->getPathName());
@@ -31,11 +68,10 @@ class ImageFileManipulator {
         if ($entity->getMimeType() == "image/png") {
             imagealphablending($newImage, false);
             imagesavealpha($newImage, true);
-            $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127);
-            imagefilledrectangle($newImage, 0, 0, $width, $height, $transparent);
+            imagefilledrectangle($newImage, 0, 0, $width, $height, $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127));
         }
 
-        $resizeSuccess = imagecopyresampled($newImage, $image, 0, 0, 0, 0, $width, $height, $entity->getWidth(), $entity->getHeight());
+        $resizeSuccess = imagecopyresampled($newImage, $image, 0, 0, $x, $y, $width, $height, $entity->getWidth(), $entity->getHeight());
 
         if ($resizeSuccess) {
             $createSuccess = $this->createPhysicalFile($entity, $newImage, $newPath = $this->root_dir . "/" . $newPathName, 100);

@@ -1,9 +1,12 @@
 <ul>
     <li>
-        <img width="{{entity.width }}" height="{{ entity.height }}" alt="{{ entity.alt }}" src="{{path("owner_site_imagefile_show", {"id": entity.id})}}" />
+        <img width="{{entity.width / 3 }}" height="{{ entity.height / 3 }}" alt="{{ entity.alt }}" src="{{path("owner_site_imagefile_show", {"id": entity.id})}}" />
     </li>
     <li>
         <a href="{{ path('owner_site_imagefile_resize', {'id': entity.id}) }}">resize</a>
+    </li>
+    <li>
+        <a href="{{ path('owner_site_imagefile_crop', {'id': entity.id}) }}">crop</a>
     </li>
     <li>
         <a href="{{ path('owner_site_file_edit', {'id': entity.id}) }}">edit</a>
