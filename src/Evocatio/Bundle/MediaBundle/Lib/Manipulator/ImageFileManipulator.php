@@ -25,7 +25,17 @@ class ImageFileManipulator {
         $image = $this->imageCreateFrom($entity);
         $newPathName = str_replace($entity->getFileName(), $newFileName = str_replace(strstr($entity->getFileName(), ".", true), uniqid(), $entity->getFileName()), $entity->getPathName());
 
-        $resizeSuccess = imagecopyresampled($newImage = imagecreatetruecolor($width, $height), $image, 0, 0, 0, 0, $width, $height, $entity->getWidth(), $entity->getHeight());
+        $newImage = imagecreatetruecolor($width, $height);
+
+        //Keep png file transparency
+        if ($entity->getMimeType() == "image/png") {
+            imagealphablending($newImage, false);
+            imagesavealpha($newImage, true);
+            $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127);
+            imagefilledrectangle($newImage, 0, 0, $width, $height, $transparent);
+        }
+
+        $resizeSuccess = imagecopyresampled($newImage, $image, 0, 0, 0, 0, $width, $height, $entity->getWidth(), $entity->getHeight());
 
         if ($resizeSuccess) {
             $createSuccess = $this->createPhysicalFile($entity, $newImage, $newPath = $this->root_dir . "/" . $newPathName, 100);
