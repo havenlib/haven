@@ -73,19 +73,27 @@ class ImageFileController extends ContainerAware {
 
         return new Response($this->container->get('templating')->render($template, $params));
     }
-    
+
     /**
      * @Route("/admin/show/image/{id}")
-     * @return RedirectResponse
      * @Method("GET")
      * @Template
      */
-    public function showAction($id){
-        $entity = $this->container->get('evocatio_media.file.read_handler')->get($id);
+    public function showAction($id) {
+        $send_file = $this->container->get("evocatio_media.file.read_handler")->get($id);
+        $path = $this->container->get('kernel')->getRootDir() . "/" . $send_file->getPathName();
 
-        return array(
-            'entity' => $entity
-                );
+        $content = file_get_contents($path);
+        ob_clean();
+
+        $response = new Response();
+        $response->headers->set('Content-Type', $send_file->getMimeType());
+        $response->headers->set('Content-Length', $send_file->getSize());
+        $response->setContent($content);
+        $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $send_file->getName(), "DownloadedFile");
+        $response->headers->set('Content-Disposition', $d);
+
+        return $response;
     }
 
 }
