@@ -20,11 +20,9 @@
 
                 </td>
                 <td>
-                    <a href="{{ path('owner_site_file_edit', {'id': entity.id}) }}">edit</a>
-                    <form action="{{ path('owner_site_file_delete', {'id': entity.id}) }}" method="post">
-                        {{ form_widget(delete_forms[entity.getId()]) }}
-                        </form>
-                    </td>
+                    {% include ['OwnerSiteBundle:File:action/' ~entity.type~ '.html.twig'
+                                ,'OwnerSiteBundle:File:action/default.html.twig'] %}
+                </td>
                 </tr>
         {% else %}
                 <tr>

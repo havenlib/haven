@@ -15,3 +15,10 @@ services:
       class:     Evocatio\Bundle\MediaBundle\Lib\Manipulator\FileManipulator
       arguments:    [%kernel.root_dir%, %secure_upload_dir%]
     
+  evocatio_media.image_file.form_handler:
+      class:     Evocatio\Bundle\MediaBundle\Lib\Handler\ImageFileFormHandler
+      arguments: ["@evocatio_media.file.read_handler", "@security.context", "@form.factory"]
+      
+  evocatio_media.image_file.manipulator:
+      class:     Evocatio\Bundle\MediaBundle\Lib\Manipulator\ImageFileManipulator
+      arguments:    [%kernel.root_dir%, %secure_upload_dir%]

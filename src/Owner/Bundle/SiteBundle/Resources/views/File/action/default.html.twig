@@ -1,0 +1,15 @@
+<ul>
+    <li>
+        <a href="{{ path('owner_site_file_edit', {'id': entity.id}) }}">edit</a>
+    </li>
+    <li>
+        <form action="{{ path('owner_site_file_delete') }}" method="post">
+            {{ form_widget(delete_forms[entity.getId()]) }}
+        </form>
+    </li>
+    <li>
+        <form action="{{ path('owner_site_file_download', {'id': entity.id}) }}" method="post">
+            <button type="submit">download</button>
+        </form>
+    </li>
+</ul>    
