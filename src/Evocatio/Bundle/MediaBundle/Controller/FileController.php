@@ -166,7 +166,7 @@ class FileController extends ContainerAware {
     public function downloadAction($id) {
         $send_file = $this->container->get("evocatio_media.file.read_handler")->get($id);
         $path = $this->container->get('kernel')->getRootDir() . "/" . $send_file->getPathName();
-
+        
         $content = file_get_contents($path);
         ob_clean();
 

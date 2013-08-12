@@ -178,6 +178,10 @@ class File {
         return $this->name;
     }
 
+    public function getType() {
+        return strstr($this->getMimeType(), '/', true);
+    }
+
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
