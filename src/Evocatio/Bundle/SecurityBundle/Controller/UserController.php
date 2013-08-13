@@ -1,32 +1,30 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Stéphan Champagne <sc@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\SecurityBundle\Controller;
 
 // Symfony includes
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 // Sensio includes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-/**
- * @Route("", requirements={
- *        "user" = "user"
- *      , "password" = "password"
- *      , "initialize" = "initialize"
- *      , "reset" = "reset"
- * })
- */
 class UserController extends ContainerAware {
 
-    protected $ROUTE_PREFIX = "evocatio_security";
-
     /**
-     * @Route("/{user}")
+     * @Route("/user")
      * @Method("GET")
      * @Template()
      */
@@ -38,7 +36,7 @@ class UserController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{show}/{user}/{id}")
+     * @Route("/show/user/{id}")
      * @Method("GET")
      * @Template()
      */
@@ -55,7 +53,7 @@ class UserController extends ContainerAware {
     /**
      * Finds and displays all users for admin.
      *
-     * @Route("/admin/{list}/{user}")
+     * @Route("/admin/list/user")
      * @Method("GET")
      * @Template()
      */
@@ -72,7 +70,7 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{create}/{user}")
+     * @Route("/admin/create/user")
      * @Method("GET")
      * @Template
      */
@@ -84,7 +82,7 @@ class UserController extends ContainerAware {
     /**
      * Creates a new user entity.
      *
-     * @Route("/admin/{create}/{user}")
+     * @Route("/admin/create/user")
      * @Method("POST")
      * @Template
      */
@@ -97,14 +95,14 @@ class UserController extends ContainerAware {
             $this->container->get("user.persistence_handler")->save($user = $edit_form->getData());
 
             $reset = $this->container->get("user.persistence_handler")->createReset($user);
-            $reset_url = $this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_reset', array("uuid" => $reset->getUuid()), array('password', 'initialize'), null, true);
+            $reset_url = $this->container->get('router')->generate(str_replace('add', "reset", $this->container->get("request")->get("_route")), array("uuid" => $reset->getUuid()), true);
 
             $notifier = $this->container->get('notifier');
             $notifier->createNewUserNotification($reset, $reset_url);
             $notifier->send();
 
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
-            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_list', array(), array('user', 'list')));
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('add', "list", $this->container->get("request")->get("_route"))));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
@@ -123,7 +121,7 @@ class UserController extends ContainerAware {
          * Permet de créer le reset et l'url de reset puis d'envoyer le mail à l'utilisateur
          */
         $reset = $this->container->get("user.persistence_handler")->createReset($user);
-        $reset_url = $this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_reset', array("uuid" => $reset->getUuid()), array('password', 'initialize'), null, true);
+        $reset_url = $this->container->get('router')->generate(str_replace('add', "reset", $this->container->get("request")->get("_route")), array("uuid" => $reset->getUuid()), true);
 
         $notifier = $this->container->get('notifier');
         $notifier->createNewUserNotification($reset, $reset_url);
@@ -131,7 +129,7 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{edit}/{user}/{id}")
+     * @Route("/admin/edit/user/{id}")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -149,7 +147,7 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{edit}/{user}/{id}")
+     * @Route("/admin/edit/user/{id}")
      * @return RedirectResponse
      * @Method("POST")
      * @Template
@@ -165,7 +163,7 @@ class UserController extends ContainerAware {
             $this->container->get("user.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_user_list', array(), array('user', 'list')));
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('update', "list", $this->container->get("request")->get("_route"))));
         }
         $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
@@ -199,7 +197,7 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{delete}/{user}")
+     * @Route("/admin/delete/user")
      * @Method("POST")
      */
     public function deleteAction() {
@@ -207,15 +205,13 @@ class UserController extends ContainerAware {
         $form_data = $this->container->get("request")->get('form');
         $this->container->get("user.persistence_handler")->delete($form_data['id']);
 
-        return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
-                    'list' => $this->container->get('translator')->trans("list", array(), "routes")
-                    , 'user' => $this->container->get('translator')->trans("user", array(), "routes"))));
+        return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route"))));
     }
 
     /**
      * reset confirmation by the user
-     * @Route("/{initialize}/{password}/{uuid}") 
-     * @Route("/{reset}/{password}/{uuid}") 
+     * @Route("/initialize/password/{uuid}") 
+     * @Route("/reset/password/{uuid}") 
      * @Method("GET")
      * @Template()
      */
@@ -230,9 +226,9 @@ class UserController extends ContainerAware {
     }
 
     /**
-     * reset confirmation by the user
-     * @Route("/{initialize}/{password}/{uuid}") 
-     * @Route("/{reset}/{password}/{uuid}") 
+     * 
+     * @Route("/initialize/password/{uuid}") 
+     * @Route("/reset/password/{uuid}") 
      * @Method("POST")
      * @Template()
      */
@@ -260,7 +256,7 @@ class UserController extends ContainerAware {
 
             $this->container->get("session")->getFlashBag()->add("success", "congratulation.password.changed.now.connect");
 
-            return new RedirectResponse($this->container->get("router")->generate($this->ROUTE_PREFIX . "_login_login"));
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('performReset', "index", $this->container->get("request")->get("_route"))));
         }
 
         $template = str_replace(":performReset.html.twig", ":reset.html.twig", $this->container->get("request")->get('_template'));
@@ -269,11 +265,10 @@ class UserController extends ContainerAware {
         return new Response($this->container->get('templating')->render($template, $params));
     }
 
-    protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
-        foreach ($translate as $word) {
-            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes", $lang);
-        }
-        return $this->container->get('router')->generate($route, $parameters, $absolute);
-    }
-
+//    protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
+//        foreach ($translate as $word) {
+//            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes", $lang);
+//        }
+//        return $this->container->get('router')->generate($route, $parameters, $absolute);
+//    }
 }

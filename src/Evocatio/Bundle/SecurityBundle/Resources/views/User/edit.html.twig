@@ -1,13 +1,4 @@
 {%  extends "EvocatioSecurityBundle:User:create.html.twig" %}
-{% import "::macro/route/suffix.html.twig" as route_suffix %}
 {% block formhead %}
-    {{ route_suffix.path('evocatio_security_user_edit', 'edit','user', entity.id) }}
+    {{ path('evocatio_security_user_edit', {'id': entity.id}) }}
 {% endblock formhead %}
-{% block delete %}
-{#<li>
-    <form action="{{ path('EvocatioSecurityBundle_delete', { 'id': entity.id }) }}" method="post">
-        {{ form_widget(delete_form) }}
-        <button type="submit">Delete</button>
-    </form>
-</li>#}
-{% endblock delete %}

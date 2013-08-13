@@ -5,12 +5,12 @@
 EvocatioWebBundle:
     resource: "@EvocatioWebBundle/Resources/config/routing.yml"
     
-#    
+EvocatioSecurityBundle:
+    resource: "@EvocatioSecurityBundle/Resources/config/routing.yml"
+    
 #EvocatioPersonaBundle:
 #    resource: "@EvocatioPersonaBundle/Resources/config/routing.yml"
 #    
-#EvocatioSecurityBundle:
-#    resource: "@EvocatioSecurityBundle/Resources/config/routing.yml"
 #    
 #    
 #EvocatioCmsBundle:
