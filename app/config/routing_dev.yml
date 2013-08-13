@@ -8,6 +8,9 @@ EvocatioWebBundle:
 EvocatioSecurityBundle:
     resource: "@EvocatioSecurityBundle/Resources/config/routing.yml"
     
+EvocatioPosBundle:
+    resource: "@EvocatioPosBundle/Resources/config/routing.yml"
+    
 #EvocatioPersonaBundle:
 #    resource: "@EvocatioPersonaBundle/Resources/config/routing.yml"
 #    

@@ -1,0 +1,16 @@
+evocatio_posbundle:
+    resource: "@EvocatioPosBundle/Controller"
+    type:     annotation
+    prefix: /{_locale}/
+    requirements:
+      _locale: fr|en
+
+
+#EvocatioPosBundle_Post:
+#    resource: "@EvocatioPosBundle/Controller/PostController.php"
+#    type:     annotation
+#    prefix: /{_locale}/
+#    defaults:
+#      admin: admin
+#    requirements:
+#      _locale: fr|en
