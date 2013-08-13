@@ -102,6 +102,10 @@
                 <source>web.display</source>
                 <target>display</target>
             </trans-unit>
+            <trans-unit id="26">
+                <source>web.faq.list</source>
+                <target>faq(s) list</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

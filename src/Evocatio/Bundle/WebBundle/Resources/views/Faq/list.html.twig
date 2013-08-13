@@ -1,12 +1,12 @@
-<h2>{{"faq.list" | trans}}</h2>
+<h2>{{"web.faq.list" | trans}}</h2>
 <table>
     <thead>
         <tr>
             <th>Id</th>
-            <th>{{"status" | trans | capitalize }}</th>
-            <th>{{"rank" | trans | capitalize }}</th>
-            <th>{{"question" | trans | capitalize }}</th>
-            <th>{{"response" | trans | capitalize }}</th>
+            <th>{{"web.status" | trans | capitalize }}</th>
+            <th>{{"web.rank" | trans | capitalize }}</th>
+            <th>{{"web.question" | trans | capitalize }}</th>
+            <th>{{"web.response" | trans | capitalize }}</th>
             <th></th>
         </tr>
     </thead>
@@ -24,7 +24,7 @@
             <td>{{ entity.response }}</td>
             <td>
                 <ul>
-                    <li><a href="{{ path('evocatio_web_faq_edit', {'id': entity.id}) }}">{{"to.edit" | trans | capitalize }}</a></li>
+                    <li><a href="{{ path('evocatio_web_faq_edit', {'id': entity.id}) }}">{{"web.to.edit" | trans | capitalize }}</a></li>
                     <li>
                         <form action="{{ path('evocatio_web_faq_delete', {'id': entity.id}) }}" method="post">
                             {{ form_widget(delete_forms[entity.getId()]) }}
@@ -36,7 +36,7 @@
         {% else %}
             <tr>
                 <td colspan="5">
-                    {{ "no.entities" |trans }}
+                    {{ "web.no.entities" |trans }}
                 </td>
             </tr>
         {% endfor %}
@@ -45,7 +45,7 @@
 <ul>
     <li>
         <a href="{{ path('evocatio_web_faq_create') }}">
-            {{ "create.a.new.entity" | trans | capitalize }}
+            {{ "web.create.a.new.entity" | trans | capitalize }}
         </a>
     </li>
 </ul>

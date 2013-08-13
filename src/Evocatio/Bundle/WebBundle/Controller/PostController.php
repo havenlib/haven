@@ -36,7 +36,7 @@ class PostController extends ContainerAware {
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get("post.read_handler")->getAllPublished();
+        $entities = $this->container->get("evocatio_web.post.read_handler")->getAllPublished();
         return array("entities" => $entities);
     }
 
@@ -46,12 +46,12 @@ class PostController extends ContainerAware {
      * @Template
      */
     public function rankAction($id) {
-        $entity = $this->container->get("post.read_handler")->get($id);
+        $entity = $this->container->get("evocatio_web.post.read_handler")->get($id);
         $form_data = $this->container->get("request")->get('form');
         $new_rank = (int) $form_data['rank'];
 
         if (is_int($new_rank) && $new_rank) {
-            $this->container->get("post.persistence_handler")->rank($entity, $new_rank);
+            $this->container->get("evocatio_web.post.persistence_handler")->rank($entity, $new_rank);
             $this->container->get("session")->getFlashBag()->add("success", "ranking.success");
 
             return new RedirectResponse($this->container->get('router')->generate(str_replace('rank', "list", $this->container->get("request")->get("_route"))));
@@ -67,8 +67,8 @@ class PostController extends ContainerAware {
      * @Template()
      */
     public function showAction($id) {
-        $entity = $this->container->get("post.read_handler")->get($id);
-        $delete_form = $this->container->get("post.form_handler")->createDeleteForm($id);
+        $entity = $this->container->get("evocatio_web.post.read_handler")->get($id);
+        $delete_form = $this->container->get("evocatio_web.post.form_handler")->createDeleteForm($id);
 
         return array(
             'entity' => $entity,
@@ -82,10 +82,10 @@ class PostController extends ContainerAware {
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get("post.read_handler")->getAllOrderedByRank();
+        $entities = $this->container->get("evocatio_web.post.read_handler")->getAllOrderedByRank();
         foreach ($entities as $entity) {
-            $delete_forms[$entity->getId()] = $this->container->get("post.form_handler")->createDeleteForm($entity->getId())->createView();
-            $rank_forms[$entity->getId()] = $this->container->get("post.form_handler")->createRankForm($entity->getId(), $entity->getRank())->createView();
+            $delete_forms[$entity->getId()] = $this->container->get("evocatio_web.post.form_handler")->createDeleteForm($entity->getId())->createView();
+            $rank_forms[$entity->getId()] = $this->container->get("evocatio_web.post.form_handler")->createRankForm($entity->getId(), $entity->getRank())->createView();
         }
 
         return array("entities" => $entities
@@ -102,7 +102,7 @@ class PostController extends ContainerAware {
     public function displayAction($slug) {
         $locale = $this->container->get("request")->get("_locale");
 
-        $entity = $this->container->get("post.read_handler")->getByLocalizedSlug($slug, $locale);
+        $entity = $this->container->get("evocatio_web.post.read_handler")->getByLocalizedSlug($slug, $locale);
 
         if (!$entity) {
             throw new NotFoundHttpException('entity.not.found');
@@ -127,7 +127,7 @@ class PostController extends ContainerAware {
      * @Template
      */
     public function createAction() {
-        $edit_form = $this->container->get("post.form_handler")->createNewForm();
+        $edit_form = $this->container->get("evocatio_web.post.form_handler")->createNewForm();
         return array(
             'entity' => $edit_form->getData()
             , "edit_form" => $edit_form->createView()
@@ -142,7 +142,7 @@ class PostController extends ContainerAware {
      * @Template
      */
     public function addAction() {
-        $edit_form = $this->container->get("post.form_handler")->createNewForm();
+        $edit_form = $this->container->get("evocatio_web.post.form_handler")->createNewForm();
 
         $request = $this->container->get('request_modifier')->setRequest($this->container->get("Request"))
                 ->slug(array("title"))
@@ -151,12 +151,12 @@ class PostController extends ContainerAware {
         $edit_form->bind($request);
 
         if ($edit_form->get('save')->isClicked() && $edit_form->isValid()) {
-            $this->container->get("post.persistence_handler")->firstSave($edit_form->getData());
+            $this->container->get("evocatio_web.post.persistence_handler")->firstSave($edit_form->getData());
 
             return new RedirectResponse($this->container->get('router')->generate(str_replace('add', "list", $this->container->get("request")->get("_route"))));
         } else {
             if ($edit_form->get('template')->isClicked()) {
-                $edit_form = $this->container->get("post.form_handler")->createNewForm($edit_form->getData());
+                $edit_form = $this->container->get("evocatio_web.post.form_handler")->createNewForm($edit_form->getData());
             } else {
                 $this->container->get("session")->getFlashBag()->add("error", "create.error");
             }
@@ -179,9 +179,9 @@ class PostController extends ContainerAware {
      * @Template
      */
     public function editAction($id) {
-        $entity = $this->container->get('post.read_handler')->get($id);
-        $edit_form = $this->container->get("post.form_handler")->createEditForm($entity->getId());
-        $delete_form = $this->container->get("post.form_handler")->createDeleteForm($entity->getId());
+        $entity = $this->container->get('evocatio_web.post.read_handler')->get($id);
+        $edit_form = $this->container->get("evocatio_web.post.form_handler")->createEditForm($entity->getId());
+        $delete_form = $this->container->get("evocatio_web.post.form_handler")->createDeleteForm($entity->getId());
 
         return array(
             'entity' => $entity,
@@ -197,9 +197,9 @@ class PostController extends ContainerAware {
      * @Template
      */
     public function updateAction($id) {
-        $entity = $this->container->get('post.read_handler')->get($id);
-        $edit_form = $this->container->get("post.form_handler")->createEditForm($entity->getId());
-        $delete_form = $this->container->get("post.form_handler")->createDeleteForm($entity->getId());
+        $entity = $this->container->get('evocatio_web.post.read_handler')->get($id);
+        $edit_form = $this->container->get("evocatio_web.post.form_handler")->createEditForm($entity->getId());
+        $delete_form = $this->container->get("evocatio_web.post.form_handler")->createDeleteForm($entity->getId());
 
         $request = $this->container->get('request_modifier')->setRequest($this->container->get("request"))
                 ->slug(array("title"))
@@ -209,13 +209,13 @@ class PostController extends ContainerAware {
 
 
         if ($edit_form->get('save')->isClicked() && $edit_form->isValid()) {
-            $this->container->get("post.persistence_handler")->save($edit_form->getData());
+            $this->container->get("evocatio_web.post.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "update.success");
 
             return new RedirectResponse($this->container->get('router')->generate(str_replace('update', "list", $this->container->get("request")->get("_route"))));
         } else {
             if ($edit_form->get('template')->isClicked()) {
-                $edit_form = $this->container->get("post.form_handler")->createNewForm($edit_form->getData());
+                $edit_form = $this->container->get("evocatio_web.post.form_handler")->createNewForm($edit_form->getData());
             } else {
                 $this->container->get("session")->getFlashBag()->add("error", "create.error");
             }
@@ -257,7 +257,7 @@ class PostController extends ContainerAware {
     public function deleteAction() {
 
         $form_data = $this->container->get("request")->get('form');
-        $this->container->get("post.persistence_handler")->delete($form_data['id']);
+        $this->container->get("evocatio_web.post.persistence_handler")->delete($form_data['id']);
 
         return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
                     'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
@@ -280,7 +280,7 @@ class PostController extends ContainerAware {
             throw new NotFoundHttpException('entity.not.found');
         }
 
-        $delete_form = $this->container->get("post.form_handler")->createDeleteForm($entity->getId());
+        $delete_form = $this->container->get("evocatio_web.post.form_handler")->createDeleteForm($entity->getId());
 
         $template = str_replace(":showFromSlug.html.twig", ":show.html.twig", $this->container->get("request")->get('_template'));
 
