@@ -1,6 +1,10 @@
-
-EvocatioCoreBundle:
-    resource: "@EvocatioCoreBundle/Resources/config/routing.yml"
+#
+#EvocatioCoreBundle:
+#    resource: "@EvocatioCoreBundle/Resources/config/routing.yml"
+    
+EvocatioWebBundle:
+    resource: "@EvocatioWebBundle/Resources/config/routing.yml"
+    
 #    
 #EvocatioPersonaBundle:
 #    resource: "@EvocatioPersonaBundle/Resources/config/routing.yml"
@@ -8,8 +12,6 @@ EvocatioCoreBundle:
 #EvocatioSecurityBundle:
 #    resource: "@EvocatioSecurityBundle/Resources/config/routing.yml"
 #    
-#EvocatioWebBundle:
-#    resource: "@EvocatioWebBundle/Resources/config/routing.yml"
 #    
 #EvocatioCmsBundle:
 #    resource: "@EvocatioCmsBundle/Resources/config/routing.yml"
@@ -19,8 +21,8 @@ EvocatioCoreBundle:
 #    type:     annotation
 #    prefix:   /
     
-OwnerSiteBundle:
-    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
+#OwnerSiteBundle:
+#    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
        
     
 _wdt:

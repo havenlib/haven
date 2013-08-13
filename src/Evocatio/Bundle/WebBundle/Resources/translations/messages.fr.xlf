@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>status</source>
+                <target>statut</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>rank</source>
+                <target>rang</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>question</source>
+                <target>question</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>response</source>
+                <target>réponse</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>no.entities</source>
+                <target>pas d'entités</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>create.a.new.entity</source>
+                <target>créer une nouvelle entité</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>back.to.the.list</source>
+                <target>retourner à la liste</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>to.edit</source>
+                <target>editer</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>perform.ranking</source>
+                <target>ordoner</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>add.entity</source>
+                <target>ajouter une entité</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>save.entity</source>
+                <target>Enregister la FAQ</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

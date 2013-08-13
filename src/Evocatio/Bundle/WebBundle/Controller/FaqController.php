@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Stéphan Champagne <sc@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\WebBundle\Controller;
 
 // Symfony includes
@@ -12,14 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-/**
- * @Route("", requirements={
- *      "rank" = "rank"
- * })
- */
 class FaqController extends ContainerAware {
-
-    protected $ROUTE_PREFIX = "evocatio_faq";
 
     /**
      * @Route("/faq")
@@ -32,39 +34,30 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{rank}/faq/{id}")
-     * @Method("GET")
+     * @Route("/admin/rank/faq/{id}")
+     * @Method("POST")
      * @Template
      */
     public function rankAction($id) {
         $entity = $this->container->get("faq.read_handler")->get($id);
-        return array("entity" => $entity);
-    }
-
-    /**
-     * @Route("/admin/{rank}/faq/{id}")
-     * @Method("POST")
-     * @Template
-     */
-    public function performRankingAction($id) {
-        $entity = $this->container->get("faq.read_handler")->get($id);
-        $new_rank = (int) $this->container->get('Request')->request->get("rank");
+        $form_data = $this->container->get("request")->get('form');
+        $new_rank = (int) $form_data['rank'];
 
         if (is_int($new_rank) && $new_rank) {
             $this->container->get("faq.persistence_handler")->rank($entity, $new_rank);
             $this->container->get("session")->getFlashBag()->add("success", "ranking.success");
 
-            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_faq_list', array(), array('list')));
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('rank', "list", $this->container->get("request")->get("_route"))));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "ranking.error");
-        return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_faq_list', array(), array('list')));
+        return new RedirectResponse($this->container->get('router')->generate(str_replace('rank', "list", $this->container->get("request")->get("_route"))));
     }
 
     /**
      * Finds and displays all faqs for admin.
      *
-     * @Route("/admin/{list}/faq")
+     * @Route("/admin/list/faq")
      * @Method("GET")
      * @Template()
      */
@@ -74,15 +67,17 @@ class FaqController extends ContainerAware {
 
         foreach ($entities as $entity) {
             $delete_forms[$entity->getId()] = $this->container->get("faq.form_handler")->createDeleteForm($entity->getId())->createView();
+            $rank_forms[$entity->getId()] = $this->container->get("faq.form_handler")->createRankForm($entity->getId(), $entity->getRank())->createView();
         }
 
         return array("entities" => $entities
             , 'delete_forms' => isset($delete_forms) && is_array($delete_forms) ? $delete_forms : array()
+            , 'rank_forms' => isset($rank_forms) && is_array($rank_forms) ? $rank_forms : array()
         );
     }
 
     /**
-     * @Route("/admin/{create}/faq")
+     * @Route("/admin/create/faq")
      * @Method("GET")
      * @Template
      */
@@ -94,7 +89,7 @@ class FaqController extends ContainerAware {
     /**
      * Creates a new faq entity.
      *
-     * @Route("/admin/{create}/faq")
+     * @Route("/admin/create/faq")
      * @Method("POST")
      * @Template
      */
@@ -107,7 +102,7 @@ class FaqController extends ContainerAware {
             $this->container->get("faq.persistence_handler")->firstSave($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_faq_list', array(), array('list')));
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('update', "list", $this->container->get("request")->get("_route"))));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
@@ -121,7 +116,7 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{edit}/faq/{id}")
+     * @Route("/admin/edit/faq/{id}")
      * @return RedirectResponse
      * @Method("GET")
      * @Template
@@ -139,7 +134,7 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{edit}/faq/{id}")
+     * @Route("/admin/edit/faq/{id}")
      * @return RedirectResponse
      * @Method("POST")
      * @Template
@@ -155,7 +150,7 @@ class FaqController extends ContainerAware {
             $this->container->get("faq.persistence_handler")->save($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_faq_list', array(), array('list')));
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('update', "edit", $this->container->get("request")->get("_route")), array("id" => $entity->getId())));
         }
         $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
@@ -189,7 +184,7 @@ class FaqController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{delete}/faq")
+     * @Route("/admin/delete/faq")
      * @Method("POST")
      */
     public function deleteAction() {
@@ -197,16 +192,14 @@ class FaqController extends ContainerAware {
         $form_data = $this->container->get("request")->get('form');
         $this->container->get("faq.persistence_handler")->delete($form_data['id']);
 
-        return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
-                    'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
-
+        return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route"))));
     }
 
-    protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
-        foreach ($translate as $word) {
-            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes", $lang);
-        }
-        return $this->container->get('router')->generate($route, $parameters, $absolute);
-    }
+//    protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
+//        foreach ($translate as $word) {
+//            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes", $lang);
+//        }
+//        return $this->container->get('router')->generate($route, $parameters, $absolute);
+//    }
 
 }
