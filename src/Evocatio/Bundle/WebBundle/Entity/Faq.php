@@ -99,8 +99,8 @@ class Faq extends Translatable {
         return $this->translations;
     }
 
-    public function getReponse($lang = null) {
-        return $this->getTranslated('Reponse', $lang);
+    public function getResponse($lang = null) {
+        return $this->getTranslated('Response', $lang);
     }
 
     public function getQuestion($lang = null) {

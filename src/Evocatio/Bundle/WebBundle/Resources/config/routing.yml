@@ -1,18 +1,11 @@
-#EvocatioWebBundle_Faq:
-#    resource: "@EvocatioWebBundle/Controller/FaqController.php"
-#    type:     annotation
-#    prefix: /{_locale}/
-#    defaults:
-#      admin: admin
-#    requirements:
-#      admin:    "admin"
-#      edit:     "edit|editer"
-#      list:     "list|lister"
-#      show:     "show|afficher"
-#      create:   "create|creer"
-#      rank:     "rank|ordonner"
-#      _locale: fr|en
-#    
+evocatio_webbundle:
+    resource: "@EvocatioWebBundle/Controller"
+    type:     annotation
+    prefix: /{_locale}/
+    requirements:
+      _locale: fr|en
+
+
 #EvocatioWebBundle_Post:
 #    resource: "@EvocatioWebBundle/Controller/PostController.php"
 #    type:     annotation
@@ -20,9 +13,4 @@
 #    defaults:
 #      admin: admin
 #    requirements:
-#      admin:    "admin"
-#      edit:     "edit|editer"
-#      list:     "list|lister"
-#      show:     "show|afficher"
-#      create:   "create|creer"
 #      _locale: fr|en

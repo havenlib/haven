@@ -22,7 +22,7 @@ class FaqType extends AbstractType {
                     )
                 ))
                 ->add('status', 'choice', array(
-                    'choices' => array(0 => "Inactive", 1 => "Publish")
+                    'choices' => array(0 => "inactive", 1 => "publish")
                 ))
                 ->add('save', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),

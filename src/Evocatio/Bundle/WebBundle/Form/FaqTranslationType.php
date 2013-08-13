@@ -12,7 +12,7 @@ class FaqTranslationType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('question', "text", array("required" => false))
-                ->add('reponse', "textarea", array("required" => false))
+                ->add('response', "textarea", array("required" => false))
                 ->add('trans_lang', null, array(
                     "property" => "name"
                     , "label" => false
