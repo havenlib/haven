@@ -54,10 +54,9 @@ class FaqFormHandler {
                         ->getForm()
         ;
     }
+    
     /**
-     * Create the simple delete form
      * @param integer $id
-     * should create an abstract form handler that whould have that one already
      * @return form
      */
     public function createRankForm($id, $rank) {
