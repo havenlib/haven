@@ -71,7 +71,7 @@ class ImageFileManipulator {
             imagefilledrectangle($newImage, 0, 0, $width, $height, $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127));
         }
 
-        $resizeSuccess = imagecopyresampled($newImage, $image, 0, 0, $x, $y, $width, $height, $entity->getWidth(), $entity->getHeight());
+        $resizeSuccess = imagecopyresampled($newImage, $image, 0, 0, 0, 0, $width, $height, $entity->getWidth(), $entity->getHeight());
 
         if ($resizeSuccess) {
             $createSuccess = $this->createPhysicalFile($entity, $newImage, $newPath = $this->root_dir . "/" . $newPathName, 100);
