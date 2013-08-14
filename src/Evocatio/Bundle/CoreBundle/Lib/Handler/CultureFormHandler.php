@@ -1,9 +1,9 @@
 <?php
 
-namespace Evocatio\Bundle\CoreBundle\Lib;
+namespace Evocatio\Bundle\CoreBundle\Lib\Handler;
 
-use Evocatio\Bundle\CoreBundle\Lib\LanguageReadHandler;
-use Evocatio\Bundle\CoreBundle\Lib\CultureReadHandler;
+use Evocatio\Bundle\CoreBundle\Lib\Handler\LanguageReadHandler;
+use Evocatio\Bundle\CoreBundle\Lib\Handler\CultureReadHandler;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\FormFactory;
 use Evocatio\Bundle\CoreBundle\Form\ChooseCultureType as Type;

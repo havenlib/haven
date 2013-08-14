@@ -1,6 +1,6 @@
 <?php
 
-namespace Evocatio\Bundle\CoreBundle\Lib;
+namespace Evocatio\Bundle\CoreBundle\Lib\Handler;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;

@@ -11,29 +11,29 @@ services:
       class:     Evocatio\Bundle\CoreBundle\Lib\Handler\CategoryFormHandler
       arguments: ["@category.read_handler", "@security.context", "@form.factory"]
       
-  language.read_handler:
-        class:     Evocatio\Bundle\CoreBundle\Lib\LanguageReadHandler
+  evocatio_core.language.read_handler:
+        class:     Evocatio\Bundle\CoreBundle\Lib\Handler\LanguageReadHandler
         arguments: ["@doctrine.orm.entity_manager", "@security.context"]
         
-  language.persistence_handler:
-        class:     Evocatio\Bundle\CoreBundle\Lib\LanguagePersistenceHandler
-        arguments: ["@language.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
+  evocatio_core.language.persistence_handler:
+        class:     Evocatio\Bundle\CoreBundle\Lib\Handler\LanguagePersistenceHandler
+        arguments: ["@evocatio_core.language.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
 
-  language.form_handler:
-      class:     Evocatio\Bundle\CoreBundle\Lib\LanguageFormHandler
-      arguments: ["@language.read_handler", "@security.context", "@form.factory"]
+  evocatio_core.language.form_handler:
+      class:     Evocatio\Bundle\CoreBundle\Lib\Handler\LanguageFormHandler
+      arguments: ["@evocatio_core.language.read_handler", "@security.context", "@form.factory"]
       
-  culture.read_handler:
-        class:     Evocatio\Bundle\CoreBundle\Lib\CultureReadHandler
+  evocatio_core.culture.read_handler:
+        class:     Evocatio\Bundle\CoreBundle\Lib\Handler\CultureReadHandler
         arguments: ["@doctrine.orm.entity_manager", "@security.context"]
         
-  culture.persistence_handler:
-        class:     Evocatio\Bundle\CoreBundle\Lib\CulturePersistenceHandler
-        arguments: ["@culture.read_handler", "@language.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
+  evocatio_core.culture.persistence_handler:
+        class:     Evocatio\Bundle\CoreBundle\Lib\Handler\CulturePersistenceHandler
+        arguments: ["@evocatio_core.culture.read_handler", "@evocatio_core.language.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
 
-  culture.form_handler:
-      class:     Evocatio\Bundle\CoreBundle\Lib\CultureFormHandler
-      arguments: ["@culture.read_handler", "@language.read_handler", "@security.context", "@form.factory"]
+  evocatio_core.culture.form_handler:
+      class:     Evocatio\Bundle\CoreBundle\Lib\Handler\CultureFormHandler
+      arguments: ["@evocatio_core.culture.read_handler", "@evocatio_core.language.read_handler", "@security.context", "@form.factory"]
       
   notifier:
       class:     Evocatio\Bundle\CoreBundle\Lib\Mailing\Notifier
@@ -52,7 +52,7 @@ services:
   
   evocatio.form.type.translation:
       class: Evocatio\Bundle\CoreBundle\Form\Type\TranslationType
-      arguments: ["@language.read_handler"]
+      arguments: ["@evocatio_core.language.read_handler"]
       tags:
           - { name: form.type, alias: translation }      
           

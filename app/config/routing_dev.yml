@@ -1,6 +1,6 @@
 #
-#EvocatioCoreBundle:
-#    resource: "@EvocatioCoreBundle/Resources/config/routing.yml"
+EvocatioCoreBundle:
+    resource: "@EvocatioCoreBundle/Resources/config/routing.yml"
     
 EvocatioWebBundle:
     resource: "@EvocatioWebBundle/Resources/config/routing.yml"

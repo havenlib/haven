@@ -1,10 +1,10 @@
 <?php
 
-namespace Evocatio\Bundle\CoreBundle\Lib;
+namespace Evocatio\Bundle\CoreBundle\Lib\Handler;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
-use Evocatio\Bundle\CoreBundle\Lib\LanguageReadHandler;
+use Evocatio\Bundle\CoreBundle\Lib\Handler\LanguageReadHandler;
 use Evocatio\Bundle\CoreBundle\Entity\Language;
 
 class LanguagePersistenceHandler {

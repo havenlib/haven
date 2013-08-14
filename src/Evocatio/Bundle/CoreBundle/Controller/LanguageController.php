@@ -1,48 +1,48 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Stéphan Champagne <sc@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\CoreBundle\Controller;
 
 // Symfony includes
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 // Sensio includes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-//Evocatio includes
-use Evocatio\Bundle\CoreBundle\Form\ChooseLanguageType;
-use Evocatio\Bundle\CoreBundle\Form\LanguageType;
-use Evocatio\Bundle\CoreBundle\Lib\Locale;
-use Evocatio\Bundle\CoreBundle\Entity\Language;
 
 class LanguageController extends ContainerAware {
 
     /**
-     * @Route("/core/{edit}/language")
+     * @Route("/admin/edit/language")
      * @Method("GET")
      * @Template
      */
     public function editAction() {
-        echo "<p>-->" . Locale::getDefault() . "</p>";
-        echo "<p>session local-->" . $this->container->get("session")->get("_locale") . "</p>";
-
-
-        $edit_form = $this->container->get("language.form_handler")->createEditForm();
-        return array('form' => $edit_form->createView(), "languages" => $this->container->get("language.read_handler")->getAll());
+        $edit_form = $this->container->get("evocatio_core.language.form_handler")->createEditForm();
+        return array('form' => $edit_form->createView(), "languages" => $this->container->get("evocatio_core.language.read_handler")->getAll());
     }
 
     /**
-     * @Route("/core/{update}/language")
+     * @Route("/admin/edit/language")
      * @Method("POST")
      * @Template
      */
     public function updateAction() {
-        $edit_form = $this->container->get("language.form_handler")->createEditForm();
+        $edit_form = $this->container->get("evocatio_core.language.form_handler")->createEditForm();
         $edit_form->bind($this->container->get('Request'));
 
         if ($edit_form->isValid()) {
-            $this->container->get("language.persistence_handler")->save($edit_form->get("symboles")->getData());
+            $this->container->get("evocatio_core.language.persistence_handler")->save($edit_form->get("symboles")->getData());
 
             return new RedirectResponse($this->container->get('router')->generate('evocatio_core_language_edit', array('edit' => $this->container->get('translator')->trans("edit", array(), "routes"))));
         }
@@ -50,35 +50,34 @@ class LanguageController extends ContainerAware {
         return array('form' => $edit_form->createView());
     }
 
-    private function getFileForLocale() {
-//        devrait aller chercher tout les informations de traduction pour chaque language, pour chaque bundle
-        echo "<pre>";
-        if (file_exists('../src/Evocatio/Bundle/CoreBundle/Resources/translations/messages.fr.xliff')) {
-            $xml = simplexml_load_file('../src/Evocatio/Bundle/CoreBundle/Resources/translations/messages.fr.xliff');
-
-            print_r($xml);
-            echo "</pre>";
-            $test = $xml;
-            while ($test->getName() != 'body') {
-                echo $test->getName();
-                $test = $test->Children();
-            }
-            $new = $test->addChild("trans-unit");
-            $new->addAttribute("id", 3);
-            $renew = $new->addChild('source', "succes");
-            $renew = $new->addChild('target', 'bilbo');
-            echo "<pre>-->";
-            echo $xml->asXML("../src/Evocatio/Bundle/CoreBundle/Resources/translations/messages.fr.xliff");
-            echo "<--</pre>";
-            foreach ($test->Children() as $node) {
-                echo $node->Attributes();
-                print_r($node->Attributes());
-            }
-        } else {
-            exit('Failed to open test.xml.');
-        }
-    }
-
+//    private function getFileForLocale() {
+////        devrait aller chercher tout les informations de traduction pour chaque language, pour chaque bundle
+//        echo "<pre>";
+//        if (file_exists('../src/Evocatio/Bundle/CoreBundle/Resources/translations/messages.fr.xliff')) {
+//            $xml = simplexml_load_file('../src/Evocatio/Bundle/CoreBundle/Resources/translations/messages.fr.xliff');
+//
+//            print_r($xml);
+//            echo "</pre>";
+//            $test = $xml;
+//            while ($test->getName() != 'body') {
+//                echo $test->getName();
+//                $test = $test->Children();
+//            }
+//            $new = $test->addChild("trans-unit");
+//            $new->addAttribute("id", 3);
+//            $renew = $new->addChild('source', "succes");
+//            $renew = $new->addChild('target', 'bilbo');
+//            echo "<pre>-->";
+//            echo $xml->asXML("../src/Evocatio/Bundle/CoreBundle/Resources/translations/messages.fr.xliff");
+//            echo "<--</pre>";
+//            foreach ($test->Children() as $node) {
+//                echo $node->Attributes();
+//                print_r($node->Attributes());
+//            }
+//        } else {
+//            exit('Failed to open test.xml.');
+//        }
+//    }
 //    public function processForm($edit_form) {
 //        if ($edit_form->isValid()) {
 //            $em = $this->container->get("Doctrine")->getEntityManager();

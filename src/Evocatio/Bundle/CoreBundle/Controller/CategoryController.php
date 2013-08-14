@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Stéphan Champagne <sc@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\CoreBundle\Controller;
 
 // Symfony includes
@@ -15,7 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class CategoryController extends ContainerAware {
 
     /**
-     * @Route("/{suffix}")
+     * @Route("/category")
      * 
      * @Method("GET")
      * @Template()
@@ -32,7 +41,7 @@ class CategoryController extends ContainerAware {
     /**
      * Finds and all persona for admin.
      *
-     * @Route("{admin}/{list}/{suffix}", requirements={"admin" = "admin"})
+     * @Route("admin/list/category")
      * @Method("GET")
      * @Template()
      */
@@ -45,7 +54,7 @@ class CategoryController extends ContainerAware {
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{admin}/{show}/{suffix}/{id}", requirements={"admin" = "admin"})
+     * @Route("/admin/show/category/{id}")
      * 
      * @Method("GET")
      * @Template()
@@ -61,7 +70,7 @@ class CategoryController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/{create}/{suffix}")
+     * @Route("/admin/create/category")
      * 
      * @Method("GET")
      * @Template
@@ -75,7 +84,7 @@ class CategoryController extends ContainerAware {
     /**
      * Creates a new persona entity.
      *
-     * @Route("/{admin}/{create}/{suffix}", requirements={"admin" = "admin", "new" = "new"})
+     * @Route("/admin/create/category")
      * 
      * @Method("POST")
      * @Template
@@ -109,7 +118,7 @@ class CategoryController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/{edit}/{suffix}/{id}")
+     * @Route("/admin/edit/category/{id}")
      * 
      * @return RedirectResponse
      * @Method("GET")
@@ -128,7 +137,7 @@ class CategoryController extends ContainerAware {
     }
 
     /**
-     * @Route("/{admin}/{edit}/{suffix}/{id}")
+     * @Route("/admin/edit/category/{id}")
      * 
      * @return RedirectResponse
      * @Method("POST")
