@@ -31,7 +31,7 @@ class UploadType extends AbstractType {
                     )
                     , "mapped" => false
                 ))
-                ->add('save', 'submit', array(
+                ->add('upload', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
                     'label' => 'upload.files'
                 ))

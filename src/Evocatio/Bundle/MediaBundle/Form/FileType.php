@@ -22,7 +22,7 @@ class FileType extends AbstractType {
                 ->add('fileName', 'text', array("required" => false))
                 ->add('save', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
-                    'label' => 'save.faq'
+                    'label' => 'save'
                 ))
         ;
     }
