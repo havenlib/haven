@@ -1,44 +1,49 @@
 <?php
 
+/*
+ * This persona is part of the Evocatio package.
+ *
+ * (c) Laurent Breleur <lbreleur@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * persona that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\PersonaBundle\Controller;
 
-// Symfony includes
-use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
-
-// Sensio includes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use \Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-abstract class PersonaController extends ContainerAware {
-
-    protected $PERSONA = null;
+class PersonaController extends ContainerAware {
 
     /**
-     * @Route("/persona/{persona}")
-     * 
+     * @Route("/persona")
      * @Method("GET")
      * @Template()
      */
     public function indexAction() {
-        $entities = $this->container->get($this->PERSONA . ".read_handler")->getAll();
-
+        $entities = $this->container->get("persona.read_handler")->getAllPublished();
         return array("entities" => $entities);
     }
 
     /**
-     * Finds and all persona for admin.
+     * Finds and displays all personas for admin.
      *
-     * @Route("/admin/{list}/persona/{persona}")
+     * @Route("/admin/list/persona")
      * @Method("GET")
      * @Template()
      */
     public function listAction() {
-        $entities = $this->container->get($this->PERSONA . ".read_handler")->getAll();
+        $entities = $this->container->get("evocatio_persona.persona.read_handler")->getAll();
+
+
         foreach ($entities as $entity) {
-            $delete_forms[$entity->getId()] = $this->container->get($this->PERSONA . ".form_handler")->createDeleteForm($entity->getId())->createView();
+            $delete_forms[$entity->getId()] = $this->container->get("evocatio_persona.persona.form_handler")->createDeleteForm($entity->getId())->createView();
         }
 
         return array("entities" => $entities
@@ -47,62 +52,43 @@ abstract class PersonaController extends ContainerAware {
     }
 
     /**
-     * Finds and displays a post entity.
-     *
-     * @Route("/admin/{show}/{persona}/{id}", requirements={"admin" = "admin"})
-     * 
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id) {
-        $entity = $this->container->get($this->PERSONA . ".read_handler")->get($id);
-        $delete_form = $this->container->get($this->PERSONA . ".form_handler")->createDeleteForm($id);
-
-        return array(
-            'entity' => $entity
-            , "delete_form" => $delete_form->createView()
-        );
-    }
-
-    /**
-     * @Route("/admin/{create}/persona/{persona}")
-     * 
+     * @Route("/admin/create/persona")
      * @Method("GET")
      * @Template
      */
     public function createAction() {
-        $edit_form = $this->container->get($this->PERSONA . ".form_handler")->createNewForm();
-
+        $edit_form = $this->container->get("evocatio_persona.persona.form_handler")->createNewForm();
         return array("edit_form" => $edit_form->createView());
     }
 
     /**
      * Creates a new persona entity.
      *
-     * @Route("/admin/{create}/persona/{persona}")
-     * 
+     * @Route("/admin/create/persona")
      * @Method("POST")
      * @Template
      */
     public function addAction() {
-        $edit_form = $this->container->get($this->PERSONA . ".form_handler")->createNewForm();
+        $edit_form = $this->container->get("evocatio_persona.persona.form_handler")->createNewForm();
         $request = $this->container->get('request_modifier')->setRequest($this->container->get("Request"))
-                ->slug(array("firstname", "lastname"))
+                ->slug(array("title"))
+                ->upload()
                 ->getRequest();
 
         $edit_form->bind($request);
 
-        if ($edit_form->isValid()) {
-            $this->container->get($this->PERSONA . ".persistence_handler")->save($edit_form->getData());
 
+        if ($edit_form->isValid()) {
+            $this->container->get("evocatio_persona.persona.persistence_handler")->batchSave($edit_form->getData());
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_list', $this->PERSONA, array(), array('list')));
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('add', "list", $this->container->get("request")->get("_route")), array(
+                        'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
 
         $this->container->get("session")->getFlashBag()->add("error", "create.error");
 
-        $template = str_replace(":create.html.twig", ":new.html.twig", $this->container->get("request")->get('_template'));
+        $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));
         $params = array(
             'edit_form' => $edit_form->createView()
         );
@@ -111,48 +97,44 @@ abstract class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{edit}/persona/{persona}/{id}")
-     * 
-     * @return RedirectResponse
+     * @Route("/admin/edit/persona/{id}")
      * @Method("GET")
      * @Template
+     * 
+     * @return RedirectResponse
      */
     public function editAction($id) {
-        $entity = $this->container->get($this->PERSONA . ".read_handler")->get($id);
-        $delete_form = $this->container->get($this->PERSONA . ".form_handler")->createDeleteForm($id);
-        $edit_form = $this->container->get($this->PERSONA . ".form_handler")->createEditForm($id);
+        $entity = $this->container->get('evocatio_persona.persona.read_handler')->get($id);
+        $edit_form = $this->container->get("evocatio_persona.persona.form_handler")->createEditForm($entity->getId());
+        $delete_form = $this->container->get("evocatio_persona.persona.form_handler")->createDeleteForm($entity->getId());
 
         return array(
-            'edit_form' => $edit_form->createView()
-            , 'entity' => $entity
-            , "delete_form" => $delete_form->createView()
+            'entity' => $entity,
+            'edit_form' => $edit_form->createView(),
+            'delete_form' => $delete_form->createView(),
         );
     }
 
     /**
-     * @Route("/admin/{edit}/persona/{persona}/{id}")
-     * 
+     * @Route("/admin/edit/persona/{id}")
      * @return RedirectResponse
      * @Method("POST")
      * @Template
      */
     public function updateAction($id) {
-        $entity = $this->container->get($this->PERSONA . ".read_handler")->get($id);
-        $delete_form = $this->container->get($this->PERSONA . ".form_handler")->createDeleteForm($id);
-        $edit_form = $this->container->get($this->PERSONA . ".form_handler")->createEditForm($id);
+        $entity = $this->container->get('evocatio_persona.persona.read_handler')->get($id);
+        $edit_form = $this->container->get("evocatio_persona.persona.form_handler")->createEditForm($entity->getId());
+        $delete_form = $this->container->get("evocatio_persona.persona.form_handler")->createDeleteForm($entity->getId());
 
-        $request = $this->container->get('request_modifier')->setRequest($this->container->get("Request"))
-                ->slug(array("firstname", "lastname"))
-                ->getRequest();
 
-        $edit_form->bind($request);
+        $edit_form->bind($this->container->get('Request'));
         if ($edit_form->isValid()) {
-            $this->container->get($this->PERSONA . ".persistence_handler")->save($edit_form->getData());
+            $this->container->get("evocatio_persona.persona.persistence_handler")->save($edit_form->getData());
+            $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
-            $this->container->get("session")->getFlashBag()->add("success", "update.success");
-            return new RedirectResponse($this->generateI18nRoute($route = $this->ROUTE_PREFIX . '_list', $this->PERSONA, array(), array('list')));
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('update', "list", $this->container->get("request")->get("_route")), array(
+                        'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
         }
-
         $this->container->get("session")->getFlashBag()->add("error", "update.error");
 
         $template = str_replace(":update.html.twig", ":edit.html.twig", $this->container->get("request")->get('_template'));
@@ -166,27 +148,55 @@ abstract class PersonaController extends ContainerAware {
     }
 
     /**
-     * @Route("/admin/{delete}/post")
+     * @Route("/admin/delete/persona")
      * @Method("POST")
      */
     public function deleteAction() {
 
         $form_data = $this->container->get("request")->get('form');
-        $this->container->get($this->PERSONA . ".persistence_handler")->delete($form_data['id']);
+        $this->container->get("evocatio_persona.persona.persistence_handler")->delete($form_data['id']);
 
         return new RedirectResponse($this->container->get('router')->generate(str_replace('delete', "list", $this->container->get("request")->get("_route")), array(
-                    'list' => $this->container->get('translator')->trans("list", array(), "routes")
-                    , 'persona' => $this->container->get('translator')->trans($this->PERSONA, array(), "routes"))));
+                    'list' => $this->container->get('translator')->trans("list", array(), "routes"))));
     }
 
-    protected function generateI18nRoute($route, $persona, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
-        foreach ($translate as $word) {
-            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes", $lang);
-        }
-        $parameters['persona'] = $this->container->get('translator')->trans($persona, array(), "routes", $lang);
-        return $this->container->get('router')->generate($route, $parameters, $absolute);
+    /**
+     * @Route("/admin/download/persona/{id}")
+     * @Method("POST")
+     */
+    public function downloadAction($id) {
+        $send_persona = $this->container->get("evocatio_persona.persona.read_handler")->get($id);
+        $path = $this->container->get('kernel')->getRootDir() . "/" . $send_persona->getPathName();
+
+        $content = persona_get_contents($path);
+        ob_clean();
+
+        $response = new Response();
+        $response->headers->set('Content-Type', $send_persona->getMimeType());
+        $response->headers->set('Content-Length', $send_persona->getSize());
+        $response->setContent($content);
+        $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $send_persona->getName(), "DownloadedPersona");
+        $response->headers->set('Content-Disposition', $d);
+
+        return $response;
     }
 
+//    /**
+//     * Set a persona entity state to inactive.
+//     *
+//     * @Route("/admin/persona/{id}/state", name="EvocatioWebBundle_PersonaToggleState")
+//     * @Method("GET")
+//     */
+//    public function toggleStateAction($id) {
+//        $em = $this->container->get('doctrine')->getEntityManager();
+//        $entity = $em->find('EvocatioWebBundle:Persona', $id);
+//        if (!$entity) {
+//            throw new NotFoundHttpException("Persona non trouvé");
+//        }
+//        $entity->setStatus(!$entity->getStatus());
+//        $em->persist($entity);
+//        $em->flush();
+//
+//        return new RedirectResponse($this->container->get("request")->headers->get('referer'));
+//    }
 }
-
-?>

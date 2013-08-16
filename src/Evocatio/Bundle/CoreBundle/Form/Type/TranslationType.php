@@ -3,7 +3,7 @@
 namespace Evocatio\Bundle\CoreBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Evocatio\Bundle\CoreBundle\Lib\LanguageReadHandler;
+use Evocatio\Bundle\CoreBundle\Lib\Handler\LanguageReadHandler;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;

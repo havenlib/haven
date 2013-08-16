@@ -1,25 +1,13 @@
 services:
-  portfolio.read_handler:
-      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\PortfolioReadHandler
+  evocatio_portfolio.project.read_handler:
+      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\ProjectReadHandler
       arguments: ["@doctrine.orm.entity_manager", "@security.context"]
       
-  portfolio.persistence_handler:
-      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\PortfolioPersistenceHandler
-      arguments: ["@portfolio.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
+  evocatio_portfolio.project.persistence_handler:
+      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\ProjectPersistenceHandler
+      arguments: ["@evocatio_portfolio.project.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
 
-  portfolio.form_handler:
-      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\PortfolioFormHandler
-      arguments: ["@portfolio.read_handler", "@security.context", "@form.factory"]
-      
-  sheet.read_handler:
-      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\SheetReadHandler
-      arguments: ["@doctrine.orm.entity_manager", "@security.context"]
-      
-  sheet.persistence_handler:
-      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\SheetPersistenceHandler
-      arguments: ["@sheet.read_handler", "@doctrine.orm.entity_manager", "@security.context"]
-
-  sheet.form_handler:
-      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\SheetFormHandler
-      arguments: ["@sheet.read_handler", "@security.context", "@form.factory"]
+  evocatio_portfolio.project.form_handler:
+      class:     Evocatio\Bundle\PortfolioBundle\Lib\Handler\ProjectFormHandler
+      arguments: ["@evocatio_portfolio.project.read_handler", "@security.context", "@form.factory"]
     

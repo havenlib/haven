@@ -5,11 +5,7 @@ namespace Owner\Bundle\SiteBundle\Entity;
 use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table()
- * @ORM\Entity()
- */
-class Profile extends Translatable {
+class ProfileDep extends Translatable {
 
     /**
      * @var integer $id

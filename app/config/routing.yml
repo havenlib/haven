@@ -7,10 +7,6 @@ root:
         path: /fr/admin/lister/page
         permanent: true
 
-evocatio_portfolio:
-    resource: "@EvocatioPortfolioBundle/Controller/"
-    type:     annotation
-    prefix:   /
 
 owner_site_menu_showmenulink:
     path:  /{_locale}/{slug}
