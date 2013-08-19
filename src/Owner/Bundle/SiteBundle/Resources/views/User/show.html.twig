@@ -1,49 +1,45 @@
 {% extends "OwnerSiteBundle::base_admin.html.twig" %}
-{% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block inside_content %}
-<h1>Security</h1>
-
-<table class="record_properties">
+<h2>{{"security.user" | trans | capitalize}}</h2>
+<table>
     <tbody>
         <tr>
             <th>Id</th>
-            <td>{{ entity.getId() }}</td>
+            <td>{{ entity.id }}</td>
         </tr>
         <tr>
-            <th>Actif</th>
-            <td>{{ entity.getStatus() }}</td>
+            <th>{{"security.locked" | trans | capitalize }}</th>
+            <td>{{ entity.locked }}</td>
         </tr>
         <tr>
-            <th>Username</th>
-            <td>{{ entity.getUsername() }}</td>
+            <th>{{"security.status" | trans | capitalize }}</th>
+            <td>{{ entity.status }}</td>
         </tr>
         <tr>
-            <th>Email</th>
-            <td>{{ entity.getEmail() }}</td>
+            <th>{{"security.username" | trans | capitalize }}</th>
+            <td>{{ entity.username }}</td>
         </tr>
         <tr>
-            <th>Locked</th>
-            <td>{{ entity.getLocked()?"Locked":"Unlocked" }}</td>
+            <th>{{"security.email" | trans | capitalize }}</th>
+            <td>{{ entity.email }}</td>
+        </tr>
+        <tr>
+            <th>{{"security.password" | trans | capitalize }}</th>
+            <td>xxxxxxxxx</td>
+        </tr>
+        <tr>
+            <th>{{"security.salt" | trans | capitalize }}</th>
+            <td>{{ entity.salt }}</td>
+        </tr>
+        <tr>
+            <th>{{"security.created.at" | trans | capitalize }}</th>
+            <td>{{ entity.createdat | date("security.date.format" | trans) }}</td>
+        </tr>
+        <tr>
+            <th>{{"security.created.by" | trans | capitalize }}</th>
+            <td>{{ entity.createdby }}</td>
+        </tr>
         </tr>
     </tbody>
 </table>
-
-<ul>
-    <li>
-        <a href="{{ route_i18n.path('owner_site_user_list', {}, ['user', 'list']) }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ route_i18n.path('owner_site_user_edit', {'id': entity.id}, ['user', 'edit']) }}">
-            Edit
-        </a>
-    </li>
-    {#<li>
-        <form action="{{ path('EvocatioSecurityBundle_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>#}
-</ul>
 {% endblock inside_content %}

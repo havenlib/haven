@@ -1,41 +1,50 @@
 {% extends "OwnerSiteBundle::base_admin.html.twig" %}
 {% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block inside_content %}
+<h2>{{"security.user" | trans | capitalize}}</h2>
 <table>
     <thead>
         <tr>
-            <th>Status</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Locked</th>
+            <th>Id</th>
+            <th>{{"security.locked" | trans | capitalize }}</th>
+            <th>{{"security.status" | trans | capitalize }}</th>
+            <th>{{"security.username" | trans | capitalize }}</th>
+            <th>{{"security.email" | trans | capitalize }}</th>
+            <th>{{"security.password" | trans | capitalize }}</th>
+            <th>{{"security.salt" | trans | capitalize }}</th>
+            <th>{{"security.created.at" | trans | capitalize }}</th>
+            <th>{{"security.created.by" | trans | capitalize }}</th>
             <th></th>
         </tr>
     </thead>
     <tbody class="sortable">
         {% for entity in entities %}
-            <tr>
-                <td>
-                    {{ entity.status?'Published':'Inactive' }}
-                </td>
-                <td>
-                    {{ entity.username }}
-                </td>
-                <td>{{ entity.email }}</td>
-                <td>
-                    <a href="{{ route_i18n.path('owner_site_user_edit', {'id': entity.id}, ['user', 'edit']) }}">edit</a> 
-                    | <a href="{{ route_i18n.path('owner_site_user_show', {'id': entity.id}, ['user', 'show']) }}">show</a>|
-                     <form action="{{ route_i18n.path('owner_site_user_delete', {}, ['user', 'delete']) }}" method="post">
-                        {{ form_widget(delete_forms[entity.getId()]) }}
-                    </form>
-                </td>
-                <td>
-                    {{ entity.locked }}
-                </td>
-            </tr>
+        <tr>
+            <td>{{ entity.id }}</td>
+            <td>{{ entity.locked }}</td>
+            <td>{{ entity.status }}</td>
+            <td>{{ entity.username }}</td>
+            <td>{{ entity.email }}</td>
+            <td>xxxxxxxxx</td>
+            <td>{{ entity.salt }}</td>
+            <td>{{ entity.createdat | date("security.date.format" | trans) }}</td>
+            <td>{{ entity.createdby }}</td>
+            <td>
+                <ul>
+                    <li><a href="{{ path('owner_site_user_edit', {'id': entity.id}) }}">{{"security.to.edit" | trans | capitalize }}</a></li>
+                    <li>
+                        <form action="{{ path('owner_site_user_delete', {'id': entity.id}) }}" method="post">
+                            {{ form_widget(delete_forms[entity.getId()]) }}
+                        </form>
+                    </li>
+                    <li><a href="{{ path('owner_site_user_show', {'id': entity.id}) }}">{{"security.show" | trans | capitalize }}</a></li>
+                </ul>
+            </td>
+        </tr>
         {% else %}
             <tr>
-                <td>
-                    aucune entré
+                <td colspan="5">
+                    {{ "security.no.entities" |trans }}
                 </td>
             </tr>
         {% endfor %}
@@ -43,8 +52,8 @@
 </table>
 <ul>
     <li>
-        <a href="{{ route_i18n.path('owner_site_user_create', {}, ['user', 'create']) }}">
-            Create a new entry
+        <a href="{{ path('owner_site_user_create') }}">
+            {{ "security.create.a.new.entity" | trans | capitalize }}
         </a>
     </li>
 </ul>

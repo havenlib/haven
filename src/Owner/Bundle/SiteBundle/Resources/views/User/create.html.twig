@@ -1,7 +1,6 @@
 {%  extends "OwnerSiteBundle:Templates:add_template.html.twig" %}
-{% import "::macro/route/i18n.html.twig" as route_i18n %}
 {% block formhead %}
-    {{ route_i18n.path('owner_site_user_create', {}, ['user', 'create']) }}
+    {{ path('owner_site_user_create') }}
 {% endblock formhead %}
 
 {% block save_button %}
@@ -14,8 +13,9 @@
 </fieldset>
 {% endblock fields %}
 
+
 {% block back %}
-    <a href="{{ route_i18n.path('owner_site_user_list', {}, ['user', 'list']) }}">
-        Back to the list
-    </a>
+<a href="{{ path('owner_site_user_list') }}">
+    {{"security.back.to.the.list" | trans | capitalize }}
+</a>
 {% endblock back %}
