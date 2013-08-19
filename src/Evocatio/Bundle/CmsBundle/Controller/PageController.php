@@ -26,7 +26,7 @@ class PageController extends ContainerAware {
         $entities = $this->container->get("page.read_handler")->getAll();
 
         foreach ($entities as $entity) {
-            $delete_forms[$entity->getId()] = $this->container->get("faq.form_handler")->createDeleteForm($entity->getId())->createView();
+            $delete_forms[$entity->getId()] = $this->container->get("page.form_handler")->createDeleteForm($entity->getId())->createView();
         }
 
         return array("entities" => $entities
