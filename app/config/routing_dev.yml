@@ -20,15 +20,11 @@
 #EvocatioPersonaBundle:
 #    resource: "@EvocatioPersonaBundle/Resources/config/routing.yml"
 #    
-#    
-#    
 #EvocatioCmsBundle:
 #    resource: "@EvocatioCmsBundle/Resources/config/routing.yml"
-
+#
 #EvocatioMediaBundle:
-#    resource: "@EvocatioMediaBundle/Controller/FileController.php"
-#    type:     annotation
-#    prefix:   /
+#    resource: "@EvocatioMediaBundle/Resources/config/routing.yml"
     
 OwnerSiteBundle:
     resource: "@OwnerSiteBundle/Resources/config/routing.yml"
