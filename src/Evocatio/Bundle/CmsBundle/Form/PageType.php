@@ -48,7 +48,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
-                        , 'areas' => (isset($options['data'])) ? $options['data']->getTemplate()->getAreasAsArray() : array()
+                        , 'areas' => (isset($options['data']) && $options['data']->getTemplate()) ? $options['data']->getTemplate()->getAreasAsArray() : array()
                     )
                 ))
                 ->add('text_contents', "collection", array(
@@ -60,7 +60,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
-                        , 'areas' => (isset($options['data'])) ? $options['data']->getTemplate()->getAreasAsArray() : array()
+                        , 'areas' => (isset($options['data']) && $options['data']->getTemplate()) ? $options['data']->getTemplate()->getAreasAsArray() : array()
                     )
                 ))
                 ->add('news_widgets', "collection", array(
@@ -72,7 +72,7 @@ class PageType extends AbstractType {
                     , 'by_reference' => false
                     , 'options' => array(
                         'label' => false
-                        , 'areas' => (isset($options['data'])) ? $options['data']->getTemplate()->getAreasAsArray() : array()
+                        , 'areas' => (isset($options['data']) && $options['data']->getTemplate()) ? $options['data']->getTemplate()->getAreasAsArray() : array()
                     )
                 ))
                 ->add('save', 'submit', array(
