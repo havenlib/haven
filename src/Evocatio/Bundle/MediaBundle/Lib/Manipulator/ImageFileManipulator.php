@@ -21,55 +21,46 @@ class ImageFileManipulator {
         $this->upload_dir = $upload_dir;
     }
 
-    public function crop($fileName, $pathName, $mimeType, $width, $height, $newWidth, $newHeight) {
-        $image = $this->createImageFrom($pathName, $mimeType);
-        $newPathName = str_replace($fileName, $newFileName = str_replace(strstr($fileName, ".", true), uniqid(), $fileName), $pathName);
+    /**
+     * 
+     * @param type $fileName
+     * @param type $pathName
+     * @param type $mimeType
+     * @param type $srcWidth
+     * @param type $srcHeight
+     * @param type $dstWidth
+     * @param type $dstHeight
+     * @param type $x
+     * @param type $y
+     * @return boolean or array
+     * 
+     * To crop set $srcWidth with $dstWith value and set $srcHeight with $dstHeight when passing parameters
+     */
+    public function resizeOrCrop($fileName, $pathName, $mimeType, $srcWidth, $srcHeight, $dstWidth, $dstHeight, $x = 0, $y = 0) {
+        $dstImage = $this->createImageFrom($pathName, $mimeType);
+        $dstPathName = str_replace($fileName, $dstFileName = str_replace(strstr($fileName, ".", true), uniqid(), $fileName), $pathName);
 
-        $newImage = imagecreatetruecolor($newWidth, $newHeight);
-
-        //Keep png file transparency
-        if ($mimeType == "image/png") {
-            imagealphablending($newImage, false);
-            imagesavealpha($newImage, true);
-            imagefilledrectangle($newImage, 0, 0, $newWidth, $newHeight, $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127));
-        }
-
-        $resizeSuccess = imagecopyresampled($newImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-        if (!$resizeSuccess)
-            return false;
-
-        $createSuccess = $this->createPhysicalFile($mimeType, $newImage, $newPath = $this->root_dir . "/" . $newPathName, 100);
-        if (!$createSuccess)
-            return false;
-
-        return array("pathName" => $newPathName, "width" => $newWidth, "height" => $newHeight, "fileName" => $newFileName, "mimeType" => $mimeType, "size" => filesize($newPath));
-    }
-
-    public function resize($fileName, $pathName, $mimeType, $width, $height, $newWidth, $newHeight) {
-        $image = $this->createImageFrom($pathName, $mimeType);
-        $newPathName = str_replace($fileName, $newFileName = str_replace(strstr($fileName, ".", true), uniqid(), $fileName), $pathName);
-
-        $newImage = imagecreatetruecolor($newWidth, $newHeight);
+        $dstImageTrueC = imagecreatetruecolor($dstWidth, $dstHeight);
 
         //Keep png file transparency
         if ($mimeType == "image/png") {
-            imagealphablending($newImage, false);
-            imagesavealpha($newImage, true);
-            imagefilledrectangle($newImage, 0, 0, $newWidth, $newHeight, $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127));
+            imagealphablending($dstImageTrueC, false);
+            imagesavealpha($dstImageTrueC, true);
+            imagefilledrectangle($dstImageTrueC, 0, 0, $dstWidth, $dstHeight, $transparent = imagecolorallocatealpha($dstImageTrueC, 255, 255, 255, 127));
         }
 
-        $resizeSuccess = imagecopyresampled($newImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+        $resizeSuccess = imagecopyresampled($dstImageTrueC, $dstImage, 0, 0, $x, $y, $dstWidth, $dstHeight, $srcWidth, $srcHeight);
         if (!$resizeSuccess)
             return false;
 
-        $createSuccess = $this->createPhysicalFile($mimeType, $newImage, $newPath = $this->root_dir . "/" . $newPathName, 100);
+        $createSuccess = $this->createPhysicalFile($mimeType, $dstImageTrueC, $newPath = $this->root_dir . "/" . $dstPathName, 100);
         if (!$createSuccess)
             return false;
 
-        return array("pathName" => $newPathName
-            , "width" => $newWidth
-            , "height" => $newHeight
-            , "fileName" => $newFileName
+        return array("pathName" => $dstPathName
+            , "width" => $dstWidth
+            , "height" => $dstHeight
+            , "fileName" => $dstFileName
             , "mimeType" => $mimeType
             , "size" => filesize($newPath));
     }

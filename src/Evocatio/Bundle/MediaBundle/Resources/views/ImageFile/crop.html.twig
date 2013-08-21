@@ -1,9 +1,13 @@
-{% extends "OwnerSiteBundle:Templates:add_template.html.twig" %}
+{% extends "EvocatioMediaBundle:ImageFile:form/add_template.html.twig" %}
 
 {% block formhead %}
-    {{ path('owner_site_imagefile_crop', {"id": entity.id}) }}
+    {{ path('evocatio_media_imagefile_crop', {"id": entity.id}) }}
 {% endblock formhead %}
-
+{% block image %}
+        <img  alt="{{ entity.alt }}" src="{{path("evocatio_media_imagefile_show", {"id": entity.id})}}" />
+        <br />
+        {{ entity.name }}
+{% endblock image %}
 {% block save_button %}
     {#{ form_widget(edit_form.save) }#}
 {% endblock save_button %}

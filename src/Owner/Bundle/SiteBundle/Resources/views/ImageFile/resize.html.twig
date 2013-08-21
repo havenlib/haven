@@ -1,9 +1,13 @@
-{% extends "OwnerSiteBundle:Templates:add_template.html.twig" %}
+{% extends "OwnerSiteBundle:ImageFile:form/add_template.html.twig" %}
 
 {% block formhead %}
     {{ path('owner_site_imagefile_resize', {"id": entity.id}) }}
 {% endblock formhead %}
-
+{% block image %}
+        <img  alt="{{ entity.alt }}" src="{{path("owner_site_imagefile_show", {"id": entity.id})}}" />
+        <br />
+        {{ entity.name }}
+{% endblock image %}
 {% block save_button %}
     {#{ form_widget(edit_form.save) }#}
 {% endblock save_button %}
