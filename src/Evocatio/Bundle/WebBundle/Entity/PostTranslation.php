@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Stéphan Champagne <sc@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\WebBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -55,24 +64,6 @@ class PostTranslation extends SluggableMappedBase {
      */
     private $excerpt;
 
-    /**
-     * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable = true)
-     */
-    private $name;
-
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
-    public $file;
-
-    /**
-     * @var string $path
-     *
-     * @ORM\Column(name="path", type="string", length=255, nullable=true)
-     */
-    protected $path;
 
     /**
      * @var Post parent
@@ -97,9 +88,6 @@ class PostTranslation extends SluggableMappedBase {
         return $this->id;
     }
 
-    public function getFile() {
-        return $this->file;
-    }
 
     /**
      * Set content
@@ -157,24 +145,6 @@ class PostTranslation extends SluggableMappedBase {
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name) {
-        $this->name = $name;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName() {
-        return $this->name;
-    }
-
-    /**
      * Set parent
      *
      * @param Evocatio\Bundle\WebBundle\Entity\Post $parent
@@ -190,24 +160,6 @@ class PostTranslation extends SluggableMappedBase {
      */
     public function getParent() {
         return $this->parent;
-    }
-
-    /**
-     * Set path
-     *
-     * @param string $path
-     */
-    public function setPath($path) {
-        $this->path = $path;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string 
-     */
-    public function getPath() {
-        return $this->path;
     }
 
     /**

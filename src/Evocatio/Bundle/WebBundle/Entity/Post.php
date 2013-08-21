@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Stéphan Champagne <sc@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\WebBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -90,6 +99,7 @@ class Post extends Translatable {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -232,16 +242,8 @@ class Post extends Translatable {
         return $this->getTranslated('excerpt', $lang);
     }
 
-    public function getName($lang = null) {
-        return $this->getTranslated('name', $lang);
-    }
-
     public function getSlug($lang = null) {
         return $this->getTranslated('slug', $lang);
-    }
-
-    public function getPath($lang = null) {
-        return $this->getTranslated('path', $lang);
     }
 
     private function getFormated($date, $format) {
@@ -322,17 +324,15 @@ class Post extends Translatable {
         $this->categories->removeElement($categories);
     }
 
-
     /**
      * Set rank
      *
      * @param string $rank
      * @return Post
      */
-    public function setRank($rank)
-    {
+    public function setRank($rank) {
         $this->rank = $rank;
-    
+
         return $this;
     }
 
@@ -341,8 +341,8 @@ class Post extends Translatable {
      *
      * @return string 
      */
-    public function getRank()
-    {
+    public function getRank() {
         return $this->rank;
     }
+
 }

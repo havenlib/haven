@@ -1,22 +1,33 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Stéphan Champagne <sc@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\PosBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Evocatio\Bundle\CoreBundle\Generic\Translatable;
 use Doctrine\Common\Annotations\AnnotationReader;
 use \ReflectionClass;
+
 /**
  * Evocatio\Bundle\PosBundle\Entity\Products
  *
- * @ORM\Entity(repositoryClass="Evocatio\Bundle\CoreBundle\Generic\StatusRepository")
+ * @ORM\Entity(repositoryClass="Evocatio\Bundle\PosBundle\Repository\ProductRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="plane", type="string")
- * @ORM\DiscriminatorMap({
- * "generic"="Evocatio\Bundle\PosBundle\Entity\GenericProduct", 
- * })
  */
 class Product extends Translatable implements \Serializable {
+
+    const STATUS_INACTIVE = 0;
+    const STATUS_PUBLISHED = 1;
+    const STATUS_DRAFT = 2;
 
     /**
      * @var integer $id 

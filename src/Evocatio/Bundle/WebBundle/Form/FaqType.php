@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Stéphan Champagne <sc@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\WebBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -22,7 +31,7 @@ class FaqType extends AbstractType {
                     )
                 ))
                 ->add('status', 'choice', array(
-                    'choices' => array(0 => "Inactive", 1 => "Publish")
+                    'choices' => array(0 => "inactive", 1 => "publish")
                 ))
                 ->add('save', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),

@@ -5,10 +5,6 @@ namespace Owner\Bundle\SiteBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Evocatio\Bundle\CoreBundle\Entity\TranslationMappedBase;
 
-/**
- * @ORM\Table()
- * @ORM\Entity
- */
 class ProfileTranslation extends TranslationMappedBase {
 
     /**

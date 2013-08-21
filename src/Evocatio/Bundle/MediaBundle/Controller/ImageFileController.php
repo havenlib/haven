@@ -52,13 +52,28 @@ class ImageFileController extends ContainerAware {
 
         $edit_form->bind($this->container->get('Request'));
         if ($edit_form->isValid()) {
-            $resizeResult = $this->container->get("evocatio_media.image_file.manipulator")->resize($entity, $edit_form->get("width")->getData(), $edit_form->get("height")->getData());
+            $resizeResult = $this->container->get("evocatio_media.image_file.manipulator")->resizeOrCrop($entity->getFileName()
+                    , $entity->getPathName()
+                    , $entity->getMimeType()
+                    , $entity->getWidth()
+                    , $entity->getHeight()
+                    , $edit_form->get("width")->getData()
+                    , $edit_form->get("height")->getData()
+            );
 
-            if ($resizeResult instanceof \Evocatio\Bundle\MediaBundle\Entity\ImageFile) {
-                $this->container->get("evocatio_media.file.persistence_handler")->save($resizeResult);
+            if ($resizeResult && is_array($resizeResult)) {
+                $data = array_merge($resizeResult, array(
+                    "name" => $resizeResult["width"] . 'x' . $resizeResult["height"] . "_" . $entity->getName()
+                    , "alt" => $entity->getAlt()
+                ));
+
+                $newEntity = $this->container->get("evocatio_media.file.manipulator")->mergeWithArray(new \Evocatio\Bundle\MediaBundle\Entity\ImageFile, $data);
+
+                $this->container->get("evocatio_media.file.persistence_handler")->save($newEntity);
                 $this->container->get("session")->getFlashBag()->add("success", "resize.success");
+
                 return new RedirectResponse($this->container->get('router')->generate($this->container->get("request")->get("_route"), array(
-                            'id' => $resizeResult->getId())));
+                            'id' => $newEntity->getId())));
             }
         }
 
@@ -105,17 +120,30 @@ class ImageFileController extends ContainerAware {
 
         $edit_form->bind($this->container->get('Request'));
         if ($edit_form->isValid()) {
-            $result = $this->container->get("evocatio_media.image_file.manipulator")->crop($entity
-                    , $edit_form->get("width")->getData()
-                    , $edit_form->get("height")->getData()
+            $resizeResult = $this->container->get("evocatio_media.image_file.manipulator")->resizeOrCrop($entity->getFileName()
+                    , $entity->getPathName()
+                    , $entity->getMimeType()
+                    , $width = $edit_form->get("width")->getData()
+                    , $height = $edit_form->get("height")->getData()
+                    , $width
+                    , $height
                     , $edit_form->get("x")->getData()
-                    , $edit_form->get("y")->getData());
+                    , $edit_form->get("y")->getData()
+            );
 
-            if ($result instanceof \Evocatio\Bundle\MediaBundle\Entity\ImageFile) {
-                $this->container->get("evocatio_media.file.persistence_handler")->save($result);
-                $this->container->get("session")->getFlashBag()->add("success", "crop.success");
+            if ($resizeResult && is_array($resizeResult)) {
+                $data = array_merge($resizeResult, array(
+                    "name" => $resizeResult["width"] . 'x' . $resizeResult["height"] . "_" . $entity->getName()
+                    , "alt" => $entity->getAlt()
+                ));
+
+                $newEntity = $this->container->get("evocatio_media.file.manipulator")->mergeWithArray(new \Evocatio\Bundle\MediaBundle\Entity\ImageFile, $data);
+
+                $this->container->get("evocatio_media.file.persistence_handler")->save($newEntity);
+                $this->container->get("session")->getFlashBag()->add("success", "resize.success");
+
                 return new RedirectResponse($this->container->get('router')->generate($this->container->get("request")->get("_route"), array(
-                            'id' => $result->getId())));
+                            'id' => $newEntity->getId())));
             }
         }
 

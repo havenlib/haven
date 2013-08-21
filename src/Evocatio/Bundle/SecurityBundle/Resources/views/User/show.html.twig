@@ -1,49 +1,42 @@
-{%  extends "::base.html.twig" %}
-{% import "::macro/route/suffix.html.twig" as route_suffix %}
-{% block inside_theater %}
-<h1>Security</h1>
-
-<table class="record_properties">
+<h2>{{"security.user" | trans | capitalize}}</h2>
+<table>
     <tbody>
         <tr>
             <th>Id</th>
-            <td>{{ entity.getId() }}</td>
+            <td>{{ entity.id }}</td>
         </tr>
         <tr>
-            <th>Actif</th>
-            <td>{{ entity.getStatus() }}</td>
+            <th>{{"security.locked" | trans | capitalize }}</th>
+            <td>{{ entity.locked }}</td>
         </tr>
         <tr>
-            <th>Username</th>
-            <td>{{ entity.getUsername() }}</td>
+            <th>{{"security.status" | trans | capitalize }}</th>
+            <td>{{ entity.status }}</td>
         </tr>
         <tr>
-            <th>Email</th>
-            <td>{{ entity.getEmail() }}</td>
+            <th>{{"security.username" | trans | capitalize }}</th>
+            <td>{{ entity.username }}</td>
         </tr>
         <tr>
-            <th>Locked</th>
-            <td>{{ entity.getLocked()?"Locked":"Unlocked" }}</td>
+            <th>{{"security.email" | trans | capitalize }}</th>
+            <td>{{ entity.email }}</td>
+        </tr>
+        <tr>
+            <th>{{"security.password" | trans | capitalize }}</th>
+            <td>xxxxxxxxx</td>
+        </tr>
+        <tr>
+            <th>{{"security.salt" | trans | capitalize }}</th>
+            <td>{{ entity.salt }}</td>
+        </tr>
+        <tr>
+            <th>{{"security.created.at" | trans | capitalize }}</th>
+            <td>{{ entity.createdat | date("security.date.format" | trans) }}</td>
+        </tr>
+        <tr>
+            <th>{{"security.created.by" | trans | capitalize }}</th>
+            <td>{{ entity.createdby }}</td>
+        </tr>
         </tr>
     </tbody>
 </table>
-
-<ul>
-    <li>
-        <a href="{{ route_suffix.path('evocatio_security_user_list', 'list','user') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ route_suffix.path('evocatio_security_user_edit', 'edit','user', entity.id) }}">
-            Edit
-        </a>
-    </li>
-    {#<li>
-        <form action="{{ path('EvocatioSecurityBundle_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>#}
-</ul>
-{% endblock inside_theater %}

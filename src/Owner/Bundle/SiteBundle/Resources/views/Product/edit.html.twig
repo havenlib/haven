@@ -1,0 +1,6 @@
+{%  extends "OwnerSiteBundle:Product:create.html.twig" %}
+{% block formhead %}
+    {{ path('owner_site_product_edit', {'id': entity.id}) }}
+{% endblock formhead %}
+
+

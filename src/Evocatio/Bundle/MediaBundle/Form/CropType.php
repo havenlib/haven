@@ -25,7 +25,7 @@ class CropType extends AbstractType {
                 ->add('y', null, array("required" => false))
                 ->add('save', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
-                    'label' => 'resize.image'
+                    'label' => 'resize'
                 ))
         ;
     }

@@ -1,31 +1,59 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Stéphan Champagne <sc@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\WebBundle\Lib\Handler;
 
-use Evocatio\Bundle\CoreBundle\Lib\Handler\ReadHandler;
+use Symfony\Component\Security\Core\SecurityContext;
+use Doctrine\ORM\EntityManager;
 
-class PostReadHandler extends ReadHandler {
+class PostReadHandler{
 
-    public function getAllPublished() {
-        return $this->em->getRepository("EvocatioWebBundle:Post")->findAllPublished();
+    protected $em;
+    protected $security_context;
+
+    function __construct(EntityManager $em, SecurityContext $security_context) {
+        $this->em = $em;
+        $this->security_context = $security_context;
     }
 
-    public function getLastPublished($limit = null) {
-        return $this->em->getRepository("EvocatioWebBundle:Post")->findLastPublished($limit);
-    }
+    public function get($id) {
 
-    public function getAllOrderedByRank() {
-        return $this->em->getRepository($this->getDefaultEntityClass())->findAllOrderedByRank();
-    }
+        $entity = $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Post")->find($id);
 
-    public function getBySlugForLanguage($slug, $language) {
-        $entity = $this->em->getRepository("EvocatioWebBundle:Post")->findByLocalizedSlug($slug, $language);
-        
+        if (!$entity)
+            throw new \Exception('entity.not.found');
+
         return $entity;
     }
 
-    protected function getDefaultEntityClass() {
-        return "Evocatio\Bundle\WebBundle\Entity\Post";
+    public function getAll() {
+        return $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Post")->findAll();
+    }
+
+    public function getAllPublished() {
+        return $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Post")->findAllPublished();
+    }
+
+    public function getLastPublished($limit = null) {
+        return $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Post")->findLastPublished($limit);
+    }
+
+    public function getAllOrderedByRank() {
+        return $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Post")->findAllOrderedByRank();
+    }
+
+    public function getByLocalizedSlug($slug, $language) {
+        $entity = $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Post")->findByLocalizedSlug($slug, $language);
+
+        return $entity;
     }
 
 }

@@ -23,7 +23,7 @@ class ImageFileType extends AbstractType {
                 ->add('alt', 'text', array("required" => false))
                 ->add('save', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
-                    'label' => 'save.file'
+                    'label' => 'save'
                 ))
         ;
     }

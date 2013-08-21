@@ -1,4 +1,35 @@
-  
+#
+#EvocatioCoreBundle:
+#    resource: "@EvocatioCoreBundle/Resources/config/routing.yml"
+#    
+#EvocatioWebBundle:
+#    resource: "@EvocatioWebBundle/Resources/config/routing.yml"
+#    
+#EvocatioMediaBundle:
+#    resource: "@EvocatioMediaBundle/Resources/config/routing.yml"
+#    
+#EvocatioSecurityBundle:
+#    resource: "@EvocatioSecurityBundle/Resources/config/routing.yml"
+#    
+#EvocatioPosBundle:
+#    resource: "@EvocatioPosBundle/Resources/config/routing.yml"
+#    
+#EvocatioPortfolioBundle:
+#    resource: "@EvocatioPortfolioBundle/Resources/config/routing.yml"
+#    
+#EvocatioPersonaBundle:
+#    resource: "@EvocatioPersonaBundle/Resources/config/routing.yml"
+#    
+#EvocatioCmsBundle:
+#    resource: "@EvocatioCmsBundle/Resources/config/routing.yml"
+#
+#EvocatioMediaBundle:
+#    resource: "@EvocatioMediaBundle/Resources/config/routing.yml"
+    
+OwnerSiteBundle:
+    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
+       
+    
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
     prefix:   /_wdt

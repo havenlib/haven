@@ -2,7 +2,7 @@
 
 namespace Evocatio\Bundle\CmsBundle\Lib;
 
-use Evocatio\Bundle\CoreBundle\Lib\LanguageReadHandler;
+use Evocatio\Bundle\CoreBundle\Lib\Handler\LanguageReadHandler;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\FormFactory;
 use Evocatio\Bundle\CmsBundle\Entity\PageContent as Entity;

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Stéphan Champagne <sc@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\WebBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -34,9 +43,9 @@ class FaqTranslation extends TranslationMappedBase
     /**
      * @var text $reponse
      * 
-     * @ORM\Column(name="reponse", type="text", nullable=true)
+     * @ORM\Column(name="response", type="text", nullable=true)
      */
-    protected $reponse;
+    protected $response;
     
     /**
      * @ORM\ManyToOne(targetEntity="Faq", inversedBy="translations")
@@ -76,23 +85,23 @@ class FaqTranslation extends TranslationMappedBase
     }
 
     /**
-     * Set reponse
+     * Set response
      *
-     * @param text $reponse
+     * @param text $response
      */
-    public function setReponse($reponse)
+    public function setResponse($response)
     {
-        $this->reponse = $reponse;
+        $this->response = $response;
     }
 
     /**
-     * Get reponse
+     * Get response
      *
      * @return text 
      */
-    public function getReponse()
+    public function getResponse()
     {
-        return $this->reponse;
+        return $this->response;
     }
 
 

@@ -1,3 +1,11 @@
+evocatio_personabundle:
+    resource: "@EvocatioPersonaBundle/Controller"
+    type:     annotation
+    prefix: /{_locale}/
+    requirements:
+      _locale: fr|en
+
+
 #EvocatioPersonaBundle_Person:
 #    resource: "@EvocatioPersonaBundle/Controller/PersonController.php"
 #    type:     annotation

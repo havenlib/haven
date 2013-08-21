@@ -1,8 +1,9 @@
 imports:
     - { resource: "@EvocatioCoreBundle/Resources/config/services.yml" }
     - { resource: "@EvocatioWebBundle/Resources/config/services.yml" }
+    - { resource: "@EvocatioPosBundle/Resources/config/services.yml" }
     - { resource: "@EvocatioSecurityBundle/Resources/config/services.yml" }
-#    - { resource: "@EvocatioPersonaBundle/Resources/config/services.yml" }
+    - { resource: "@EvocatioPersonaBundle/Resources/config/services.yml" }
     - { resource: "@EvocatioCmsBundle/Resources/config/services.yml" }
     - { resource: "@EvocatioPortfolioBundle/Resources/config/services.yml" }
     - { resource: "@EvocatioMediaBundle/Resources/config/services.yml" }

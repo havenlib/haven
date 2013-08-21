@@ -4,20 +4,14 @@ namespace Evocatio\Bundle\PersonaBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\InheritanceType;
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
-use Evocatio\Bundle\PersonaBundle\Entity\ContactAddress;
-use Doctrine\Common\Annotations\AnnotationReader;
-use \ReflectionClass;
 
 /**
  * Evocatio\Bundle\PersonaBundle\Entity\Persona
  * @ORM\Entity(repositoryClass="Evocatio\Bundle\PersonaBundle\Repository\PersonaRepository")
- * @InheritanceType("JOINED")
- * @DiscriminatorColumn(name="discr", type="string")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
  */
-class Persona  {
+class Persona {
 
     /**
      * @ORM\Id
@@ -262,6 +256,7 @@ class Persona  {
 
         return $return_collection;
     }
+
 //
 //    /**
 //     * Add coordinate
@@ -355,4 +350,5 @@ class Persona  {
 
         return $return_collection;
     }
+
 }

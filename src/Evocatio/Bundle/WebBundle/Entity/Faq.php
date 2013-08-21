@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Stéphan Champagne <sc@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\WebBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -99,8 +108,8 @@ class Faq extends Translatable {
         return $this->translations;
     }
 
-    public function getReponse($lang = null) {
-        return $this->getTranslated('Reponse', $lang);
+    public function getResponse($lang = null) {
+        return $this->getTranslated('Response', $lang);
     }
 
     public function getQuestion($lang = null) {

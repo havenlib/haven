@@ -64,6 +64,15 @@ class FileManipulator {
         return $obj2;
     }
 
+    public function mergeWithArray($obj, $data) {
+        foreach ($data as $key => $value) {
+            if (method_exists($obj, $method_name = "set" . ucfirst(trim($key))))
+                $obj->{$method_name}($value);
+        }
+
+        return $obj;
+    }
+
 }
 
 ?>

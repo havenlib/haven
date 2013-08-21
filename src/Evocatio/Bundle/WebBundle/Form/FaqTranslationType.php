@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Stéphan Champagne <sc@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\WebBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -12,7 +21,7 @@ class FaqTranslationType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('question', "text", array("required" => false))
-                ->add('reponse', "textarea", array("required" => false))
+                ->add('response', "textarea", array("required" => false))
                 ->add('trans_lang', null, array(
                     "property" => "name"
                     , "label" => false

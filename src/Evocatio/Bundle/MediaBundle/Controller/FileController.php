@@ -98,9 +98,10 @@ class FileController extends ContainerAware {
 
     /**
      * @Route("/admin/edit/file/{id}")
-     * @return RedirectResponse
      * @Method("GET")
      * @Template
+     * 
+     * @return RedirectResponse
      */
     public function editAction($id) {
         $entity = $this->container->get('evocatio_media.file.read_handler')->get($id);

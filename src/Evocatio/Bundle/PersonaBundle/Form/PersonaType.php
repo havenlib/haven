@@ -42,6 +42,10 @@ class PersonaType extends AbstractType {
                     'prototype' => true,
                     'by_reference' => true,
                     "attr" => array("class" => "coordinate", "data-join-class" => "coordinate")))
+                ->add('save', 'submit', array(
+                    'attr' => array('class' => 'btn save-btn'),
+                    'label' => 'save'
+                ))
         ;
     }
 

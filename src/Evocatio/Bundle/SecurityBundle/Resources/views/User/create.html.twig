@@ -1,40 +1,22 @@
-{%  extends "EvocatioCoreBundle:Template:add_template.html.twig" %}
-{% import "::macro/route/i18n.html.twig" as route_i18n %}
+{% extends "EvocatioSecurityBundle:User:form/add_template.html.twig" %}
+
 {% block formhead %}
-    {#{ route_i18n.path('evocatio_security_user_create', ['user']) }#}
+    {{ path('evocatio_security_user_create') }}
 {% endblock formhead %}
 
-{% block form %}
-<fieldset>
-    <ul>
-        <li>{{ form_label(edit_form.status)}}
-            {{ form_errors(edit_form.status)}}
-                <span>{{ form_widget(edit_form.status)}}</span>
-            </li>
-            <li>{{ form_label(edit_form.username)}}
-            {{ form_errors(edit_form.username)}}
-                    <span>{{ form_widget(edit_form.username)}}</span>
-                </li>
-                <li>{{ form_label(edit_form.email)}}
-            {{ form_errors(edit_form.email)}}
-                        <span>{{ form_widget(edit_form.email)}}</span>
-                    </li>
-                    <li>{{ form_label(edit_form.plainPassword)}}
-            {{ form_errors(edit_form.plainPassword)}}
-                            <span>{{ form_widget(edit_form.plainPassword)}}</span>
-                        </li>
-                    <li>{{ form_label(edit_form.locked)}}
-            {{ form_errors(edit_form.locked)}}
-                            <span>{{ form_widget(edit_form.locked)}}</span>
-                        </li>
+{% block save_button %}
+    {{ form_widget(edit_form.save) }}
+{% endblock save_button %}
 
-                    </ul>
-                        {{ form_rest(edit_form) }}
-                </fieldset>
-{% endblock form %}
+{% block fields %}
+<fieldset>
+    {{ form_rest(edit_form) }}
+</fieldset>
+{% endblock fields %}
+
 
 {% block back %}
-                <a href="{{ route_suffix.path('evocatio_security_user_list', 'list','user') }}">
-                    Back to the list
-                </a>
+<a href="{{ path('evocatio_security_user_list') }}">
+    {{"security.back.to.the.list" | trans | capitalize }}
+</a>
 {% endblock back %}

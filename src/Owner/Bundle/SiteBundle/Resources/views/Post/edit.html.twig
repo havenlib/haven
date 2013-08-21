@@ -1,12 +1,4 @@
 {%  extends "OwnerSiteBundle:Post:create.html.twig" %}
 {% block formhead %}
-    {{ path('owner_site_post_edit', {'edit': ('edit' | trans({}, 'routes')), 'id': entity.id}) }}
+    {{ path('owner_site_post_edit', {'id': entity.id}) }}
 {% endblock formhead %}
-{% block delete %}
-{#<li>
-    <form action="{{ path('EvocatioWebBundle_PostDelete', { 'id': entity.id }) }}" method="post">
-        {{ form_widget(delete_form) }}
-        <button type="submit">Delete</button>
-    </form>
-</li>#}
-{% endblock delete %}

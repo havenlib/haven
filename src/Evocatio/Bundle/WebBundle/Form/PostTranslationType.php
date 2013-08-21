@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Evocatio package.
+ *
+ * (c) Stéphan Champagne <sc@evocatio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evocatio\Bundle\WebBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -11,6 +20,10 @@ class PostTranslationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
+                ->add('title', "text", array(
+                    'required' => false,
+                    'attr' => array("inline-editing" => true)
+                ))
                 ->add('subtitle', "text", array('required' => false))
                 ->add('slug', "text", array('required' => false))
 //                ->add('name', "text", array('required' => false))
@@ -20,11 +33,6 @@ class PostTranslationType extends AbstractType {
 //                    , 'label' => false
                     , 'attr' => array('class' => 'hiden')
                 ))
-                ->add('title', "text", array(
-                    'required' => false,
-                    'attr' => array("inline-editing" => true)
-                ))
-                ->add('file', "file", array('required' => false, "attr" => array("multiple" => true)))
                 ->add('status', 'choice', array(
                     'choices' => array(0 => "Inactive", 1 => "Publish", 2 => "Draft")
                 ))

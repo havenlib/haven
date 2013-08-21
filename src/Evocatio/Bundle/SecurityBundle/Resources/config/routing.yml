@@ -1,3 +1,10 @@
+evocatio_securitybundle:
+    resource: "@EvocatioSecurityBundle/Controller"
+    type:     annotation
+    prefix: /{_locale}/
+    requirements:
+      _locale: fr|en
+      
 #EvocatioSecurityBundle_Login:
 #    resource: "@EvocatioSecurityBundle/Controller/LoginController.php"
 #    type:     annotation

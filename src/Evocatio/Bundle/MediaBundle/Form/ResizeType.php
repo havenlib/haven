@@ -23,7 +23,7 @@ class ResizeType extends AbstractType {
                 ->add('width', null, array("required" => false))
                 ->add('save', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
-                    'label' => 'resize.image'
+                    'label' => 'resize'
                 ))
         ;
     }

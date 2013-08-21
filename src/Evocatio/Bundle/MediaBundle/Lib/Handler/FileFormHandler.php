@@ -12,7 +12,6 @@
 namespace Evocatio\Bundle\MediaBundle\Lib\Handler;
 
 use Symfony\Component\Security\Core\SecurityContext;
-use Evocatio\Bundle\CoreBundle\Lib\Handler\FormHandler;
 use Symfony\Component\Form\FormFactory;
 
 class FileFormHandler {
@@ -33,15 +32,6 @@ class FileFormHandler {
         switch (get_class($entity)) {
             case "Evocatio\Bundle\MediaBundle\Entity\ImageFile":
                 $form_class = "Evocatio\Bundle\MediaBundle\Form\ImageFileType";
-                break;
-            case "Evocatio\Bundle\MediaBundle\Entity\ApplicationFile":
-                $form_class = "Evocatio\Bundle\MediaBundle\Form\ApplicationFileType";
-                break;
-            case "Evocatio\Bundle\MediaBundle\Entity\AudioFile":
-                $form_class = "Evocatio\Bundle\MediaBundle\Form\AudioFileType";
-                break;
-            case "Evocatio\Bundle\MediaBundle\Entity\UnknowFile":
-                $form_class = "Evocatio\Bundle\MediaBundle\Form\UnknowFileType";
                 break;
             default:
                 $form_class = "Evocatio\Bundle\MediaBundle\Form\FileType";

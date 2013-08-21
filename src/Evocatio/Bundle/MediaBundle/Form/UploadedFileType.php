@@ -24,9 +24,6 @@ class UploadedFileType extends AbstractType {
                 ->add('name', 'text', array("required" => false))
                 ->add('fileName', 'text', array("required" => false))
                 ->add('size', 'text', array("required" => false))
-//                ->add('upload', 'file', array(
-//                    "mapped" => false
-//                ))
         ;
     }
 

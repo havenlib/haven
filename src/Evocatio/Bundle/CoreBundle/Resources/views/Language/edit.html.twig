@@ -1,25 +1,20 @@
-{% extends "::base.html.twig" %}
 
 
-{% block title %}Info sur la translation{% endblock %}
-
-{% block inside_main %}
 <ul>
 {% for language in languages %}
 <li>
     <a href="{#{ path('change_language') }}?lang={{ language.symbol }#}" >{{ language.name }} </a>
     --->
-    <a href="{{ path('evocatio_core_culture_edit', {'edit': ('edit' | trans({}, 'routes')), 'display_language': language.symbol}) }}"> choir la culture</a>
+    <a href="{{ path('evocatio_core_culture_edit', {'display_language': language.symbol}) }}"> choir la culture</a>
 </li>
 {% endfor %}
 </ul>
 &nbsp;
-<form action="{{ path('evocatio_core_language_edit', {'edit': ('edit' | trans({}, 'routes'))}) }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('evocatio_core_language_edit') }}" method="post" {{ form_enctype(form) }}>
 Form: {{ form_widget(form) }}
 
 <input type="submit" value="go" />
 </form>
-{% endblock inside_main %}
 
 
 
