@@ -245,5 +245,9 @@ class File {
 
         return new File($target);
     }
+    
+    public function __toString() {
+        return $this->getName();
+    }
 
 }
