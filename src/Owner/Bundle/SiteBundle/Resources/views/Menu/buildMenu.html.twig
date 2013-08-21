@@ -8,7 +8,7 @@
 {{ app.request.attributes.get('current_menu_id') }}
 </p>
 <p>attr: 
-{{ dump(app.request.attributes.get('_route_params')) }}
+{#{ dump(app.request.attributes.get('_route_params')) }}
 </p>
 <p>attr menu: 
 {{ dump(app.request.attributes) }}
@@ -18,6 +18,6 @@
 {{ dump(entity.getChildren().0.getNode().getSlug()) }}
 </p>
 <p>
-{{ dump(entity.getChildren().0.getNode().getLink().getRouteParams()) }}
+{{ dump(entity.getChildren().0.getNode().getLink().getRouteParams()) }#}
 </p>
 --

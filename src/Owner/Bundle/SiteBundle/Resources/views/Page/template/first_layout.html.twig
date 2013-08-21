@@ -12,9 +12,9 @@
     </div>
 {% endblock inside_header %}
 {% block inside_main %} 
-{{ dump(app.request.attributes) }}
+{#{ dump(app.request.attributes) }}
 <<<
- {{ dump(app.request| keys) }}
+ {{ dump(app.request| keys) }#}
 >>>
 {{ render(controller('OwnerSiteBundle:Menu:buildMenu', {
         'root': 1

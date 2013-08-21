@@ -30,7 +30,8 @@
         {% if 0 != name %}
             {% set attr = attr|merge({'class' : 'trans_div hidden'}) %}
         {% elseif "translations" != name %}
-            {% set attr = attr|merge({'class' : 'trans_div '~dump(form | keys)}) %}
+            {% set attr = attr|merge({'class' : 'trans_div '}) %}
+            {#% set attr = attr|merge({'class' : 'trans_div '~dump(form | keys)}) %#}
         {% endif %}
 {% endif %}
         {{ block('form_widget_compound') }}
