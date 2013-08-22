@@ -16,7 +16,7 @@ class MenuReadHandler {
         $this->em = $em;
         $this->security_context = $security_context;
         $config = $nsm->getConfiguration();
-        $config->setClass('Evocatio\Bundle\CmsBundle\Entity\Menu');        
+        $config->setClass('Evocatio\Bundle\CmsBundle\Entity\Menu');
         $this->nsm = $nsm;
     }
 
@@ -39,15 +39,22 @@ class MenuReadHandler {
         foreach ($roots as $root) {
             $entities[] = $this->nsm->fetchTree($root->getId());
         }
-        
+
         return $entities;
     }
-    
-    public function getBySlugForLanguage($slug, $language){
-        $entity = $this->em->getRepository("EvocatioCmsBundle:Menu")->findByLocalizedSlug( $slug, $language);
 
-        return $entity;        
-    }    
+    public function getRootMenuByName($name) {
+        $root = $this->em->getRepository("EvocatioCmsBundle:Menu")->findRootMenuByName($name);
+        $entity = $this->nsm->fetchTree($root->getId());
+
+        return $entity;
+    }
+
+    public function getBySlugForLanguage($slug, $language) {
+        $entity = $this->em->getRepository("EvocatioCmsBundle:Menu")->findByLocalizedSlug($slug, $language);
+
+        return $entity;
+    }
 
 }
 

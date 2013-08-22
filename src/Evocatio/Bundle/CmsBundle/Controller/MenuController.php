@@ -273,11 +273,14 @@ class MenuController extends ContainerAware {
      * @Route("/menu/build/{root}/{depth}")
      * @Template
      * @param type $root
-     * @param type $drillDown
+     * @param type $depth
      */
     public function buildMenuAction($root, $depth = null) {
-        $entity = $this->container->get('menu.read_handler')->get($root);
-
+        if(is_numeric($root)){
+            $entity = $this->container->get('menu.read_handler')->get($root);
+        }else{
+            $entity = $this->container->get('menu.read_handler')->getRootMenuByName($root);
+        }
 //        $list = $entity->getDescendants();
 
 //        foreach ($list as $item) {

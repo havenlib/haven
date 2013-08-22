@@ -7,7 +7,13 @@
 
 {% block inside_header %}
 <div id="header" class="area">
-    {{ parent() }}
+    {{ app.request.attributes.get('current_menu_id') }}
+{{ render(controller('OwnerSiteBundle:Menu:buildMenu', {
+        'root': "Paper clip"
+        ,'depth': 3
+        ,'current_menu_id' : app.request.attributes.get('current_menu_id')
+    })) }}
+    {#{ parent() }#}
 {#{ CHelp.fill_area(entity, "header") }#}
     </div>
 {% endblock inside_header %}
@@ -15,12 +21,6 @@
 {#{ dump(app.request.attributes) }}
 <<<
  {{ dump(app.request| keys) }#}
->>>
-{{ render(controller('OwnerSiteBundle:Menu:buildMenu', {
-        'root': 1
-        ,'depth': 3
-        ,'current_menu_id' : app.request.attributes.get('current_menu_id')
-    })) }}
         <div id="blue-bar">&nbsp;</div>
     <div id="sidebar" class="area">
 {#{ CHelp.fill_area(entity, "sidebar", edit_form is defined?edit_form:null , language is defined?language:"") }#}
