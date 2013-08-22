@@ -1,23 +1,7 @@
 {% import "EvocatioCmsBundle:Macro:menu.html.twig" as _menu %}
 
 <div class="menu">
+    <ul>
 {{ _menu.show_menu(entity,depth,app.request.attributes.get('current_menu_id')) }}
+    </ul>
 </div>
-00000000000000000000000000
-<p>route: 
-{{ app.request.attributes.get('current_menu_id') }}
-</p>
-<p>attr: 
-{#{ dump(app.request.attributes.get('_route_params')) }}
-</p>
-<p>attr menu: 
-{{ dump(app.request.attributes) }}
-</p>
---
-<p>
-{{ dump(entity.getChildren().0.getNode().getSlug()) }}
-</p>
-<p>
-{{ dump(entity.getChildren().0.getNode().getLink().getRouteParams()) }#}
-</p>
---

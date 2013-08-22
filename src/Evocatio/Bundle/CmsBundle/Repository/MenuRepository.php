@@ -17,8 +17,8 @@ class MenuRepository extends EntityRepository {
     public function __construct($em, \Doctrine\ORM\Mapping\ClassMetadata $class) {
         parent::__construct($em, $class);
         $this->query_builder = $this->createQueryBuilder("m")
-                        ->leftJoin("m.translations", "t")
-                        ->leftJoin("t.trans_lang", "tl");
+                ->leftJoin("m.translations", "t")
+                ->leftJoin("t.trans_lang", "tl");
     }
 
     public function findRootMenus() {
@@ -26,6 +26,18 @@ class MenuRepository extends EntityRepository {
 
         return $this->query_builder->getQuery()->getResult();
     }
+
+    public function findRootMenuByName($name) {
+        $query_builder = $this->createQueryBuilder("m")
+                ->leftJoin("m.translations", "t")
+                ->leftJoin("t.trans_lang", "tl");
+        $query_builder->andWhere("m.id = m.root");
+//        $this->filterByName($name);
+         $query_builder->andWhere("t.name = :name");
+        $query_builder->setParameter("name", $name);
+        return $query_builder->getQuery()->getOneOrNullResult();
+    }
+
     public function findByLocalizedSlug($slug, $language) {
 //        $this->query_builder = $this->createBaseQueryBuilder();
         $this->filterByLang($language, $this->query_builder);
@@ -34,7 +46,7 @@ class MenuRepository extends EntityRepository {
 
         return $this->query_builder->getQuery()->getOneOrNullResult();
     }
-    
+
     public function getQueryBuilder() {
 
         return $this->query_builder;
@@ -52,6 +64,14 @@ class MenuRepository extends EntityRepository {
 
         $this->query_builder->andWhere("t.slug = :slug");
         $this->query_builder->setParameter("slug", $slug);
+
+        return $this;
+    }
+    private function filterByName($name, $qb = null) {
+//        $this->query_builder = ($qb) ? $qb : $this->createBaseQueryBuilder();
+
+        $this->query_builder->andWhere("t.name = :name");
+        $this->query_builder->setParameter("name", $name);
 
         return $this;
     }
