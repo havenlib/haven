@@ -7,7 +7,7 @@
 
 {% block inside_header %}
 <div id="header" class="area">
-    {{ app.request.attributes.get('current_menu_id') }}
+    {#{ app.request.attributes.get('current_menu_id') }#}
 {{ render(controller('OwnerSiteBundle:Menu:buildMenu', {
         'root': "Paper clip"
         ,'depth': 3
