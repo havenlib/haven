@@ -281,6 +281,8 @@ class MenuController extends ContainerAware {
         }else{
             $entity = $this->container->get('menu.read_handler')->getRootMenuByName($root);
         }
+        
+
 //        $list = $entity->getDescendants();
 
 //        foreach ($list as $item) {
