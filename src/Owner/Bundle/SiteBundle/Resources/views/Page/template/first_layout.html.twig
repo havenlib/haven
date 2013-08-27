@@ -9,7 +9,7 @@
 <div id="header" class="area">
     {#{ app.request.attributes.get('current_menu_id') }#}
 {{ render(controller('OwnerSiteBundle:Menu:buildMenu', {
-        'root': "Paper clip"
+        'root': "Menu Principale"
         ,'depth': 3
         ,'current_menu_id' : app.request.attributes.get('current_menu_id')
     })) }}
@@ -23,7 +23,7 @@
  {{ dump(app.request| keys) }#}
         <div id="blue-bar">&nbsp;</div>
     <div id="sidebar" class="area">
-{#{ CHelp.fill_area(entity, "sidebar", edit_form is defined?edit_form:null , language is defined?language:"") }#}
+{{ CHelp.fill_area(entity, "sidebar", edit_form is defined?edit_form:null , language is defined?language:"") }}
     </div>
     <div id="theatre" class="area">
 

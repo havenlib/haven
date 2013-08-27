@@ -45,6 +45,9 @@ class MenuReadHandler {
 
     public function getRootMenuByName($name) {
         $root = $this->em->getRepository("EvocatioCmsBundle:Menu")->findRootMenuByName($name);
+        if (empty($root)) {
+            return $root;
+        }
         $entity = $this->nsm->fetchTree($root->getId());
 
         return $entity;
