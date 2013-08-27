@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * This file is part of the Evocatio package.
  *
@@ -21,10 +20,9 @@ class ConfirmType extends AbstractType {
         $builder
                 ->add('confirmation')
                 ->add('plainPassword', 'repeated', array('type' => 'password'
-//                    , "first_name" => "mot.de.passe"
-//                    , "second_name" => "repetez.mot.de.passe"
                     , "invalid_message" => "mot.de.passe.pas.identiques"
                     , "options" => array("required" => true)))
+                ->add('confirm', 'submit')
 //                ->add("uuid", "text")
         ;
     }
