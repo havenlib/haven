@@ -69,7 +69,12 @@ class Project extends Translatable {
      * @ORM\Column(name="status", type="boolean", nullable=true)
      */
     protected $status;
-
+    /**
+     *
+     * @var type 
+     * @ORM\OneToMany(targetEntity="ProjectFile", mappedBy="project")
+     */
+    protected $projectFiles;
     /**
      * 
      * @ORM\OneToMany(targetEntity="ProjectTranslation", mappedBy="parent", cascade={"persist"})
@@ -79,6 +84,7 @@ class Project extends Translatable {
 
     public function __construct() {
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->projectFiles = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -236,5 +242,38 @@ class Project extends Translatable {
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Add projectFiles
+     *
+     * @param \Evocatio\Bundle\PortfolioBundle\Entity\ProjectFile $projectFiles
+     * @return Project
+     */
+    public function addProjectFile(\Evocatio\Bundle\PortfolioBundle\Entity\ProjectFile $projectFiles)
+    {
+        $this->projectFiles[] = $projectFiles;
+    
+        return $this;
+    }
+
+    /**
+     * Remove projectFiles
+     *
+     * @param \Evocatio\Bundle\PortfolioBundle\Entity\ProjectFile $projectFiles
+     */
+    public function removeProjectFile(\Evocatio\Bundle\PortfolioBundle\Entity\ProjectFile $projectFiles)
+    {
+        $this->projectFiles->removeElement($projectFiles);
+    }
+
+    /**
+     * Get projectFiles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProjectFiles()
+    {
+        return $this->projectFiles;
     }
 }

@@ -35,6 +35,9 @@ class ProjectType extends AbstractType {
                 ->add('createdAt')
                 ->add('updatedAt')
                 ->add('status')
+                ->add('projectFiles', 'collection', array(
+                    "type" => new ProjectFileType()
+                ))
                 ->add('save', 'submit', array(
                     'attr' => array('class' => 'btn save-btn'),
                     'label' => 'save'
@@ -49,7 +52,7 @@ class ProjectType extends AbstractType {
     }
 
     public function getName() {
-        return 'evocatio_bundle_portfoliobundle_projettype';
+        return 'evocatio_bundle_portfoliobundle_projecttype';
     }
 
 }
