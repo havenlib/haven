@@ -150,17 +150,18 @@ class PostController extends ContainerAware {
 
         $edit_form->bind($request);
 
-        if ($edit_form->get('save')->isClicked() && $edit_form->isValid()) {
-            $this->container->get("evocatio_web.post.persistence_handler")->firstSave($edit_form->getData());
+        if (/* $edit_form->get('save')->isClicked() && */ $edit_form->isValid()) {
+            $this->container->get("evocatio_web.post.persistence_handler")->save($edit_form->getData(), true);
 
             return new RedirectResponse($this->container->get('router')->generate(str_replace('add', "list", $this->container->get("request")->get("_route"))));
-        } else {
-            if ($edit_form->get('template')->isClicked()) {
-                $edit_form = $this->container->get("evocatio_web.post.form_handler")->createNewForm($edit_form->getData());
-            } else {
-                $this->container->get("session")->getFlashBag()->add("error", "create.error");
-            }
         }
+//        else {
+//            if ($edit_form->get('template')->isClicked()) {
+//                $edit_form = $this->container->get("evocatio_web.post.form_handler")->createNewForm($edit_form->getData());
+//            } else {
+//                $this->container->get("session")->getFlashBag()->add("error", "create.error");
+//            }
+//        }
 
 
         $template = str_replace(":add.html.twig", ":create.html.twig", $this->container->get("request")->get('_template'));

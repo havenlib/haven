@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContext;
 
-class FaqReadHandler{
+class FaqReadHandler {
 
     protected $em;
     protected $security_context;
@@ -36,7 +36,11 @@ class FaqReadHandler{
     }
 
     public function getAll() {
-        return $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Faq")->findAll();
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Faq")->findAll();
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     public function getAllPublished() {
