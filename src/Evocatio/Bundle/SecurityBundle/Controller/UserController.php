@@ -253,7 +253,7 @@ class UserController extends ContainerAware {
             $user->setPassword($encoder->encodePassword($form->get('plainPassword')->get('first')->getData(), $user->getSalt()));
 
             $this->container->get("user.persistence_handler")->save($user);
-            $this->container->get("user.persistence_handler")->removeOldReset($user);
+            $this->container->get("user.persistence_handler")->removeResets($user);
 
             $this->container->get("session")->getFlashBag()->add("success", "congratulation.password.changed.now.connect");
 

@@ -37,7 +37,11 @@ class UserReadHandler extends ReadHandler {
     }
 
     public function getAll() {
-        return $this->em->getRepository("Evocatio\Bundle\SecurityBundle\Entity\User")->findAll();
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $this->em->getRepository("Evocatio\Bundle\SecurityBundle\Entity\User")->findAll();
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     public function getResetByUuid($uuid) {

@@ -26,21 +26,23 @@ class UserFormHandler {
         $this->security_context = $security_context;
     }
 
-    /**
-     * @return Form 
-     */
     public function createEditForm($id) {
         $entity = $this->read_handler->get($id);
-        return $form = $this->doCreate("Evocatio\Bundle\SecurityBundle\Form\UserType", $entity);
+
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $form = $this->form_factory->create(new \Evocatio\Bundle\SecurityBundle\Form\UserType(), $entity);
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     public function createNewForm() {
-        return $form = $this->doCreate("Evocatio\Bundle\SecurityBundle\Form\UserType");
-    }
 
-    protected function doCreate($type, $entity = null) {
-        $type = is_object($type) ? $type : new $type();
-        return $this->form_factory->create($type, $entity);
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $form = $this->form_factory->create(new \Evocatio\Bundle\SecurityBundle\Form\UserType());
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     /**
@@ -50,11 +52,15 @@ class UserFormHandler {
      * @return form
      */
     public function createDeleteForm($id) {
-        return $this->form_factory->createBuilder('form', array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->add('delete', 'submit')
-                        ->getForm()
-        ;
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $this->form_factory->createBuilder('form', array('id' => $id))
+                            ->add('id', 'hidden')
+                            ->add('delete', 'submit')
+                            ->getForm()
+            ;
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
 }

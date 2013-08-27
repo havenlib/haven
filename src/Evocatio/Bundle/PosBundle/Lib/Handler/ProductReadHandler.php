@@ -14,7 +14,7 @@ namespace Evocatio\Bundle\PosBundle\Lib\Handler;
 use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\ORM\EntityManager;
 
-class ProductReadHandler{
+class ProductReadHandler {
 
     protected $em;
     protected $security_context;
@@ -39,7 +39,11 @@ class ProductReadHandler{
     }
 
     public function getAllPublished() {
-        return $this->em->getRepository("Evocatio\Bundle\PosBundle\Entity\Product")->findAllPublished();
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $this->em->getRepository("Evocatio\Bundle\PosBundle\Entity\Product")->findAllPublished();
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     public function getLastPublished($limit = null) {
