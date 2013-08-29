@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Jeu 29 Août 2013 à 00:05
+-- Généré le: Jeu 29 Août 2013 à 00:11
 -- Version du serveur: 5.5.31
 -- Version de PHP: 5.5.1-2+debphp.org~quantal+2
 
@@ -627,7 +627,11 @@ INSERT INTO `InternalLink` (`id`, `route`, `params`) VALUES
 (13, 'EvocatioWebBundle_PageDisplaySlug', 'a:2:{s:4:"slug";s:24:"processus-de-realisation";s:7:"_locale";s:2:"fr";}'),
 (14, 'EvocatioWebBundle_PageDisplaySlug', 'a:2:{s:4:"slug";N;s:7:"_locale";s:2:"en";}'),
 (15, 'EvocatioWebBundle_PageDisplaySlug', 'a:2:{s:4:"slug";s:24:"processus-de-realisation";s:7:"_locale";s:2:"fr";}'),
-(16, 'EvocatioWebBundle_PageDisplaySlug', 'a:2:{s:4:"slug";N;s:7:"_locale";s:2:"en";}');
+(16, 'EvocatioWebBundle_PageDisplaySlug', 'a:2:{s:4:"slug";N;s:7:"_locale";s:2:"en";}'),
+(17, 'EvocatioWebBundle_PageDisplaySlug', 'a:2:{s:4:"slug";s:6:"le-roi";s:7:"_locale";s:2:"fr";}'),
+(18, 'EvocatioWebBundle_PageDisplaySlug', 'a:2:{s:4:"slug";N;s:7:"_locale";s:2:"en";}'),
+(19, 'EvocatioWebBundle_PageDisplaySlug', 'a:2:{s:4:"slug";s:29:"les-medias-et-reseaux-sociaux";s:7:"_locale";s:2:"fr";}'),
+(20, 'EvocatioWebBundle_PageDisplaySlug', 'a:2:{s:4:"slug";N;s:7:"_locale";s:2:"en";}');
 
 -- --------------------------------------------------------
 
@@ -721,7 +725,7 @@ CREATE TABLE IF NOT EXISTS `Link` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `discr` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
 
 --
 -- Contenu de la table `Link`
@@ -743,7 +747,11 @@ INSERT INTO `Link` (`id`, `discr`) VALUES
 (13, 'internal'),
 (14, 'internal'),
 (15, 'internal'),
-(16, 'internal');
+(16, 'internal'),
+(17, 'internal'),
+(18, 'internal'),
+(19, 'internal'),
+(20, 'internal');
 
 -- --------------------------------------------------------
 
@@ -790,14 +798,14 @@ CREATE TABLE IF NOT EXISTS `Menu` (
   `root` int(11) NOT NULL,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
 
 --
 -- Contenu de la table `Menu`
 --
 
 INSERT INTO `Menu` (`id`, `lft`, `rgt`, `root`, `type`) VALUES
-(1, 1, 18, 1, 'root'),
+(1, 1, 22, 1, 'root'),
 (2, 2, 11, 1, 'internal'),
 (3, 3, 4, 1, 'internal'),
 (4, 5, 6, 1, 'internal'),
@@ -805,7 +813,9 @@ INSERT INTO `Menu` (`id`, `lft`, `rgt`, `root`, `type`) VALUES
 (6, 12, 17, 1, 'internal'),
 (7, 13, 16, 1, 'internal'),
 (8, 9, 10, 1, 'internal'),
-(9, 14, 15, 1, 'internal');
+(9, 14, 15, 1, 'internal'),
+(10, 18, 21, 1, 'internal'),
+(11, 19, 20, 1, 'internal');
 
 -- --------------------------------------------------------
 
@@ -825,7 +835,7 @@ CREATE TABLE IF NOT EXISTS `MenuTranslation` (
   UNIQUE KEY `UNIQ_F8D6B08CADA40271` (`link_id`),
   KEY `IDX_F8D6B08C3059CC60` (`trans_lang_id`),
   KEY `IDX_F8D6B08CCCD7E912` (`menu_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=23 ;
 
 --
 -- Contenu de la table `MenuTranslation`
@@ -849,7 +859,11 @@ INSERT INTO `MenuTranslation` (`id`, `trans_lang_id`, `link_id`, `menu_id`, `slu
 (15, 2, 13, 8, 'vos-specialiste-web/comment-fait-on-une-application-web', 'Comment fait-on une application Web'),
 (16, 1, 14, 8, '/', NULL),
 (17, 2, 15, 9, 'notre-alternative-a-word-press/quand-word-press-ne-suffit-plus', 'Quand WordPress ne suffit plus'),
-(18, 1, 16, 9, 'notre-alternative-a-word-press/', NULL);
+(18, 1, 16, 9, 'notre-alternative-a-word-press/', NULL),
+(19, 2, 17, 10, 'le-web-des-affaires', 'Le web des affaires'),
+(20, 1, 18, 10, '', NULL),
+(21, 2, 19, 11, 'le-web-des-affaires/twitter-facebook-et-cie', 'Twitter, Facebook et cie'),
+(22, 1, 20, 11, 'le-web-des-affaires/', NULL);
 
 -- --------------------------------------------------------
 
