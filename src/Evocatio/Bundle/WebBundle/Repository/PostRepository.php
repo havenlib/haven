@@ -28,10 +28,10 @@ class PostRepository extends StatusRepository {
     public function __construct($em, \Doctrine\ORM\Mapping\ClassMetadata $class) {
         parent::__construct($em, $class);
         $this->query_builder = $this->createQueryBuilder("e")
-                        ->leftJoin("e.translations", "t")
-                        ->leftJoin("t.trans_lang", "tl");
+                ->leftJoin("e.translations", "t")
+                ->leftJoin("t.trans_lang", "tl");
     }
-    
+
     public function findAll() {
         return $this->getResult();
     }
@@ -85,6 +85,36 @@ class PostRepository extends StatusRepository {
                 ->setMaxResults($limit);
 
         return $this->getResult();
+    }
+
+    public function search($filters) {
+
+        foreach ($filters as $filter => $value) {
+            $filter = array_map(function($word) {
+                        return ucfirst($word);
+                    }, explode('_', $filter));
+
+            $this->{"filterBy" . implode('', $filter)}($value, false);
+        }
+
+        $query = $this->query_builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function filterByTitle($title, $strict = true) {
+
+        if ($strict) {
+            $query_restriction = "t.title = :title";
+        } else {
+            $query_restriction = "t.title like :title";
+            $title = "%" . $title . "%";
+        }
+
+        $this->query_builder->andWhere($query_restriction);
+        $this->query_builder->setParameter("title", $title);
+
+        return $this;
     }
 
     private function filterByStatus($status) {

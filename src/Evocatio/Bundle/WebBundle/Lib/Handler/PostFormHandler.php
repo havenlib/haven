@@ -63,7 +63,7 @@ class PostFormHandler extends FormHandler {
                         ->getForm()
         ;
     }
-    
+
     /**
      * @param integer $id
      * @return form
@@ -75,6 +75,10 @@ class PostFormHandler extends FormHandler {
                         ->add('perform.ranking', 'submit')
                         ->getForm()
         ;
+    }
+
+    public function createSearchForm() {
+        return $form = $this->form_factory->create(new \Evocatio\Bundle\WebBundle\Form\PostSearchType());
     }
 
 }
