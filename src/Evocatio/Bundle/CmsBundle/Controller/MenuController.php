@@ -193,9 +193,9 @@ class MenuController extends ContainerAware {
         if ($edit_form->isValid()) {
             $type = $entity->getNode()->getType();
             if (!$entity->hasParent()) {
-                $this->container->get("menu.persistence_handler")->createRootMenu($edit_form->getData());
+                $this->container->get("menu.persistence_handler")->save($edit_form->getData());
             } else if (!empty($type)) {
-                $parent = $entity->getParent();
+//                $parent = $entity->getParent();
                 switch ($type) {
                     case "external" :
 //                        $edit_form->getData()->setType('external');
