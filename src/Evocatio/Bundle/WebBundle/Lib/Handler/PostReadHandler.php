@@ -14,7 +14,7 @@ namespace Evocatio\Bundle\WebBundle\Lib\Handler;
 use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\ORM\EntityManager;
 
-class PostReadHandler{
+class PostReadHandler {
 
     protected $em;
     protected $security_context;
@@ -54,6 +54,14 @@ class PostReadHandler{
         $entity = $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Post")->findByLocalizedSlug($slug, $language);
 
         return $entity;
+    }
+
+    public function search($filters) {
+
+        //Remove all empty filters
+        $filters = array_filter($filters);
+
+        return $entities = $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Post")->search($filters);
     }
 
 }

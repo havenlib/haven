@@ -264,6 +264,43 @@ class PostController extends ContainerAware {
     }
 
     /**
+     * @Route("/admin/search/post")
+     * @Method("GET")
+     * @Template
+     */
+    public function searchAction() {
+        $form = $this->container->get("evocatio_web.post.form_handler")->createSearchForm();
+
+        return array(
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * @Route("/admin/search/post")
+     * @Method("POST")
+     * @Template
+     */
+    public function performSearchAction() {
+        $form = $this->container->get("evocatio_web.post.form_handler")->createSearchForm();
+        $form->bind($request = $this->container->get("request"));
+
+        if ($form->isValid()) {
+            $entities = $this->container->get("evocatio_web.post.read_handler")->search($form->getData());
+        } else {
+            $this->container->get("session")->getFlashBag()->add("error", "create.error");
+        }
+
+        $template = str_replace(":performSearch.html.twig", ":search.html.twig", $this->container->get("request")->get('_template'));
+        $params = array(
+            'entities' => isset($entities) ? $entities : null,
+            'form' => $form->createView(),
+        );
+
+        return new Response($this->container->get('templating')->render($template, $params));
+    }
+
+    /**
      * @Route("/post/{slug}")
      * @Method("GET")
      * @Template
@@ -298,13 +335,6 @@ class PostController extends ContainerAware {
 
 
         return new Response($this->container->get('templating')->render($template ? $template : 'EvocatioWebBundle:Post:list_widget.html.twig', array('entities' => $entities)));
-    }
-
-    protected function generateI18nRoute($route, $parameters = array(), $translate = array(), $lang = null, $absolute = false) {
-        foreach ($translate as $word) {
-            $parameters[$word] = $this->container->get('translator')->trans($word, array(), "routes", $lang);
-        }
-        return $this->container->get('router')->generate($route, $parameters, $absolute);
     }
 
 }

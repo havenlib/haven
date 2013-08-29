@@ -1,5 +1,5 @@
 evocatio_mediabundle:
-    resource: "@EvocatioMediaBundle/Controller"
+    resource: "@EvocatioWebBundle/Controller"
     type:     annotation
     prefix: /{_locale}/
     requirements:
