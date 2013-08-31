@@ -2,7 +2,7 @@
 
 namespace Owner\Bundle\SiteBundle\Controller;
 
-use Evocatio\Bundle\SecurityBundle\Controller\LoginController as BaseLoginController;
+use Haven\Bundle\SecurityBundle\Controller\LoginController as BaseLoginController;
 
 class LoginController extends BaseLoginController {
     

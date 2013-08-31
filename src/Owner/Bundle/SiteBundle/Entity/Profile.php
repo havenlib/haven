@@ -2,7 +2,7 @@
 
 namespace Owner\Bundle\SiteBundle\Entity;
 
-use Evocatio\Bundle\CoreBundle\Generic\Translatable;
+use Haven\Bundle\CoreBundle\Generic\Translatable;
 use Doctrine\ORM\Mapping as ORM;
 
 class ProfileDep extends Translatable {

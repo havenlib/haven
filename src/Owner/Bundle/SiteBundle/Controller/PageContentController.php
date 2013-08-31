@@ -2,7 +2,7 @@
 
 namespace Owner\Bundle\SiteBundle\Controller;
 
-use Evocatio\Bundle\CmsBundle\Controller\PageContentController as BasePageContentController;
+use Haven\Bundle\CmsBundle\Controller\PageContentController as BasePageContentController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class PageContentController extends BasePageContentController {

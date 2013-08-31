@@ -19,7 +19,7 @@ class EmployeeType extends AbstractType {
                     )
                     , 'multiple' => false
                 ))
-//                ->add('user', new \Evocatio\Bundle\SecurityBundle\Form\UserType())
+//                ->add('user', new \Haven\Bundle\SecurityBundle\Form\UserType())
                 ->add('user')
                 ->add('profile', new ProfileType())
                 ->add('slug')

@@ -2,12 +2,12 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     localhost
     database_port:     ~
-    database_name:     evocatio_siteweb
-    database_user:     evocatio
-    database_password: evocatio
+    database_name:     haven_siteweb
+    database_user:     haven
+    database_password: haven
     
     mailer_transport:  smtp
-    mailer_host:       smtp.evocatio.com
+    mailer_host:       smtp.haven.com
     mailer_user:       relayuser
     mailer_password:   3v0c4t10
 

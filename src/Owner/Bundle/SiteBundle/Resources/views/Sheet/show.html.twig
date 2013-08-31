@@ -36,7 +36,7 @@
     <li>
     </li>
    {# <li>
-        <form action="{{ path('EvocatiosheetBundle_sheetDelete', { 'id': entity.id }) }}" method="post">
+        <form action="{{ path('HavensheetBundle_sheetDelete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>
@@ -46,5 +46,5 @@
 #}
 {% endblock inside_theater %}
 {% block aside %}
-    {#% render "EvocatioCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %#}
+    {#% render "HavenCoreBundle:Core:i18nSwitcher" with {"_locale" : app.getRequest().get("_locale")} %#}
 {% endblock aside %}

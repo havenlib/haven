@@ -10,13 +10,13 @@
 <fieldset> {{ form_widget(edit_form) }} </fieldset>
 <ul class="contents-list">
     <li>
-        <input type=button value="Add Html content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_html_contents');" />
+        <input type=button value="Add Html content" onclick="javascript:addAnItem('haven_bundle_cmsbundle_pagetype_html_contents');" />
     </li>
     <li>
-        <input type=button value="Add Text content" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_text_contents');" />
+        <input type=button value="Add Text content" onclick="javascript:addAnItem('haven_bundle_cmsbundle_pagetype_text_contents');" />
     </li>
     <li>
-        <input type=button value="Add News Widget" onclick="javascript:addAnItem('evocatio_bundle_cmsbundle_pagetype_news_widgets');" />
+        <input type=button value="Add News Widget" onclick="javascript:addAnItem('haven_bundle_cmsbundle_pagetype_news_widgets');" />
     </li>
 </ul>
 <p>
@@ -26,7 +26,7 @@
 
 {% block delete %}
 <li>
-   {# <form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
+   {# <form action="{{ path('HavenPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
         <button type="submit">Delete</button>
     </form>#}

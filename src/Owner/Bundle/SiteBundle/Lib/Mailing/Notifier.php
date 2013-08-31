@@ -2,8 +2,8 @@
 
 namespace Owner\Bundle\SiteBundle\Lib\Mailing;
 
-use Evocatio\Bundle\CoreBundle\Lib\Mailing\MailMessage;
-use Evocatio\Bundle\CoreBundle\Lib\Mailing\Notifier as BaseNotifier;
+use Haven\Bundle\CoreBundle\Lib\Mailing\MailMessage;
+use Haven\Bundle\CoreBundle\Lib\Mailing\Notifier as BaseNotifier;
 
 class Notifier extends BaseNotifier {
 

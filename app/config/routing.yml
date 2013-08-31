@@ -7,23 +7,23 @@ root:
         path: /fr/admin/lister/page
         permanent: true
 
-EvocatioCoreBundle:
-    resource: "@EvocatioCoreBundle/Resources/config/routing.yml"
+HavenCoreBundle:
+    resource: "@HavenCoreBundle/Resources/config/routing.yml"
 #    
-#EvocatioPersonaBundle:
-#    resource: "@EvocatioPersonaBundle/Resources/config/routing.yml"
+#HavenPersonaBundle:
+#    resource: "@HavenPersonaBundle/Resources/config/routing.yml"
 #    
-#EvocatioSecurityBundle:
-#    resource: "@EvocatioSecurityBundle/Resources/config/routing.yml"
+#HavenSecurityBundle:
+#    resource: "@HavenSecurityBundle/Resources/config/routing.yml"
 #    
-#EvocatioWebBundle:
-#    resource: "@EvocatioWebBundle/Resources/config/routing.yml"
+#HavenWebBundle:
+#    resource: "@HavenWebBundle/Resources/config/routing.yml"
 #    
-#EvocatioCmsBundle:
-#    resource: "@EvocatioCmsBundle/Resources/config/routing.yml"
+#HavenCmsBundle:
+#    resource: "@HavenCmsBundle/Resources/config/routing.yml"
 
-#EvocatioMediaBundle:
-#    resource: "@EvocatioMediaBundle/Controller/FileController.php"
+#HavenMediaBundle:
+#    resource: "@HavenMediaBundle/Controller/FileController.php"
 #    type:     annotation
 #    prefix:   /
     
@@ -31,14 +31,14 @@ OwnerSiteBundle:
     resource: "@OwnerSiteBundle/Resources/config/routing.yml"
        
   
-evocatio_portfolio:
-    resource: "@EvocatioPortfolioBundle/Controller/"
+haven_portfolio:
+    resource: "@HavenPortfolioBundle/Controller/"
     type:     annotation
     prefix:   /
 
 owner_site_menu_showmenulink:
     path:  /{_locale}/{slug}
-    defaults: { _controller: EvocatioCmsBundle:Menu:showMenuLink }
+    defaults: { _controller: HavenCmsBundle:Menu:showMenuLink }
     requirements:  
         slug : .+
     methods:  [GET]

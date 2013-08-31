@@ -3,7 +3,7 @@
 namespace Owner\Bundle\SiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Evocatio\Bundle\CoreBundle\Entity\TranslationMappedBase;
+use Haven\Bundle\CoreBundle\Entity\TranslationMappedBase;
 
 class ProfileTranslation extends TranslationMappedBase {
 

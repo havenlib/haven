@@ -3,7 +3,7 @@
 namespace Owner\Bundle\SiteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Evocatio\Bundle\MediaBundle\Controller\FileController as BaseFileController;
+use Haven\Bundle\MediaBundle\Controller\FileController as BaseFileController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
