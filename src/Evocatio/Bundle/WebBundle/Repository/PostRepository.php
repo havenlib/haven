@@ -144,6 +144,7 @@ class PostRepository extends StatusRepository {
     private function filterByLang($lang) {
 
         $this->query_builder
+//                ->leftJoin("t.trans_lang", "tl")
                 ->andWhere("tl.symbol= :language")
                 ->setParameter("language", $lang)
         ;
@@ -166,7 +167,8 @@ class PostRepository extends StatusRepository {
 //        $query_builder = $this->createQueryBuilder("e");
         $this->query_builder->orderBy("e.created_at", "ASC")
                 ->setMaxResults($qt);
-        $this->query_builder = $this->filterOnlines();
+        $this->filterOnlines();
+        $this->filterTranslationByStatus(PostTranslation::STATUS_PUBLISHED);
 
 
         return $this->query_builder->getQuery()->getResult();

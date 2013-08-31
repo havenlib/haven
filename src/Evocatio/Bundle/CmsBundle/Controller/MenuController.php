@@ -193,9 +193,9 @@ class MenuController extends ContainerAware {
         if ($edit_form->isValid()) {
             $type = $entity->getNode()->getType();
             if (!$entity->hasParent()) {
-                $this->container->get("menu.persistence_handler")->createRootMenu($edit_form->getData());
+                $this->container->get("menu.persistence_handler")->save($edit_form->getData());
             } else if (!empty($type)) {
-                $parent = $entity->getParent();
+//                $parent = $entity->getParent();
                 switch ($type) {
                     case "external" :
 //                        $edit_form->getData()->setType('external');
@@ -273,10 +273,15 @@ class MenuController extends ContainerAware {
      * @Route("/menu/build/{root}/{depth}")
      * @Template
      * @param type $root
-     * @param type $drillDown
+     * @param type $depth
      */
     public function buildMenuAction($root, $depth = null) {
-        $entity = $this->container->get('menu.read_handler')->get($root);
+        if(is_numeric($root)){
+            $entity = $this->container->get('menu.read_handler')->get($root);
+        }else{
+            $entity = $this->container->get('menu.read_handler')->getRootMenuByName($root);
+        }
+        
 
 //        $list = $entity->getDescendants();
 
