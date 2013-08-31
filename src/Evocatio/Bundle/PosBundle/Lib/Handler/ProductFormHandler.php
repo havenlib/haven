@@ -34,17 +34,23 @@ class ProductFormHandler extends FormHandler {
      */
     public function createEditForm($id) {
         $entity = $this->read_handler->get($id);
-        return $form = $this->doCreate("Evocatio\Bundle\PosBundle\Form\ProductType", $entity);
+
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $form = $this->form_factory->create(new \Evocatio\Bundle\PosBundle\Form\ProductType(), $entity);
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     public function createNewForm() {
-        return $form = $this->doCreate("Evocatio\Bundle\PosBundle\Form\ProductType");
+
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $form = $this->form_factory->create(new \Evocatio\Bundle\PosBundle\Form\ProductType());
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
-    protected function doCreate($type, $entity = null) {
-        $type = is_object($type) ? $type : new $type();
-        return $this->form_factory->create($type, $entity);
-    }
 
     /**
      * Create the simple delete form
@@ -53,24 +59,32 @@ class ProductFormHandler extends FormHandler {
      * @return form
      */
     public function createDeleteForm($id) {
-        return $this->form_factory->createBuilder('form', array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->add('delete', 'submit')
-                        ->getForm()
-        ;
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $this->form_factory->createBuilder('form', array('id' => $id))
+                            ->add('id', 'hidden')
+                            ->add('delete', 'submit')
+                            ->getForm()
+            ;
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
-    
+
     /**
      * @param integer $id
      * @return form
      */
     public function createRankForm($id, $rank) {
-        return $this->form_factory->createBuilder('form', array('id' => $id, 'rank' => $rank))
-                        ->add('id', 'hidden')
-                        ->add('rank')
-                        ->add('perform.ranking', 'submit')
-                        ->getForm()
-        ;
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $this->form_factory->createBuilder('form', array('id' => $id, 'rank' => $rank))
+                            ->add('id', 'hidden')
+                            ->add('rank')
+                            ->add('perform.ranking', 'submit')
+                            ->getForm()
+            ;
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
 }

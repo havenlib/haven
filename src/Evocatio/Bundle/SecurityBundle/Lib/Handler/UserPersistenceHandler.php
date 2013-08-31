@@ -33,19 +33,31 @@ class UserPersistenceHandler {
 
     public function save($entity) {
 
-        if (0 !== strlen($password = $entity->getPlainPassword())) {
-            $encoder = $this->encoder_factory->getEncoder($entity);
-            $entity->setPassword($encoder->encodePassword($password, $entity->getSalt()));
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            if (0 !== strlen($password = $entity->getPlainPassword())) {
+                $encoder = $this->encoder_factory->getEncoder($entity);
+                $entity->setPassword($encoder->encodePassword($password, $entity->getSalt()));
+            }
+
+            $this->em->persist($entity);
+            $this->em->flush();
+
+            return true;
         }
 
-        $this->em->persist($entity);
-        $this->em->flush();
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     public function delete($id) {
-        $entity = $this->read_handler->get($id);
-        $this->em->remove($entity);
-        $this->em->flush();
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            $entity = $this->read_handler->get($id);
+            $this->em->remove($entity);
+            $this->em->flush();
+
+            return true;
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
 //    public function saveWithReset($entity) {
@@ -61,7 +73,7 @@ class UserPersistenceHandler {
 //    }
 
     public function createReset($entity) {
-        $this->removeOldReset($entity);
+        $this->removeResets($entity);
 
         $reset = new UserReset();
         $reset->setUser($entity);
@@ -72,7 +84,7 @@ class UserPersistenceHandler {
         return $reset;
     }
 
-    public function removeOldReset($entity) {
+    public function removeResets($entity) {
         $resets = $this->em->createQuery("SELECT ur FROM EvocatioSecurityBundle:UserReset ur WHERE ur.user = :id")
                 ->setParameter("id", $entity->getId())
                 ->getResult();

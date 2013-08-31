@@ -27,26 +27,23 @@ class ProjectFormHandler {
     }
 
     /**
-     * Pour rajouter des droits d'accès, surcharger la méthode et utiliser SecurityContext.
-     * 
      * @return Form 
      */
     public function createEditForm($id) {
-        $entity = $this->read_handler->get($id);
-        return $form = $this->doCreate('Evocatio\Bundle\PortfolioBundle\Form\ProjectType', $entity);
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            $entity = $this->read_handler->get($id);
+            return $this->form_factory->create(new \Evocatio\Bundle\PortfolioBundle\Form\ProjectType(), $entity);
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
-    /**
-     * Pour rajouter des droits d'accès, surcharger la méthode et utiliser SecurityContext.
-     * 
-     */
     public function createNewForm() {
-        return $form = $this->doCreate('Evocatio\Bundle\PortfolioBundle\Form\ProjectType');
-    }
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $this->form_factory->create(new \Evocatio\Bundle\PortfolioBundle\Form\ProjectType());
+        }
 
-    protected function doCreate($type, $entity = null) {
-        $type = is_object($type) ? $type : new $type();
-        return $this->form_factory->create($type, $entity);
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     /**
@@ -56,11 +53,15 @@ class ProjectFormHandler {
      * @return form
      */
     public function createDeleteForm($id) {
-        return $this->form_factory->createBuilder('form', array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->add('delete', 'submit')
-                        ->getForm()
-        ;
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $this->form_factory->createBuilder('form', array('id' => $id))
+                            ->add('id', 'hidden')
+                            ->add('delete', 'submit')
+                            ->getForm()
+            ;
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
 }

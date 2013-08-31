@@ -35,7 +35,11 @@ class PostReadHandler {
     }
 
     public function getAll() {
-        return $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Post")->findAll();
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Post")->findAll();
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     public function getAllPublished() {
@@ -47,7 +51,11 @@ class PostReadHandler {
     }
 
     public function getAllOrderedByRank() {
-        return $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Post")->findAllOrderedByRank();
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            return $this->em->getRepository("Evocatio\Bundle\WebBundle\Entity\Post")->findAllOrderedByRank();
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     public function getByLocalizedSlug($slug, $language) {

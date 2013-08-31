@@ -27,47 +27,77 @@ class PostPersistenceHandler {
         $this->read_handler = $read_handler;
     }
 
-    public function save($entity) {
-        $this->em->persist($entity);
-        $this->em->flush();
+    public function save($entity, $rank = false) {
+        if (!$this->security_context->isGranted('ROLE_Admin')) {
+            $this->em->persist($entity);
+            $this->em->flush();
+
+            /**
+             * Set the default rank to max rank + 1
+             */
+            if ($rank)
+                $this->em->getConnection()->exec("UPDATE Post AS p, (SELECT IFNULL(MAX(rank), 0) AS rank FROM Post) p2 SET p.rank = p2.rank + 1 WHERE p.id = " . $entity->getId());
+
+            return true;
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     public function batchSave($entities) {
-        foreach ($entities as $entity) {
-            $this->em->persist($entity);
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+
+            foreach ($entities as $entity) {
+                $this->em->persist($entity);
+            }
+            $this->em->flush();
+
+            return true;
         }
-        $this->em->flush();
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     public function rank($entity, $new_rank) {
 
-        $entities = $this->em->getRepository('EvocatioWebBundle:Post')->findAllFromRank($new_rank, $old_rank = $entity->getRank(), $entity->getId());
-        $rank = ($new_rank < $old_rank) ? $new_rank : $old_rank;
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            $entities = $this->em->getRepository('EvocatioWebBundle:Post')->findAllFromRank($new_rank, $old_rank = $entity->getRank(), $entity->getId());
+            $rank = ($new_rank < $old_rank) ? $new_rank : $old_rank;
 
-        foreach ($entities as $e) {
-            $e->setRank(($old_rank - $new_rank > 0) ? ++$rank : $rank++);
-            $this->em->persist($e);
+            foreach ($entities as $e) {
+                $e->setRank(($old_rank - $new_rank > 0) ? ++$rank : $rank++);
+                $this->em->persist($e);
+            }
+
+            $entity->setRank($new_rank);
+            $this->em->persist($entity);
+            $this->em->flush();
+
+            return true;
         }
 
-        $entity->setRank($new_rank);
-        $this->em->persist($entity);
-        $this->em->flush();
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
-    public function firstSave($entity) {
-        $this->em->persist($entity);
-        $this->em->flush();
-
-        /**
-         * Set the default rank to max rank + 1
-         */
-        $this->em->getConnection()->exec("UPDATE Post AS p, (SELECT IFNULL(MAX(rank), 0) AS rank FROM Post) p2 SET p.rank = p2.rank + 1 WHERE p.id = " . $entity->getId());
-    }
+//    public function firstSave($entity) {
+//        if ($this->security_context->isGranted('ROLE_Admin')) {
+//            $this->em->persist($entity);
+//            $this->em->flush();
+//
+//
+//            return true;
+//        }
+//
+//        throw new AccessDeniedException("you.dont.have.right.for.this.action");
+//    }
 
     public function delete($id) {
-        $entity = $this->read_handler->get($id);
-        $this->em->remove($entity);
-        $this->em->flush();
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            $entity = $this->read_handler->get($id);
+            $this->em->remove($entity);
+            $this->em->flush();
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
 }

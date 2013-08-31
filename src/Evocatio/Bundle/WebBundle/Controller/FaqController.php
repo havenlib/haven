@@ -99,7 +99,7 @@ class FaqController extends ContainerAware {
 
 
         if ($edit_form->isValid()) {
-            $this->container->get("evocatio_web.faq.persistence_handler")->firstSave($edit_form->getData());
+            $this->container->get("evocatio_web.faq.persistence_handler")->save($edit_form->getData(), true);
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
 
             return new RedirectResponse($this->container->get('router')->generate(str_replace('update', "list", $this->container->get("request")->get("_route"))));

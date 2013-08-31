@@ -240,6 +240,7 @@ class UserController extends ContainerAware {
 
         $form = $this->container->get("form.factory")->create(new \Evocatio\Bundle\SecurityBundle\Form\ConfirmType());
         $form->bind($this->container->get('request'));
+        
 
         if ($form->isValid()) {
 
@@ -252,11 +253,11 @@ class UserController extends ContainerAware {
             $user->setPassword($encoder->encodePassword($form->get('plainPassword')->get('first')->getData(), $user->getSalt()));
 
             $this->container->get("user.persistence_handler")->save($user);
-            $this->container->get("user.persistence_handler")->removeOldReset($user);
+            $this->container->get("user.persistence_handler")->removeResets($user);
 
             $this->container->get("session")->getFlashBag()->add("success", "congratulation.password.changed.now.connect");
 
-            return new RedirectResponse($this->container->get('router')->generate(str_replace('performReset', "index", $this->container->get("request")->get("_route"))));
+            return new RedirectResponse($this->container->get('router')->generate(str_replace('performreset', "index", $this->container->get("request")->get("_route"))));
         }
 
         $template = str_replace(":performReset.html.twig", ":reset.html.twig", $this->container->get("request")->get('_template'));

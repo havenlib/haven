@@ -28,21 +28,39 @@ class ProductPersistenceHandler {
     }
 
     public function save($entity) {
-        $this->em->persist($entity);
-        $this->em->flush();
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            $this->em->persist($entity);
+            $this->em->flush();
+
+            return true;
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     public function batchSave($entities) {
-        foreach ($entities as $entity) {
-            $this->em->persist($entity);
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            foreach ($entities as $entity) {
+                $this->em->persist($entity);
+            }
+            $this->em->flush();
+
+            return true;
         }
-        $this->em->flush();
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
     public function delete($id) {
-        $entity = $this->read_handler->get($id);
-        $this->em->remove($entity);
-        $this->em->flush();
+        if ($this->security_context->isGranted('ROLE_Admin')) {
+            $entity = $this->read_handler->get($id);
+            $this->em->remove($entity);
+            $this->em->flush();
+
+            return true;
+        }
+
+        throw new AccessDeniedException("you.dont.have.right.for.this.action");
     }
 
 }
