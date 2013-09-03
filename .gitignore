@@ -15,7 +15,6 @@ app/config/parameters.yml
 app/config/parameters_dev.yml
 app/config/apache.conf
 # netbeans
+nbproject
 nbproject/private/*
 
-#the pdf creator's log
-src/Slik/DompdfBundle/DomPDF/lib/fonts/log*
