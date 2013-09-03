@@ -1,7 +1,0 @@
-<div class="switch-language">
-{% for language in languages %}
-    {% if app.request.get('_locale')|lower not in language.symbol|lower %}
-        <a href="{{ path('change_language') }}?lang={{ language.symbol }}" >{{ language.getLanguage().getName()| capitalize }}</a>
-    {% endif %}
-{% endfor %}
-</div>

@@ -91,9 +91,12 @@ class Post extends Translatable {
     protected $categories;
 
     /**
-     * @Assert\File(maxSize="6000000")
+     * @ORM\ManyToMany(targetEntity="Haven\Bundle\MediaBundle\Entity\File")
+     * @ORM\JoinTable(name="PostsFiles",
+     * joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
+     * inverseJoinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")})
      */
-    public $file;
+    public $files;
 
     public function __construct() {
         $this->setCreatedAt(new \DateTime());
@@ -109,10 +112,6 @@ class Post extends Translatable {
      */
     public function getId() {
         return $this->id;
-    }
-
-    public function getFile() {
-        return $this->file;
     }
 
     /**

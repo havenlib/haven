@@ -1,4 +1,0 @@
-{% extends entity.getTemplate() is empty?"OwnerSiteBundle::base_admin.html.twig":entity.getTemplate().getPath() %}
-{% block inside_body %}
-{{ parent() }}
-{% endblock inside_body %}
