@@ -15,20 +15,14 @@ use Symfony\Component\Process\Process;
 
 class SimpleProcessTest extends AbstractProcessTest
 {
+    private $enabledSigchild = false;
 
-    protected function skipIfPHPSigchild()
+    public function setUp()
     {
         ob_start();
         phpinfo(INFO_GENERAL);
 
-        if (false !== strpos(ob_get_clean(), '--enable-sigchild')) {
-            $this->markTestSkipped('Your PHP has been compiled with --enable-sigchild, this test can not be executed');
-        }
-    }
-
-    protected function getProcess($commandline, $cwd = null, array $env = null, $stdin = null, $timeout = 60, array $options = array())
-    {
-        return new Process($commandline, $cwd, $env, $stdin, $timeout, $options);
+        $this->enabledSigchild = false !== strpos(ob_get_clean(), '--enable-sigchild');
     }
 
     public function testGetExitCode()
@@ -83,5 +77,71 @@ class SimpleProcessTest extends AbstractProcessTest
     {
         $this->skipIfPHPSigchild();
         parent::testIsNotSuccessful();
+    }
+
+    public function testGetPid()
+    {
+        $this->skipIfPHPSigchild();
+        parent::testGetPid();
+    }
+
+    public function testGetPidIsNullBeforeStart()
+    {
+        $this->skipIfPHPSigchild();
+        parent::testGetPidIsNullBeforeStart();
+    }
+
+    public function testGetPidIsNullAfterRun()
+    {
+        $this->skipIfPHPSigchild();
+        parent::testGetPidIsNullAfterRun();
+    }
+
+    public function testSignal()
+    {
+        $this->skipIfPHPSigchild();
+        parent::testSignal();
+    }
+
+    /**
+     * @expectedException Symfony\Component\Process\Exception\LogicException
+     */
+    public function testSignalProcessNotRunning()
+    {
+        $this->skipIfPHPSigchild();
+        parent::testSignalProcessNotRunning();
+    }
+
+    /**
+     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     */
+    public function testSignalWithWrongIntSignal()
+    {
+        $this->skipIfPHPSigchild();
+        parent::testSignalWithWrongIntSignal();
+    }
+
+    /**
+     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     */
+    public function testSignalWithWrongNonIntSignal()
+    {
+        $this->skipIfPHPSigchild();
+        parent::testSignalWithWrongNonIntSignal();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getProcess($commandline, $cwd = null, array $env = null, $stdin = null, $timeout = 60, array $options = array())
+    {
+        return new Process($commandline, $cwd, $env, $stdin, $timeout, $options);
+    }
+
+    private function skipIfPHPSigchild()
+    {
+        if ($this->enabledSigchild) {
+            $this->markTestSkipped('Your PHP has been compiled with --enable-sigchild, this test can not be executed');
+        }
     }
 }

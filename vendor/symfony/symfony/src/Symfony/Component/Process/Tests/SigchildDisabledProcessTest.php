@@ -13,17 +13,8 @@ namespace Symfony\Component\Process\Tests;
 
 class SigchildDisabledProcessTest extends AbstractProcessTest
 {
-
-    protected function getProcess($commandline, $cwd = null, array $env = null, $stdin = null, $timeout = 60, array $options = array())
-    {
-        $process = new ProcessInSigchildEnvironment($commandline, $cwd, $env, $stdin, $timeout, $options);
-        $process->setEnhanceSigchildCompatibility(false);
-
-        return $process;
-    }
-
     /**
-     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     * @expectedException \Symfony\Component\Process\Exception\RuntimeException
      */
     public function testGetExitCode()
     {
@@ -31,7 +22,7 @@ class SigchildDisabledProcessTest extends AbstractProcessTest
     }
 
     /**
-     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     * @expectedException \Symfony\Component\Process\Exception\RuntimeException
      */
     public function testExitCodeCommandFailed()
     {
@@ -39,7 +30,7 @@ class SigchildDisabledProcessTest extends AbstractProcessTest
     }
 
     /**
-     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     * @expectedException \Symfony\Component\Process\Exception\RuntimeException
      */
     public function testProcessIsSignaledIfStopped()
     {
@@ -47,7 +38,7 @@ class SigchildDisabledProcessTest extends AbstractProcessTest
     }
 
     /**
-     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     * @expectedException \Symfony\Component\Process\Exception\RuntimeException
      */
     public function testProcessWithTermSignal()
     {
@@ -55,7 +46,7 @@ class SigchildDisabledProcessTest extends AbstractProcessTest
     }
 
     /**
-     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     * @expectedException \Symfony\Component\Process\Exception\RuntimeException
      */
     public function testProcessIsNotSignaled()
     {
@@ -63,11 +54,35 @@ class SigchildDisabledProcessTest extends AbstractProcessTest
     }
 
     /**
-     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     * @expectedException \Symfony\Component\Process\Exception\RuntimeException
      */
     public function testProcessWithoutTermSignal()
     {
         parent::testProcessWithoutTermSignal();
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Process\Exception\RuntimeException
+     */
+    public function testGetPid()
+    {
+        parent::testGetPid();
+    }
+
+    /**
+     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     */
+    public function testGetPidIsNullBeforeStart()
+    {
+        parent::testGetPidIsNullBeforeStart();
+    }
+
+    /**
+     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     */
+    public function testGetPidIsNullAfterRun()
+    {
+        parent::testGetPidIsNullAfterRun();
     }
 
     /**
@@ -82,7 +97,7 @@ class SigchildDisabledProcessTest extends AbstractProcessTest
     }
 
     /**
-     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     * @expectedException \Symfony\Component\Process\Exception\RuntimeException
      */
     public function testIsSuccessful()
     {
@@ -90,10 +105,47 @@ class SigchildDisabledProcessTest extends AbstractProcessTest
     }
 
     /**
-     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     * @expectedException \Symfony\Component\Process\Exception\RuntimeException
      */
     public function testIsNotSuccessful()
     {
         parent::testIsNotSuccessful();
+    }
+
+    /**
+     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     */
+    public function testSignal()
+    {
+        parent::testSignal();
+    }
+
+    /**
+     * @expectedException Symfony\Component\Process\Exception\RuntimeException
+     */
+    public function testProcessWithoutTermSignalIsNotSignaled()
+    {
+        parent::testProcessWithoutTermSignalIsNotSignaled();
+    }
+
+    public function testStopWithTimeoutIsActuallyWorking()
+    {
+        $this->markTestSkipped('Stopping with signal is not supported in sigchild environment');
+    }
+
+    public function testProcessThrowsExceptionWhenExternallySignaled()
+    {
+        $this->markTestSkipped('Retrieving Pid is not supported in sigchild environment');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getProcess($commandline, $cwd = null, array $env = null, $stdin = null, $timeout = 60, array $options = array())
+    {
+        $process = new ProcessInSigchildEnvironment($commandline, $cwd, $env, $stdin, $timeout, $options);
+        $process->setEnhanceSigchildCompatibility(false);
+
+        return $process;
     }
 }

@@ -26,6 +26,10 @@ class ModelChoiceListTest extends Propel1TestCase
         if (!class_exists('Symfony\Component\Form\Form')) {
             $this->markTestSkipped('The "Form" component is not available');
         }
+
+        if (!class_exists('Symfony\Component\PropertyAccess\PropertyAccessor')) {
+            $this->markTestSkipped('The "PropertyAccessor" component is not available');
+        }
     }
 
     public function testEmptyChoicesReturnsEmpty()
@@ -68,6 +72,29 @@ class ModelChoiceListTest extends Propel1TestCase
         );
 
         $this->assertSame(array(1 => $item1, 2 => $item2), $choiceList->getChoices());
+    }
+
+    public function testFlattenedPreferredChoices()
+    {
+        $item1 = new Item(1, 'Foo');
+        $item2 = new Item(2, 'Bar');
+
+        $choiceList = new ModelChoiceList(
+            self::ITEM_CLASS,
+            'value',
+            array(
+                $item1,
+                $item2,
+            ),
+            null,
+            null,
+            array(
+                $item1
+            )
+        );
+
+        $this->assertSame(array(1 => $item1, 2 => $item2), $choiceList->getChoices());
+        $this->assertEquals(array(1 => new ChoiceView($item1, '1', 'Foo')), $choiceList->getPreferredViews());
     }
 
     public function testNestedChoices()
@@ -157,5 +184,19 @@ class ModelChoiceListTest extends Propel1TestCase
 
         $this->assertEquals(array(1, 2), $choiceList->getValuesForChoices(array($item1, $item2)));
         $this->assertEquals(array(1, 2), $choiceList->getIndicesForChoices(array($item1, $item2)));
+    }
+
+    public function testDifferentEqualObjectsAreChoosen()
+    {
+        $item = new Item(1, 'Foo');
+        $choiceList = new ModelChoiceList(
+            self::ITEM_CLASS,
+            'value',
+            array($item)
+        );
+
+        $choosenItem = new Item(1, 'Foo');
+
+        $this->assertEquals(array(1), $choiceList->getIndicesForChoices(array($choosenItem)));
     }
 }

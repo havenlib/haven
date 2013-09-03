@@ -11,20 +11,15 @@
 
 namespace Symfony\Component\Form\Tests;
 
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormTypeGuesserChain;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\Guess\Guess;
 use Symfony\Component\Form\Guess\ValueGuess;
 use Symfony\Component\Form\Guess\TypeGuess;
 use Symfony\Component\Form\Tests\Fixtures\Author;
-use Symfony\Component\Form\Tests\Fixtures\AuthorType;
-use Symfony\Component\Form\Tests\Fixtures\TestExtension;
 use Symfony\Component\Form\Tests\Fixtures\FooType;
 use Symfony\Component\Form\Tests\Fixtures\FooSubType;
 use Symfony\Component\Form\Tests\Fixtures\FooSubTypeWithParentInstance;
-use Symfony\Component\Form\Tests\Fixtures\FooTypeBarExtension;
-use Symfony\Component\Form\Tests\Fixtures\FooTypeBazExtension;
 
 /**
  * @author Bernhard Schussek <bschussek@gmail.com>
@@ -74,50 +69,6 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
                 $this->guesser1,
                 $this->guesser2,
             ))));
-    }
-
-    public function testAddType()
-    {
-        $type = new FooType();
-        $resolvedType = $this->getMockResolvedType();
-
-        $this->resolvedTypeFactory->expects($this->once())
-            ->method('createResolvedType')
-            ->with($type)
-            ->will($this->returnValue($resolvedType));
-
-        $this->registry->expects($this->once())
-            ->method('addType')
-            ->with($resolvedType);
-
-        $this->factory->addType($type);
-    }
-
-    public function testHasType()
-    {
-        $this->registry->expects($this->once())
-            ->method('hasType')
-            ->with('name')
-            ->will($this->returnValue('RESULT'));
-
-        $this->assertSame('RESULT', $this->factory->hasType('name'));
-    }
-
-    public function testGetType()
-    {
-        $type = new FooType();
-        $resolvedType = $this->getMockResolvedType();
-
-        $resolvedType->expects($this->once())
-            ->method('getInnerType')
-            ->will($this->returnValue($type));
-
-        $this->registry->expects($this->once())
-            ->method('getType')
-            ->with('name')
-            ->will($this->returnValue($resolvedType));
-
-        $this->assertEquals($type, $this->factory->getType('name'));
     }
 
     public function testCreateNamedBuilderWithTypeName()
@@ -220,25 +171,6 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('BUILDER', $this->factory->createNamedBuilder('name', $resolvedType, null, $options));
     }
 
-    public function testCreateNamedBuilderWithParentBuilder()
-    {
-        $options = array('a' => '1', 'b' => '2');
-        $parentBuilder = $this->getMockFormBuilder();
-        $resolvedType = $this->getMockResolvedType();
-
-        $this->registry->expects($this->once())
-            ->method('getType')
-            ->with('type')
-            ->will($this->returnValue($resolvedType));
-
-        $resolvedType->expects($this->once())
-            ->method('createBuilder')
-            ->with($this->factory, 'name', $options, $parentBuilder)
-            ->will($this->returnValue('BUILDER'));
-
-        $this->assertSame('BUILDER', $this->factory->createNamedBuilder('name', 'type', null, $options, $parentBuilder));
-    }
-
     public function testCreateNamedBuilderFillsDataOption()
     {
         $givenOptions = array('a' => '1', 'b' => '2');
@@ -277,7 +209,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @expectedException        \Symfony\Component\Form\Exception\UnexpectedTypeException
      * @expectedExceptionMessage Expected argument of type "string, Symfony\Component\Form\ResolvedFormTypeInterface or Symfony\Component\Form\FormTypeInterface", "stdClass" given
      */
     public function testCreateNamedBuilderThrowsUnderstandableException()
@@ -351,6 +283,24 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('FORM'));
 
         $this->assertSame('FORM', $this->factory->createNamed('name', 'type', null, $options));
+    }
+
+    public function testCreateBuilderForPropertyWithoutTypeGuesser()
+    {
+        $registry = $this->getMock('Symfony\Component\Form\FormRegistryInterface');
+        $factory = $this->getMockBuilder('Symfony\Component\Form\FormFactory')
+            ->setMethods(array('createNamedBuilder'))
+            ->setConstructorArgs(array($registry, $this->resolvedTypeFactory))
+            ->getMock();
+
+        $factory->expects($this->once())
+            ->method('createNamedBuilder')
+            ->with('firstName', 'text', null, array())
+            ->will($this->returnValue('builderInstance'));
+
+        $builder = $factory->createBuilderForProperty('Application\Author', 'firstName');
+
+        $this->assertEquals('builderInstance', $builder);
     }
 
     public function testCreateBuilderForPropertyCreatesFormWithHighestConfidence()
@@ -465,74 +415,6 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('builderInstance', $builder);
     }
 
-    public function testCreateBuilderUsesMinLengthIfFound()
-    {
-        $this->guesser1->expects($this->once())
-                ->method('guessMinLength')
-                ->with('Application\Author', 'firstName')
-                ->will($this->returnValue(new ValueGuess(
-                    2,
-                    Guess::MEDIUM_CONFIDENCE
-                )));
-
-        $this->guesser2->expects($this->once())
-                ->method('guessMinLength')
-                ->with('Application\Author', 'firstName')
-                ->will($this->returnValue(new ValueGuess(
-                    5,
-                    Guess::HIGH_CONFIDENCE
-                )));
-
-        $factory = $this->getMockFactory(array('createNamedBuilder'));
-
-        $factory->expects($this->once())
-            ->method('createNamedBuilder')
-            ->with('firstName', 'text', null, array('pattern' => '.{5,}'))
-            ->will($this->returnValue('builderInstance'));
-
-        $builder = $factory->createBuilderForProperty(
-            'Application\Author',
-            'firstName'
-        );
-
-        $this->assertEquals('builderInstance', $builder);
-    }
-
-    public function testCreateBuilderPrefersPatternOverMinLength()
-    {
-        // min length is deprecated
-        $this->guesser1->expects($this->once())
-                ->method('guessMinLength')
-                ->with('Application\Author', 'firstName')
-                ->will($this->returnValue(new ValueGuess(
-                    2,
-                    Guess::HIGH_CONFIDENCE
-                )));
-
-        // pattern is preferred even though confidence is lower
-        $this->guesser2->expects($this->once())
-                ->method('guessPattern')
-                ->with('Application\Author', 'firstName')
-                ->will($this->returnValue(new ValueGuess(
-                    '.{5,10}',
-                    Guess::LOW_CONFIDENCE
-                )));
-
-        $factory = $this->getMockFactory(array('createNamedBuilder'));
-
-        $factory->expects($this->once())
-            ->method('createNamedBuilder')
-            ->with('firstName', 'text', null, array('pattern' => '.{5,10}'))
-            ->will($this->returnValue('builderInstance'));
-
-        $builder = $factory->createBuilderForProperty(
-            'Application\Author',
-            'firstName'
-        );
-
-        $this->assertEquals('builderInstance', $builder);
-    }
-
     public function testCreateBuilderUsesRequiredSettingWithHighestConfidence()
     {
         $this->guesser1->expects($this->once())
@@ -619,6 +501,6 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
 
     private function getMockFormBuilder()
     {
-        return $this->getMock('Symfony\Component\Form\Tests\FormBuilderInterface');
+        return $this->getMock('Symfony\Component\Form\Test\FormBuilderInterface');
     }
 }

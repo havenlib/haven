@@ -14,7 +14,6 @@ namespace Symfony\Component\Form\Tests;
 use Symfony\Component\Form\ResolvedFormType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\FormConfigBuilder;
 use Symfony\Component\Form\Form;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -55,6 +54,10 @@ class ResolvedFormTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateBuilder()
     {
+        if (version_compare(\PHPUnit_Runner_Version::id(), '3.7', '<')) {
+            $this->markTestSkipped('This test requires PHPUnit 3.7.');
+        }
+
         $parentType = $this->getMockFormType();
         $type = $this->getMockFormType();
         $extension1 = $this->getMockFormTypeExtension();
@@ -69,7 +72,7 @@ class ResolvedFormTypeTest extends \PHPUnit_Framework_TestCase
         $assertIndex = function ($index) use (&$i, $test) {
             return function () use (&$i, $test, $index) {
                 /* @var \PHPUnit_Framework_TestCase $test */
-                $test->assertEquals($index, $i, 'Executed at index ' . $index);
+                $test->assertEquals($index, $i, 'Executed at index '.$index);
 
                 ++$i;
             };
@@ -131,10 +134,8 @@ class ResolvedFormTypeTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnCallback($assertIndex(7)));
 
         $factory = $this->getMockFormFactory();
-        $parentBuilder = $this->getBuilder('parent');
-        $builder = $resolvedType->createBuilder($factory, 'name', $givenOptions, $parentBuilder);
+        $builder = $resolvedType->createBuilder($factory, 'name', $givenOptions);
 
-        $this->assertSame($parentBuilder, $builder->getParent());
         $this->assertSame($resolvedType, $builder->getType());
     }
 
@@ -167,7 +168,7 @@ class ResolvedFormTypeTest extends \PHPUnit_Framework_TestCase
         $assertIndexAndNbOfChildViews = function ($index, $nbOfChildViews) use (&$i, $test) {
             return function (FormView $view) use (&$i, $test, $index, $nbOfChildViews) {
                 /* @var \PHPUnit_Framework_TestCase $test */
-                $test->assertEquals($index, $i, 'Executed at index ' . $index);
+                $test->assertEquals($index, $i, 'Executed at index '.$index);
                 $test->assertCount($nbOfChildViews, $view);
 
                 ++$i;

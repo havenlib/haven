@@ -1,72 +1,35 @@
-#EvocatioPosBundle:
-#    resource: "@EvocatioPosBundle/Controller/"
-#    type:     annotation
-#    prefix:   /product
-
-EvocatioLogin:
-    resource: "@EvocatioSecurityBundle/Controller/LoginController.php"
-    type:     annotation
-    prefix: /auth/
-
-EvocatioUser:
-    resource: "@EvocatioSecurityBundle/Controller/UserController.php"
-    type:     annotation
-    prefix: /{_locale}/user/
-
-EvocatioBasket:
-    resource: "@EvocatioPosBundle/Controller/BasketController.php"
-    type:     annotation
-    prefix: /{_locale}/basket/
-
-EvocatioPosGenericProduct:
-    resource: "@EvocatioPosBundle/Controller/GenericProductController.php"
-    type:     annotation
-    prefix: /{_locale}/generic/
-
-EvocatioPersonaBundle:
-    resource: "@EvocatioPersonaBundle/Controller/PersonaController.php"
-    type:     annotation
-    prefix: /{_locale}/persona/
-
-EvocatioPersonaPerson:
-    resource: "@EvocatioPersonaBundle/Controller/PersonController.php"
-    type:     annotation
-    prefix: /{_locale}/person/
-
-EvocatioPersonaPersonWithCoor:
-    resource: "@EvocatioPersonaBundle/Controller/PersonWithCoorController.php"
-    type:     annotation
-    prefix: /{_locale}/personWithCoor/
-
-EvocatioCompanyBundle:
-    resource: "@EvocatioPersonaBundle/Controller/CompanyController.php"
-    type:     annotation
-    prefix: /{_locale}/company/
-
-EvocatioPostalBundle:
-    resource: "@EvocatioPersonaBundle/Controller/PostalController.php"
-    type:     annotation
-    prefix: /{_locale}/postal/
-
-EvocatioFaqBundle:
-    resource: "@EvocatioFaqBundle/Controller/FaqController.php"
-    type:     annotation
-    prefix: /{_locale}/faq/
-#    requirements: 
-#      _locale: fr|en
-
-EvocatioPostBundle:
-    resource: "@EvocatioPostBundle/Controller/PostController.php"
-    type:     annotation
-    prefix: /{_locale}/post/
-#    requirements: 
-#      _locale: fr|en
-
-EvocatioCoreBundle:
-    resource: "@EvocatioCoreBundle/Controller/"
-    type:     annotation
-    prefix: /{_locale}/core/
-
+#
+#HavenCoreBundle:
+#    resource: "@HavenCoreBundle/Resources/config/routing.yml"
+#    
+#HavenWebBundle:
+#    resource: "@HavenWebBundle/Resources/config/routing.yml"
+#    
+#HavenMediaBundle:
+#    resource: "@HavenMediaBundle/Resources/config/routing.yml"
+#    
+#HavenSecurityBundle:
+#    resource: "@HavenSecurityBundle/Resources/config/routing.yml"
+#    
+#HavenPosBundle:
+#    resource: "@HavenPosBundle/Resources/config/routing.yml"
+#    
+#HavenPortfolioBundle:
+#    resource: "@HavenPortfolioBundle/Resources/config/routing.yml"
+#    
+#HavenPersonaBundle:
+#    resource: "@HavenPersonaBundle/Resources/config/routing.yml"
+#    
+#HavenCmsBundle:
+#    resource: "@HavenCmsBundle/Resources/config/routing.yml"
+#
+#HavenMediaBundle:
+#    resource: "@HavenMediaBundle/Resources/config/routing.yml"
+    
+OwnerSiteBundle:
+    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
+       
+    
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
     prefix:   /_wdt
