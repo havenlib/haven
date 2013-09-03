@@ -1,6 +1,5 @@
 imports:
     - { resource: "@HavenSecurityBundle/Resources/config/security.yml" }
-#    - { resource: "@OwnerSiteBundle/Resources/config/security.yml" }
     
 #security:
 #    encoders:

@@ -1,41 +1,4 @@
-
-#redirect / to /admin/lister/page c'était en autre pour un exemple de redirect pris ici : http://symfony.com/doc/current/cookbook/routing/redirect_in_config.html
-root:
-    path:     /
-    defaults:
-        _controller: FrameworkBundle:Redirect:urlRedirect
-        path: /fr/admin/lister/page
-        permanent: true
-
-HavenCoreBundle:
-    resource: "@HavenCoreBundle/Resources/config/routing.yml"
-#    
-#HavenPersonaBundle:
-#    resource: "@HavenPersonaBundle/Resources/config/routing.yml"
-#    
-#HavenSecurityBundle:
-#    resource: "@HavenSecurityBundle/Resources/config/routing.yml"
-#    
-#HavenWebBundle:
-#    resource: "@HavenWebBundle/Resources/config/routing.yml"
-#    
-#HavenCmsBundle:
-#    resource: "@HavenCmsBundle/Resources/config/routing.yml"
-
-#HavenMediaBundle:
-#    resource: "@HavenMediaBundle/Controller/FileController.php"
-#    type:     annotation
-#    prefix:   /
     
-OwnerSiteBundle:
-    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
-       
-  
-haven_portfolio:
-    resource: "@HavenPortfolioBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 owner_site_menu_showmenulink:
     path:  /{_locale}/{slug}
     defaults: { _controller: HavenCmsBundle:Menu:showMenuLink }

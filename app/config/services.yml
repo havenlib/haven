@@ -7,4 +7,3 @@ imports:
     - { resource: "@HavenCmsBundle/Resources/config/services.yml" }
     - { resource: "@HavenPortfolioBundle/Resources/config/services.yml" }
     - { resource: "@HavenMediaBundle/Resources/config/services.yml" }
-    - { resource: "@OwnerSiteBundle/Resources/config/services.yml" }

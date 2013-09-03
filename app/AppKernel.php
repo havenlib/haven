@@ -21,14 +21,12 @@ class AppKernel extends Kernel {
             new Haven\Bundle\PersonaBundle\HavenPersonaBundle(),
             new Haven\Bundle\PosBundle\HavenPosBundle(),
             new Haven\Bundle\WebBundle\HavenWebBundle(),
-            new Owner\Bundle\SiteBundle\OwnerSiteBundle(),
             new Haven\Bundle\CmsBundle\HavenCmsBundle(),
             new Haven\Bundle\PortfolioBundle\HavenPortfolioBundle(),
             new Haven\Bundle\MediaBundle\HavenMediaBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-//            $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();

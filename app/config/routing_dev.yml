@@ -1,33 +1,30 @@
-#
-#HavenCoreBundle:
-#    resource: "@HavenCoreBundle/Resources/config/routing.yml"
-#    
-#HavenWebBundle:
-#    resource: "@HavenWebBundle/Resources/config/routing.yml"
-#    
-#HavenMediaBundle:
-#    resource: "@HavenMediaBundle/Resources/config/routing.yml"
-#    
-#HavenSecurityBundle:
-#    resource: "@HavenSecurityBundle/Resources/config/routing.yml"
-#    
-#HavenPosBundle:
-#    resource: "@HavenPosBundle/Resources/config/routing.yml"
-#    
-#HavenPortfolioBundle:
-#    resource: "@HavenPortfolioBundle/Resources/config/routing.yml"
-#    
-#HavenPersonaBundle:
-#    resource: "@HavenPersonaBundle/Resources/config/routing.yml"
-#    
-#HavenCmsBundle:
-#    resource: "@HavenCmsBundle/Resources/config/routing.yml"
-#
-#HavenMediaBundle:
-#    resource: "@HavenMediaBundle/Resources/config/routing.yml"
+
+HavenCoreBundle:
+    resource: "@HavenCoreBundle/Resources/config/routing.yml"
     
-OwnerSiteBundle:
-    resource: "@OwnerSiteBundle/Resources/config/routing.yml"
+HavenWebBundle:
+    resource: "@HavenWebBundle/Resources/config/routing.yml"
+    
+HavenMediaBundle:
+    resource: "@HavenMediaBundle/Resources/config/routing.yml"
+    
+HavenSecurityBundle:
+    resource: "@HavenSecurityBundle/Resources/config/routing.yml"
+    
+HavenPosBundle:
+    resource: "@HavenPosBundle/Resources/config/routing.yml"
+    
+HavenPortfolioBundle:
+    resource: "@HavenPortfolioBundle/Resources/config/routing.yml"
+    
+HavenPersonaBundle:
+    resource: "@HavenPersonaBundle/Resources/config/routing.yml"
+    
+HavenCmsBundle:
+    resource: "@HavenCmsBundle/Resources/config/routing.yml"
+
+HavenMediaBundle:
+    resource: "@HavenMediaBundle/Resources/config/routing.yml"
        
     
 _wdt:
