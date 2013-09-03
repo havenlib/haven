@@ -1,5 +1,5 @@
 {%  extends "::base.html.twig" %}
-{% import "EvocatioPersonaBundle::macro/route/i18n.html.twig" as route_i18n_persona %}
+{% import "HavenPersonaBundle::macro/route/i18n.html.twig" as route_i18n_persona %}
 {% block inside_theater %}
 <h1>Person</h1>
 
@@ -66,7 +66,7 @@
         </a>
     </li>
     <li>
-        {#<form action="{{ path('EvocatioPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
+        {#<form action="{{ path('HavenPersonaBundle_PersonDelete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>#}

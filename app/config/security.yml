@@ -1,5 +1,5 @@
 imports:
-    - { resource: "@EvocatioSecurityBundle/Resources/config/security.yml" }
+    - { resource: "@HavenSecurityBundle/Resources/config/security.yml" }
 #    - { resource: "@OwnerSiteBundle/Resources/config/security.yml" }
     
 #security:

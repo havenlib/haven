@@ -3,7 +3,7 @@
 namespace Owner\Bundle\SiteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Evocatio\Bundle\CmsBundle\Controller\MenuController as BaseMenuController;
+use Haven\Bundle\CmsBundle\Controller\MenuController as BaseMenuController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

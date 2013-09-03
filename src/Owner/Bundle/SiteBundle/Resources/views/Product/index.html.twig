@@ -13,7 +13,7 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('evocatio_pos_product_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('haven_pos_product_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.price }}</td>
                 <td>{{ entity.status }}</td>
             </tr>
@@ -23,7 +23,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('evocatio_pos_product_create') }}">
+            <a href="{{ path('haven_pos_product_create') }}">
                 {{ "product.create.a.new.entity" | trans | capitalize }}
             </a>
         </li>

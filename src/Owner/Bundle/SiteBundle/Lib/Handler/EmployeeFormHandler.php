@@ -2,7 +2,7 @@
 
 namespace Owner\Bundle\SiteBundle\Lib\Handler;
 
-use Evocatio\Bundle\CoreBundle\Lib\Handler\FormHandler;
+use Haven\Bundle\CoreBundle\Lib\Handler\FormHandler;
 
 class EmployeeFormHandler extends FormHandler {
 

@@ -7,8 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Evocatio\Bundle\CmsBundle\Entity\PageTranslation as EntityTranslation;
-use Evocatio\Bundle\CmsBundle\Controller\PageController as BasePageController;
+use Haven\Bundle\CmsBundle\Entity\PageTranslation as EntityTranslation;
+use Haven\Bundle\CmsBundle\Controller\PageController as BasePageController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class PageController extends BasePageController {
@@ -31,7 +31,7 @@ class PageController extends BasePageController {
     }
 
     /**
-     * @Route("/page/{slug}", name="EvocatioWebBundle_PageDisplaySlug")
+     * @Route("/page/{slug}", name="HavenWebBundle_PageDisplaySlug")
      * @Method("GET")
      * @Template
      */

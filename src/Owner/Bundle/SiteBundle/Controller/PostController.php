@@ -5,7 +5,7 @@ namespace Owner\Bundle\SiteBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Evocatio\Bundle\WebBundle\Controller\PostController as BasePostController;
+use Haven\Bundle\WebBundle\Controller\PostController as BasePostController;
 
 /**
  * @Route("", requirements={

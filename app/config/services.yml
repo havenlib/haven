@@ -1,10 +1,10 @@
 imports:
-    - { resource: "@EvocatioCoreBundle/Resources/config/services.yml" }
-    - { resource: "@EvocatioWebBundle/Resources/config/services.yml" }
-    - { resource: "@EvocatioPosBundle/Resources/config/services.yml" }
-    - { resource: "@EvocatioSecurityBundle/Resources/config/services.yml" }
-    - { resource: "@EvocatioPersonaBundle/Resources/config/services.yml" }
-    - { resource: "@EvocatioCmsBundle/Resources/config/services.yml" }
-    - { resource: "@EvocatioPortfolioBundle/Resources/config/services.yml" }
-    - { resource: "@EvocatioMediaBundle/Resources/config/services.yml" }
+    - { resource: "@HavenCoreBundle/Resources/config/services.yml" }
+    - { resource: "@HavenWebBundle/Resources/config/services.yml" }
+    - { resource: "@HavenPosBundle/Resources/config/services.yml" }
+    - { resource: "@HavenSecurityBundle/Resources/config/services.yml" }
+    - { resource: "@HavenPersonaBundle/Resources/config/services.yml" }
+    - { resource: "@HavenCmsBundle/Resources/config/services.yml" }
+    - { resource: "@HavenPortfolioBundle/Resources/config/services.yml" }
+    - { resource: "@HavenMediaBundle/Resources/config/services.yml" }
     - { resource: "@OwnerSiteBundle/Resources/config/services.yml" }

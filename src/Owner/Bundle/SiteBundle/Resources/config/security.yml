@@ -18,10 +18,10 @@ security:
                 
     providers:
         administrators:
-            entity: { class: EvocatioSecurityBundle:User }
+            entity: { class: HavenSecurityBundle:User }
 
     encoders:
-        Evocatio\Bundle\SecurityBundle\Entity\User:
+        Haven\Bundle\SecurityBundle\Entity\User:
           algorithm: sha512
 #          encode_as_base64: true
 #          iterations: 1

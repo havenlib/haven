@@ -2,7 +2,7 @@
 
 namespace Owner\Bundle\SiteBundle\Controller;
 
-use Evocatio\Bundle\PortfolioBundle\Controller\PortfolioController as BasePortfolioController;
+use Haven\Bundle\PortfolioBundle\Controller\PortfolioController as BasePortfolioController;
 
 class PortfolioController extends BasePortfolioController {
 

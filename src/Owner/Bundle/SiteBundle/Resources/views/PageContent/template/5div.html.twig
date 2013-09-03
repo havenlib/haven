@@ -1,5 +1,5 @@
 {% extends "OwnerSiteBundle::base.html.twig" %}
-{% import "EvocatioCmsBundle:Macro:content.html.twig" as CHelp %}
+{% import "HavenCmsBundle:Macro:content.html.twig" as CHelp %}
 {% block navigation %}
 {% endblock navigation %}
 {% block header %}
@@ -12,7 +12,7 @@
         </section>
         <div class="display">
             {% for content in entity.getPageContents() %}
-                {% if(content.getContent().is("Evocatio\\Bundle\\CmsBundle\\Entity\\HtmlContent")) %}
+                {% if(content.getContent().is("Haven\\Bundle\\CmsBundle\\Entity\\HtmlContent")) %}
                 
                 
                     {% for translation in content.content().translations %}
@@ -27,7 +27,7 @@
                         </div>
                     {% endfor %}
                 
-                {% elseif(content.getContent().is("Evocatio\\Bundle\\CmsBundle\\Entity\\Widget")) %}
+                {% elseif(content.getContent().is("Haven\\Bundle\\CmsBundle\\Entity\\Widget")) %}
                         {{ CHelp.render_widget(content.getContent()) }}
                 {% else %}
                         No informations

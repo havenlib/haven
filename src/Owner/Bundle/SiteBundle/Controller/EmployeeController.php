@@ -6,7 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Evocatio\Bundle\PersonaBundle\Controller\PersonaController;
+use Haven\Bundle\PersonaBundle\Controller\PersonaController;
 
 /**
  * @Route("", requirements={

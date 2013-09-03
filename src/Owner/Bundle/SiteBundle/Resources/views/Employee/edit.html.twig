@@ -1,11 +1,11 @@
 {%  extends "OwnerSiteBundle:Employee:create.html.twig" %}
-{% import "EvocatioPersonaBundle::macro/route/i18n.html.twig" as route_i18n_persona %}
+{% import "HavenPersonaBundle::macro/route/i18n.html.twig" as route_i18n_persona %}
 {% block formhead %}
     {{ route_i18n_persona.path('owner_site_employee_edit', {"id": entity.id}, ['edit'], 'employee') }}
 {% endblock formhead %}
 {% block delete %}
 {#<li>
-    <form action="{{ path('EvocatioSecurityBundle_delete', { 'id': entity.id }) }}" method="post">
+    <form action="{{ path('HavenSecurityBundle_delete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
         <button type="submit">Delete</button>
     </form>

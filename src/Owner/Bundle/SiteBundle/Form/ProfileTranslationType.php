@@ -5,7 +5,7 @@ namespace Owner\Bundle\SiteBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Evocatio\Bundle\CoreBundle\Repository\LanguageRepository;
+use Haven\Bundle\CoreBundle\Repository\LanguageRepository;
 
 class ProfileTranslationType extends AbstractType {
 
@@ -19,7 +19,7 @@ class ProfileTranslationType extends AbstractType {
                     "property" => "name"
                     , "label" => false
                     , 'query_builder' => function(LanguageRepository $er) {
-                        return $er->filterByStatus(\Evocatio\Bundle\CoreBundle\Entity\Language::STATUS_PUBLISHED)
+                        return $er->filterByStatus(\Haven\Bundle\CoreBundle\Entity\Language::STATUS_PUBLISHED)
                                 ->orderByRank()
                                 ->getQueryBuilder();
                     }

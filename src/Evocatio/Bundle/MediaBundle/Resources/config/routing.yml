@@ -1,6 +1,0 @@
-evocatio_mediabundle:
-    resource: "@EvocatioMediaBundle/Controller"
-    type:     annotation
-    prefix: /{_locale}/
-    requirements:
-      _locale: fr|en
