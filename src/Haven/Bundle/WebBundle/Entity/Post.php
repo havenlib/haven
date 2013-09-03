@@ -344,4 +344,37 @@ class Post extends Translatable {
         return $this->rank;
     }
 
+
+    /**
+     * Add files
+     *
+     * @param \Haven\Bundle\MediaBundle\Entity\File $files
+     * @return Post
+     */
+    public function addFile(\Haven\Bundle\MediaBundle\Entity\File $files)
+    {
+        $this->files[] = $files;
+    
+        return $this;
+    }
+
+    /**
+     * Remove files
+     *
+     * @param \Haven\Bundle\MediaBundle\Entity\File $files
+     */
+    public function removeFile(\Haven\Bundle\MediaBundle\Entity\File $files)
+    {
+        $this->files->removeElement($files);
+    }
+
+    /**
+     * Get files
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFiles()
+    {
+        return $this->files;
+    }
 }
