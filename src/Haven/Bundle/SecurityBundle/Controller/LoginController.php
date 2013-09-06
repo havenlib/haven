@@ -13,18 +13,14 @@ namespace Haven\Bundle\SecurityBundle\Controller;
 
 // Symfony includes
 use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 // Sensio includes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-// Haven includes
-use Haven\Bundle\SecurityBundle\Entity\User as Entity;
-use Haven\Bundle\SecurityBundle\Form\UserType as Form;
 
+// Haven includes
 //use Haven\Bundle\SecurityBundle\Form\LoginType;
 
 class LoginController extends ContainerAware {
@@ -32,6 +28,7 @@ class LoginController extends ContainerAware {
     /**
      *  @Route("/auth/login")
      *  @Method("GET")
+     *  @Template
      */
     public function loginAction() {
         $request = $this->container->get("Request");
@@ -47,18 +44,22 @@ class LoginController extends ContainerAware {
         $csrfToken = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
         $templating = $this->container->get('templating');
 
-        $render = $templating->render('HavenSecurityBundle:Login:login.html.twig', array(
-            // last username entered by the user
+
+        $params = array(
             "csrfToken" => $csrfToken,
-            "login_form" => $login_form->createView(),
+            // last username entered by the user
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error' => $error,
-                ));
+        );
 
         $response = new Response();
         if ($request->isXMLHttpRequest()) {
-            $render = json_encode(array('message' => 'NotLoggedIn', 'render' => $render));
+            $params["error"] = $error->getMessage();
+            $render = json_encode(array('message' => 'NotLoggedIn', 'params' => $params));
             $response->headers->set('Content-Type', 'application/json');
+        } else {
+            $params["login_form"] = $login_form->createView();
+            $render = $templating->render($request->get('_template'), $params);
         }
 
         $response->setContent($render);
@@ -84,7 +85,7 @@ class LoginController extends ContainerAware {
                 "register_form" => $register_form->createView(),
 //                    'last_username' => $session->get(SecurityContext::LAST_USERNAME),
 //                    'error' => $error,
-                    ));
+            ));
             $message = 'NotRegistered';
         }
         $response = new Response();
@@ -177,7 +178,7 @@ class LoginController extends ContainerAware {
         }
         $render = $templating->render("HavenSecurityBundle:Login:resetRequest.html.twig", array(
             "reset_form" => $reset_form->createView(), "success" => !empty($success) ? $success : null, "error" => !empty($error) ? $error : null
-                ));
+        ));
         $response = new Response();
         if ($request->isXMLHttpRequest()) {
             $render = json_encode(array('message' => $message, 'render' => $render));
@@ -238,6 +239,7 @@ class LoginController extends ContainerAware {
             $em = $this->container->get("doctrine")->getEntityManager();
             $em->persist($user);
             $em->flush();
+
             return true;
         }
         return false;
@@ -253,9 +255,9 @@ class LoginController extends ContainerAware {
                     "host" => $prefix . $request->getHttpHost()
                     , "confirmationUrl" => $this->container->get('router')->generate("HavenSecurityBundle_resetConfirmation", array("uuid" => $params["user_reset"]->getUuid()), true)
                     , "confirmation" => $params["user_reset"]->getConfirmation()
-                )));
+        )));
         $mail_message->addParam("host", $prefix . $request->getHttpHost());
-        \Haven\Bundle\CoreBundle\Lib\MailService::sendAllMessages($mail_message, "sc@evocatio.com");
+        \Haven\ Bundle\CoreBundle\Lib\MailService::sendAllMessages($mail_message, "sc@evocatio.com");
     }
 
 }

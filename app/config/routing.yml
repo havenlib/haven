@@ -1,8 +1,13 @@
+apoge_site:
+    resource: "@ApogeSiteBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
     
-owner_site_menu_showmenulink:
-    path:  /{_locale}/{slug}
-    defaults: { _controller: HavenCmsBundle:Menu:showMenuLink }
-    requirements:  
-        slug : .+
-    methods:  [GET]
+#owner_site_menu_showmenulink:
+#    path:  /{_locale}/{slug}
+#    defaults: { _controller: HavenCmsBundle:Menu:showMenuLink }
+#    requirements:  
+#        slug : .+
+#    methods:  [GET]
 

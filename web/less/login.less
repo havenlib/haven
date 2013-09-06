@@ -1,0 +1,186 @@
+@import "mixins.less";
+
+#login{
+    @box-height: 12.5rem;
+    @large-width: 82%;
+
+    width: 24rem;
+    margin: auto;
+    position: relative;
+    height: @box-height;
+    margin-top: 3rem;
+
+    .box-shadow;
+    .rounded-corners;
+    .gradient(#f4f4f4, #e6e6e6);
+
+    .fields{
+        float: left;
+    }
+    .title{
+        overflow: hidden;
+        h5{
+            text-align: center;
+            font-family: sans-serif;
+            font-size: 1.0em;
+            font-weight: lighter;
+            width: @large-width;
+            padding-top: 1px;
+            color: #5f5f5f;
+        }
+    }
+    .button{
+        right: 0;
+        top: 0;
+        width: 18%;
+        border-left: 1px solid #a5a5a5;
+        position: absolute;
+
+        button{
+            color: #5f5f5f;
+            cursor: pointer;
+            height: @box-height;
+            width: 100%;
+            border: none;
+            border-left: 1px solid #ffffff;
+            font-weight: lighter;
+
+            .gradient(#f4f4f4, #e6e6e6);
+            .rounded-corners(0);
+
+            &:active{
+             .gradient(#e6e6e6, #f4f4f4);
+            }
+         }
+    }
+    .fields{
+        width: @large-width;
+        ul{
+            margin-right: 5%;
+            list-style-type: none;
+            padding: 0;
+            li:last-child{
+                margin-top: 0.5rem;
+            }
+            text-align: right;
+        }
+        label{
+            font-family: sans-serif;
+            font-size: 0.9em;
+            text-align: right;
+            margin-right: 1rem;
+            color: #5f5f5f;
+        }
+        input[type="text"], input[type="password"]{
+            border: none;
+            height: 1.8rem;
+            outline: none;
+            .rounded-corners;
+            padding-left: 0.6rem;
+            width: 65%;
+            .inner-box-shadow(@blur: 0.30rem, @color: #9f9f9f);
+            &:focus{
+                .inner-box-shadow(@blur: 0.40rem);
+                transition: all 1s ease;
+                -webkit-transition: all 0.40s ease;
+                -moz-transition: all 0.40s ease;
+            }
+        }
+    }
+    .more{
+        left: 0.45rem;
+        bottom: 0.08rem;
+        position: absolute; 
+        z-index: 1000;
+        img{
+            //position: absolute;
+            top: -1.5rem;
+            cursor: pointer;
+        }
+        .tools{
+            .hidden;
+            top: 1.5rem;
+            left: -1.42rem;
+            position: absolute;
+            ul{
+                width: 11.5rem;
+                background-color: #525252;
+                list-style-type: none;
+                margin: 0;
+                padding: 1.3rem 1.2rem 1.3rem 1.2rem;
+                .rounded-corners(0);
+                color: white;
+                font-family: sans-serif;
+                font-size: 0.9em;
+                li:last-child{
+                    margin-top: 0.4rem;
+                }
+                li input[type="checkbox"]{
+                    vertical-align: middle;
+                }
+                li a{
+                    color: white;
+                }
+            }
+            .arrow-up{
+                margin-left: 1rem;
+                width: 0; 
+                height: 0; 
+                border-left: 15px solid transparent;
+                border-right: 15px solid transparent;
+
+                border-bottom: 15px solid #525252;
+            }
+        }
+    }
+}
+.clock{
+    margin-top: 3rem;
+    text-align: right;
+    .time{
+        display: inline-block;
+        margin-right: 15%;
+        text-align: center;
+    }
+    .date{
+        display: inline-block;
+        margin-top: 0.6rem;
+        font-family: sans-serif;
+        color: #5f5f5f;
+        font-size: 0.9em;
+        color: #5f5f5f;
+    }
+}
+.alert{
+    @padding-alert: 0.35rem 0 0.35rem 0;
+
+    margin: 0.9rem auto;
+    width: 24rem;
+    position: relative;
+    font-family: sans-serif;
+    font-size: 0.9em;
+    &.alert-error{
+        div.message{
+            background-color: #ffbebe;
+            border: 1px solid #ff7474;
+            margin: 0 30px 0 0;
+            padding: @padding-alert;
+            text-align: center;
+            color: #d20000;
+        }
+        div.x{
+            padding: @padding-alert;
+            border: 1px solid #d20000;
+            background-color: #d20000;
+            float: right;
+            width: 1.8rem;
+            position: absolute;
+            top: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-weight: bolder;
+            cursor: pointer;
+        }
+    }
+}

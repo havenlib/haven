@@ -1,3 +1,7 @@
+parameters:
+    #Override DefaultAuthentificationHandler to manage ajax request 
+    security.authentication.success_handler.class: Haven\Bundle\SecurityBundle\Lib\Handler\AuthenticationSuccessHandler
+    
 services:
   user.read_handler:
       class:     Haven\Bundle\SecurityBundle\Lib\Handler\UserReadHandler
@@ -10,5 +14,7 @@ services:
   user.form_handler:
       class:     Haven\Bundle\SecurityBundle\Lib\Handler\UserFormHandler
       arguments: ["@user.read_handler", "@security.context", "@form.factory"]
-
-    
+      
+  authentication_success_handler:
+      class: Haven\Bundle\SecurityBundle\Lib\Handler\AuthenticationSuccessHandler
+      arguments: ["@security.http_utils", {}]

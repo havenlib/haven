@@ -97,9 +97,9 @@ class UserController extends ContainerAware {
             $reset = $this->container->get("user.persistence_handler")->createReset($user);
             $reset_url = $this->container->get('router')->generate(str_replace('add', "reset", $this->container->get("request")->get("_route")), array("uuid" => $reset->getUuid()), true);
 
-            $notifier = $this->container->get('notifier');
-            $notifier->createNewUserNotification($reset, $reset_url);
-            $notifier->send();
+//            $notifier = $this->container->get('notifier');
+//            $notifier->createNewUserNotification($reset, $reset_url);
+//            $notifier->send();
 
             $this->container->get("session")->getFlashBag()->add("success", "create.success");
             return new RedirectResponse($this->container->get('router')->generate(str_replace('add', "list", $this->container->get("request")->get("_route"))));

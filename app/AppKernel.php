@@ -24,6 +24,7 @@ class AppKernel extends Kernel {
             new Haven\Bundle\CmsBundle\HavenCmsBundle(),
             new Haven\Bundle\PortfolioBundle\HavenPortfolioBundle(),
             new Haven\Bundle\MediaBundle\HavenMediaBundle(),
+            new Apoge\Bundle\SiteBundle\ApogeSiteBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

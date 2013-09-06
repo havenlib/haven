@@ -5,10 +5,10 @@ haven_securitybundle:
     requirements:
       _locale: fr|en
       
-#HavenSecurityBundle_Login:
-#    resource: "@HavenSecurityBundle/Controller/LoginController.php"
-#    type:     annotation
-#
+HavenSecurityBundle_Login:
+    resource: "@HavenSecurityBundle/Controller/LoginController.php"
+    type:     annotation
+
 #HavenSecurityBundle_User:
 #    resource: "@HavenSecurityBundle/Controller/UserController.php"
 #    type:     annotation

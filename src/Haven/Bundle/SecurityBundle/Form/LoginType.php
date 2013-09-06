@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * This file is part of the Haven package.
  *
@@ -15,25 +14,24 @@ namespace Haven\Bundle\SecurityBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class LoginType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+class LoginType extends AbstractType {
+
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('username')
-            ->add('email')
-            ->add('password')
-//            ->add('salt')
-//            ->add('locked')
-//            ->add('status')
-//            ->add('created_at')
-//            ->add('created_by')
-//            ->add('contact')
+                ->add('username')
+                ->add('password', 'password')
+                ->add('remember', 'checkbox', array(
+                    'label' => 'remember.me'
+                    , 'required' => false
+                ))
+                ->add('send', 'submit', array(
+                    'label' => 'OPEN'
+                ))
         ;
     }
 
-    public function getName()
-    {
+    public function getName() {
         return 'haven_bundle_securitybundle_logintype';
     }
+
 }

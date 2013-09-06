@@ -39,11 +39,11 @@ class UserRepository extends StatusRepository implements UserProviderInterface {
             // The Query::getSingleResult() method throws an exception
             // if there is no record matching the criteria.
             $user = $q->getSingleResult();
+            return $user;
         } catch (NoResultException $e) {
 //            throw new UsernameNotFoundException(sprintf('Unable to find an status admin AcmeUserBundle:User object identified by "%s".', $username), null, 0, $e);
         }
 
-        return $user;
     }
 
     public function refreshUser(UserInterface $user) {

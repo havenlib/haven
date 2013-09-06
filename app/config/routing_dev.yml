@@ -8,8 +8,8 @@ HavenWebBundle:
 HavenMediaBundle:
     resource: "@HavenMediaBundle/Resources/config/routing.yml"
     
-HavenSecurityBundle:
-    resource: "@HavenSecurityBundle/Resources/config/routing.yml"
+#HavenSecurityBundle:
+#    resource: "@HavenSecurityBundle/Resources/config/routing.yml"
     
 HavenPosBundle:
     resource: "@HavenPosBundle/Resources/config/routing.yml"

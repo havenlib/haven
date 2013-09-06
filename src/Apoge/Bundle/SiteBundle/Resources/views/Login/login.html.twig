@@ -1,0 +1,79 @@
+{% extends "::base.html.twig" %}
+
+{% block inside_middle %}
+<div class="clock">
+    <div class="time">
+         <canvas id="canvas" width="147" height="147">
+         </canvas>
+            <br />
+        <span class="date">
+             {{ "now"  |date("d M Y") }}
+        </span>
+    </div>
+ </div>
+<div id="login-box">
+    <div id="login">
+        <div class="title">
+            <h5>{{"login" | trans | upper}}</h5>
+        </div>
+        <form class="ajax" data-ajax-callback="loginCallback" action="{{ path("login_check") }}" method="post">
+            <div class="fields">
+                <ul>
+                    <li>
+                        {{ form_label(login_form.username)}}
+                            <input type="text" id="username" onfocus="toggleTools(this)" name="_username" value="{{ last_username }}" required="required">
+                    </li>
+                    <li>
+                        {{ form_label(login_form.password) }}
+                            <input type="password" id="password" onfocus="toggleTools(this)" name="_password" required="required">
+                    </li>
+                </ul>
+            </div>
+
+            <div class="more">
+                <img src="/images/plus.png" onclick="clickPlus(this)" />
+                <div class="tools">
+                    <div class="arrow-up"></div>
+                    <ul>
+                        <li>
+                            {{ form_row(login_form.remember) }}
+                        </li>
+                        <li>
+                            <a href="#">{{"forgot.password" | trans }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="button">
+                <button onclick="toggleTools(this)" id="{{login_form.send.vars.id}}" name="{{login_form.send.vars.name}}" type="submit">
+                    <img src="/images/glyphicons_044_keys.png" />
+                    OPEN
+                </button>
+            </div>
+            <input type="hidden" id="_token" value="{{ csrfToken }}">
+        </form>
+    </div>
+    <div class="alert alert-error {% if not error %} hidden {%endif%}">
+        <div class="message">{% if error %}{{ error.message }}{%endif%}</div>
+        <div class="x" onclick="toggleAlert(this)">x</div>
+    </div>
+</div>
+
+
+{% endblock inside_middle %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% if app.environment != 'prod' %}
+        <link href="{{ asset("less/login.less") }}" rel="stylesheet/less" type="text/css" />
+    {% else %}
+        <link rel="stylesheet" type="text/css" href="/css/login.css" />
+    {% endif %}
+{% endblock stylesheets%}
+
+{% block javascripts %}
+    {{ parent() }}
+        <script src="{{ asset("js/login.js") }}" type="text/javascript"></script>
+{% endblock javascripts %}  
