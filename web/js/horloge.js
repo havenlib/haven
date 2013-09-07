@@ -94,6 +94,11 @@ function drawScene() { // main drawScene function
 // initialization
 $(function() {
     canvas = document.getElementById('canvas');
+
+    if (!canvas) {
+        return false;
+    }
+
     ctx = canvas.getContext('2d');
 
     // var width = canvas.width;

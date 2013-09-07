@@ -1,0 +1,61 @@
+{% extends "::base.html.twig" %}
+
+{% block middle %}
+<div class="menu-zone">
+    <ul class="menu">
+        <li class="separator"><div></div></li>
+        <li>
+            <span class="title">
+                {{"post" | trans | upper }}
+            </span>
+            <ul class="submenu">
+                <li><a href="{{ path('apoge_site_post_create') }}">{{"add.post"}}</a></li>
+                <li><a href="{{ path('apoge_site_post_list') }}">{{"list.post"}}</a></li>
+            </ul>
+        </li>
+        <li class="separator"><div></div></li>
+        <li>
+            <span class="title">
+                {{"faq" | trans | upper }}
+            </span>
+            <ul class="submenu">
+                <li><a href="#">Create FAQ</a></li>
+                <li><a href="#">List FAQ</a></li>
+            </ul>
+        </li>
+        <li class="separator"><div></div></li>
+        <li>
+            <span class="title">{{"cms" | trans | upper }}</span>
+            <ul class="submenu">
+                <li><a href="#">Create Page</a></li>
+                <li><a href="#">List Pages</a></li>
+            </ul>
+        </li>
+        <li class="separator"><div></div></li>
+        <li>
+            <span class="title">{{"store" | trans | upper }}</span>
+        </li>
+        <li class="separator"><div></div></li>
+        <li>
+            <span class="title">{{"media.library" | trans | upper }}</span>
+        </li>
+    </ul>
+</div>
+    {% block inside_middle %}
+    {% endblock inside_middle %}
+{% endblock middle %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% if app.environment != 'prod' %}
+        <link href="{{ asset("less/admin.less") }}" rel="stylesheet/less" type="text/css" />
+    {% else %}
+        <link rel="stylesheet" type="text/css" href="/css/admin.css" />
+    {% endif %}
+{% endblock stylesheets%}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset("js/admin.js") }}" type="text/javascript"></script>
+{% endblock javascripts %}  

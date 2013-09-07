@@ -1,0 +1,56 @@
+{% extends "ApogeSiteBundle::admin.html.twig" %}
+{% block inside_middle %}
+<div class="theater-zone">
+    {#{ app.request.attributes.get("_controller") }#}
+    <h1>{{"web.post.list" | trans | upper}}</h1>
+    <div id="entity-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>{{"web.title" | trans | capitalize }}</th>
+                    <th>{{"web.excerpt" | trans | capitalize }}</th>
+                    <th>{{"web.created.at" | trans | capitalize }}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="sortable">
+                {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.title }}</td>
+                    <!--td>
+                        <form action="{{ path('apoge_site_post_rank', {'id': entity.id}) }}" method="post">
+                            {{ form_widget(rank_forms[entity.getId()]) }}
+                        </form>
+                    </td-->
+                    <td>{{ entity.excerpt }}</td>
+                    <td>{{ entity.createdat | date("web.date.format" | trans) }}</td>
+                    <td>
+                        <ul class="action">
+                            <li class="edit"><a href="{{ path('apoge_site_post_edit', {'id': entity.id}) }}">{#{"web.to.edit" | trans | capitalize }#}</a></li>
+                            <li class="delete">
+                                <form action="{{ path('apoge_site_post_delete', {'id': entity.id}) }}" method="post">
+                                    {{ form_widget(delete_forms[entity.getId()].delete, {'label': ' '}) }}
+                                    {{ form_rest(delete_forms[entity.getId()]) }}
+                                </form>
+                            </li>
+                            <!--li><a href="{{ path('apoge_site_post_show', {'id': entity.id}) }}">{{ "web.show" | trans | capitalize }}</a></li-->
+                        </ul>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="13">
+                        {{ "web.no.entities" |trans }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <ul class="paginator">
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock inside_middle %}
+

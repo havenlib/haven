@@ -1,6 +1,11 @@
 apoge_site:
     resource: "@ApogeSiteBundle/Controller/"
     type:     annotation
+    prefix:   /{_locale}/
+    
+apoge_site_login:
+    resource: "@ApogeSiteBundle/Controller/LoginController.php"
+    type:     annotation
     prefix:   /
 
     

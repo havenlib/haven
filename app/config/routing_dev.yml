@@ -2,8 +2,8 @@
 HavenCoreBundle:
     resource: "@HavenCoreBundle/Resources/config/routing.yml"
     
-HavenWebBundle:
-    resource: "@HavenWebBundle/Resources/config/routing.yml"
+#HavenWebBundle:
+#    resource: "@HavenWebBundle/Resources/config/routing.yml"
     
 HavenMediaBundle:
     resource: "@HavenMediaBundle/Resources/config/routing.yml"
